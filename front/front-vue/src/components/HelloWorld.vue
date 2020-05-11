@@ -39,7 +39,7 @@ export default {
   name: "HelloWorld",
   components: {
     Carousel3d,
-    Slide,
-  },
+    Slide
+  }
 };
 </script>
