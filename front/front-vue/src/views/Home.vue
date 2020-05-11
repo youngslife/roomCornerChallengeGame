@@ -13,6 +13,7 @@
           <div
             class="text-h5 absolute-bottom text-center"
             style="background-color: rgba(255, 255, 255,.0);"
+             OnClick="location.href ='http://localhost:8080/how'"
           >
             랭킹
           </div>
