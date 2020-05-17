@@ -15,4 +15,12 @@
 ## 구현 예정
 
 - 화상 회의
-  - (RTSP) https://github.com/Streamedian/html5_rtsp_player
+  - (RTSP) <https://github.com/Streamedian/html5_rtsp_player>
+  - RTSP -> WebRTC 변경
+  - (WebRTC) <https://webrtc.org/>
+    - 사용가능 브라우저
+      - chrome
+      - opera
+      - firefox
+      - android
+      - ios
