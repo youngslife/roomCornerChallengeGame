@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.UserDao" >
+
+ 	<insert id="insert"		parameterType="user">
+	 	INSERT INTO USER(
+			user_email,
+			user_name,
+			uesr_password,
+			user_sex,
+			user_age,
+			user_login_type
+		)
+		VALUES(
+			#{user_email:VARCHAR},
+			#{user_name:VARCHAR},
+			#{uesr_password:VARCHAR},
+			#{user_sex:INTEGER},
+			#{user_age:INTEGER},
+			#{user_login_type:INTEGER}
+		);
+	</insert> 
+	
+   	<delete id="delete" 	parameterType="int">
+   		<!-- 
+   		익명정보, 가명정보 도입할 것
+   		유저성별, 나이 등 남기고 삭제되는 유저 뒤에 삭제유저숫자 추가
+   		UPDATE USER SET
+   		user_name = "undefinedUser",
+   		user_password = #{user_password},
+   		user_token= #{user_token},
+   		user_grant = #{user_grant},
+   		user_lastlogin = CURRENT_TIMESTAMP(), 
+   		WHERE user_id = #{user_id} -->
+	</delete>
+
+   	<update id="update"		parameterType="user">
+   		UPDATE USER SET
+			user_name 		= #{user_name:VARCHAR},
+			user_password 	= #{user_password:VARCHAR},
+			user_token		= #{user_token:VARCHAR},
+			user_sex 		= #{user_sex:INTEGER},
+			user_age 		= #{user_age:INTEGER},		
+			user_grant 		= #{user_grant:VARCHAR},
+			user_lastlogin 	= CURRENT_TIMESTAMP(), 
+   		WHERE user_no 	= #{user_no:INTEGER}
+   	</update>
+
+	<select id="search"		parameterType="int"  resultType="user">
+		SELECT
+		 *
+		FROM
+		 USER
+		WHERE
+		 user_no = #{user_no}
+		 AND user_del_check = FALSE;
+	</select>
+	<select id="searchAll"	resultType="user">
+		SELECT
+		 *
+		FROM
+		 USER
+		WHERE
+		 user_del_check = FALSE;
+	</select>
+
+	<select id ="searchByEmail" parameterType="string" resultType="user">
+		SELECT 
+		 *
+		FROM 
+		 USER
+		WHERE 
+		 user_email = #{user_email}
+		 AND user_del_check = FALSE;
+	</select>
+
+	
+	
+</mapper>
+
