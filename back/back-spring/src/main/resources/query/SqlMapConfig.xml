@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.ssafy.backspring.model.dto.User" alias="User" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Board" alias="Board" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Post" alias="Post" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Comment" alias="Comment" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="query/user_query.xml" />
+		<mapper resource="query/board_query.xml" />
+		<mapper resource="query/post_query.xml" />
+		<mapper resource="query/comment_query.xml" />
+	</mappers>
+</configuration>
