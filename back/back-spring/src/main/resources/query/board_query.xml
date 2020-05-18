@@ -87,6 +87,59 @@
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
 	</select>
+	<select id="searchAllBoardByOption" parameterType="hashmap" resultMap="bpMap">
+		<![CDATA[
+		SELECT
+			RESULT.*
+		FROM (SELECT 
+			(CASE 
+				WHEN @vpost_no = bpu.post_no
+				THEN @rownum:=@rownum
+				ELSE @rownum:=@rownum+1
+			END) AS rnum,
+			(@vpost_no:=bpu.post_no) vpost_no,
+			bpu.*
+			FROM
+				(SELECT 
+					b.board_no,
+					b.board_title,
+					b.board_category,
+					p.post_no,
+					p.user_no,
+					u.user_name,
+					p.post_title,
+					p.post_content,
+					p.post_recommendation_num,
+					p.post_views_num,
+					p.post_blamed,
+					p.post_regtime, 
+					p.post_updatetime
+					FROM BOARD b
+					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE) as bpu, 
+				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
+			) AS RESULT
+		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+		<choose>
+			<when test="searchOption == 'all'">
+				<if test="word != null">
+				AND RESULT.post_title like concat('%','${word}','%')
+				OR RESULT.post_content like concat('%','${word}','%')
+				OR RESULT.user_name like concat('%','${word}','%')
+				</if>
+			</when>
+			<when test="searchOption == 'title'">
+				AND	RESULT.post_title like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'content'">
+				AND RESULT.post_content like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'writer'">
+				AND RESULT.user_name like concat('%','${word}','%')
+			</when>
+		</choose>
+	</select>
 	<select id="searchTargetBoard" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
@@ -121,6 +174,60 @@
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+	</select>
+	<select id="searchTargetBoardByOption" parameterType="hashmap" resultMap="bpMap">
+		<![CDATA[
+		SELECT
+			RESULT.*
+		FROM (SELECT 
+			(CASE 
+				WHEN @vpost_no = bpu.post_no
+				THEN @rownum:=@rownum
+				ELSE @rownum:=@rownum+1
+			END) AS rnum,
+			(@vpost_no:=bpu.post_no) vpost_no,
+			bpu.*
+			FROM
+				(SELECT 
+					b.board_no,
+					b.board_title,
+					b.board_category,
+					p.post_no,
+					p.user_no,
+					u.user_name,
+					p.post_title,
+					p.post_content,
+					p.post_recommendation_num,
+					p.post_views_num,
+					p.post_blamed,
+					p.post_regtime, 
+					p.post_updatetime
+					FROM BOARD b
+					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE AND b.board_no =#{target_no}) as bpu, 
+				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
+			) AS RESULT
+		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+		<choose>
+			<when test="searchOption == 'all'">
+				<if test="word != null">
+				AND RESULT.post_title like concat('%','${word}','%')
+				OR RESULT.post_content like concat('%','${word}','%')
+				OR RESULT.user_name like concat('%','${word}','%')
+				</if>
+			</when>
+			<when test="searchOption == 'title'">
+				AND	RESULT.post_title like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'content'">
+				AND RESULT.post_content like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'writer'">
+				AND RESULT.user_name like concat('%','${word}','%')
+			</when>
+		</choose>
+		<!-- ORDER BY RESULT.post_regtime DESC -->
 	</select>
 </mapper>
 

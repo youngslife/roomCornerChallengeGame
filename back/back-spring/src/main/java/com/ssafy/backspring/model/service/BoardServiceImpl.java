@@ -80,4 +80,22 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return null;
 	}
+	@Override
+	public List<Map<String, Object>> searchAllBoardByOption(PageMaker page){
+		try {
+			return dao.searchAllBoardByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Map<String, Object>> searchTargetBoardByOption(PageMaker page){
+		try {
+			return dao.searchTargetBoardByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
