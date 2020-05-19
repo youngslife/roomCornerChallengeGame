@@ -27,3 +27,18 @@ public class Comment implements Serializable{
 	//음 이걸로 대댓글할거였는데 귀찮아지니까 일단 냅두고 나중에 ㄱ
 	private List<Comment> cmt_childList;
 }
+/*
+댓글 클래스
+댓글 관리번호
+게시물 번호
+유저 번호
+상위 댓글 번호
+내용
+추천수
+신고여부
+삭제여부
+등록시간
+수정시간
+작성자
+대댓글리스트
+ */

@@ -18,3 +18,11 @@ public class Board implements Serializable{
 	private boolean board_del_check;
 	private List<Post> board_postList;
 }
+/*
+게시판 클래스
+게시판 번호
+제목
+카테고리
+삭제여부
+게시물 리스트
+*/
