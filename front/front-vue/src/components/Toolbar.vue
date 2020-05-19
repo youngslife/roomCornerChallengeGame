@@ -1,7 +1,32 @@
 <template>
-  <div v-show="loginStatus">
-    {{ name }}님 환영합니다.
-    <a @click="logout" href>Logout</a>
+  <div>
+    <q-bar dark class="bg-primary text-white">
+      <div class="col text-left">
+        <q-btn    dense
+          flat
+          round
+          label="back"
+          size="20px"
+          color="red"
+          class="q-pa-lg" @click="back" />
+      </div>
+      <div class="col text-center text-weight-bold">
+        In-Room-Chalinge
+      </div>
+      <div class="col text-right text-weight-bold">
+        {{ name }}님 환영합니다.
+        <q-btn
+          dense
+          flat
+          round
+          label="Logout"
+          size="20px"
+          color="green"
+          class="q-pa-lg"
+          @click="logout"
+        />
+      </div>
+    </q-bar>
   </div>
 </template>
 
@@ -15,6 +40,7 @@ export default {
       loginStatus: false
     };
   },
+
   mounted() {
     let self = this;
     firebase.auth().onAuthStateChanged(function(user) {
@@ -40,6 +66,9 @@ export default {
             console.log(error);
           });
       }
+    },
+    back(){
+      this.$router.go(-1)
     }
   }
 };

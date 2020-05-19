@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <div class="flex flex-center">
     <carousel-3d
       width="700"
       height="700"
@@ -28,7 +28,7 @@
         <img src="../assets/tabsonic.png" />
       </slide>
     </carousel-3d>
-  </q-page>
+  </div>
 </template>
 
 <style></style>
@@ -40,6 +40,7 @@ export default {
   components: {
     Carousel3d,
     Slide
-  }
+  },
+  methods: {}
 };
 </script>
