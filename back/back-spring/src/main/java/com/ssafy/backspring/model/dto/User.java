@@ -24,5 +24,21 @@ public class User implements Serializable{
 	private boolean user_del_check;
 	private String user_lastlogin;
 	private String user_regtime;
-	
+	private Image user_profile; //이미지 추가
 }
+/*
+유저 클래스
+유저 관리번호
+이메일
+닉네임
+비밀번호
+토큰
+성별
+나이
+권한
+로그인종류
+삭제여부
+마지막로그인
+가입일
+프로필사진
+*/
