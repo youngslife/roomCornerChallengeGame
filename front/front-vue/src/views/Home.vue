@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" infinite style="height:610px;">
+    <q-carousel animated v-model="slide" infinite style="height:610px;" autoplay>
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -17,7 +17,7 @@
             :options="[
               { value: 'first', slot: 'first' },
               { value: 'second', slot: 'second' },
-              { abel: '방탈출', value: 'third', slot: 'third' }
+              {  value: 'third', slot: 'third' }
             ]"
             style="height:100px; width:100%;"
           >
@@ -65,7 +65,7 @@
       </div>
       <div class="col-3">
         <div class="col text-right" style="margin-top:50px;">
-          <q-btn color="primary" icon="check" label="고객센터" />
+          <q-btn color="primary" icon="check" label="고객센터" to="/mypage"/>
           <q-btn color="primary" icon="check" label="보안센터" />
         </div>
         <div

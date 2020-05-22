@@ -1,71 +1,6 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" infinite style="height:710px;">
-      <q-carousel-slide
-        v-for="(card, index) in mainCard"
-        :name="card.name"
-        :img-src="card.imgSrc"
-        :key="index"
-      >
-        <!--이부분은 컴포넌트화시키면 될듯  -->
-        <div class="absolute-top justify-around row" style="height:50px;margin-top:20px;">
-          <div class="col-2 flex flex-center" >
-            <q-btn  icon="check" label="피트니스로고" style="width:100%; height:100%; color:white; font-size:25px;" class="text-weight-bold"/>
-          </div>
-          <q-btn
-            v-for="index in 4"
-            :key="index"
-            style=" color:white; font-size:25px;" 
-            label="Persistent Menu"
-            class="col-2 text-weight-bold"
-          >
-            <q-menu persistent auto-close>
-              <q-list style="min-width: 350px">
-                <q-item clickable>
-                  <q-item-section>New tab</q-item-section>
-                </q-item>
-                <q-item clickable>
-                  <q-item-section>New incognito tab</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable>
-                  <q-item-section>Recent tabs</q-item-section>
-                </q-item>
-                <q-item clickable>
-                  <q-item-section>History</q-item-section>
-                </q-item>
-                <q-item clickable>
-                  <q-item-section>Downloads</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable>
-                  <q-item-section>Settings</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable>
-                  <q-item-section>Help &amp; Feedback</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-        </div>
-        <div class="absolute-bottom">
-          <q-btn-toggle
-            v-model="slide"
-            spread
-            text-color="white"
-            toggle-color="brand"
-            :options="[
-              { label: '링피트1', value: 'first' },
-              { label: '링피트2', value: 'second' },
-              { label: '링피트3', value: 'third' }
-            ]"
-            style="height:100px; width:100%;"
-          />
-        </div>
-      </q-carousel-slide>
-    </q-carousel>
-    <div class="row" style="background:gray;">
+     <div class="row" style="background:gray;">
       <div class="col-4 flex flex-center">
         <q-btn
           color="primary"
@@ -135,7 +70,14 @@
       <div class="col-6 row">
         <div class="col-7">
           <q-list bordered class="col ">
-            <q-item v-for="index in 4" clickable v-ripple :key="index" class="col-2" style="margin-top:22px; margin-bottom:22px;">
+            <q-item
+              v-for="index in 4"
+              clickable
+              v-ripple
+              :key="index"
+              class="col-2"
+              style="margin-top:22px; margin-bottom:22px;"
+            >
               <q-item-section avatar>
                 <q-icon color="primary" name="bluetooth" />
               </q-item-section>
@@ -145,12 +87,18 @@
         </div>
         <q-separator spaced inset vertical />
         <div class="col-4 justify-around" style="background:gray">
-                <q-card class="my-card col-4 ">
-                    <img src="https://cdn.quasar.dev/img/mountains.jpg"  style="height:100px">
-                </q-card>
-                 <q-card class="my-card col-4" >
-                    <img src="https://cdn.quasar.dev/img/mountains.jpg" style="height:100px">
-                </q-card>
+          <q-card class="my-card col-4 ">
+            <img
+              src="https://cdn.quasar.dev/img/mountains.jpg"
+              style="height:100px"
+            />
+          </q-card>
+          <q-card class="my-card col-4">
+            <img
+              src="https://cdn.quasar.dev/img/mountains.jpg"
+              style="height:100px"
+            />
+          </q-card>
         </div>
       </div>
     </div>
@@ -180,27 +128,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      slide: "first",
-      mainCard: [
-        { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
-        { name: "second", imgSrc: require("../../assets/ring.jpeg") },
-        { name: "third", imgSrc: require("../../assets/room.png") }
-      ],
-      slide2: "tv"
-    };
-  },
-  methods: {},
-  computed: {}
+ 
 };
 </script>
 
 <style>
-.text-brand {
-  color: white;
-}
-.bg-brand {
-  background: rgba(0, 102, 255, 0.4);
-}
+
 </style>

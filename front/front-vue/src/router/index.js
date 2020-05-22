@@ -15,13 +15,42 @@ const routes = [
     component: () => import("../views/Login.vue")
   },
   {
+    path: "/signin",
+    name: "signin",
+    component: () => import("../views/SignIn.vue")
+  },
+  {
+    path: "/mypage",
+    name: "mypage",
+    component: () => import("../views/MyPage.vue")
+  },
+  {
     path: "/fitness",
-    name: "fitness",
-    component: () => import("../views/Fitness/FitnessHome.vue")
+    component: () => import("../views/Fitness/Fitness.vue"),
+    children: [
+      {
+        path: "",
+        name: "fitness",
+        component: () => import("../views/Fitness/FitnessHome.vue")
+      },
+      {
+        path: "community",
+        name: "fitnesscommunity",
+        component: () => import("../views/Fitness/FitnessCommunity.vue")
+      },
+      {
+        path: "guide",
+        name: "fitnessguide",
+        component: () => import("../views/Fitness/FitnessGuide.vue")
+      },
+      {
+        path: "rank",
+        name: "fitnessrank",
+        component: () => import("../views/Fitness/FitnessRank.vue")
+      }
+    ]
   }
 ];
-
-
 
 const router = new VueRouter({
   mode: "history",
@@ -30,9 +59,8 @@ const router = new VueRouter({
 });
 import store from "../store/index.js";
 router.beforeEach((to, from, next) => {
-
-  if(store.state.header.isDrawer == true){
-  store.dispatch('header/changeIsDrawer');
+  if (store.state.header.isDrawer == true) {
+    store.dispatch("header/changeIsDrawer");
   }
   next();
 });

@@ -23,7 +23,7 @@
         align="justify"
         class="bg-purple text-white shadow-2 col-7"
       >
-        <q-tab name="mails" label="게임1" />
+        <q-tab name="mails" label="피트니스" />
         <q-tab name="alarms" label="게임2" />
         <q-tab v-if="$q.screen.gt.sm" name="movies" label="게임3" />
         <q-tab v-if="$q.screen.gt.sm" name="photos" label="게임4" />

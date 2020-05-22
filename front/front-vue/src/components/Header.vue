@@ -10,7 +10,9 @@
         <a href="/"> <h3>방구석 챌린지</h3></a>
       </div>
       <div class="col text-right text-weight-bold">
-        <button class="button button1">회원가입</button>
+        <button class="button button1" onclick="location.href ='signin'">
+          회원가입
+        </button>
         <button class="button button2" onclick="location.href ='/login'">
           로그인
         </button>

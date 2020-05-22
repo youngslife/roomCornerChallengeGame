@@ -16,13 +16,11 @@
       </div>
       <q-scroll-area class="fit" style="margin-top:20px;">
         <q-list>
-          <q-item v-for="index in 50" :key="index" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="inbox" />
-            </q-item-section>
-
+          <q-item >
+          </q-item>
+          <q-item v-for="index in 10" :key=index clickable v-ripple>
             <q-item-section>
-              Inbox
+              <q-item-label>링피트</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
