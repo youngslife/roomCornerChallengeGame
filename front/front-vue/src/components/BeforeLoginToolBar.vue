@@ -1,62 +1,50 @@
 <template>
-  <q-bar dark class="bg-black text-white">
-    <div class="col text-left text-weight-bold q-pa-lg">
-      <q-btn
-        dense
-        flat
-        round
-        label="마피아"
-        size="20px"
-        color="white"
-        class="q-pa-lg"
-        @click="clickMenu(false, 2)"
-      />
-      <q-btn
-        dense
-        flat
-        round
-        label="링피트"
-        size="20px"
-        color="yellow"
-        class="q-pa-lg"
-        @click="clickMenu(false, 3)"
-      />
-      <q-btn
-        dense
-        flat
-        round
-        label="기본 소개"
-        size="20px"
-        class="q-pa-lg"
-        @click="clickMenu(false, 4)"
-      />
-    </div>
-    <div class="col text-center text-weight-bold">
-      In-Room-Chalinge
-    </div>
-    <div class="col text-right text-weight-bold">
-      <q-btn
-        dense
-        flat
-        round
-        label="login"
-        size="20px"
-        color="green"
-        class="q-pa-lg"
-        @click="clickMenu(true, 1)"
-      />
-    </div>
-  </q-bar>
+  <div>
+  </div>
 </template>
 
 <script>
+// import firebase from "firebase";
+
 export default {
+  data() {
+    return {
+      name: "",
+      loginStatus: false
+    };
+  },
+
+  mounted() {
+    let self = this;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        self.loginStatus = true;
+        self.name = user.displayName;
+      }
+    });
+  },
   methods: {
-    clickMenu(check, slide) {
-      this.$emit("isLoginButton", check, slide);
+    logout() {
+      let user = firebase.auth().currentUser;
+      // let provider = new firebase.auth.GoogleAuthProvider();
+      // provider.setCustomParameters({ prompt: "select_account" });
+      if (user) {
+        firebase
+          .auth()
+          .signOut()
+          .then(function() {
+            console.log("logout success");
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+    back(){
+      this.$router.go(-1)
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

@@ -1,21 +1,25 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <template v-if="user != undefined">
-      <Toolbar />
-    </template>
+    <Header />
+    <Drawer />
     <router-view />
+    <Footer />
   </q-layout>
 </template>
 
 <script>
 import firebase from "firebase";
-import Toolbar from "./components/Toolbar";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Drawer from "./components/Drawer";
 // import { mapState } from "vuex";
 export default {
   name: "LayoutDefault",
 
   components: {
-    Toolbar
+    Header,
+    Footer,
+    Drawer
   },
 
   data() {

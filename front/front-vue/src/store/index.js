@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import user from "./modules/user";
 import board from "./modules/board";
 import comment from "./modules/comment";
+import header from "./modules/header";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     user,
     board,
     comment,
-  },
+    header
+  }
 });
