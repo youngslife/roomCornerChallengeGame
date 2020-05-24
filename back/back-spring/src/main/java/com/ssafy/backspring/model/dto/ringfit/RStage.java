@@ -14,6 +14,7 @@ public class RStage implements Serializable {
 	private int rstage_no;
 	private String rstage_name;
 	private String rstage_theme;
+	private boolean rstage_del_check;
 	private RMap rstage_map;
 	private List<RMonster> rstage_monster;
 }

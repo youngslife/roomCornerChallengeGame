@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RMonsterDao" >
+
+ 	<insert id="insert"		parameterType="rmonster">
+	 	INSERT INTO RMONSTER(
+			rmon_name,
+			rmon_level,
+			rmon_hp,
+			rmon_grade,
+			rmon_description
+			)
+		VALUES(
+			#{rmon_name:VARCHAR},
+			#{rmon_level:INTEGER},
+			#{rmon_hp:INTEGER},
+			#{rmon_grade:VARCHAR},
+			#{rmon_description:VARCHAR}
+		)
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="rmonster">
+	   	UPDATE RMONSTER
+		SET
+			rmon_name = #{rmon_name:VARCHAR},
+			rmon_level = #{rmon_level:INTEGER},
+			rmon_hp = #{rmon_hp:INTEGER},
+			rmon_grade = #{rmon_grade:VARCHAR},
+			rmon_description = #{rmon_description:VARCHAR},
+			rmon_del_check = #{rmon_del_check:BOOLEAN}
+		WHERE rmon_no = #{rmon_no:INTEGER}
+   	</update>
+	<select id="search"		parameterType="int"  resultType="rmonster">
+		SELECT * FROM RMONSTER WHERE rmon_no=#{rmon_no:INTEGER}
+	</select>
+	<select id="searchAll"	resultType="rmonster">
+		SELECT * FROM RMONSTER
+	</select>
+	
+</mapper>
+

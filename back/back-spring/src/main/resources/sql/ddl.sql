@@ -40,6 +40,7 @@ CREATE TABLE POST(
         post_del_check BOOLEAN DEFAULT FALSE,						# 게시물 삭제여부
 		post_regtime DATETIME DEFAULT CURRENT_TIMESTAMP(), 			# 게시물 등록시간
         post_updatetime DATETIME DEFAULT CURRENT_TIMESTAMP(),		# 게시물 수정시간
+        post_tag VARCHAR(500),										# 게시물 태그
         FOREIGN KEY(board_no) REFERENCES BOARD(board_no),
         FOREIGN KEY(user_no) REFERENCES USER(user_no)
 );
@@ -59,4 +60,102 @@ CREATE TABLE Comment(
         FOREIGN KEY(user_no) REFERENCES USER(user_no)
 );
 
+CREATE TABLE IMAGE(
+		img_no INT PRIMARY KEY AUTO_INCREMENT, # 이미지 관리번호
+		img_type VARCHAR(50) NOT NULL, # 이미지 종류
+		# user_profile, post_img, monster_img, map_img
+		img_type_no INT, 		# 해당 테이블에서 필요에 맞는 번호 가져오기
+		img_name VARCHAR(300),	# 이미지 이름
+		img_path VARCHAR(1000),	# 이미지 경로
+		img_purpose VARCHAR(100),# 이미지 사옹 목적
+        img_extension VARCHAR(50), # 이미지 확장자
+        img_del_check BOOLEAN DEFAULT FALSE
+);
+CREATE TABLE UserGameInfo(
+		uginfo_no INT PRIMARY KEY AUTO_INCREMENT,
+        user_no INT NOT NULL,
+		uginfo_level INT DEFAULT 1,
+		uginfo_experience INT DEFAULT 0,
+		uginfo_golds INT DEFAULT 0,
+		uginfo_active_score DOUBLE DEFAULT 0.0,
+        uginfo_del_check BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY(user_no) REFERENCES USER(user_no)
+);
 
+CREATE TABLE RStage(
+		rstage_no INT PRIMARY KEY AUTO_INCREMENT, # 스테이지 관리번호
+		rstage_name VARCHAR(100) NOT NULL, #스테이지 이름
+		rstage_theme VARCHAR(200), #스테이지 테마
+        rstage_del_check BOOLEAN DEFAULT FALSE
+);
+CREATE TABLE RUserInfo(
+		ruserinfo_no INT PRIMARY KEY AUTO_INCREMENT,
+		rstage_no INT NOT NULL,
+		user_no INT NOT NULL,
+		ruserinfo_hp INT DEFAULT 10,
+		ruserinfo_iscleared BOOLEAN DEFAULT FALSE,
+		ruserinfo_iswon BOOLEAN DEFAULT FALSE,
+        ruserinfo_golds INT DEFAULT 0,
+        rsuerinfo_del_check BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY(rstage_no) REFERENCES RStage(rstage_no),
+        FOREIGN KEY(user_no) REFERENCES USER(user_no)
+);
+
+CREATE TABLE RGameInfo(
+		rgameinfo_no INT PRIMARY KEY AUTO_INCREMENT,
+		ruserinfo_no INT NOT NULL,
+		rgameinfo_startdate DATETIME DEFAULT CURRENT_TIMESTAMP(),
+		rgameinfo_playtime DATETIME,
+		rgameinfo_enddate DATETIME,
+		rgameinfo_level INT DEFAULT 1,
+		rgameinfo_perfect_num INT DEFAULT 0,
+		rgameinfo_great_num INT DEFAULT 0,
+		rgameinfo_good_num INT DEFAULT 0,
+		rgameinfo_miss_num INT DEFAULT 0,
+		rgameinfo_rank VARCHAR(5) , # S+ S S- A+ A A- .. F
+		rgameinfo_kcal DOUBLE DEFAULT 0.0,
+		rgameinfo_score DOUBLE DEFAULT 0.0,
+        rgameinfo_del_check BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY(ruserinfo_no) REFERENCES RUserInfo(ruserinfo_no)
+);
+
+CREATE TABLE RMap(
+		rmap_no INT PRIMARY KEY AUTO_INCREMENT,
+        rstage_no INT NOT NULL,
+        rmap_length INT,
+        rmap_del_check BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY(rstage_no) REFERENCES RStage(rstage_no)
+);
+
+CREATE TABLE RMonster(
+		rmon_no INT PRIMARY KEY AUTO_INCREMENT,
+		rmon_name VARCHAR(100) NOT NULL,
+		rmon_level INT DEFAULT 1,
+		rmon_hp INT DEFAULT 10,
+		rmon_grade VARCHAR(50),
+		rmon_description VARCHAR(1000),
+        rmon_del_check BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE RItem(
+		ritem_no INT PRIMARY KEY AUTO_INCREMENT,
+		ritem_name VARCHAR(100) NOT NULL,
+		ritem_price INT NOT NULL,
+		ritem_category VARCHAR(200),
+		ritem_desc VARCHAR(1000),
+        ritem_del_check BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE RShop(
+		rshop_no INT PRIMARY KEY AUTO_INCREMENT,
+		rshop_name VARCHAR(100) NOT NULL,
+        rshop_del_check BOOLEAN DEFAULT FALSE
+);
+
+
+DROP TABLE rmap;
+DROP TABLE rmonster;
+DROP TABLE rstage;
+DROP TABLE ruserinfo;
+DROP TABLE rgameinfo;
+DROP TABLE image;

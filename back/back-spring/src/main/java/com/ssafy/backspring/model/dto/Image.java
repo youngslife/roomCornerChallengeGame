@@ -20,6 +20,8 @@ public class Image implements Serializable{
 	private String img_name;
 	private String img_path;
 	private String img_purpose; 
+	private String img_extension;
+	private boolean img_del_check;
 	// 기본(프로필, 게시글), 
 	// 몬스터 기본1, 기본2, 기본3, 피격1, 피격2, 피격3, 사망
 	// 배경 맵, 조형물, 캐릭터

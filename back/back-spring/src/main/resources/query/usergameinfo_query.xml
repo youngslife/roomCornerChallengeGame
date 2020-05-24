@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.UserGameInfoDao" >
+
+ 	<insert id="insert"		parameterType="int">
+ 		INSERT INTO UserGameInfo(user_no)VALUES(#{user_no:INTEGER});
+	</insert> 
+   	<delete id="delete" 	parameterType="int"> <!-- 유저 삭제될때 같이 되도록 할 것 -->
+	</delete>
+   	<update id="update"		parameterType="usergameinfo">
+	   	UPDATE UserGameInfo
+		SET
+			user_no = #{user_no: INTEGER},
+			uginfo_level = #{uginfo_level:INTEGER},
+			uginfo_experience = #{uginfo_experience:INTEGER},
+			uginfo_golds = #{uginfo_golds:INTEGER},
+			uginfo_active_score = #{uginfo_active_score:DOUBLE}
+		WHERE uginfo_no = #{uginfo_no:INTEGER};
+   	</update>
+	<select id="search"		parameterType="int"  resultType="usergameinfo">
+		SELECT * FROM USERGAMEINFO WHERE uginfo_no = #{uginfo_no:INTEGER}
+	</select>
+	<select id="searchAll"	resultType="usergameinfo">
+		SELECT * FROM USERGAMEINFO
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RItemDao" >
+
+ 	<insert id="insert"		parameterType="ritem">
+ 		INSERT INTO RITEM(
+			ritem_name,
+			ritem_price,
+			ritem_category,
+			ritem_desc,
+		)
+		VALUES(
+			#{ritem_name:VARCHAR},
+			#{ritem_price:INTEGER},
+			#{ritem_category:VARCHAR},
+			#{ritem_desc:VARCHAR},
+		)
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="ritem">
+	   	UPDATE RITEM
+		SET
+			ritem_name = #{ritem_name:VARCHAR},
+			ritem_price = #{ritem_price:INTEGER},
+			ritem_category = #{ritem_category:VARCHAR},
+			ritem_desc = #{ritem_desc:VARCHAR},
+			ritem_del_check = #{ritem_del_check:BOOLEAN}
+		WHERE ritem_no = #{ritem_no:INTEGER};
+   	</update>
+	<select id="search"		parameterType="int"  resultType="ritem">
+		SELECT * FROM RITEM WHERE ritem_no = #{ritem_no:INTEGER}
+	</select>
+	<select id="searchAll"	resultType="ritem">
+		SELECT * FROM RITEM 
+	</select>
+	
+</mapper>
+

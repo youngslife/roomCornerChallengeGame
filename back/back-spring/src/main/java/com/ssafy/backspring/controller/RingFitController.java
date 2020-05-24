@@ -1,3 +1,9 @@
+package com.ssafy.backspring.controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.backspring.util.Handler;
+
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 public class RingFitController{

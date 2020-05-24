@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.User;
+import com.ssafy.backspring.model.service.UserGameInfoService;
 import com.ssafy.backspring.model.service.UserService;
 import com.ssafy.backspring.util.Handler;
 
@@ -27,6 +28,8 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+	@Autowired
+	private UserGameInfoService ugi_service;
 	
 	private final Handler handler = Handler.getInstance();
 	
@@ -61,6 +64,7 @@ public class UserController {
         	return handler.handleFail("패스워드 에러", HttpStatus.FORBIDDEN);
         }
 		service.insert(user);
+		ugi_service.insert(user.getUser_no());
         return handler.handleSuccess("User 등록 성공");
     }
 	@ApiOperation("User 정보 수정하는 기능")
