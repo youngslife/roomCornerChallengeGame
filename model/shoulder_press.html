@@ -50,13 +50,16 @@
         }
     }
 
+    var check = 0
+
     async function loop(timestamp) {
-        console.log(timestamp)
-        await predict();
+        // console.log(timestamp)
+        check += 0.1
         webcam.update(); // update the webcam frame
-        // 예측 비동기 처리 
-        
-        window.requestAnimationFrame(loop);
+        await predict();
+        if(check <= 120){
+            window.requestAnimationFrame(loop);
+        }
     }
 
     var status = "up"
