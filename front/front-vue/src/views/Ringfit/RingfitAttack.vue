@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1>공격화면</h1>
-    <h3>{{ player.username }} hp : {{ pnowHp }}</h3>
-    <h3>{{ monster.name }} hp : {{ mnowHp }}</h3>
-    <q-btn :label="skills.first.name" @click="playerAttck(skills.first.name)"></q-btn>
-    <q-btn :label="skills.second.name" @click="playerAttck(skills.second.name)"></q-btn>
-    <q-btn :label="skills.third.name" @click="playerAttck(skills.third.name)"></q-btn>
+    <div style="text-align: center;">
+      <h3>{{ monster.name }} hp : {{ mnowHp }}</h3>
+      <img :src="mimageChange">
+      <p>{{ player.username }} hp : {{ pnowHp }}</p>
+    </div>
+    <div class="row skill-set">
+      <q-btn class="col-4" :label="skills.first.name" @click="playerAttck(skills.first.name)"></q-btn>
+      <q-btn class="col-4" :label="skills.second.name" @click="playerAttck(skills.second.name)"></q-btn>
+      <q-btn class="col-4" :label="skills.third.name" @click="playerAttck(skills.third.name)"></q-btn>
+    </div>
   </div>
 </template>
 
@@ -20,22 +24,26 @@ export default {
         combo: 0
       },
       monster: {
-        name: "피카츄",
+        name: "라이언",
         hp: 100,
-        strength: 5
+        strength: 5,
+        image: null
       },
       skills: {
         first: {
           name: "스쿼트",
-          strength: 10
+          strength: 10,
+          image: '',
         },
         second: {
           name: "런지",
-          strength: 20
+          strength: 20,
+          image: '',
         },
         third: {
           name: "마운틴 클라이머",
-          strength: 30
+          strength: 50,
+          image: '',
         }
       }
     };
@@ -76,15 +84,25 @@ export default {
       } else if (skillName == this.skills.third.name) {
         demage = this.skills.third.strength;
       }
+      this.monster.image = require("../../assets/ryan2.png")
       this.monster.hp -= demage;
-      if (this.monster.hp <= 0) {
-        this.monster.hp = 0;
-        alert(`${this.monster.name} 처치 완료`);
-        return;
+      if(this.monster.hp > 0) {
+        setTimeout(() => {
+          this.monster.image = require("../../assets/ryan1.png")
+        }, 300)
       }
-      setTimeout(() => {
-        this.monsterAttack();
-      }, 1000);
+      if (this.monster.hp <= 0) {
+        this.monster.image = require("../../assets/ryan3.png")
+        this.monster.hp = 0;
+        setTimeout(() => {
+          alert(`${this.monster.name} 처치 완료`);
+        }, 500)
+      } else {
+        setTimeout(() => {
+          alert(`${this.monster.name}의 공격`)
+          this.monsterAttack();
+        }, 1000);
+      }
     },
     monsterAttack() {
       console.log("attack from a monster");
@@ -101,7 +119,13 @@ export default {
     },
     pnowHp() {
       return this.player.hp;
+    },
+    mimageChange(){
+      return this.monster.image;
     }
+  },
+  mounted() {
+     this.monster.image = require("../../assets/ryan1.png")
   }
 };
 </script>
