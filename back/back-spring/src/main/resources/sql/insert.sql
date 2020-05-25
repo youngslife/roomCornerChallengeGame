@@ -4,10 +4,11 @@ INSERT INTO BOARD(
 board_location,
 board_type,
 board_subtype,
-board_title,
-board_category)
-VALUES('소식','공지사항'),('소식','이벤트'),('소식','패치노트'),
-('가이드','커뮤니티');
+board_title)
+VALUES
+(1,'소식','공지사항'),(1,'소식','이벤트'),
+(2,'소식','공지사항'),(2,'소식','이벤트'),(2,'소식','패치노트'),
+(2,'가이드','게임가이드'),(2,'가이드','운동가이드');
 
 INSERT INTO `pjt3db`.`post`
 (
