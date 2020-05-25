@@ -7,6 +7,8 @@
 		<typeAlias type="com.ssafy.backspring.model.dto.Post" alias="Post" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Comment" alias="Comment" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Image" alias="Image" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Faq" alias="Faq" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Qna" alias="Qna" />
 		<typeAlias type="com.ssafy.backspring.model.dto.UserGameInfo" alias="UserGameInfo" />
 		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RUserInfo" alias="RUserInfo" />
 		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RGameInfo" alias="RGameInfo" />
@@ -23,6 +25,8 @@
 		<mapper resource="query/post_query.xml" />
 		<mapper resource="query/comment_query.xml" />
 		<mapper resource="query/image_query.xml" />
+		<mapper resource="query/faq_query.xml" />
+		<mapper resource="query/qna_query.xml" />
 		<mapper resource="query/usergameinfo_query.xml" />
 		<mapper resource="query/ringfit/ruserinfo_query.xml" />
 		<mapper resource="query/ringfit/rgameinfo_query.xml" />

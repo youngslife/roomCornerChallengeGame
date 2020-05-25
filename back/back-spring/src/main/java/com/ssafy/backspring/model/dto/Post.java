@@ -15,6 +15,7 @@ public class Post implements Serializable{
 	private int post_no;
 	private int board_no;
 	private int user_no; //유저번호로 게시물 작성자 연동
+	private String post_type;
 	private String post_title;
 	private String post_content;
 	private int post_recommendation_num;

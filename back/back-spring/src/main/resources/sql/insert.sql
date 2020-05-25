@@ -1,9 +1,13 @@
 use pjt3db;
 
 INSERT INTO BOARD(
+board_location,
+board_type,
+board_subtype,
 board_title,
 board_category)
-VALUES('팁과 노하우','정보'),('공략','정보'),('방탈출','커뮤니티'),('마피아','커뮤니티');
+VALUES('소식','공지사항'),('소식','이벤트'),('소식','패치노트'),
+('가이드','커뮤니티');
 
 INSERT INTO `pjt3db`.`post`
 (
@@ -223,3 +227,49 @@ uginfo_experience = #{uginfo_experience:INTEGER},
 uginfo_golds = #{uginfo_golds:INTEGER},
 uginfo_active_score = #{uginfo_active_score:DOUBLE}
 WHERE uginfo_no = #{uginfo_no:INTEGER};
+
+
+INSERT INTO Qna(
+user_no,
+qna_category,
+qna_title,
+qna_content,
+qna_regtime)
+VALUES(
+#{user_no:INTEGER},
+#{qna_category:VARCHAR},
+#{qna_title:VARCHAR},
+#{qna_content:VARCHAR},
+CURRENT_TIMESTAMP()
+);
+
+UPDATE Qna
+SET
+qna_answer = #{qna_answer:VARCHAR},
+qna_answertime = CURRENT_TIMESTAMP()
+WHERE qna_no = #{qna_no:INTEGER};
+
+SELECT * FROM Qna;
+
+INSERT INTO Faq(
+faq_category,
+faq_question,
+faq_answer)
+VALUES(
+#{faq_category:VARCHAR},
+#{faq_question:VARCHAR},
+#{faq_answer:VARCHAR}
+);
+
+UPDATE Faq
+SET
+faq_category = #{faq_category:VARCHAR},
+faq_question = #{faq_question:VARCHAR},
+faq_answer = #{faq_answer:VARCHAR},
+faq_del_check = #{faq_del_check:BOOLEAN}
+WHERE faq_no = #{faq_no:INTEGER};
+
+SELECT * FROM Faq;
+SELECT * FROM Faq WHERE faq_no = #{faq_no:INTEGER};
+SELECT * FROM Faq WHERE faq_category = #{faq_category:VARCHAR};
+

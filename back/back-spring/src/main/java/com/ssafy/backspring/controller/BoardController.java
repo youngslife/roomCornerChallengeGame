@@ -58,7 +58,7 @@ public class BoardController {
         return handler.handleSuccess("Board 정보 수정 완료");
     }
 	@ApiOperation("특정 Board를 삭제하는 기능")
-    @DeleteMapping("/Board/delete")
+    @DeleteMapping("/Board/delete/{board_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int board_no) {
 		service.delete(board_no);
         return handler.handleSuccess("Board 정보 수정 완료");

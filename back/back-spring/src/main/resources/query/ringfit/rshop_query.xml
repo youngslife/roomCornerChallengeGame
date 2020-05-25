@@ -13,14 +13,15 @@
    	<update id="update"		parameterType="rshop">
 	   	UPDATE RSHOP
 		SET
-		rshop_name = #{rshop_name:VARCHAR}
+		rshop_name = #{rshop_name:VARCHAR},
+		rshop_del_check = #{rshop_del_check:BOOLEAN}
 		WHERE rshop_no = #{rshop_no:INTEGER}
    	</update>
 	<select id="search"		parameterType="int"  resultType="rshop">
-		SELECT * FROM RSHOP WHERE rshop_no = #{rshop_no}
+		SELECT * FROM RSHOP WHERE rshop_no = #{rshop_no} AND rshop_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="rshop">
-		SELECT * FROM RSHOP
+		SELECT * FROM RSHOP WHERE rshop_del_check = FALSE
 	</select>
 	
 </mapper>

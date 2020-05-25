@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.UserGameInfoDao" >
 
  	<insert id="insert"		parameterType="int">
- 		INSERT INTO UserGameInfo(user_no)VALUES(#{user_no:INTEGER});
+ 		INSERT INTO UserGameInfo(user_no) VALUES(#{user_no:INTEGER});
 	</insert> 
    	<delete id="delete" 	parameterType="int"> <!-- 유저 삭제될때 같이 되도록 할 것 -->
 	</delete>
@@ -16,14 +16,15 @@
 			uginfo_level = #{uginfo_level:INTEGER},
 			uginfo_experience = #{uginfo_experience:INTEGER},
 			uginfo_golds = #{uginfo_golds:INTEGER},
-			uginfo_active_score = #{uginfo_active_score:DOUBLE}
+			uginfo_active_score = #{uginfo_active_score:DOUBLE},
+			uginfo_del_check = #{uginfo_del_check:BOOLEAN}
 		WHERE uginfo_no = #{uginfo_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="usergameinfo">
-		SELECT * FROM USERGAMEINFO WHERE uginfo_no = #{uginfo_no:INTEGER}
+		SELECT * FROM USERGAMEINFO WHERE uginfo_no = #{uginfo_no:INTEGER} AND uginfo_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="usergameinfo">
-		SELECT * FROM USERGAMEINFO
+		SELECT * FROM USERGAMEINFO WHERE uginfo_del_check = FALSE
 	</select>
 	
 </mapper>

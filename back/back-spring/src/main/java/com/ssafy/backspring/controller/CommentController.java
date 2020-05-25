@@ -56,7 +56,7 @@ public class CommentController {
         return handler.handleSuccess("Comment 정보 수정 완료");
     }
 	@ApiOperation("특정 Comment를 삭제하는 기능")
-    @DeleteMapping("/Comment/delete")
+    @DeleteMapping("/Comment/delete/{cmt_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int cmt_no) {
 		service.delete(cmt_no);
         return handler.handleSuccess("Comment 정보 수정 완료");

@@ -56,7 +56,7 @@ public class PostController {
         return handler.handleSuccess("Post 정보 수정 완료");
     }
 	@ApiOperation("특정 Post를 삭제하는 기능")
-    @DeleteMapping("/Post/delete")
+    @DeleteMapping("/Post/delete//{post_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int post_no) {
 		service.delete(post_no);
         return handler.handleSuccess("Post 정보 수정 완료");

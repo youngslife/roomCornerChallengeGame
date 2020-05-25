@@ -31,10 +31,10 @@
 		WHERE ritem_no = #{ritem_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="ritem">
-		SELECT * FROM RITEM WHERE ritem_no = #{ritem_no:INTEGER}
+		SELECT * FROM RITEM WHERE ritem_no = #{ritem_no:INTEGER} AND ritem_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="ritem">
-		SELECT * FROM RITEM 
+		SELECT * FROM RITEM WHERE ritem_del_check = FALSE
 	</select>
 	
 </mapper>

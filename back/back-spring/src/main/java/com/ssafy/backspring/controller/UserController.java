@@ -74,7 +74,7 @@ public class UserController {
         return handler.handleSuccess("User 정보 수정 완료");
     }
 	@ApiOperation("특정 User를 삭제하는 기능")
-    @DeleteMapping("/User/delete")
+    @DeleteMapping("/User/delete/{user_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int user_no) {
 		service.delete(user_no);
         return handler.handleSuccess("User 정보 수정 완료");
@@ -83,19 +83,20 @@ public class UserController {
     @PostMapping("/User/login") 
     public ResponseEntity<Map<String, Object>> loginMembers(@RequestBody User user) {
         String email = user.getUser_email();
-        String pw = user.getUesr_password();
+//        String pw = user.getUesr_password();
         User checkUser = service.searchByEmail(email);
-        if (checkUser != null) {
-             String check_password_inDB = checkUser.getUesr_password();
-             String check_password_inUsers = service.sha256Encryption(pw);
-             if (check_password_inDB.equals(check_password_inUsers)) {
-            	 return handler.handleSuccess("로그인 성공");
-             }else {
-            	 return handler.handleFail("비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
-             }
-        } else {
-            return handler.handleFail("존재하지 않는 회원입니다.", HttpStatus.NOT_FOUND);
-        }
+//        if (checkUser != null) {
+//             String check_password_inDB = checkUser.getUesr_password();
+//             String check_password_inUsers = service.sha256Encryption(pw);
+//             if (check_password_inDB.equals(check_password_inUsers)) {
+//            	 return handler.handleSuccess("로그인 성공");
+//             }else {
+//            	 return handler.handleFail("비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
+//             }
+//        } else {
+//            return handler.handleFail("존재하지 않는 회원입니다.", HttpStatus.NOT_FOUND);
+//        }
+        return (checkUser != null)?handler.handleSuccess("로그인 성공"):handler.handleFail("로그인 실패", HttpStatus.NOT_FOUND);
     }
 
 
