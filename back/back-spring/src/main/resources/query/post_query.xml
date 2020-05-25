@@ -111,6 +111,17 @@
 			ON c.user_no = u.user_no) as cc ON p.post_no = cc.post_no
 		WHERE p.post_no = #{post_no:INTEGER} AND p.post_del_check = FALSE ORDER BY cc.cmt_no;
 	</select>
- 
+ 	<update id="addPostViews" parameterType="int">
+ 		UPDATE POST
+ 		SET
+ 			post_views_num = post_views_num + 1
+ 		WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE;
+ 	</update>
+ 	<update id="addPostRecommendation" parameterType="int">
+ 		UPDATE POST
+ 		SET
+ 			post_recommendation_num = post_recommendation_num + 1
+ 		WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE;
+ 	</update>
 </mapper>
 

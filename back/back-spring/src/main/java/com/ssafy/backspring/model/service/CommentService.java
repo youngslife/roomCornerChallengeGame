@@ -10,4 +10,5 @@ public interface CommentService {
 	public List<Comment> searchAll();
 	public void update(Comment cmt);
 	public void delete(int cmt_no);
+	public void addCmtRecommendation(int cmt_no);
 }

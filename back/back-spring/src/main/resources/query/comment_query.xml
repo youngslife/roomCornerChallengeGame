@@ -44,6 +44,11 @@
 		SELECT * FROM COMMENT
 		WHERE cmt_del_check=FALSE
 	</select>
-	
+	<update id="addCmtRecommendation" parameterType="int">
+ 		UPDATE POST
+ 		SET
+ 			cmt_recommendation_num = cmt_recommendation_num + 1
+ 		WHERE cmt_no = #{cmt_no:INTEGER} AND cmt_del_check = FALSE;
+ 	</update>
 </mapper>
 

@@ -65,7 +65,16 @@ public class PostController {
     @GetMapping("/Post/searchDetail/{post_no}")
     public ResponseEntity<Map<String, Object>> searchPostDetail(@PathVariable int post_no) {
         final Post post = service.searchPostDetail(post_no);
+        //조회수 증가
+        service.addPostViews(post.getPost_no());
         return handler.handleSuccess(post);
     }
+    
+//    @ApiOperation("특정 Post를 추천하는 기능")
+//    @PutMapping("/Post/add/{post_no}")
+//    public ResponseEntity<Map<String, Object>> addPostRecommendation(@PathVariable int post_no) {
+//        service.addPostRecommendation(post_no);
+//        return handler.handleSuccess("Post 추천 완료");
+//    }
 
 }
