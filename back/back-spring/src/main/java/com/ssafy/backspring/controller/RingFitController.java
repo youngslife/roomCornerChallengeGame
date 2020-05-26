@@ -1,18 +1,6 @@
 package com.ssafy.backspring.controller;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafy.backspring.model.dto.Post;
-import com.ssafy.backspring.model.service.ringfit.RUserInfoService;
-import com.ssafy.backspring.util.Handler;
-
-import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -31,7 +19,7 @@ public class RingFitController{
 //	@Autowired
 //	private RUserInfoService rui_service;
 	
-    private final Handler handler = Handler.getInstance();
+//    private final Handler handler = Handler.getInstance();
 //    @ApiOperation("유저별 스테이지 리스트 보여주는 기능")
     //스테이지 리스트 보여줄 때는 유저별로 스테이지 클리어했는지랑 플레이시간, 총점수 이런거 가져다주고
     //모든 스테이지를 가져다줘야하는데 유저의 게임정보들을 뒤져서 스테이지 클리어했는지 
