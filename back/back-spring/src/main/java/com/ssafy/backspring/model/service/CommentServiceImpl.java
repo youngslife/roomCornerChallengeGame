@@ -60,5 +60,14 @@ public class CommentServiceImpl implements CommentService {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void addCmtRecommendation(int cmt_no) {
+		try {
+			dao.addCmtRecommendation(cmt_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

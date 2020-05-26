@@ -30,8 +30,14 @@ public class PageMaker {
 	@Setter
 	private List<String> filters;// 태그필터링
 	@Getter
-	@Setter int target_no; //특정게시판 번호
-
+	@Setter 
+	int location;// 게시판 위치(홈,링피트,등등) 숫자로
+	@Getter
+	@Setter
+	String title;//게시판 제목(게임소식, 가이드 등등)
+	@Getter
+	@Setter
+	String subtitle;//게시판내 소제목(공지사항, 이벤트, 등등)
 	
 
 

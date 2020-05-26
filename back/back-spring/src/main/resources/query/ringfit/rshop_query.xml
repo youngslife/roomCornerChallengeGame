@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RShopDao" >
+
+ 	<insert id="insert"		parameterType="rshop">
+ 		INSERT INTO RSHOP(rshop_name) VALUES (#{rshop_name:VARCHAR})
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+   	
+	</delete>
+   	<update id="update"		parameterType="rshop">
+	   	UPDATE RSHOP
+		SET
+		rshop_name = #{rshop_name:VARCHAR},
+		rshop_del_check = #{rshop_del_check:BOOLEAN}
+		WHERE rshop_no = #{rshop_no:INTEGER}
+   	</update>
+	<select id="search"		parameterType="int"  resultType="rshop">
+		SELECT * FROM RSHOP WHERE rshop_no = #{rshop_no} AND rshop_del_check = FALSE
+	</select>
+	<select id="searchAll"	resultType="rshop">
+		SELECT * FROM RSHOP WHERE rshop_del_check = FALSE
+	</select>
+	
+</mapper>
+

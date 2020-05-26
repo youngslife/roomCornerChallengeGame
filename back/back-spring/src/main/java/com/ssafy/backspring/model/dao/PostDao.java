@@ -15,4 +15,6 @@ public interface PostDao {
 	public void update(Post post);
 	public void delete(int post_no);
 	public Post searchPostDetail(int post_no);
+	public void addPostViews(int post_no);
+	public void addPostRecommendation(int post_no);
 }
