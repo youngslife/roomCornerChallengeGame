@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.Board;
@@ -26,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 public class BoardController {
-
+	private static final int perPageNum = 10;
 	@Autowired
 	private BoardService service;
 	
@@ -58,7 +56,7 @@ public class BoardController {
         return handler.handleSuccess("Board 정보 수정 완료");
     }
 	@ApiOperation("특정 Board를 삭제하는 기능")
-    @DeleteMapping("/Board/delete")
+    @DeleteMapping("/Board/delete/{board_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int board_no) {
 		service.delete(board_no);
         return handler.handleSuccess("Board 정보 수정 완료");
@@ -68,6 +66,7 @@ public class BoardController {
     public ResponseEntity<Map<String, Object>> searchAllBoard(Page pageBean, @PathVariable int page_no) {
 		PageMaker pageMaker = new PageMaker();
 		pageBean.setPage(page_no);
+		pageBean.setPerPageNum(perPageNum);
 		pageMaker.setPageBean(pageBean);
 		pageMaker.setStartPage(pageBean.getPage());
 		pageMaker.setEndPage(pageMaker.getStartPage());
@@ -79,11 +78,44 @@ public class BoardController {
     public ResponseEntity<Map<String, Object>> searchTargetBoard(Page pageBean, @PathVariable int target_no, @PathVariable int page_no) {
 		PageMaker pageMaker = new PageMaker();
 		pageBean.setPage(page_no);
+		pageBean.setPerPageNum(perPageNum);
 		pageMaker.setPageBean(pageBean);
 		pageMaker.setStartPage(pageBean.getPage());
 		pageMaker.setEndPage(pageMaker.getStartPage());
 		pageMaker.setTarget_no(target_no);
 		List<Map<String, Object>> list = service.searchTargetBoard(pageMaker);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+    }
+	@ApiOperation("전체 게시판 제목, 작성자, 내용으로 검색하는 기능")
+    @GetMapping("/Board/searchAllBoardByOption/{page_no}/{searchOption}/{word}")
+    public ResponseEntity<Map<String, Object>> searchAllBoardByOption(Page pageBean, 
+    		@PathVariable int page_no, @PathVariable String searchOption, @PathVariable String word) {
+		PageMaker pageMaker = new PageMaker();
+		pageBean.setPage(page_no);
+		pageBean.setPerPageNum(perPageNum);
+		pageMaker.setPageBean(pageBean);
+		pageMaker.setStartPage(pageBean.getPage());
+		pageMaker.setEndPage(pageMaker.getStartPage());
+		pageMaker.setSearchOption(searchOption);
+		pageMaker.setWord(word);
+		List<Map<String, Object>> list = service.searchAllBoardByOption(pageMaker);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+    }
+	@ApiOperation("특정 게시판 제목, 작성자, 내용으로 검색하는 기능")
+    @GetMapping("/Board/searchTargetBoardByOption/{target_no}/{page_no}/{searchOption}/{word}")
+    public ResponseEntity<Map<String, Object>> searchTargetBoardByOption(Page pageBean, 
+    		@PathVariable int target_no, @PathVariable int page_no, 
+    		@PathVariable String searchOption, @PathVariable String word) {
+		PageMaker pageMaker = new PageMaker();
+		pageBean.setPage(page_no);
+		pageBean.setPerPageNum(perPageNum);
+		pageMaker.setPageBean(pageBean);
+		pageMaker.setStartPage(pageBean.getPage());
+		pageMaker.setEndPage(pageMaker.getStartPage());
+		pageMaker.setTarget_no(target_no);
+		pageMaker.setSearchOption(searchOption);
+		pageMaker.setWord(word);
+		List<Map<String, Object>> list = service.searchTargetBoardByOption(pageMaker);
 		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
     }
 }

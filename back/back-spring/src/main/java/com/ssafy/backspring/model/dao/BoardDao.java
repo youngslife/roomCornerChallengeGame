@@ -18,4 +18,6 @@ public interface BoardDao {
 	public void delete(int board_no);
 	public List<Map<String, Object>> searchAllBoard(PageMaker page);
 	public List<Map<String, Object>> searchTargetBoard(PageMaker page);
+	public List<Map<String, Object>> searchAllBoardByOption(PageMaker page);
+	public List<Map<String, Object>> searchTargetBoardByOption(PageMaker page);
 }

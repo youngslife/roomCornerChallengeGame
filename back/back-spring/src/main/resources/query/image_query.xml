@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ImageDao" >
+
+ 	<insert id="insert"		parameterType="image">
+	 	INSERT INTO IMAGE(
+			img_type,
+			img_type_no,
+			img_name,
+			img_path,
+			img_purpose,
+			img_extension)
+		VALUES(
+			#{img_type:VARCHAR},
+			#{img_type_no:INTEGER},
+			#{img_name:VARCHAR},
+			#{img_path:VARCHAR},
+			#{img_purpose:VARCHAR},
+			#{img_extension:VARCHAR}
+		);
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="image">
+	   	UPDATE IMAGE
+		SET
+			img_type = #{img_type:VARCHAR},
+			img_type_no= #{img_type_no:INTEGER},
+			img_name = #{img_name:VARCHAR},
+			img_path = #{img_path:VARCHAR},
+			img_purpose = #{img_purpose:VARCHAR},
+			img_extension = #{img_extension:VARCHAR},
+		    img_del_check = #{img_del_check:BOOLEAN}
+		WHERE img_no = #{img_no:INTEGER};
+   	</update>
+	<select id="search"		parameterType="int"  resultType="image">
+		SELECT * FROM IMAGE WHERE img_no = #{img_no:INTEGER} AND img_del_check = FALSE
+	</select>
+	<select id="searchAll"	resultType="image">
+		SELECT * FROM IMAGE WHERE img_del_check = FALSE
+	</select>
+	
+</mapper>
+

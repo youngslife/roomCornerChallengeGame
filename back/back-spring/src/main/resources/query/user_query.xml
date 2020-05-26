@@ -8,16 +8,16 @@
 	 	INSERT INTO USER(
 			user_email,
 			user_name,
-			uesr_password,
 			user_sex,
+			user_birthday,
 			user_age,
 			user_login_type
 		)
 		VALUES(
 			#{user_email:VARCHAR},
 			#{user_name:VARCHAR},
-			#{uesr_password:VARCHAR},
 			#{user_sex:INTEGER},
+			#{user_birthday:VARCHAR},
 			#{user_age:INTEGER},
 			#{user_login_type:INTEGER}
 		);
@@ -42,6 +42,7 @@
 			user_password 	= #{user_password:VARCHAR},
 			user_token		= #{user_token:VARCHAR},
 			user_sex 		= #{user_sex:INTEGER},
+			user_birthday	= #{user_birthday:VARCHAR},
 			user_age 		= #{user_age:INTEGER},		
 			user_grant 		= #{user_grant:VARCHAR},
 			user_lastlogin 	= CURRENT_TIMESTAMP(), 

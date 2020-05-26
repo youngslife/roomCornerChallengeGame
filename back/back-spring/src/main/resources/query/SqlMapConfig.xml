@@ -6,6 +6,17 @@
 		<typeAlias type="com.ssafy.backspring.model.dto.Board" alias="Board" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Post" alias="Post" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Comment" alias="Comment" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Image" alias="Image" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Faq" alias="Faq" />
+		<typeAlias type="com.ssafy.backspring.model.dto.Qna" alias="Qna" />
+		<typeAlias type="com.ssafy.backspring.model.dto.UserGameInfo" alias="UserGameInfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RUserInfo" alias="RUserInfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RGameInfo" alias="RGameInfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RStage" alias="RStage" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RMap" alias="RMap" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RMonster" alias="RMonster" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RItem" alias="RItem" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RShop" alias="RShop" />
 	</typeAliases>
 
 	<mappers>
@@ -13,5 +24,16 @@
 		<mapper resource="query/board_query.xml" />
 		<mapper resource="query/post_query.xml" />
 		<mapper resource="query/comment_query.xml" />
+		<mapper resource="query/image_query.xml" />
+		<mapper resource="query/faq_query.xml" />
+		<mapper resource="query/qna_query.xml" />
+		<mapper resource="query/usergameinfo_query.xml" />
+		<mapper resource="query/ringfit/ruserinfo_query.xml" />
+		<mapper resource="query/ringfit/rgameinfo_query.xml" />
+		<mapper resource="query/ringfit/rstage_query.xml" />
+		<mapper resource="query/ringfit/rmap_query.xml" />
+		<mapper resource="query/ringfit/rmonster_query.xml" />
+		<mapper resource="query/ringfit/ritem_query.xml" />
+		<mapper resource="query/ringfit/rshop_query.xml" />
 	</mappers>
 </configuration>
