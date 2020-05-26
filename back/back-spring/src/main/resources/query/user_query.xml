@@ -27,7 +27,7 @@
 		</association>
 	</resultMap>
  	<insert id="insert"		parameterType="user">
-	 	INSERT INTO USER(
+	 	INSERT INTO User(
 			user_email,
 			user_login_type
 		)
@@ -41,7 +41,7 @@
    		<!-- 
    		익명정보, 가명정보 도입할 것
    		유저성별, 나이 등 남기고 삭제되는 유저 뒤에 삭제유저숫자 추가
-   		UPDATE USER SET
+   		UPDATE User SET
    		user_name = "undefinedUser",
    		user_password = #{user_password},
    		user_token= #{user_token},
@@ -51,7 +51,7 @@
 	</delete>
 
    	<update id="update"		parameterType="user">
-   		UPDATE USER SET
+   		UPDATE User SET
 			user_name 		= #{user_name:VARCHAR},
 			user_token		= #{user_token:VARCHAR},
 			user_sex 		= #{user_sex:INTEGER},
@@ -66,7 +66,7 @@
 		SELECT
 		 *
 		FROM
-		 USER
+		 User
 		WHERE
 		 user_no = #{user_no}
 		 AND user_del_check = FALSE;
@@ -75,7 +75,7 @@
 		SELECT
 		 *
 		FROM
-		 USER
+		 User
 		WHERE
 		 user_del_check = FALSE;
 	</select>
@@ -84,7 +84,7 @@
 		SELECT 
 		 *
 		FROM 
-		 USER
+		 User
 		WHERE 
 		 user_email = #{user_email}
 		 AND user_del_check = FALSE;
@@ -108,12 +108,12 @@
 			ugi.uginfo_gold,
 			ugi.uginfo_active_score
 		FROM
-		USER u
+		User u
 		RIGHT JOIN 
-			(SELECT * FROM IMAGE
+			(SELECT * FROM Image
 			WHERE img_type = 'user_profile' AND img_type_no = #{user_no:INTEGER}) i
 		ON u.user_no = i.img_type_no
-		LEFT JOIN USERGAMEINFO ugi
+		LEFT JOIN Usergameinfo ugi
 		ON u.user_no = ugi.user_no
 		WHERE user_del_check = FALSE;
 	</select>

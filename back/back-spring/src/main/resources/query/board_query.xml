@@ -33,7 +33,7 @@
 	</resultMap>
 	
  	<insert id="insert"		parameterType="board">
-	 	INSERT INTO BOARD(
+	 	INSERT INTO Board(
 	 		board_location,
 	 		board_title,
 	 		board_subtitle)
@@ -51,10 +51,10 @@
    	</update>
 
 	<select id="search"		parameterType="int"  resultType="board">
-		SELECT * FROM BOARD WHERE board_no = #{board_no:INTEGER} AND board_del_check = FALSE
+		SELECT * FROM Board WHERE board_no = #{board_no:INTEGER} AND board_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="board">
-		SELECT * FROM BOARD WHERE board_del_check = FALSE
+		SELECT * FROM Board WHERE board_del_check = FALSE
 	</select>
 	
 	<select id="searchBoardTitle" parameterType="hashmap" resultMap="bpMap">
@@ -86,9 +86,9 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}) as bpu, 
@@ -125,9 +125,9 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}) as bpu,
@@ -182,9 +182,9 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}
@@ -222,9 +222,9 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}
