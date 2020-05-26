@@ -24,7 +24,9 @@
         v-bind:class="{ pauseMap: isPause }"
       ></div> -->
       <div class="col-9">
-        <Game />
+      <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
+        <Game v-if="!isMonster" />
+        <ringfit-attack v-if="isMonster" :useSkill="useSkill" />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
@@ -51,6 +53,7 @@
 
 <script>
 import WebCam from "../../components/WebCam";
+import RingfitAttack from "../Ringfit/RingfitAttack.vue"
 import Game from "@/components/Game";
 import { mapActions, mapState } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
@@ -60,6 +63,7 @@ export default {
     WebCam,
     QOverlay,
     Game,
+    RingfitAttack,
   },
   data() {
     return {
@@ -75,6 +79,8 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
+      isMonster: false,
+      useSkill: "",
     };
   },
   computed: {
@@ -139,6 +145,7 @@ export default {
       // const map = document.getElementById("map");
       if (status === "walk") {
         // 걷는 모션
+        this.useSkill = "walk"
         let arrowRight = new KeyboardEvent("keydown");
         Object.defineProperty(arrowRight, "keyCode", {
           get: () => 39,
@@ -146,6 +153,7 @@ export default {
         document.dispatchEvent(arrowRight);
         // map.style.webkitAnimationPlayState = "running";
       } else if (status === "jump") {
+        this.useSkill = "jump"
         let arrowUp = new KeyboardEvent("keydown");
         Object.defineProperty(arrowUp, "keyCode", {
           get: () => 38,
@@ -156,6 +164,13 @@ export default {
       } else if (status === "stand") {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
+      }
+    },
+    changeToAttack() {
+      if (this.isMonster == false) {
+        this.isMonster = true
+      } else if (this.isMonster == true) {
+        this.isMonster = false
       }
     },
   },

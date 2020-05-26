@@ -5,13 +5,12 @@ import firebase from "firebase";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/",
     name: "Login",
     component: () => import("../views/Login.vue"),
     beforeEnter: (to, from, next) => {
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function (user) {
         console.log(user);
         if (user) {
           next("/home");
@@ -31,7 +30,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/GameHome.vue"),
+      import( /* webpackChunkName: "about" */ "../views/GameHome.vue"),
   },
   {
     path: "/how",
@@ -68,7 +67,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // let requireAuth = to.matched.some((record) => record.meta.requireAuth);
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user || to.path === "/") {
       next();
     } else {
