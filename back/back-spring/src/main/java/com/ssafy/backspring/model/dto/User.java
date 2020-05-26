@@ -15,9 +15,9 @@ public class User implements Serializable{
 	private int user_no;
 	private String user_email;
 	private String user_name;
-	private String uesr_password;
 	private String user_token;
 	private int user_sex;
+	private String user_birthday;
 	private int user_age;
 	private String user_grant;
 	private int user_login_type;

@@ -1,5 +1,6 @@
 package com.ssafy.backspring.controller;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -59,10 +60,11 @@ public class UserController {
         	return handler.handleFail("이미 존재하는 아이디 입니다", HttpStatus.BAD_REQUEST);
         }
         //pw 암호화
-        user.setUesr_password(service.sha256Encryption(user.getUesr_password()));
-        if(user.getUesr_password()=="") {
-        	return handler.handleFail("패스워드 에러", HttpStatus.FORBIDDEN);
-        }
+//        user.setUesr_password(service.sha256Encryption(user.getUesr_password()));
+//        if(user.getUesr_password()=="") {
+//        	return handler.handleFail("패스워드 에러", HttpStatus.FORBIDDEN);
+//        }
+        
 		service.insert(user);
 		ugi_service.insert(user.getUser_no());
         return handler.handleSuccess("User 등록 성공");
@@ -83,21 +85,65 @@ public class UserController {
     @PostMapping("/User/login") 
     public ResponseEntity<Map<String, Object>> loginMembers(@RequestBody User user) {
         String email = user.getUser_email();
-//        String pw = user.getUesr_password();
         User checkUser = service.searchByEmail(email);
-//        if (checkUser != null) {
-//             String check_password_inDB = checkUser.getUesr_password();
-//             String check_password_inUsers = service.sha256Encryption(pw);
-//             if (check_password_inDB.equals(check_password_inUsers)) {
-//            	 return handler.handleSuccess("로그인 성공");
-//             }else {
-//            	 return handler.handleFail("비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
-//             }
-//        } else {
-//            return handler.handleFail("존재하지 않는 회원입니다.", HttpStatus.NOT_FOUND);
-//        }
         return (checkUser != null)?handler.handleSuccess("로그인 성공"):handler.handleFail("로그인 실패", HttpStatus.NOT_FOUND);
     }
+	/*
+	    월과 일을 같이 계산하기 위해서 월을 100 자리 일을 1자리로 수치화 해서 계산하는 방법입니다.
+		1월 2일 = 0102
+		11월 12일 = 1112
+		8월 9일 = 0809
+		current.get(Calender.Month)+1 하는 이유는 월이 1 ~ 12 가 아니라 0 ~ 11 값으로 나오기 때문입니다.
+	*/
+	public int getAge(int birthYear, int birthMonth, int birthDay){
 
+	        Calendar current = Calendar.getInstance();
+	        int currentYear  = current.get(Calendar.YEAR);
+	        int currentMonth = current.get(Calendar.MONTH) + 1;
+	        int currentDay   = current.get(Calendar.DAY_OF_MONTH);
+	       
+	        int age = currentYear - birthYear;
+	        // 생일 안 지난 경우 -1
+	        if (birthMonth * 100 + birthDay > currentMonth * 100 + currentDay)  age--;
+	       
+	        return age;
+
+	}
+	@ApiOperation("User 프로필을 수정하는 기능")
+    @PutMapping("/User/updateProfile")
+    public ResponseEntity<Map<String, Object>> updateProfile(User user) {
+		//닉네임,성별,생년월일,이미지을 수정할 수 있다.
+		
+		if(user.getUser_birthday()!=null) {
+			String[] birth = user.getUser_birthday().split("-");
+	        user.setUser_age(getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+		}
+		service.update(user);
+        return handler.handleSuccess("User 정보 수정 완료");
+    }
+	
 
 }
+
+//String pw = user.getUesr_password();
+//if (checkUser != null) {
+//String check_password_inDB = checkUser.getUesr_password();
+//String check_password_inUsers = service.sha256Encryption(pw);
+//if (check_password_inDB.equals(check_password_inUsers)) {
+//return handler.handleSuccess("로그인 성공");
+//}else {
+//return handler.handleFail("비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
+//}
+//} else {
+//return handler.handleFail("존재하지 않는 회원입니다.", HttpStatus.NOT_FOUND);
+//}
+
+
+//Calendar birthdayCalendar = Calendar.getInstance();
+//Calendar currentCalendar = Calendar.getInstance(); //Now
+//
+//birthdayCalendar.set(birthYear, birthMonth, birthDay); //Birthday
+//
+//if(birthdayCalendar.compareTo(currentCalendar) > 0){
+//    age--;
+//}
