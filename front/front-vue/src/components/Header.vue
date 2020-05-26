@@ -7,7 +7,10 @@
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <a href="/"> <h3>방구석 챌린지</h3></a>
+        <img
+          :src="require('../assets/logo.png')"
+          onclick="location.href ='/'"
+        />
       </div>
       <div class="col text-right text-weight-bold">
         <button class="button button1" onclick="location.href ='signin'">
@@ -21,8 +24,8 @@
     <q-separator />
   </div>
 </template>
-
 <script>
+import { mapActions } from "vuex";
 const menuList = [
   {
     icon: "inbox",
@@ -61,7 +64,6 @@ const menuList = [
     separator: false
   }
 ];
-import { mapActions } from "vuex";
 export default {
   data() {
     return {

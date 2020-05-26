@@ -1,6 +1,6 @@
 <template>
   <div>
-      <q-carousel
+    <q-carousel
       animated
       v-model="slide"
       infinite
@@ -52,21 +52,21 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-   
-      <router-view></router-view>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-     data() {
+  data() {
     return {
       slide: "first",
       menus: [
+        { name: "소식", rink: "/fitness/info" },
         { name: "가이드", rink: "/fitness/guide" },
         { name: "랭킹", rink: "/fitness/rank" },
-        { name:"커뮤니티",rink:"/fitness/community"},
-        { name: "etc", rink: "/fitness" }
+        { name: "커뮤니티", rink: "/fitness/community" }
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
@@ -78,8 +78,7 @@ export default {
   },
   methods: {},
   computed: {}
-
-}
+};
 </script>
 
 <style>

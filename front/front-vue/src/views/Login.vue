@@ -24,27 +24,54 @@
           <q-tab-panels v-model="tab" animated style="height:500px">
             <q-tab-panel name="bg">
               <div class="row justify-center " style="margin-top:50px;">
-                <q-input type="text" label="id" style="width:80%"  />
-                <q-input type="text" label="pw" style="width:80%; margin-top:20px;"  />
-                <q-btn color="primary" icon="check" label="방구석 ID로 로그인" style="width:80%; margin-top:50px;" />
+                <q-input type="text" label="id" style="width:80%" />
+                <q-input
+                  type="text"
+                  label="pw"
+                  style="width:80%; margin-top:20px;"
+                />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                />
               </div>
-              <q-separator  style="margin-top:50px;" />
+              <q-separator style="margin-top:50px;" />
               <div class="row justify-around" style="margin-top:50px;">
-              <q-btn color="primary" icon="check" label="방구석ID 찾기" />
-              <q-btn color="primary" icon="check" label="비밀번호 찾기" />
-              <q-btn color="primary" icon="check" label="방구석 회원가입" />
-              
+                <q-btn color="primary" icon="check" label="방구석ID 찾기" />
+                <q-btn color="primary" icon="check" label="비밀번호 찾기" />
+                <q-btn color="primary" icon="check" label="방구석 회원가입" />
               </div>
             </q-tab-panel>
 
             <q-tab-panel name="another">
-            <div class="row justify-center" style="margin-top:20px;">
-              <q-btn color="primary" icon="check" label="방구석 ID로 로그인" style="width:80%; margin-top:50px;" />
-              <q-btn color="primary" icon="check" label="방구석 ID로 로그인" style="width:80%; margin-top:50px;" />
-              <q-btn color="primary" icon="check" label="방구석 ID로 로그인" style="width:80%; margin-top:50px;" />
-              <q-btn color="primary" icon="check" label="방구석 ID로 로그인" style="width:80%; margin-top:50px;" />
-              
-            </div>
+              <div class="row justify-center" style="margin-top:20px;">
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                />
+              </div>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -54,8 +81,6 @@
 </template>
 
 <script>
-// import firebase from "firebase";
-
 export default {
   components: {},
   data() {
@@ -63,33 +88,8 @@ export default {
       tab: "bg"
     };
   },
-  mounted() {
-    // this.users = firebase.database().ref("users");
-  },
-  methods: {
-    //   googleLogin() {
-    //     console.log("Google Login");
-    //     var self = this;
-    //     firebase
-    //       .auth()
-    //       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    //       .then(function(result) {
-    //         var token = result.credential.accessToken;
-    //         console.log(token);
-    //         localStorage.setItem("accessToken", token);
-    //         self.$store.dispatch("user/setCurrentUser", result.user);
-    //       })
-    //       .catch(function(error) {
-    //         var errorMessage = error.message;
-    //         alert(errorMessage);
-    //       });
-    //   },
-    //   isLoginButton: function(check, slide) {
-    //     console.log(typeof slide);
-    //     this.isLogin = check;
-    //     this.menuSlide = String(slide);
-    //   }
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 

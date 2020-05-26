@@ -7,7 +7,7 @@ const getters = {
 };
 
 const actions = {
-   changeIsDrawer({ commit }) {
+  changeIsDrawer({ commit }) {
     commit("setIsDrawer");
   }
 };
@@ -25,4 +25,3 @@ export default {
   mutations,
   actions
 };
-

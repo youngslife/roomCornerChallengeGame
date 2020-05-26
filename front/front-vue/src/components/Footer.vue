@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top:20px;">
+  <div style="margin-top:100px;">
     <q-separator spaced />
     <q-bar class="bg-white" style="height:100px;">
       <div class="col text-center text-weight-bold">
@@ -10,9 +10,7 @@
 </template>
 
 <script>
-export default {
-  
-};
+export default {};
 </script>
 
 <style>

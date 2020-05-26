@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div class="row" style="background:gray;">
+    <div class="row" style="background:gray;">
       <div class="col-4 flex flex-center">
         <q-btn
           color="primary"
@@ -123,15 +123,32 @@
         </q-card>
       </div>
     </div>
+    <div class="row justify-around" style="margin-top:20px;">
+      <div class="col-3 "></div>
+      <div class="col-6 text-center"><h2>링피트 랭킹</h2></div>
+      <div class="col-3 text-center">
+        <q-btn color="primary" icon="add" style="margin-top:50px" />
+      </div>
+    </div>
+    <div class="row justify-center">
+      <div class="col-10 row justify-around">
+        <q-card v-for="index in 4" class="my-card col-2" :key="index">
+          <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+          <q-card-section>
+            <div class="text-h6">Our Changing Planet</div>
+            <div class="text-subtitle2">by John Doe</div>
+          </q-card-section>
+          <q-card-section>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
- 
-};
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
