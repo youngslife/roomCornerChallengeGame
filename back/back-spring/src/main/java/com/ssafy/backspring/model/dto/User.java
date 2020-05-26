@@ -25,6 +25,7 @@ public class User implements Serializable{
 	private String user_lastlogin;
 	private String user_regtime;
 	private Image user_profile; //이미지 추가
+	private UserGameInfo user_gameinfo;
 }
 /*
 CREATE TABLE USER(

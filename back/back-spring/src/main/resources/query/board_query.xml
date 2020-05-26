@@ -57,7 +57,7 @@
 		SELECT * FROM BOARD WHERE board_del_check = FALSE
 	</select>
 	
-	<select id="searchAllBoard" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardTitle" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -89,12 +89,14 @@
 					FROM BOARD b
 					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
 					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE) as bpu, 
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}) as bpu, 
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
-		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+		WHERE RESULT.rnum >#{startPage} AND RESULT.rnum <= #{endPage}]]>
 	</select>
-	<select id="searchAllBoardByOption" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -126,7 +128,9 @@
 					FROM BOARD b
 					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
 					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE) as bpu, 
+					WHERE b.board_del_check=FALSE
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
@@ -149,7 +153,7 @@
 			</when>
 		</choose>
 	</select>
-	<select id="searchTargetBoard" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardSubTitle" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -181,12 +185,15 @@
 					FROM BOARD b
 					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
 					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE AND b.board_no =#{target_no}) as bpu, 
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}
+						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
 	</select>
-	<select id="searchTargetBoardByOption" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardSubTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -218,7 +225,10 @@
 					FROM BOARD b
 					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
 					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE AND b.board_no =#{target_no}) as bpu, 
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}
+						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>

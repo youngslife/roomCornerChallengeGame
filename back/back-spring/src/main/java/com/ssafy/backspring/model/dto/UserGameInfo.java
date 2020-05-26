@@ -20,7 +20,7 @@ public class UserGameInfo implements Serializable{
 	private int user_no;
 	private int uginfo_level;
 	private int uginfo_experience;
-	private int uginfo_golds;//링피트에서 쓰는거로 해두고 나중에 추가해야하거나 따로 떼어내는 건 필요하면
+	private int uginfo_gold;//링피트에서 쓰는거로 해두고 나중에 추가해야하거나 따로 떼어내는 건 필요하면
 	private double uginfo_active_score; //게임별로 하면 유저 활동지수를 나타내는 유의미한 통계를 위한 자료로 사용될 수 있지만 일단 게시판용으로만
 	private boolean uginfo_del_check;
 	private List<RUserInfo> uginfo_ruserinfo;

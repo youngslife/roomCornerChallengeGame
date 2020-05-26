@@ -38,8 +38,8 @@ public class FileUploadController {
     }
     
     @PostMapping("/uploadFile")
-    public FileUploadResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = service.storeFile(file);
+    public FileUploadResponse uploadFile(@RequestParam("file") MultipartFile file, String distingishString) {
+        String fileName = service.storeFile(file, distingishString);
         
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                                 .path("/downloadFile/")
@@ -50,10 +50,11 @@ public class FileUploadController {
     }
     
     @PostMapping("/uploadMultipleFiles")
-    public List<FileUploadResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
+    public List<FileUploadResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, String distingishString){
+    	
         return Arrays.asList(files)
                 .stream()
-                .map(file -> uploadFile(file))
+                .map(file -> uploadFile(file, distingishString))
                 .collect(Collectors.toList());
     }
     

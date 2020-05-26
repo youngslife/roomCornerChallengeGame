@@ -37,8 +37,9 @@ public class FileUploadDownloadService {
             throw new FileUploadException("파일을 업로드할 디렉토리를 생성하지 못했습니다.", e);
         }
     }
-    public String storeFile(MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    public String storeFile(MultipartFile file, String distingishString) {
+    	if(distingishString==null) distingishString="";
+        String fileName = distingishString+"_"+StringUtils.cleanPath(file.getOriginalFilename());
         
         try {
             // 파일명에 부적합 문자가 있는지 확인한다.
@@ -46,7 +47,6 @@ public class FileUploadDownloadService {
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
             
             Path targetLocation = this.fileLocation.resolve(fileName);
-            
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             
             return fileName;

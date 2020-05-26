@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.UserGameInfoDao" >
 
  	<insert id="insert"		parameterType="int">
- 		INSERT INTO UserGameInfo(user_no) VALUES(#{user_no:INTEGER});
+ 		INSERT INTO UserGameInfo(user_no) VALUES (#{user_no:INTEGER});
 	</insert> 
    	<delete id="delete" 	parameterType="int"> <!-- 유저 삭제될때 같이 되도록 할 것 -->
 	</delete>

@@ -16,8 +16,8 @@ public interface BoardDao {
 	public List<Board> searchAll();
 	public void update(Board board);
 	public void delete(int board_no);
-	public List<Map<String, Object>> searchAllBoard(PageMaker page);
-	public List<Map<String, Object>> searchTargetBoard(PageMaker page);
-	public List<Map<String, Object>> searchAllBoardByOption(PageMaker page);
-	public List<Map<String, Object>> searchTargetBoardByOption(PageMaker page);
+	public List<Map<String, Object>> searchBoardTitle(PageMaker page);
+	public List<Map<String, Object>> searchBoardSubTitle(PageMaker page);
+	public List<Map<String, Object>> searchBoardTitleByOption(PageMaker page);
+	public List<Map<String, Object>> searchBoardSubTitleByOption(PageMaker page);
 }

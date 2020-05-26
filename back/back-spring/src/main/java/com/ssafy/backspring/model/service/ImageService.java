@@ -10,4 +10,5 @@ public interface ImageService {
 	public List<Image> searchAll();
 	public void update(Image img);
 	public void delete(int img_no);
+	public Image searchForUserProfile(int user_no);
 }

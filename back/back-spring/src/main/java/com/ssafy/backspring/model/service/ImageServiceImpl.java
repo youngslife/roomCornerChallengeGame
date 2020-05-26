@@ -60,4 +60,14 @@ public class ImageServiceImpl implements ImageService {
 		}
 	}
 
+	@Override
+	public Image searchForUserProfile(int user_no) {
+		try {
+			return dao.searchForUserProfile(user_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

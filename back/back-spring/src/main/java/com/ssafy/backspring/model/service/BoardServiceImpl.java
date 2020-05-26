@@ -62,37 +62,42 @@ public class BoardServiceImpl implements BoardService {
 			e.printStackTrace();
 		}
 	}
+	
+
 	@Override
-	public List<Map<String, Object>> searchAllBoard(PageMaker page){
+	public List<Map<String, Object>> searchBoardTitle(PageMaker page) {
 		try {
-			return dao.searchAllBoard(page);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	@Override
-	public List<Map<String, Object>> searchTargetBoard(PageMaker page){
-		try {
-			return dao.searchTargetBoard(page);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	@Override
-	public List<Map<String, Object>> searchAllBoardByOption(PageMaker page){
-		try {
-			return dao.searchAllBoardByOption(page);
+			return dao.searchBoardTitle(page);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 	@Override
-	public List<Map<String, Object>> searchTargetBoardByOption(PageMaker page){
+	public List<Map<String, Object>> searchBoardSubTitle(PageMaker page) {
 		try {
-			return dao.searchTargetBoardByOption(page);
+			return dao.searchBoardSubTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchBoardTitleByOption(PageMaker page) {
+		try {
+			return dao.searchBoardTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchBoardSubTitleByOption(PageMaker page) {
+		try {
+			return dao.searchBoardSubTitleByOption(page);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

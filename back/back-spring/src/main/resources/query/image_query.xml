@@ -41,6 +41,9 @@
 	<select id="searchAll"	resultType="image">
 		SELECT * FROM IMAGE WHERE img_del_check = FALSE
 	</select>
-	
+	<select id="searchForUserProfile" parameterType="int" resultType="image">
+		SELECT * FROM IMAGE 
+		WHERE img_type = 'user_profile' AND img_type_no = #{user_no:INTEGER} AND img_del_check = FALSE
+	</select>
 </mapper>
 
