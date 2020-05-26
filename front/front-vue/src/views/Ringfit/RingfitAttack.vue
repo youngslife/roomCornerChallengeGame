@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="text-align: center;">
+      <h3>{{ useSkill }}</h3>
       <h3>{{ monster.name }} hp : {{ mnowHp }}</h3>
       <img :src="mimageChange">
       <p>{{ player.username }} hp : {{ pnowHp }}</p>
@@ -31,7 +32,7 @@ export default {
       },
       skills: {
         first: {
-          name: "스쿼트",
+          name: "walk",
           strength: 10,
           image: '',
         },
@@ -41,12 +42,15 @@ export default {
           image: '',
         },
         third: {
-          name: "마운틴 클라이머",
+          name: "jump",
           strength: 50,
           image: '',
         }
       }
     };
+  },
+  props: {
+    useSkill: String
   },
   // 후에 component로 쓰게 된다면 prop 이용
   // props: {
@@ -122,6 +126,12 @@ export default {
     },
     mimageChange(){
       return this.monster.image;
+    },
+  },
+  watch: {
+    useSkill: function() {
+      console.log(this.useSkill)
+      this.playerAttck(this.useSkill)
     }
   },
   mounted() {
