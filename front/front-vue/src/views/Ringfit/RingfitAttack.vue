@@ -98,14 +98,14 @@ export default {
       if (this.monster.hp <= 0) {
         this.monster.image = require("../../assets/ryan3.png")
         this.monster.hp = 0;
-        setTimeout(() => {
-          alert(`${this.monster.name} 처치 완료`);
-        }, 500)
+        // setTimeout(() => {
+        //   alert(`${this.monster.name} 처치 완료`);
+        // }, 500)
       } else {
-        setTimeout(() => {
-          alert(`${this.monster.name}의 공격`)
-          this.monsterAttack();
-        }, 1000);
+        // setTimeout(() => {
+        //   alert(`${this.monster.name}의 공격`)
+        //   this.monsterAttack();
+        // }, 1000);
       }
     },
     monsterAttack() {
@@ -113,7 +113,7 @@ export default {
       this.player.hp -= this.monster.strength;
       if (this.player.hp <= 0) {
         this.player.hp = 0;
-        alert(`${this.player.username}(이)가 더이상 공격할 수 없습니다.`);
+        // alert(`${this.player.username}(이)가 더이상 공격할 수 없습니다.`);
       }
     }
   },

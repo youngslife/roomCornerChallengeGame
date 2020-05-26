@@ -39,12 +39,22 @@
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
           <web-cam
-            :url="url"
+            v-if="!isMonster"
+            :url="changeUrl"
             :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
           ></web-cam>
+          <squat-cam
+            v-if="isMonster"
+            :url="changeUrl"
+            :stage="stage"
+            :width="window.width"
+            :height="window.height"
+            @child="jump"
+          >
+          </squat-cam>
         </div>
       </div>
     </div>
@@ -53,6 +63,7 @@
 
 <script>
 import WebCam from "../../components/WebCam";
+import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../Ringfit/RingfitAttack.vue"
 import Game from "@/components/Game";
 import { mapActions, mapState } from "vuex";
@@ -60,6 +71,7 @@ import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
   components: {
+    SquatCam,
     WebCam,
     QOverlay,
     Game,
@@ -67,8 +79,7 @@ export default {
   },
   data() {
     return {
-      url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+      url: "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       stage: "",
       window: {
         width: 0,
@@ -91,11 +102,17 @@ export default {
       // minute: (state) => state.minute,
       // second: (state) => state.second,
     }),
+    changeUrl() {
+      console.log(this.url)
+      console.log(this.isMonster)
+      return this.url
+    }
   },
   async mounted() {
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
+    // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
@@ -168,9 +185,12 @@ export default {
     },
     changeToAttack() {
       if (this.isMonster == false) {
+        this.url = "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/"
         this.isMonster = true
+        
       } else if (this.isMonster == true) {
         this.isMonster = false
+        this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
       }
     },
   },
