@@ -10,25 +10,25 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true,
+      required: true
     },
     stage: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       average: 0,
       startTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       endTime: {
         type: "",
-        time: 0,
+        time: 0
       },
-      befAction: "",
+      befAction: ""
     };
   },
   computed: {
@@ -50,7 +50,7 @@ export default {
             : "stand"
           : "None";
       return test2;
-    },
+    }
   },
   mounted() {
     this.action(0);
@@ -67,7 +67,7 @@ export default {
       setTimeout(() => {
         this.action(time + 100);
       }, 100);
-    },
-  },
+    }
+  }
 };
 </script>

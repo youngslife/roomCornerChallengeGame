@@ -21,30 +21,30 @@ export default {
   props: {
     url: {
       type: String,
-      required: true,
+      required: true
     },
     stage: {
       type: String,
-      required: true,
+      required: true
     },
     height: {
       type: Number,
-      required: true,
+      required: true
     },
     width: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AllPredict,
-    BestPredict,
+    BestPredict
   },
   data() {
     return {
       model: null,
       webcam: null,
-      predictions: [],
+      predictions: []
     };
   },
   async mounted() {
@@ -93,7 +93,7 @@ export default {
     },
     test(isJump) {
       this.$emit("child", isJump);
-    },
-  },
+    }
+  }
 };
 </script>

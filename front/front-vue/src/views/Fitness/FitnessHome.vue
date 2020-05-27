@@ -149,12 +149,11 @@
 
 <script>
 export default {
-    data() {
+  data() {
     return {
-     
       slide2: "tv"
     };
-  },
+  }
 };
 </script>
 

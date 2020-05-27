@@ -24,6 +24,7 @@ const routes = [
     name: "mypage",
     component: () => import("../views/MyPage.vue")
   },
+  //피트니스 게임
   {
     path: "/fitness",
     component: () => import("../views/Fitness/Fitness.vue"),
@@ -54,11 +55,6 @@ const routes = [
         component: () => import("../views/Fitness/FitnessInfo.vue")
       }
     ]
-  },
-  {
-    path: "/boardCreate",
-    name: "boardCreate",
-    component: () => import("../views/Board/BoardCreate.vue")
   },
   {
     path: "/game/RingFit",

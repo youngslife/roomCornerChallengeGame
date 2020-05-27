@@ -2,33 +2,40 @@ import fireService from "../../api/FirebaseService";
 import UserService from "../../api/UserService";
 
 import router from "../../router";
-const state = { user: {} };
+const state = { user: {}, tempEmail: "", tempEmailType: 0 };
 
 const getters = {};
 
 const actions = {
   postSignUp: (store, payload) => {
-    //네이버는 아니야
-    var signUpCheck = UserService.signUp(payload.user);
-
-    if (payload.status) {
-      if (signUpCheck) {
-        fireService
-          .signUpWithDefault(payload.user.mem_email, payload.user.mem_password)
-          .then(check => {
-            if (check) router.push("/login");
-          });
+    UserService.insertUser(payload.user).then(signUpCheck => {
+      if (state.tempEmailType == 0) {
+        if (signUpCheck) {
+          fireService
+            .signUpWithDefault(payload.user.user_email, payload.user_password)
+            .then(check => {
+              if (check) router.push("/login");
+            });
+          store.commit("signUpSubEmail", { email: "", type: 0 });
+        } else {
+          alert("중복된 아이디가 존재합니다. 아이디 바꿔주세요");
+        }
       } else {
-        if (signUpCheck) router.push("/login");
+        if (signUpCheck) {
+          alert("회원가입 완료");
+          router.push("/login");
+        } else {
+          alert("에러");
+        }
       }
-    }
+    });
   },
   postLogIn: (store, payLoad) => {
     fireService
       .loginWithDefault(payLoad.user_email, payLoad.user_pw)
       .then(check => {
         if (check) {
-          UserService.LogIn(payLoad.user_email).then(result => {
+          UserService.login(payLoad.user_email).then(result => {
             store.commit("postLogIn", { user: result });
           });
           router.push("/");
@@ -37,14 +44,15 @@ const actions = {
         }
       });
   },
-  postGoogleLogIn: (store, payLoad) => {
+  postGoogleLogIn: store => {
     fireService
-      .loginWithGoogle(payLoad.user_email, payLoad.user_pw)
+      .loginWithGoogle()
       .then(async response => {
-        await UserService.LogIn(response.user.email).then(Response => {
-          if (Response.status != undefined && !Response.status) {
-            store.commit("signUpSubEmail", { email: Response.email });
-            router.push("/signup");
+        let email = response.user.email;
+        await UserService.login(email).then(Response => {
+          if (Response == false) {
+            store.commit("signUpSubEmail", { email: email, type: 1 });
+            router.push("/signin");
           } else {
             store.commit("postLogIn", { user: Response });
             router.push("/");
@@ -52,27 +60,6 @@ const actions = {
         });
       })
       .catch(exp => alert("로그인 실패" + exp));
-    //뒤에 우리디비에서 로그인 요청
-  },
-  postGitHubLogIn: (store, payLoad) => {
-    fireService
-      .loginWithGitHub(payLoad.user_email, payLoad.user_pw)
-      .then(async response => {
-        await UserService.LogIn(response.user.email)
-          .then(Response => {
-            if (Response.status != undefined && !Response.status) {
-              store.commit("signUpSubEmail", { email: Response.email });
-              router.push("/signup");
-            } else {
-              store.commit("postLogIn", { user: Response });
-              router.push("/");
-            }
-          })
-          .catch(() => {
-            alert("이미 가입된 아이디 이거나 로그인에 실패하셧습니다.");
-          });
-      })
-      .catch(exp => alert("로그인 실패 " + exp));
   },
   changeDeafultPw: (store, payLoad) => {
     fireService.resetPw(payLoad.email);
@@ -82,6 +69,7 @@ const actions = {
 const mutations = {
   signUpSubEmail(state, payLoad) {
     state.tempEmail = payLoad.email;
+    state.tempEmailType = payLoad.type;
   },
   postLogIn(state, payLoad) {
     state.user = payLoad.user;

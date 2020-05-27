@@ -24,17 +24,27 @@
           <q-tab-panels v-model="tab" animated style="height:500px">
             <q-tab-panel name="bg">
               <div class="row justify-center " style="margin-top:50px;">
-                <q-input type="text" label="id" style="width:80%" />
                 <q-input
                   type="text"
-                  label="pw"
-                  style="width:80%; margin-top:20px;"
+                  label="email"
+                  style="width:80%"
+                  v-model="email"
+                />
+                <q-input
+                  class="col-10"
+                  clearable
+                  v-model="pw"
+                  label="비밀번호"
+                  :type="isPwd ? 'password' : 'text'"
+                  hint
+                  style="width:80%"
                 />
                 <q-btn
                   color="primary"
                   icon="check"
                   label="방구석 ID로 로그인"
                   style="width:80%; margin-top:50px;"
+                  @click="DefaultLogin()"
                 />
               </div>
               <q-separator style="margin-top:50px;" />
@@ -44,18 +54,8 @@
                 <q-btn color="primary" icon="check" label="방구석 회원가입" />
               </div>
             </q-tab-panel>
-
             <q-tab-panel name="another">
               <div class="row justify-center" style="margin-top:20px;">
-                <q-btn
-                  icon="img:https://image.flaticon.com/icons/svg/25/25231.svg"
-                  size="md"
-                  style="height: 50px"
-                  class="full-width"
-                  outline
-                  @click="GithubLogin()"
-                  label="깃허브 아이디로 로그인"
-                />
                 <q-btn
                   icon="img:https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                   size="md"
@@ -79,23 +79,22 @@ export default {
   components: {},
   data() {
     return {
-      tab: "bg"
+      tab: "bg",
+      email: "",
+      pw: "",
+      isPwd: true
     };
   },
   mounted() {},
   methods: {
-    GithubLogin() {
-      this.$store.dispatch("user/postGitHubLogIn", {
+    DefaultLogin() {
+      this.$store.dispatch("user/postLogIn", {
         user_email: this.email,
-        user_pw: this.password
+        user_pw: this.pw
       });
     },
     GoogleLogin() {
-      this.$store.dispatch("user/postGoogleLogIn", {
-        user_email: this.email,
-        user_pw: this.password
-      });
-      this.$router.push("/");
+      this.$store.dispatch("user/postGoogleLogIn");
     }
   }
 };

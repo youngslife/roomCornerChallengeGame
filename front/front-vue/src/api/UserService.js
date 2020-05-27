@@ -1,45 +1,62 @@
 import Api from "./Api";
 
 class UserService {
-  async signUp(user) {
-    return await Api.post("/Members/insert", user)
+  //전체 유저 리스트
+  async getAllUser() {
+    return await Api.get("/User/searchAll")
+      .then(Response => {
+        return Response;
+      })
+      .catch(exp => {
+        console.log("Error getAllUser : " + exp);
+        return {};
+      });
+  }
+  // 유저 넘버(키)를 이용한 유저 검색
+  async getUserFromNo(userNo) {
+    return await Api.get(`/User/search/${userNo}`)
+      .then(Response => {
+        return Response;
+      })
+      .catch(exp => {
+        console.log("Error getUserFromNo : " + exp);
+        return {};
+      });
+  }
+  // 유저 회원 가입
+  async insertUser(user) {
+    return await Api.post("/User/insert", user)
       .then(() => {
-        alert("회원가입 성공");
         return true;
       })
       .catch(exp => {
-        alert("회원가입 실패 " + exp);
+        console.log("Error insertUser : " + exp);
         return false;
       });
   }
-
-  LogIn(email) {
-    return Api.post("/Members/login", {
-      mem_email: email
-    })
-      .then(response => {
-        return response.data.data;
+  //유저 로그인
+  async login(email) {
+    return await Api.post("/User/login", { email: email })
+      .then(Response => {
+        console.log(Response);
+        return Response;
       })
-      .catch(error => {
-        if (error.response.status === 404) {
-          return { status: false, email: email };
-        }
+      .catch(exp => {
+        console.log("Error login : " + exp);
+        return false;
       });
   }
-
-  updateUser(user) {
-    return Api.put("/Members/update", user)
-      .then(res => {
-        return res.data;
+  //유저 정보 수정
+  async updateUser(user) {
+    return await Api.put("/User/update", { user: user })
+      .then(Response => {
+        console.log(Response);
+        return true;
       })
-      .catch(e => {
-        console.log(e);
+      .catch(exp => {
+        console.log("Error updateUser : " + exp);
+        return false;
       });
-  }
-  followerUser(userNo) {
-    return Api.get(`/Members/searchFollowMePeople/${userNo}`).then(Response => {
-      return Response.data.data;
-    });
   }
 }
 

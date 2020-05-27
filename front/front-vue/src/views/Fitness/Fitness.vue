@@ -20,8 +20,8 @@
         >
           <div class="col-2 flex flex-center">
             <q-img
-              :src='require("../../assets/fitrun.png")'
-              :ratio="16/9"
+              :src="require('../../assets/fitrun.png')"
+              :ratio="16 / 9"
               spinner-color="primary"
               spinner-size="82px"
             />

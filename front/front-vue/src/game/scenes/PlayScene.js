@@ -22,7 +22,7 @@ export default class PlayScene extends Scene {
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
 
-    coinLayer.forEach((el) => {
+    coinLayer.forEach(el => {
       let obj = coins.create(el.x, el.y + 150, "coin");
       // obj.setScale(el.width / 16, el.height / 16);
       obj.setOrigin(0);
@@ -42,20 +42,20 @@ export default class PlayScene extends Scene {
       frames: this.anims.generateFrameNames("player", {
         prefix: "robo_player_",
         start: 2,
-        end: 3,
+        end: 3
       }),
       frameRate: 10,
-      repeat: -1,
+      repeat: -1
     });
     this.anims.create({
       key: "idle",
       frames: [{ key: "player", frame: "robo_player_0" }],
-      frameRate: 10,
+      frameRate: 10
     });
     this.anims.create({
       key: "jump",
       frames: [{ key: "player", frame: "robo_player_1" }],
-      frameRate: 10,
+      frameRate: 10
     });
     // this.cameras.main.setZoom(2);
   }

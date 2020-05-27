@@ -59,7 +59,7 @@ export default {
   components: {
     WebCam,
     QOverlay,
-    Game,
+    Game
   },
   data() {
     return {
@@ -68,13 +68,13 @@ export default {
       stage: "",
       window: {
         width: 0,
-        height: 0,
+        height: 0
       },
       time: null,
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false,
+      isPause: false
     };
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
-    }),
+    })
   },
   async mounted() {
     const right = document.getElementById("right");
@@ -98,7 +98,7 @@ export default {
     ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id,
+        id: this.$store.state.id
       };
       await this.getStage(params); // axios
     },
@@ -141,14 +141,14 @@ export default {
         // 걷는 모션
         let arrowRight = new KeyboardEvent("keydown");
         Object.defineProperty(arrowRight, "keyCode", {
-          get: () => 39,
+          get: () => 39
         });
         document.dispatchEvent(arrowRight);
         // map.style.webkitAnimationPlayState = "running";
       } else if (status === "jump") {
         let arrowUp = new KeyboardEvent("keydown");
         Object.defineProperty(arrowUp, "keyCode", {
-          get: () => 38,
+          get: () => 38
         });
         document.dispatchEvent(arrowUp);
         // map.style.webkitAnimationPlayState = "running";
@@ -157,11 +157,11 @@ export default {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
       }
-    },
+    }
   },
   beforeDestroy() {
     clearTimeout(this.time);
-  },
+  }
 };
 function addZeros(num, digit) {
   // 자릿수 맞춰주기

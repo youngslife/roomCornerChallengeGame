@@ -12,6 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default {
+  //firebase email을 활용한 회원가입
   async signUpWithDefault(email, password) {
     return await firebase
       .auth()
@@ -24,6 +25,7 @@ export default {
         return false;
       });
   },
+  //firebase email을 활용한 로그인
   async loginWithDefault(email, password) {
     return await firebase
       .auth()
@@ -36,6 +38,7 @@ export default {
         return false;
       });
   },
+  //구글 아이디를 활용한 로그인
   loginWithGoogle() {
     let provider = new firebase.auth.GoogleAuthProvider();
     return firebase
@@ -48,18 +51,20 @@ export default {
         console.error("[Google Login Error]", error);
       });
   },
-  loginWithGitHub() {
-    var provider = new firebase.auth.GithubAuthProvider();
-    return firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        return result;
-      })
-      .catch(function(error) {
-        console.error("[GitHub Login Error]", error);
-      });
-  },
+  // //깃허브 아이디를 활용한 로그인
+  // loginWithGitHub() {
+  //   var provider = new firebase.auth.GithubAuthProvider();
+  //   return firebase
+  //     .auth()
+  //     .signInWithPopup(provider)
+  //     .then(function(result) {
+  //       return result;
+  //     })
+  //     .catch(function(error) {
+  //       console.error("[GitHub Login Error]", error);
+  //     });
+  // },
+  // 비밀번호 초기화
   resetPw(email) {
     if (email.includes("@google.com")) {
       alert("구글에서 비밀번호를 찾아주세요.");

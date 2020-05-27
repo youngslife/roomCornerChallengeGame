@@ -11,15 +11,15 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true,
+      required: true
     },
     stage: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   mounted() {
     console.log(this.predictions);
-  },
+  }
 };
 </script>
