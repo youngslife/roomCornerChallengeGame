@@ -182,7 +182,7 @@ export default {
       }
     },
     goAttack(count){
-      this.useSkill = count
+      this.useSkill = count;
     },
     changeToAttack() {
       if (this.isMonster == false) {

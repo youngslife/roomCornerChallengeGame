@@ -65,16 +65,18 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         
-        if(prediction[0].probability.toFixed(2) > 0.80) {
+        if(prediction[0].probability.toFixed(2) > 0.95) {
             if(status == "squat") {
                 count++;
                 console.log(count);
             }
             status = "stand";
         } else if (
-            prediction[1].probability.toFixed(2) > 0.80
+            prediction[1].probability.toFixed(2) > 0.95
         ){
             status = "squat"
+        } else if( prediction[0].probability.toFixed(2) < 0.60 || prediction[1].probability.toFixed(2) < 0.60){
+            console.log("BADD ")
         }
         // } else if (
         //     prediction[0].probability.toFixed(2) < 0.40 ||
