@@ -19,11 +19,11 @@
           style="height:50px;margin-top:20px;"
         >
           <div class="col-2 flex flex-center">
-            <q-btn
-              icon="check"
-              label="피트니스로고"
-              style="width:100%; height:100%; color:white; font-size:25px;"
-              class="text-weight-bold"
+            <q-img
+              :src='require("../../assets/fitrun.png")'
+              :ratio="16/9"
+              spinner-color="primary"
+              spinner-size="82px"
             />
           </div>
           <q-btn

@@ -148,7 +148,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+    return {
+     
+      slide2: "tv"
+    };
+  },
+};
 </script>
 
 <style></style>
