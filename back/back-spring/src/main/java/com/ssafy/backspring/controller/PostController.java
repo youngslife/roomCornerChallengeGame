@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.Post;
@@ -56,7 +54,7 @@ public class PostController {
         return handler.handleSuccess("Post 정보 수정 완료");
     }
 	@ApiOperation("특정 Post를 삭제하는 기능")
-    @DeleteMapping("/Post/delete")
+    @DeleteMapping("/Post/delete//{post_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int post_no) {
 		service.delete(post_no);
         return handler.handleSuccess("Post 정보 수정 완료");
@@ -65,7 +63,16 @@ public class PostController {
     @GetMapping("/Post/searchDetail/{post_no}")
     public ResponseEntity<Map<String, Object>> searchPostDetail(@PathVariable int post_no) {
         final Post post = service.searchPostDetail(post_no);
+        //조회수 증가
+        service.addPostViews(post.getPost_no());
         return handler.handleSuccess(post);
     }
+    
+//    @ApiOperation("특정 Post를 추천하는 기능")
+//    @PutMapping("/Post/add/{post_no}")
+//    public ResponseEntity<Map<String, Object>> addPostRecommendation(@PathVariable int post_no) {
+//        service.addPostRecommendation(post_no);
+//        return handler.handleSuccess("Post 추천 완료");
+//    }
 
 }

@@ -20,6 +20,7 @@ public class RMonster implements Serializable{
 	private int rmon_hp;
 	private String rmon_grade;
 	private String rmon_description;
+	private boolean rmon_del_check;
 	private List<Image> rmon_imgs;
 }
 /*

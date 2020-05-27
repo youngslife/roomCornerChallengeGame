@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.Comment;
@@ -56,7 +54,7 @@ public class CommentController {
         return handler.handleSuccess("Comment 정보 수정 완료");
     }
 	@ApiOperation("특정 Comment를 삭제하는 기능")
-    @DeleteMapping("/Comment/delete")
+    @DeleteMapping("/Comment/delete/{cmt_no}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int cmt_no) {
 		service.delete(cmt_no);
         return handler.handleSuccess("Comment 정보 수정 완료");

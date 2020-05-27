@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.QnaDao" >
+
+ 	<insert id="insert"		parameterType="qna">
+ 		INSERT INTO Qna(
+			user_no,
+			qna_category,
+			qna_title,
+			qna_content)
+		VALUES(
+			#{user_no:INTEGER},
+			#{qna_category:VARCHAR},
+			#{qna_title:VARCHAR},
+			#{qna_content:VARCHAR}
+		);
+	</insert> 
+   	<update id="update"		parameterType="qna">
+	   	UPDATE Qna
+		SET
+			user_no = #{user_no:INTEGER},
+			qna_category = #{qna_category:VARCHAR},
+			qna_title = #{qna_title:VARCHAR},
+			qna_content = #{qna_content:VARCHAR},
+			qna_updatetime = CURRENT_TIMESTAMP(),
+			qna_del_check = #{qna_del_check:BOOLEAN}
+		WHERE qna_no = #{qna_no:INTEGER};
+   	</update>
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+	<select id="search"		parameterType="int"  resultType="qna">
+		SELECT * FROM Qna WHERE qna_no = #{qna_no:INTEGER} AND qna_del_check = FALSE;
+	</select>
+	<select id="searchAll"	resultType="qna">
+		SELECT * FROM Qna WHERE qna_del_check = FALSE;
+	</select>
+	<select id="searchUserQna"	parameterType = "int" resultType="qna">
+		SELECT * FROM Qna WHERE user_no = #{user_no:INTEGER} AND qna_del_check = FALSE;
+	</select>
+	<update id="insertAnswer" parameterType="qna">
+		UPDATE Qna
+		SET
+			qna_answer = #{qna_answer:VARCHAR},
+			qna_answertime = CURRENT_TIMESTAMP()
+		WHERE qna_no = #{qna_no:INTEGER} AND qna_del_check = FALSE;
+	</update>
+</mapper>
+

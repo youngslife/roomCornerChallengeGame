@@ -16,6 +16,7 @@ public class RMap implements Serializable{
 	private int rmap_no;
 	private int rstage_no;
 	private int rmap_length;
+	private boolean rmap_del_check;
 	private List<Image> rmap_imgs;
 }
 /*

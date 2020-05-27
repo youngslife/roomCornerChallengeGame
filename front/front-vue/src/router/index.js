@@ -53,10 +53,10 @@ const routes = [{
     component: () => import("../views/Board/BoardCreate.vue"),
   },
   {
-    path: "/rfattack",
-    name: "ringfitAttack",
-    component: () => import("../views/Ringfit/RingfitAttack"),
-  }
+    path: "/game/RingFit",
+    name: "RingFit",
+    component: () => import("../views/Game/RingFit.vue"),
+  },
 ];
 
 const router = new VueRouter({

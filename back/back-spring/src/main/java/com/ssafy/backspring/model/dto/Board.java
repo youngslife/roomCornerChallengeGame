@@ -13,16 +13,9 @@ import lombok.NoArgsConstructor;
 public class Board implements Serializable{
 	private static final long serialVersionUID = 8743362152756927500L;
 	private int board_no;
-	private String board_title;
-	private String board_category;
+	private int board_location;//main, game1, game2 ... 해당 게시판 종류
+	private String board_title; // 소식, 가이드, 커뮤니티..
+	private String board_subtitle; //공지사항, 이벤트, 패치노트, 게임가이드..	
 	private boolean board_del_check;
 	private List<Post> board_postList;
 }
-/*
-게시판 클래스
-게시판 번호
-제목
-카테고리
-삭제여부
-게시물 리스트
-*/
