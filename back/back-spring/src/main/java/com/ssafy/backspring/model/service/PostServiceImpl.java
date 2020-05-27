@@ -71,4 +71,22 @@ public class PostServiceImpl implements PostService {
 		return null;
 	}
 
+	@Override
+	public void addPostViews(int post_no) {
+		try{
+			dao.addPostViews(post_no);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void addPostRecommendation(int post_no) {
+		try{
+			dao.addPostRecommendation(post_no);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 }

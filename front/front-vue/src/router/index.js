@@ -54,6 +54,16 @@ const routes = [
         component: () => import("../views/Fitness/FitnessInfo.vue")
       }
     ]
+  },
+  {
+    path: "/boardCreate",
+    name: "boardCreate",
+    component: () => import("../views/Board/BoardCreate.vue")
+  },
+  {
+    path: "/game/RingFit",
+    name: "RingFit",
+    component: () => import("../views/Game/RingFit.vue")
   }
 ];
 

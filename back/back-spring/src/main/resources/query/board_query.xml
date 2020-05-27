@@ -7,6 +7,7 @@
 		<result property="post_no" column="post_no" />
 		<result property="board_no" column="board_no" />
 		<result property="user_no" column="user_no" />
+		<result property="post_type" column="post_type" />
 		<result property="post_title" column="post_title" />
 		<result property="post_content" column="post_content" />
 		<result property="post_recommendation_num" column="post_recommendation_num" />
@@ -25,17 +26,21 @@
 
 	<resultMap id="bpMap" type="board">
 		<result property="board_no" column="board_no"/>
+		<result property="board_locatoin" column="board_locatoin"/>
 		<result property="board_title" column="board_title"/>
-		<result property="board_category" column="board_category"/>
+		<result property="board_subtitle" column="board_subtitle"/>
 		<collection property="board_postList" ofType="post" resultMap="postMap" />
 	</resultMap>
+	
  	<insert id="insert"		parameterType="board">
-	 	INSERT INTO BOARD(
-			board_title,
-			board_category)
+	 	INSERT INTO Board(
+	 		board_location,
+	 		board_title,
+	 		board_subtitle)
 		VALUES(
-			#{board_title:VARCHAR},
-			#{board_category:VARCHAR}
+			#{board_location:INTEGER}
+			#{board_type:VARCHAR}
+			#{board_subtype:VARCHAR}
 		);
 	</insert> 
 	
@@ -46,13 +51,13 @@
    	</update>
 
 	<select id="search"		parameterType="int"  resultType="board">
-		SELECT * FROM BOARD WHERE board_no = #{board_no:INTEGER} AND board_del_check = FALSE
+		SELECT * FROM Board WHERE board_no = #{board_no:INTEGER} AND board_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="board">
-		SELECT * FROM BOARD WHERE board_del_check = FALSE
+		SELECT * FROM Board WHERE board_del_check = FALSE
 	</select>
 	
-	<select id="searchAllBoard" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardTitle" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -67,11 +72,13 @@
 			FROM
 				(SELECT 
 					b.board_no,
+					b.board_location,
 					b.board_title,
-					b.board_category,
+					b.board_subtitle,
 					p.post_no,
 					p.user_no,
 					u.user_name,
+					p.post_type,
 					p.post_title,
 					p.post_content,
 					p.post_recommendation_num,
@@ -79,15 +86,17 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE) as bpu, 
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}) as bpu, 
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
-		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+		WHERE RESULT.rnum >#{startPage} AND RESULT.rnum <= #{endPage}]]>
 	</select>
-	<select id="searchAllBoardByOption" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -102,11 +111,13 @@
 			FROM
 				(SELECT 
 					b.board_no,
+					b.board_location,
 					b.board_title,
-					b.board_category,
+					b.board_subtitle,
 					p.post_no,
 					p.user_no,
 					u.user_name,
+					p.post_type,
 					p.post_title,
 					p.post_content,
 					p.post_recommendation_num,
@@ -114,10 +125,12 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE) as bpu, 
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
@@ -140,7 +153,7 @@
 			</when>
 		</choose>
 	</select>
-	<select id="searchTargetBoard" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardSubTitle" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -155,11 +168,13 @@
 			FROM
 				(SELECT 
 					b.board_no,
+					b.board_location,
 					b.board_title,
-					b.board_category,
+					b.board_subtitle,
 					p.post_no,
 					p.user_no,
 					u.user_name,
+					p.post_type,
 					p.post_title,
 					p.post_content,
 					p.post_recommendation_num,
@@ -167,15 +182,18 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE AND b.board_no =#{target_no}) as bpu, 
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}
+						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
 	</select>
-	<select id="searchTargetBoardByOption" parameterType="hashmap" resultMap="bpMap">
+	<select id="searchBoardSubTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
 		SELECT
 			RESULT.*
@@ -190,11 +208,13 @@
 			FROM
 				(SELECT 
 					b.board_no,
+					b.board_location,
 					b.board_title,
-					b.board_category,
+					b.board_subtitle,
 					p.post_no,
 					p.user_no,
 					u.user_name,
+					p.post_type,
 					p.post_title,
 					p.post_content,
 					p.post_recommendation_num,
@@ -202,10 +222,13 @@
 					p.post_blamed,
 					p.post_regtime, 
 					p.post_updatetime
-					FROM BOARD b
-					LEFT JOIN POST p ON p.board_no = b.board_no AND p.post_del_check=FALSE
-					LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check=FALSE
-					WHERE b.board_del_check=FALSE AND b.board_no =#{target_no}) as bpu, 
+					FROM Board b
+					LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+					WHERE b.board_del_check=FALSE 
+						AND b.board_location = #{location:INTEGER}
+						AND b.board_title =#{title:VARCHAR}
+						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
