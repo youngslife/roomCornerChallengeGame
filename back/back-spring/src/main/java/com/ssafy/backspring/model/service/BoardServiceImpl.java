@@ -67,6 +67,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Map<String, Object>> searchBoardTitle(PageMaker page) {
 		try {
+			System.out.println("#####"+page);
 			return dao.searchBoardTitle(page);
 		}catch(Exception e) {
 			e.printStackTrace();

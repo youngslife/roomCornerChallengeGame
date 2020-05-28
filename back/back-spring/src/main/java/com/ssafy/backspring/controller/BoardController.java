@@ -65,9 +65,13 @@ public class BoardController {
         return handler.handleSuccess("Board 정보 수정 완료");
     }
 	@ApiOperation("게시판 제목으로 조회하는 기능 ex) 게임1-게임소식-1page = 2/게임소식/1")
-    @GetMapping("/Board/searchBoardTitle/{location}/{title}/{page_no}")
+    @PostMapping("/Board/searchBoardTitle")
     public ResponseEntity<Map<String, Object>> searchBoardTitle(Page pageBean, 
-    		@PathVariable int location, @PathVariable String title, @PathVariable int page_no) {
+    		@RequestBody Map<String,Object> map){
+//    		@PathVariable int location, @PathVariable String title, @PathVariable int page_no) {
+		int page_no = (int) map.get("page_no");
+		int location = (int) map.get("location");
+		String title = (String) map.get("title");
 		PageMaker pageMaker = new PageMaker();
 		pageBean.setPage(page_no);
 		pageBean.setPerPageNum(perPageNum);
@@ -76,6 +80,7 @@ public class BoardController {
 		pageMaker.setTitle(title);
 		pageMaker.setStartPage(pageBean.getPage());
 		pageMaker.setEndPage(pageMaker.getStartPage());
+		System.out.println(pageMaker.getStartPage()+","+pageMaker.getEndPage());
 		List<Map<String, Object>> list = service.searchBoardTitle(pageMaker);
 		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
     }

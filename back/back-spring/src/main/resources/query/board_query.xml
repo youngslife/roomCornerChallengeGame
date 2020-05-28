@@ -26,7 +26,7 @@
 
 	<resultMap id="bpMap" type="board">
 		<result property="board_no" column="board_no"/>
-		<result property="board_locatoin" column="board_locatoin"/>
+		<result property="board_location" column="board_location"/>
 		<result property="board_title" column="board_title"/>
 		<result property="board_subtitle" column="board_subtitle"/>
 		<collection property="board_postList" ofType="post" resultMap="postMap" />
@@ -91,7 +91,7 @@
 					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
-						AND b.board_title =#{title:VARCHAR}) as bpu, 
+						AND b.board_title =#{title:VARCHAR} ) as bpu, 
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum >#{startPage} AND RESULT.rnum <= #{endPage}]]>
