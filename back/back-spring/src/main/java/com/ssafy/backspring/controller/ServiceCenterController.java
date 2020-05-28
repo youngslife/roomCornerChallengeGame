@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.Faq;
@@ -48,13 +49,13 @@ public class ServiceCenterController {
     }
 	@ApiOperation("Faq 정보 등록 하는 기능")
     @PostMapping("/serviceCenter/faq/insert")
-    public ResponseEntity<Map<String, Object>> finsert(Faq faq) {
+    public ResponseEntity<Map<String, Object>> finsert(@RequestBody Faq faq) {
 		f_service.insert(faq);
         return handler.handleSuccess("Faq 등록 성공");
     }
 	@ApiOperation("Faq 정보 수정하는 기능")
     @PutMapping("/serviceCenter/faq/update")
-    public ResponseEntity<Map<String, Object>> fupdate(Faq faq) {
+    public ResponseEntity<Map<String, Object>> fupdate(@RequestBody Faq faq) {
 		f_service.update(faq);
         return handler.handleSuccess("Faq 정보 수정 완료");
     }
@@ -86,13 +87,13 @@ public class ServiceCenterController {
     }
 	@ApiOperation("Qna 정보 등록 하는 기능")
     @PostMapping("/serviceCenter/qna/insert")
-    public ResponseEntity<Map<String, Object>> qinsert(Qna qna) {
+    public ResponseEntity<Map<String, Object>> qinsert(@RequestBody Qna qna) {
 		q_service.insert(qna);
         return handler.handleSuccess("Qna 등록 성공");
     }
 	@ApiOperation("Qna 정보 수정하는 기능")
     @PutMapping("/serviceCenter/qna/update")
-    public ResponseEntity<Map<String, Object>> qupdate(Qna qna) {
+    public ResponseEntity<Map<String, Object>> qupdate(@RequestBody Qna qna) {
 		q_service.update(qna);
         return handler.handleSuccess("Qna 정보 수정 완료");
     }
@@ -110,7 +111,7 @@ public class ServiceCenterController {
     }
 	@ApiOperation("Qna 답변 달아주는 기능")
     @PutMapping("/serviceCenter/qna/insertAnswer")
-    public ResponseEntity<Map<String, Object>> qinsertAnswer(Qna qna) {
+    public ResponseEntity<Map<String, Object>> qinsertAnswer(@RequestBody Qna qna) {
 		q_service.insertAnswer(qna);
         return handler.handleSuccess("Qna 정보 수정 완료");
     }

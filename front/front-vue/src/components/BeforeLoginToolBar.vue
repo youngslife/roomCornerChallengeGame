@@ -1,12 +1,10 @@
 <template>
-  <div v-show="loginStatus">
-    {{ name }}님 환영합니다.
-    <a @click="logout" href>Logout</a>
+  <div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
+// import firebase from "firebase";
 
 export default {
   data() {
@@ -15,6 +13,7 @@ export default {
       loginStatus: false
     };
   },
+
   mounted() {
     let self = this;
     firebase.auth().onAuthStateChanged(function(user) {
@@ -40,6 +39,9 @@ export default {
             console.log(error);
           });
       }
+    },
+    back(){
+      this.$router.go(-1)
     }
   }
 };
