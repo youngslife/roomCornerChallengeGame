@@ -99,7 +99,7 @@ public class UserController {
 		System.out.println(map.toString());
 		String email = map.get("email").toString();
 		User checkUser = service.searchByEmail(email);
-		return (checkUser != null) ? handler.handleSuccess("로그인 성공")
+		return (checkUser != null) ? handler.handleSuccess(checkUser)
 				: handler.handleFail("로그인 실패", HttpStatus.NOT_FOUND);
 	}
 
