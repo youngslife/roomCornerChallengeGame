@@ -52,7 +52,7 @@
             :stage="stage"
             :width="window.width"
             :height="window.height"
-            @child="jump"
+            @child="goAttack"
           >
           </squat-cam>
         </div>
@@ -91,7 +91,7 @@ export default {
       second: 0,
       isPause: false,
       isMonster: false,
-      useSkill: "",
+      useSkill: 0,
     };
   },
   computed: {
@@ -162,7 +162,6 @@ export default {
       // const map = document.getElementById("map");
       if (status === "walk") {
         // 걷는 모션
-        this.useSkill = "walk"
         let arrowRight = new KeyboardEvent("keydown");
         Object.defineProperty(arrowRight, "keyCode", {
           get: () => 39,
@@ -170,7 +169,6 @@ export default {
         document.dispatchEvent(arrowRight);
         // map.style.webkitAnimationPlayState = "running";
       } else if (status === "jump") {
-        this.useSkill = "jump"
         let arrowUp = new KeyboardEvent("keydown");
         Object.defineProperty(arrowUp, "keyCode", {
           get: () => 38,
@@ -182,6 +180,9 @@ export default {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
       }
+    },
+    goAttack(count){
+      this.useSkill = count;
     },
     changeToAttack() {
       if (this.isMonster == false) {

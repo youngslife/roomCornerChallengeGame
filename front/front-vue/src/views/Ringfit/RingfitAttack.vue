@@ -50,7 +50,8 @@ export default {
     };
   },
   props: {
-    useSkill: String
+    // useSkill: String
+    useSkill: Number
   },
   // 후에 component로 쓰게 된다면 prop 이용
   // props: {
@@ -79,15 +80,16 @@ export default {
   //   },
   // },
   methods: {
-    playerAttck(skillName) {
+    playerAttck() {
       let demage;
-      if (skillName == this.skills.first.name) {
-        demage = this.skills.first.strength;
-      } else if (skillName == this.skills.second.name) {
-        demage = this.skills.second.strength;
-      } else if (skillName == this.skills.third.name) {
-        demage = this.skills.third.strength;
-      }
+      // if (skillName == this.skills.first.name) {
+      //   demage = this.skills.first.strength;
+      // } else if (skillName == this.skills.second.name) {
+      //   demage = this.skills.second.strength;
+      // } else if (skillName == this.skills.third.name) {
+      //   demage = this.skills.third.strength;
+      // }
+      demage = 10;
       this.monster.image = require("../../assets/ryan2.png")
       this.monster.hp -= demage;
       if(this.monster.hp > 0) {
@@ -130,8 +132,7 @@ export default {
   },
   watch: {
     useSkill: function() {
-      console.log(this.useSkill)
-      this.playerAttck(this.useSkill)
+      this.playerAttck()
     }
   },
   mounted() {
