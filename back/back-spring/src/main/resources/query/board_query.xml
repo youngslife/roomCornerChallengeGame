@@ -91,10 +91,22 @@
 					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
-						AND b.board_title =#{title:VARCHAR} ) as bpu, 
+						AND b.board_title =#{title:VARCHAR} 
+						ORDER BY p.post_regtime DESC) as bpu, 
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum >#{startPage} AND RESULT.rnum <= #{endPage}]]>
+	</select>
+	<select id="countBoardTitle" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(*) as count
+		FROM Board b
+		LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+		LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+		WHERE b.board_del_check = FALSE 
+			AND b.board_location = #{location:INTEGER} 
+			AND b.board_title =#{title:VARCHAR}
+		GROUP BY b.board_location;
 	</select>
 	<select id="searchBoardTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
@@ -130,7 +142,8 @@
 					LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
 					WHERE b.board_del_check=FALSE
 						AND b.board_location = #{location:INTEGER}
-						AND b.board_title =#{title:VARCHAR}) as bpu,
+						AND b.board_title =#{title:VARCHAR}
+						ORDER BY p.post_regtime DESC) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
@@ -152,6 +165,33 @@
 				AND RESULT.user_name like concat('%','${word}','%')
 			</when>
 		</choose>
+	</select>
+	<select id="countBoardTitleByOption" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(*) as count
+		FROM Board b
+		LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+		LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+		WHERE b.board_del_check = FALSE AND b.board_location = #{location:INTEGER} AND b.board_title =#{title:VARCHAR}
+		<choose>
+			<when test="searchOption == 'all'">
+				<if test="word != null">
+				AND p.post_title like concat('%','${word}','%')
+				OR p.post_content like concat('%','${word}','%')
+				OR u.user_name like concat('%','${word}','%')
+				</if>
+			</when>
+			<when test="searchOption == 'title'">
+				AND	p.post_title like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'content'">
+				AND p.post_content like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'writer'">
+				AND u.user_name like concat('%','${word}','%')
+			</when>
+		</choose>
+		GROUP BY b.board_location;
 	</select>
 	<select id="searchBoardSubTitle" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
@@ -188,10 +228,23 @@
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}
-						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
+						AND b.board_subtitle=#{subtitle:VARCHAR}
+						ORDER BY p.post_regtime DESC) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
+	</select>
+	<select id="countBoardSubTitle" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(*) as count
+		FROM Board b
+		LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+		LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+		WHERE b.board_del_check = FALSE 
+			AND b.board_location = #{location:INTEGER} 
+			AND b.board_title =#{title:VARCHAR} 
+			AND b.board_subtitle=#{subtitle:VARCHAR}
+		GROUP BY b.board_title;
 	</select>
 	<select id="searchBoardSubTitleByOption" parameterType="hashmap" resultMap="bpMap">
 		<![CDATA[
@@ -228,7 +281,8 @@
 					WHERE b.board_del_check=FALSE 
 						AND b.board_location = #{location:INTEGER}
 						AND b.board_title =#{title:VARCHAR}
-						AND b.board_subtitle=#{subtitle:VARCHAR}) as bpu,
+						AND b.board_subtitle=#{subtitle:VARCHAR}
+						ORDER BY p.post_regtime DESC) as bpu,
 				(SELECT @vpost_no:='', @rownum:=0 FROM DUAL) as n
 			) AS RESULT
 		WHERE RESULT.rnum > #{startPage} AND RESULT.rnum <= #{endPage}]]>
@@ -251,6 +305,36 @@
 			</when>
 		</choose>
 		<!-- ORDER BY RESULT.post_regtime DESC -->
+	</select>
+	<select id="countBoardSubTitleByOption" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(*) as count
+		FROM Board b
+		LEFT JOIN Post p ON p.board_no = b.board_no AND p.post_del_check=FALSE
+		LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check=FALSE
+		WHERE b.board_del_check = FALSE 
+			AND b.board_location = #{location:INTEGER} 
+			AND b.board_title =#{title:VARCHAR} 
+			AND b.board_subtitle=#{subtitle:VARCHAR}
+		<!-- <choose> 흠 뭔가 이상한 문제가 생겼음 틀린게 없는데
+			<when test="searchOption == 'all'">
+				<if test="word != null">
+				AND p.post_title like concat('%','${word}','%')
+				OR p.post_content like concat('%','${word}','%')
+				OR u.user_name like concat('%','${word}','%')
+				</if>
+			</when>
+			<when test="searchOption == 'title'">
+				AND	p.post_title like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'content'">
+				AND p.post_content like concat('%','${word}','%')
+			</when>
+			<when test="searchOption == 'writer'">
+				AND u.user_name like concat('%','${word}','%')
+			</when>
+		</choose> -->
+		GROUP BY b.board_title;
 	</select>
 </mapper>
 

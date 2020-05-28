@@ -104,4 +104,44 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return null;
 	}
+
+	@Override
+	public int countBoardTitle(PageMaker page) {
+		try {
+			return dao.countBoardTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitle(PageMaker page) {
+		try {
+			return dao.countBoardSubTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardSubTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

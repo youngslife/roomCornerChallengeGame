@@ -20,4 +20,9 @@ public interface BoardDao {
 	public List<Map<String, Object>> searchBoardSubTitle(PageMaker page);
 	public List<Map<String, Object>> searchBoardTitleByOption(PageMaker page);
 	public List<Map<String, Object>> searchBoardSubTitleByOption(PageMaker page);
+	public int countBoardTitle(PageMaker page);
+	public int countBoardTitleByOption(PageMaker page);
+	public int countBoardSubTitle(PageMaker page);
+	public int countBoardSubTitleByOption(PageMaker page);
+	
 }
