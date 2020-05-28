@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.Post;
@@ -42,14 +43,14 @@ public class PostController {
     }
 	@ApiOperation("Post 정보 등록 하는 기능")
     @PostMapping("/Post/insert")
-    public ResponseEntity<Map<String, Object>> insert(Post post) {
+    public ResponseEntity<Map<String, Object>> insert(@RequestBody Post post) {
 		//이미 있는 이름은 안돼
 		service.insert(post);
         return handler.handleSuccess("Post 등록 성공");
     }
 	@ApiOperation("Post 정보 수정하는 기능")
     @PutMapping("/Post/update")
-    public ResponseEntity<Map<String, Object>> update(Post post) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody Post post) {
 		service.update(post);
         return handler.handleSuccess("Post 정보 수정 완료");
     }
