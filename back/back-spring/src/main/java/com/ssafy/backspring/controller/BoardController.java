@@ -92,7 +92,7 @@ public class BoardController {
 			if(count%perPageNum == 0)lastPage=count/perPageNum;
 			else lastPage=count/perPageNum+1;
 		}
-		data.put("lastPage",""+lastPage)
+		data.put("lastPage",""+lastPage);
 		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("게시판 소제목으로 조회하는 기능 ex) 게임1-게임소식-공지사항-1page = 2/게임소식/공지사항/1")
@@ -119,7 +119,7 @@ public class BoardController {
 			if(count%perPageNum == 0)lastPage=count/perPageNum;
 			else lastPage=count/perPageNum+1;
 		}
-		data.put("lastPage",""+lastPage)
+		data.put("lastPage",""+lastPage);
 		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("전체 게시판 제목, 작성자, 내용으로 검색하는 기능")
@@ -148,7 +148,7 @@ public class BoardController {
 			if(count%perPageNum == 0)lastPage=count/perPageNum;
 			else lastPage=count/perPageNum+1;
 		}
-		data.put("lastPage",""+lastPage)
+		data.put("lastPage",""+lastPage);
 		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("특정 게시판 제목, 작성자, 내용으로 검색하는 기능")
