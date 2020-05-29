@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +37,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
@@ -69,8 +71,8 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody User user) {
 		// 일단 검증이나 실패는 빼두고
 		// email 검증
-//		System.out.println("wlrma");
-//		System.out.println(user);
+		// System.out.println("wlrma");
+		// System.out.println(user);
 		String uemail = user.getUser_email();
 		if (!service.isValidEmail(uemail)) {
 			return handler.handleFail("올바르지 않은 형식의 아이디 입니다", HttpStatus.BAD_REQUEST);
@@ -142,7 +144,8 @@ public class UserController {
 
 	@ApiOperation("User 프로필을 수정하는 기능")
 	@PutMapping("/User/update")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user, @RequestParam(required = false) MultipartFile file) {
+	public ResponseEntity<Map<String, Object>> update(@RequestBody User user,
+			@RequestParam(required = false) MultipartFile file) {
 		// 닉네임,성별,생년월일,이미지을 수정할 수 있다.
 		User updateUser = service.search(user.getUser_no());
 		if (user.getUser_birthday() != null) {
