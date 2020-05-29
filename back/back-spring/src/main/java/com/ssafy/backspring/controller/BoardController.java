@@ -1,5 +1,6 @@
 package com.ssafy.backspring.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,10 @@ public class BoardController {
     @GetMapping("/Board/searchBoardTitle/{location}/{title}/{page_no}")
     public ResponseEntity<Map<String, Object>> searchBoardTitle(Page pageBean, 
     		@PathVariable int location, @PathVariable String title, @PathVariable int page_no) {
+//    		@RequestBody Map<String,Object> map){
+//		int page_no = Integer.parseInt((String)map.get("page_no"));
+//		int location = Integer.parseInt((String)map.get("location"));
+//		String title = (String) map.get("title");
 		PageMaker pageMaker = new PageMaker();
 		pageBean.setPage(page_no);
 		pageBean.setPerPageNum(perPageNum);
@@ -77,7 +82,18 @@ public class BoardController {
 		pageMaker.setStartPage(pageBean.getPage());
 		pageMaker.setEndPage(pageMaker.getStartPage());
 		List<Map<String, Object>> list = service.searchBoardTitle(pageMaker);
-		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+		int count = service.countBoardTitle(pageMaker);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("count",""+count);
+		data.put("result", list);
+		int lastPage= 0;
+		if(count<=perPageNum) lastPage =1;
+		else {
+			if(count%perPageNum == 0)lastPage=count/perPageNum;
+			else lastPage=count/perPageNum+1;
+		}
+		data.put("lastPage",""+lastPage);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("게시판 소제목으로 조회하는 기능 ex) 게임1-게임소식-공지사항-1page = 2/게임소식/공지사항/1")
     @GetMapping("/Board/searchBoardSubTitle/{location}/{title}/{subtitle}/{page_no}")
@@ -93,7 +109,18 @@ public class BoardController {
 		pageMaker.setStartPage(pageBean.getPage());
 		pageMaker.setEndPage(pageMaker.getStartPage());
 		List<Map<String, Object>> list = service.searchBoardSubTitle(pageMaker);
-		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+		int count = service.countBoardSubTitle(pageMaker);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("count",""+count);
+		data.put("result", list);
+		int lastPage= 0;
+		if(count<=perPageNum) lastPage =1;
+		else {
+			if(count%perPageNum == 0)lastPage=count/perPageNum;
+			else lastPage=count/perPageNum+1;
+		}
+		data.put("lastPage",""+lastPage);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("전체 게시판 제목, 작성자, 내용으로 검색하는 기능")
     @GetMapping("/Board/searchBoardTitleByOption/{location}/{title}/{page_no}/{searchOption}/{word}")
@@ -111,7 +138,18 @@ public class BoardController {
 		pageMaker.setSearchOption(searchOption);
 		pageMaker.setWord(word);
 		List<Map<String, Object>> list = service.searchBoardTitleByOption(pageMaker);
-		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+		int count = service.countBoardTitleByOption(pageMaker);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("count",""+count);
+		data.put("result", list);
+		int lastPage= 0;
+		if(count<=perPageNum) lastPage =1;
+		else {
+			if(count%perPageNum == 0)lastPage=count/perPageNum;
+			else lastPage=count/perPageNum+1;
+		}
+		data.put("lastPage",""+lastPage);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 	@ApiOperation("특정 게시판 제목, 작성자, 내용으로 검색하는 기능")
     @GetMapping("/Board/searchBoardSubTitleByOption/{location}/{title}/{subtitle}/{page_no}/{searchOption}/{word}")
@@ -131,7 +169,18 @@ public class BoardController {
 		pageMaker.setSearchOption(searchOption);
 		pageMaker.setWord(word);
 		List<Map<String, Object>> list = service.searchBoardSubTitleByOption(pageMaker);
-		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(list);
+		int count = service.countBoardSubTitleByOption(pageMaker);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("count",""+count);
+		data.put("result", list);
+		int lastPage= 0;
+		if(count<=perPageNum) lastPage =1;
+		else {
+			if(count%perPageNum == 0)lastPage=count/perPageNum;
+			else lastPage=count/perPageNum+1;
+		}
+		data.put("lastPage",""+lastPage);
+		return list.size() == 0 ? handler.handleSuccess("이 페이지에는 게시글이 존재하지 않습니다") : handler.handleSuccess(data);
     }
 }
 

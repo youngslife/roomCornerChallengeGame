@@ -67,6 +67,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Map<String, Object>> searchBoardTitle(PageMaker page) {
 		try {
+			System.out.println("#####"+page);
 			return dao.searchBoardTitle(page);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -102,5 +103,45 @@ public class BoardServiceImpl implements BoardService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public int countBoardTitle(PageMaker page) {
+		try {
+			return dao.countBoardTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitle(PageMaker page) {
+		try {
+			return dao.countBoardSubTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardSubTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

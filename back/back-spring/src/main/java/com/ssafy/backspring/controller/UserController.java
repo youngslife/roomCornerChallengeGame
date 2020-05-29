@@ -78,6 +78,12 @@ public class UserController {
 		if (service.searchByEmail(uemail) != null) {
 			return handler.handleFail("이미 존재하는 아이디 입니다", HttpStatus.BAD_REQUEST);
 		}
+		if (user.getUser_birthday() != null) {
+			String[] birth = user.getUser_birthday().split("-");
+			user.setUser_age(
+					getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+		}
+
 		service.insert(user);
 		User extraInfo = service.searchByEmail(uemail);
 		Image default_object = getDefaultObject(extraInfo.getUser_no());
@@ -99,7 +105,7 @@ public class UserController {
 		System.out.println(map.toString());
 		String email = map.get("email").toString();
 		User checkUser = service.searchByEmail(email);
-		return (checkUser != null) ? handler.handleSuccess("로그인 성공")
+		return (checkUser != null) ? handler.handleSuccess(checkUser)
 				: handler.handleFail("로그인 실패", HttpStatus.NOT_FOUND);
 	}
 

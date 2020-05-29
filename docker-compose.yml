@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+    back-spring:
+        build: back/back-spring/
+        ports:
+          - 8081:8081
+
+    front:
+        build: front/front-vue/
+        ports:
+          - 80:80
+          - 443:443
+        volumes:
+          - /home/ubuntu/letsencrypt:/etc/letsencrypt           
+
