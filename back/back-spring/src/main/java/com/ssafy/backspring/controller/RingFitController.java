@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
+@RequestMapping("/api")
 public class RingFitController{
 
 //	@Autowired

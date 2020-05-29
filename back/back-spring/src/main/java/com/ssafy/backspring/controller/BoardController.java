@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @Api(tags={"BoardController : board_location = (Main(1)  RingFit(2) Mafia(3) Other(4))"})
 @RestController
+@RequestMapping("/api")
 public class BoardController {
 	private static final int perPageNum = 10;
 	@Autowired

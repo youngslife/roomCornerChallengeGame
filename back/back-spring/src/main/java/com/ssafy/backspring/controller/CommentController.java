@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
+@RequestMapping("/api")
 public class CommentController {
 
 	@Autowired
