@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="text-align: center;">
-      <h3>{{ useSkill }}</h3>
+      <h3>{{ cnt }}</h3>
       <h3>{{ monster.name }} hp : {{ mnowHp }}</h3>
-      <img :src="mimageChange">
+      <img :src="mimageChange" />
       <p>{{ player.username }} hp : {{ pnowHp }}</p>
     </div>
     <div class="row skill-set">
@@ -19,11 +19,6 @@ export default {
   name: "RingfitAttack",
   data() {
     return {
-      player: {
-        username: "방구석여포",
-        hp: 200,
-        combo: 0
-      },
       monster: {
         name: "라이언",
         hp: 100,
@@ -34,53 +29,31 @@ export default {
         first: {
           name: "walk",
           strength: 10,
-          image: '',
+          image: ""
         },
         second: {
           name: "런지",
           strength: 20,
-          image: '',
+          image: ""
         },
         third: {
           name: "jump",
           strength: 50,
-          image: '',
+          image: ""
         }
-      }
+      },
+      count: 0
     };
   },
   props: {
-    // useSkill: String
-    useSkill: Number
+    AttackCnt: Number,
+    player: {
+      username: String,
+      hp: Number
+    }
   },
-  // 후에 component로 쓰게 된다면 prop 이용
-  // props: {
-  //   player: {
-  //     username: String,
-  //     hp: Number
-  //   },
-  //   monster: {
-  //     name: String,
-  //     hp: Number,
-  //     strength: Number
-  //   },
-  //   skills: {
-  //     first: {
-  //       name: String,
-  //       strength: Number
-  //     },
-  //     second: {
-  //       name: String,
-  //       strength: Number
-  //     },
-  //     third: {
-  //       name: String,
-  //       strength: Number
-  //     },
-  //   },
-  // },
   methods: {
-    playerAttck() {
+    playerAttack() {
       let demage;
       // if (skillName == this.skills.first.name) {
       //   demage = this.skills.first.strength;
@@ -90,15 +63,15 @@ export default {
       //   demage = this.skills.third.strength;
       // }
       demage = 10;
-      this.monster.image = require("../../assets/ryan2.png")
+      this.monster.image = require("../../assets/ryan2.png");
       this.monster.hp -= demage;
-      if(this.monster.hp > 0) {
+      if (this.monster.hp > 0) {
         setTimeout(() => {
-          this.monster.image = require("../../assets/ryan1.png")
-        }, 300)
+          this.monster.image = require("../../assets/ryan1.png");
+        }, 300);
       }
       if (this.monster.hp <= 0) {
-        this.monster.image = require("../../assets/ryan3.png")
+        this.monster.image = require("../../assets/ryan3.png");
         this.monster.hp = 0;
         // setTimeout(() => {
         //   alert(`${this.monster.name} 처치 완료`);
@@ -106,7 +79,7 @@ export default {
       } else {
         // setTimeout(() => {
         //   alert(`${this.monster.name}의 공격`)
-        //   this.monsterAttack();
+        this.monsterAttack();
         // }, 1000);
       }
     },
@@ -126,17 +99,19 @@ export default {
     pnowHp() {
       return this.player.hp;
     },
-    mimageChange(){
+    mimageChange() {
       return this.monster.image;
     },
-  },
-  watch: {
-    useSkill: function() {
-      this.playerAttck()
+    cnt() {
+      if (this.AttackCnt != 0) this.playerAttack();
+      return this.AttackCnt;
     }
   },
+  created() {
+    this.AttackCnt = 0;
+  },
   mounted() {
-     this.monster.image = require("../../assets/ryan1.png")
+    this.monster.image = require("../../assets/ryan1.png");
   }
 };
 </script>

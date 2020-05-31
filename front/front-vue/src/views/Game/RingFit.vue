@@ -24,7 +24,7 @@
       <div class="col-9">
         <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
         <Game v-show="!isMonster" />
-        <ringfit-attack v-show="isMonster" :useSkill="useSkill" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
@@ -89,7 +89,11 @@ export default {
       second: 0,
       isPause: false,
       isMonster: false,
-      useSkill: 0
+      AttackCnt: 0,
+      player: {
+        username: "방구석여포",
+        hp: 200
+      }
     };
   },
   computed: {
@@ -180,7 +184,7 @@ export default {
       }
     },
     goAttack(count) {
-      this.useSkill = count;
+      this.AttackCnt = count;
     },
     changeToAttack() {
       if (this.isMonster == false) {
