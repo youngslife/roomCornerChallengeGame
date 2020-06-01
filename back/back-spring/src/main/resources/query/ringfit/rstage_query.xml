@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RStageDao" >
 
  	<insert id="insert"		parameterType="rstage">
-	 	INSERT INTO RSTAGE(
+	 	INSERT INTO RStage(
 			rstage_name,
 			rstage_theme)
 		VALUES(
@@ -16,7 +16,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="rstage">
-	   	UPDATE RSTAGE
+	   	UPDATE RStage
 		SET
 			rstage_name 		= #{rstage_name:VARCHAR},
 			rstage_theme 		= #{rstage_theme:VARCHAR},
@@ -24,11 +24,57 @@
 		WHERE rstage_no 		= #{rstage_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="rstage">
-		SELECT * FROM RSTAGE WHERE rstage_no = #{rstage_no:INTEGER} AND rstage_del_check=FALSE
+		SELECT * FROM RStage WHERE rstage_no = #{rstage_no:INTEGER} AND rstage_del_check=FALSE
 	</select>
 	<select id="searchAll"	resultType="rstage">
-		SELECT * FROM RSTAGE WHERE rstage_del_check=FALSE
+		SELECT * FROM RStage WHERE rstage_del_check=FALSE
 	</select>
+<!-- 	<select id="checkUserinfo" resultMap="">
 	
+	</select> -->
+	<!-- 	<resultMap type="" id="postMap">
+		<result property="post_no" column="post_no" />
+		<result property="board_no" column="board_no" />
+		<result property="user_no" column="user_no" />
+		<result property="post_type" column="post_type" />
+		<result property="post_title" column="post_title" />
+		<result property="post_content" column="post_content" />
+		<result property="post_recommendation_num" column="post_recommendation_num" />
+		<result property="post_views_num" column="post_views_num" />
+		<result property="post_blamed" column="post_blamed" />
+		<result property="post_regtime" column="post_regtime" />
+		<result property="post_updatetime" column="post_updatetime" />
+
+		<association property="post_user" javaType="user">
+			<id property="user_no" column="user_no" />
+			<result property="user_email" column="user_email" />
+			<result property="user_name" column="user_name" />
+			<result property="user_lastlogin" column="user_lastlogin" />
+		</association>
+	</resultMap> -->
+	<!-- private int rstage_no;
+	private String rstage_name;
+	private String rstage_theme;
+	private boolean rstage_del_check;
+	private RMap rstage_map;
+	private List<RMonster> rstage_monster;
+	private List<RUserInfo> rstage_usergameinfo; 
+	private int rmap_no;
+	private int rstage_no;
+	private int rmap_length;
+	private boolean rmap_del_check;
+	private List<Image> rmap_imgs;
+	-->
+<!-- 	<resultMap id="rstageMap" type="rstage">
+		<result property="rstage_no" column="rstage_no"/>
+		<result property="rstage_theme" column="rstage_theme"/>
+		<association property="rstage_map" javaType="rmap">
+			<id property="rmap_no" column="rmap_no" />
+			<result property="rstage_no" column="rstage_no" />
+			<result property="rmap_length" column="rmap_length" />
+		</association>
+		<collection property="rstage_monster" ofType="rmonster" resultMap="rmonsterMap" />
+		<collection property="rstage_usergameinfo" ofType="usergameinfo" resultMap="ugiMap" />
+	</resultMap> -->
 </mapper>
 
