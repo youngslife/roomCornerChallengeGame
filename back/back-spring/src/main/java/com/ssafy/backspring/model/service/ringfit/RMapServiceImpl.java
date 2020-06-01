@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.backspring.model.dao.ringfit.RMapDao;
 import com.ssafy.backspring.model.dto.ringfit.RMap;
 @Service
 public class RMapServiceImpl implements RMapService {
 
 	@Autowired
-	private RMapService dao;
+	private RMapDao dao;
 	@Override
 	public void insert(RMap rmap) {
 		try {
