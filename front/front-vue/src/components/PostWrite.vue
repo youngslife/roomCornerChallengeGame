@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       editor: "What you see is <b>what</b> you get.",
-      types: ["자유계시판", "팁과공략", "질문게시판"],
+      types: ["자유게시판", "팁과공략", "질문게시판"],
       games: ["링피트", "마피아", "후루추닌자", "방탈출"]
     };
   },

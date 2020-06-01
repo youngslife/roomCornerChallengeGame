@@ -2,23 +2,18 @@
   <div class="row justify-around" style="height:700px; margin-top:20px">
     <div class="col-7">
       <q-tabs v-model="tab" class="text-teal row" @click="check()">
-        <q-tab name="mails" icon="mail" label="자유계시판" class="col-4" />
-        <q-tab name="alarms" icon="alarm" label="질문계시판" class="col-4" />
+        <q-tab name="mails" icon="mail" label="자유게시판" class="col-4" />
+        <q-tab name="alarms" icon="alarm" label="질문게시판" class="col-4" />
         <q-tab name="movies" icon="movie" label="팁과공략" class="col-4" />
       </q-tabs>
       <template v-if="isWrite">
-        <writer game="링피트" type="tab"></writer
-      ></template>
+        <writer game="링피트" type="tab"></writer>
+      </template>
       <template v-else>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="mails">
             <div class="row justify-end">
-              <q-btn
-                color="primary"
-                icon="check"
-                label="글쓰기"
-                @click="write('asd')"
-              />
+              <q-btn color="primary" icon="check" label="글쓰기" @click="write('asd')" />
             </div>
             <q-list bordered>
               <q-item v-for="index in 10" :key="index" clickable v-ripple>
@@ -30,12 +25,10 @@
             </q-list>
           </q-tab-panel>
           <q-tab-panel name="alarms">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Alarms</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
           <q-tab-panel name="movies">
-            <div class="text-h6">Movies</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Movies</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
         </q-tab-panels>
       </template>
