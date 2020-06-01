@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.ImageDao" >
 
  	<insert id="insert"		parameterType="image">
-	 	INSERT INTO IMAGE(
+	 	INSERT INTO Image(
 			img_type,
 			img_type_no,
 			img_name,
@@ -24,7 +24,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="image">
-	   	UPDATE IMAGE
+	   	UPDATE Image
 		SET
 			img_type = #{img_type:VARCHAR},
 			img_type_no= #{img_type_no:INTEGER},
@@ -36,11 +36,14 @@
 		WHERE img_no = #{img_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="image">
-		SELECT * FROM IMAGE WHERE img_no = #{img_no:INTEGER} AND img_del_check = FALSE
+		SELECT * FROM Image WHERE img_no = #{img_no:INTEGER} AND img_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="image">
-		SELECT * FROM IMAGE WHERE img_del_check = FALSE
+		SELECT * FROM Image WHERE img_del_check = FALSE
 	</select>
-	
+	<select id="searchForUserProfile" parameterType="int" resultType="image">
+		SELECT * FROM Image 
+		WHERE img_type = 'user_profile' AND img_type_no = #{user_no:INTEGER} AND img_del_check = FALSE
+	</select>
 </mapper>
 

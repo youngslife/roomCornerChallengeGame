@@ -8,12 +8,9 @@ import { Quasar, QEditor } from "quasar";
 Vue.use(Quasar, {
   config: {},
   components: {
-    /* not needed if importStrategy is not 'manual' */
-    QEditor,
+    QEditor
   },
-  directives: {
-    /* not needed if importStrategy is not 'manual' */
-  },
+  directives: {},
   plugins: {},
-  lang: lang,
+  lang: lang
 });

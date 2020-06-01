@@ -113,6 +113,14 @@ public class UserServiceImpl implements UserService {
 		}
 		return converted;
 	}
-	
+	@Override
+	public User searchUserDetail(int user_no) {
+		try {
+			return dao.searchUserDetail(user_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

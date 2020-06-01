@@ -1,0 +1,23 @@
+stages:
+  - build
+variables:
+        IMAGE_NAME: k02a3041.p.ssafy.io:5000/test:latest
+
+build:
+  only:
+    - master
+    - developer
+  stage: package
+  services:
+    - name: docker:stable-dind
+  stage: build
+  script:
+    - docker-compose build
+    - docker-compose down
+    - docker-compose up -d 
+    - docker cp ./model s02p31a304_front_1:/usr/share/nginx/
+ 
+  tags:
+    - test
+    
+

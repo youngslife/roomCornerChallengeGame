@@ -1,49 +1,87 @@
-import api from "../../api";
+import fireService from "../../api/FirebaseService";
+import UserService from "../../api/UserService";
 
-const state = {
-  user: null,
-};
+import router from "../../router";
+const state = { user: {}, tempEmail: "", tempEmailType: 0 };
 
-const getters = {
-  user: (state) => state.user,
-  userList: (state) => state.userList,
-  isLogged: (state) => state.user !== null,
-};
-
-const mutations = {
-  setUser: (state, user) => {
-    state.user = user;
-  },
-  setUserList: (state, userList) => {
-    state.userList = userList;
-  },
-};
+const getters = {};
 
 const actions = {
-  async getUserList({ commit }, params) {
-    const res = await api.getUserList(params);
-    commit("setUserList", res.data);
+  postSignUp: (store, payload) => {
+    UserService.insertUser(payload.user).then(signUpCheck => {
+      if (state.tempEmailType == 0) {
+        if (signUpCheck) {
+          fireService
+            .signUpWithDefault(payload.user.user_email, payload.user_password)
+            .then(check => {
+              if (check) router.push("/login");
+            });
+          store.commit("signUpSubEmail", { email: "", type: 0 });
+        } else {
+          alert("중복된 아이디가 존재합니다. 아이디 바꿔주세요");
+        }
+      } else {
+        if (signUpCheck) {
+          alert("회원가입 완료");
+          router.push("/login");
+        } else {
+          alert("에러");
+        }
+      }
+    });
   },
-  async getCurrentUser({ commit }, params) {
-    const res = await api.getUser(params);
-    commit("setUser", res.data);
+  postLogIn: (store, payLoad) => {
+    fireService
+      .loginWithDefault(payLoad.user_email, payLoad.user_pw)
+      .then(check => {
+        if (check) {
+          UserService.login(payLoad.user_email).then(result => {
+            store.commit("postLogIn", { user: result });
+          });
+          router.push("/");
+        } else {
+          alert("등록되지 않거나 비밀번호를 잘못입력하셧습니다.");
+        }
+      });
   },
-  async create(params) {
-    return await api.createUser(params);
+  postGoogleLogIn: store => {
+    fireService
+      .loginWithGoogle()
+      .then(async response => {
+        let email = response.user.email;
+        await UserService.login(email).then(Response => {
+          if (Response == false) {
+            store.commit("signUpSubEmail", { email: email, type: 1 });
+            router.push("/signin");
+          } else {
+            store.commit("postLogIn", { user: Response });
+            router.push("/");
+          }
+        });
+      })
+      .catch(exp => alert("로그인 실패" + exp));
   },
-  async update(params) {
-    return await api.updateUser(params);
-  },
-  async delete(params) {
-    const res = await api.deleteUser(params);
-    console.log(res);
-  },
+  changeDeafultPw: (store, payLoad) => {
+    fireService.resetPw(payLoad.email);
+    router.push("/login");
+  }
 };
-
+const mutations = {
+  signUpSubEmail(state, payLoad) {
+    state.tempEmail = payLoad.email;
+    state.tempEmailType = payLoad.type;
+  },
+  postLogIn(state, payLoad) {
+    state.user = payLoad.user;
+  },
+  postGoogleLogIn: (state, payLoad) => {
+    state.user = payLoad.user;
+  }
+};
 export default {
   namespaced: true,
   state,
   getters,
   mutations,
-  actions,
+  actions
 };

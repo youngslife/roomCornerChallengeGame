@@ -14,4 +14,6 @@ public interface UserService {
 	public boolean isValidEmail(String email);
 	public User searchByEmail(String email);
 	public String sha256Encryption(String password);
+	
+	public User searchUserDetail(int user_no);
 }

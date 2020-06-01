@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -22,16 +20,16 @@
         id="map"
         class="col-9 slider-col"
         v-bind:class="{ pauseMap: isPause }"
-      ></div> -->
+      ></div>-->
       <div class="col-9">
-      <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
-        <Game v-if="!isMonster" />
-        <ringfit-attack v-if="isMonster" :useSkill="useSkill" />
+        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
+        <Game v-show="!isMonster" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
         <img :src="require('../../assets/walking.gif')" />
-      </div> -->
+      </div>-->
       <div class="pause">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
@@ -53,8 +51,7 @@
             :width="window.width"
             :height="window.height"
             @child="goAttack"
-          >
-          </squat-cam>
+          ></squat-cam>
         </div>
       </div>
     </div>
@@ -64,7 +61,7 @@
 <script>
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
-import RingfitAttack from "../Ringfit/RingfitAttack.vue"
+import RingfitAttack from "../Ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
 import { mapActions, mapState } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
@@ -75,15 +72,16 @@ export default {
     WebCam,
     QOverlay,
     Game,
-    RingfitAttack,
+    RingfitAttack
   },
   data() {
     return {
-      url: "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+      url:
+        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       stage: "",
       window: {
         width: 0,
-        height: 0,
+        height: 0
       },
       time: null,
       hour: 0,
@@ -91,7 +89,11 @@ export default {
       second: 0,
       isPause: false,
       isMonster: false,
-      useSkill: 0,
+      AttackCnt: 0,
+      player: {
+        username: "방구석여포",
+        hp: 200
+      }
     };
   },
   computed: {
@@ -103,9 +105,9 @@ export default {
       // second: (state) => state.second,
     }),
     changeUrl() {
-      console.log(this.url)
-      console.log(this.isMonster)
-      return this.url
+      console.log(this.url);
+      console.log(this.isMonster);
+      return this.url;
     }
   },
   async mounted() {
@@ -121,7 +123,7 @@ export default {
     ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id,
+        id: this.$store.state.id
       };
       await this.getStage(params); // axios
     },
@@ -164,14 +166,14 @@ export default {
         // 걷는 모션
         let arrowRight = new KeyboardEvent("keydown");
         Object.defineProperty(arrowRight, "keyCode", {
-          get: () => 39,
+          get: () => 39
         });
         document.dispatchEvent(arrowRight);
         // map.style.webkitAnimationPlayState = "running";
       } else if (status === "jump") {
         let arrowUp = new KeyboardEvent("keydown");
         Object.defineProperty(arrowUp, "keyCode", {
-          get: () => 38,
+          get: () => 38
         });
         document.dispatchEvent(arrowUp);
         // map.style.webkitAnimationPlayState = "running";
@@ -181,23 +183,24 @@ export default {
         // map.style.webkitAnimationPlayState = "paused";
       }
     },
-    goAttack(count){
-      this.useSkill = count;
+    goAttack(count) {
+      this.AttackCnt = count;
     },
     changeToAttack() {
       if (this.isMonster == false) {
-        this.url = "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/"
-        this.isMonster = true
-        
+        this.url =
+          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+        this.isMonster = true;
       } else if (this.isMonster == true) {
-        this.isMonster = false
-        this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
+        this.isMonster = false;
+        this.url =
+          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
       }
-    },
+    }
   },
   beforeDestroy() {
     clearTimeout(this.time);
-  },
+  }
 };
 function addZeros(num, digit) {
   // 자릿수 맞춰주기

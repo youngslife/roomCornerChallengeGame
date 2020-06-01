@@ -4,22 +4,44 @@
 
 <mapper namespace="com.ssafy.backspring.model.dao.UserDao" >
 
+	<resultMap type="user" id="userDetailMap">
+		<result property="user_no" column="user_no" />
+		<result property="user_email" column="user_email" />
+		<result property="user_name" column="user_name" />
+		<result property="user_sex" column="user_sex" />
+		<result property="user_birthday" column="user_birthday" />
+		<result property="user_age" column="user_age" />
+		<result property="user_lastlogin" column="user_lastlogin" />
+		
+		<association property="user_profile" javaType="image">
+			<result property="img_name" column="img_name" />
+			<result property="img_path" column="img_path" />
+			<result property="img_purpose" column="img_purpose" />
+			<result property="img_extension" column="img_extension" />
+		</association>
+		<association property="user_gameinfo" javaType="usergameinfo">
+			<result property="uginfo_level" column="uginfo_level" />
+			<result property="uginfo_experience" column="uginfo_experience" />
+			<result property="uginfo_gold" column="uginfo_gold" />
+			<result property="uginfo_active_score" column="uginfo_active_score" />
+		</association>
+	</resultMap>
  	<insert id="insert"		parameterType="user">
-	 	INSERT INTO USER(
+	 	INSERT INTO User(
 			user_email,
+			user_login_type,
 			user_name,
 			user_sex,
 			user_birthday,
-			user_age,
-			user_login_type
+			user_age		
 		)
 		VALUES(
 			#{user_email:VARCHAR},
+			#{user_login_type:INTEGER},
 			#{user_name:VARCHAR},
 			#{user_sex:INTEGER},
 			#{user_birthday:VARCHAR},
-			#{user_age:INTEGER},
-			#{user_login_type:INTEGER}
+			#{user_age:INTEGER}
 		);
 	</insert> 
 	
@@ -27,7 +49,7 @@
    		<!-- 
    		익명정보, 가명정보 도입할 것
    		유저성별, 나이 등 남기고 삭제되는 유저 뒤에 삭제유저숫자 추가
-   		UPDATE USER SET
+   		UPDATE User SET
    		user_name = "undefinedUser",
    		user_password = #{user_password},
    		user_token= #{user_token},
@@ -37,23 +59,22 @@
 	</delete>
 
    	<update id="update"		parameterType="user">
-   		UPDATE USER SET
+   		UPDATE User SET
 			user_name 		= #{user_name:VARCHAR},
-			user_password 	= #{user_password:VARCHAR},
 			user_token		= #{user_token:VARCHAR},
 			user_sex 		= #{user_sex:INTEGER},
 			user_birthday	= #{user_birthday:VARCHAR},
 			user_age 		= #{user_age:INTEGER},		
 			user_grant 		= #{user_grant:VARCHAR},
-			user_lastlogin 	= CURRENT_TIMESTAMP(), 
-   		WHERE user_no 	= #{user_no:INTEGER}
+			user_lastlogin 	= CURRENT_TIMESTAMP()
+   		WHERE user_no = #{user_no:INTEGER};
    	</update>
 
 	<select id="search"		parameterType="int"  resultType="user">
 		SELECT
 		 *
 		FROM
-		 USER
+		 User
 		WHERE
 		 user_no = #{user_no}
 		 AND user_del_check = FALSE;
@@ -62,7 +83,7 @@
 		SELECT
 		 *
 		FROM
-		 USER
+		 User
 		WHERE
 		 user_del_check = FALSE;
 	</select>
@@ -71,13 +92,39 @@
 		SELECT 
 		 *
 		FROM 
-		 USER
+		 User
 		WHERE 
 		 user_email = #{user_email}
 		 AND user_del_check = FALSE;
 	</select>
 
-	
-	
+	<select id="searchUserDetail" parameterType="int" resultMap="userDetailMap">
+		SELECT
+			u.user_no,
+			u.user_email,
+			u.user_name,
+			u.user_sex,
+			u.user_birthday,
+			u.user_age,
+			u.user_lastlogin,
+			i.img_name,
+			i.img_path,
+			i.img_purpose,
+			i.img_extension,
+			ugi.uginfo_level,
+			ugi.uginfo_experience,
+			ugi.uginfo_gold,
+			ugi.uginfo_active_score
+		FROM
+		User u
+		RIGHT JOIN 
+			(SELECT * FROM Image
+			WHERE img_type = 'user_profile' AND img_type_no = #{user_no:INTEGER}) i
+		ON u.user_no = i.img_type_no
+		LEFT JOIN Usergameinfo ugi
+		ON u.user_no = ugi.user_no
+		WHERE user_del_check = FALSE;
+	</select>
+		
 </mapper>
 

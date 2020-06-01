@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RUserInfoDao" >
 
  	<insert id="insert"		parameterType="ruserinfo">
-	 	INSERT INTO RUSERINFO(
+	 	INSERT INTO RUserinfo(
 			rstage_no,
 			user_no,
 			ruserinfo_hp,
@@ -19,7 +19,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="ruserinfo">
-	   	UPDATE RUSERINFO
+	   	UPDATE RUserinfo
 		SET
 			rstage_no = #{rstage_no: INTEGER}>,
 			user_no = #{user_no: INTEGER}>,
@@ -31,10 +31,10 @@
 		WHERE ruserinfo_no = #{ruserinfo_no:INTEGER}
    	</update>
 	<select id="search"		parameterType="int"  resultType="ruserinfo">
-		SELECT * FROM RUSERINFO WHERE ruserinfo_no = #{ruserinfo_no:INTEGER} AND ruserinfo_del_check=FALSE
+		SELECT * FROM RUserinfo WHERE ruserinfo_no = #{ruserinfo_no:INTEGER} AND ruserinfo_del_check=FALSE
 	</select>
 	<select id="searchAll"	resultType="ruserinfo">
-		SELECT * FROM RUSERINFO WHERE ruserinfo_del_check=FALSE
+		SELECT * FROM RUserinfo WHERE ruserinfo_del_check=FALSE
 	</select>
 	
 </mapper>

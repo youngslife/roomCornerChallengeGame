@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RGameInfoDao" >
 
  	<insert id="insert"		parameterType="rgameinfo">
-	 	INSERT INTO RGAMEINFO(
+	 	INSERT INTO RGameinfo(
 			ruserinfo_no,
 			rgameinfo_level
 			)
@@ -17,7 +17,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="rgameinfo">
-	   	UPDATE RGAMEINFO
+	   	UPDATE RGameinfo
 		SET
 			ruserinfo_no 			= #{ruserinfo_no:INTEGER},
 			rgameinfo_playtime	 	= #{rgameinfo_playtime:VARCHAR},
@@ -34,10 +34,10 @@
 		WHERE rgameinfo_no = #{rgameinfo_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="rgameinfo">
-		SELECT * FROM RGAMEINFO WHERE rgameinfo_no=#{rgameinfo_no:INTEGER} AND rgameinfo_del_check = FALSE
+		SELECT * FROM RGameinfo WHERE rgameinfo_no=#{rgameinfo_no:INTEGER} AND rgameinfo_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="rgameinfo">
-		SELECT * FROM RGAMEINFO WHERE rgameinfo_del_check = FALSE
+		SELECT * FROM RGameinfo WHERE rgameinfo_del_check = FALSE
 	</select>
 	
 </mapper>

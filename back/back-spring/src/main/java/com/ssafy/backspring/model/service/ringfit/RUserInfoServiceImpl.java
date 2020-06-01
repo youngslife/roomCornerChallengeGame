@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.backspring.model.dao.ringfit.RUserInfoDao;
 import com.ssafy.backspring.model.dto.ringfit.RUserInfo;
 @Service
 public class RUserInfoServiceImpl implements RUserInfoService {
 	@Autowired
-	private RUserInfoService dao;
+	private RUserInfoDao dao;
 	@Override
 	public void insert(RUserInfo ruserinfo) {
 		try {

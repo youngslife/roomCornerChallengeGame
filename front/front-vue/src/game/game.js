@@ -12,10 +12,10 @@ function launch(containerId) {
       default: "arcade",
       arcade: {
         gravity: { y: 200 },
-        debug: false,
-      },
+        debug: false
+      }
     },
-    scene: [BootScene, PlayScene],
+    scene: [BootScene, PlayScene]
   });
 }
 

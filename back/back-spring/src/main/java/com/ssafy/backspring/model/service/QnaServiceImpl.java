@@ -73,7 +73,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public void insertAnswer(Qna Qna) {
 		try {
-			dao.insert(Qna);
+			dao.insertAnswer(Qna);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

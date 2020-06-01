@@ -43,7 +43,7 @@
 		UPDATE Qna
 		SET
 			qna_answer = #{qna_answer:VARCHAR},
-			qna_answertime = CURRENT_TIMESTAMP()
+			qna_anstime = CURRENT_TIMESTAMP()
 		WHERE qna_no = #{qna_no:INTEGER} AND qna_del_check = FALSE;
 	</update>
 </mapper>

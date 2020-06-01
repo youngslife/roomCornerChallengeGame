@@ -1,79 +1,78 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import firebase from "firebase";
-
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  // 사이트 메인
+  {
     path: "/",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
-    beforeEnter: (to, from, next) => {
-      firebase.auth().onAuthStateChanged(function (user) {
-        console.log(user);
-        if (user) {
-          next("/home");
-        } else next();
-      });
-    },
+    name: "home",
+    component: () => import("../views/Home.vue")
   },
   {
-    path: "/home",
-    name: "Home",
-    component: Home,
+    path: "/login",
+    name: "login",
+    component: () => import("../views/Login.vue")
   },
   {
-    path: "/gamehome",
-    name: "GameHome",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import( /* webpackChunkName: "about" */ "../views/GameHome.vue"),
+    path: "/signin",
+    name: "signin",
+    component: () => import("../views/SignIn.vue")
   },
   {
-    path: "/how",
-    name: "how",
-    component: () => import("../views/How.vue"),
+    path: "/mypage",
+    name: "mypage",
+    component: () => import("../views/MyPage.vue")
   },
+  //피트니스 게임
   {
-    path: "/boardList",
-    name: "boardList",
-    component: () => import("../views/Board/BoardList.vue"),
-  },
-  {
-    path: "/boardDetail/:id",
-    name: "boardDetail",
-    component: () => import("../views/Board/BoardDetail.vue"),
-  },
-  {
-    path: "/boardCreate",
-    name: "boardCreate",
-    component: () => import("../views/Board/BoardCreate.vue"),
+    path: "/fitness",
+    component: () => import("../views/Fitness/Fitness.vue"),
+    children: [{
+        path: "",
+        name: "fitness",
+        component: () => import("../views/Fitness/FitnessHome.vue")
+      },
+      {
+        path: "community",
+        name: "fitnesscommunity",
+        component: () => import("../views/Fitness/FitnessCommunity.vue")
+      },
+      {
+        path: "guide",
+        name: "fitnessguide",
+        component: () => import("../views/Fitness/FitnessGuide.vue")
+      },
+      {
+        path: "rank",
+        name: "fitnessrank",
+        component: () => import("../views/Fitness/FitnessRank.vue")
+      },
+      {
+        path: "info",
+        name: "fitnessinfo",
+        component: () => import("../views/Fitness/FitnessInfo.vue")
+      }
+    ]
   },
   {
     path: "/game/RingFit",
     name: "RingFit",
-    component: () => import("../views/Game/RingFit.vue"),
-  },
+    component: () => import("../views/Game/RingFit.vue")
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
+});
+import store from "../store/index.js";
+router.beforeEach((to, from, next) => {
+  if (store.state.header.isDrawer == true) {
+    store.dispatch("header/changeIsDrawer");
+  }
+  next();
 });
 
-router.beforeEach((to, from, next) => {
-  // let requireAuth = to.matched.some((record) => record.meta.requireAuth);
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user || to.path === "/") {
-      next();
-    } else {
-      // console.log(user);
-      next("/");
-    }
-  });
-});
 export default router;
