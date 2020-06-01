@@ -3,13 +3,13 @@
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
     <all-predict :predictions="predictions" :stage="stage"></all-predict>
-    <div>Squat Prediction</div>
-    <SqautPredict
+    <div>Prediction</div>
+    <SquatPredict
       :predictions="predictions"
       :stage="stage"
       @child="test"
     >
-    </SqautPredict>
+    </SquatPredict>
 
   </div>
 </template>
@@ -18,7 +18,7 @@
 import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
 import AllPredict from "./predictions/AllPredictions";
-import SqautPredict from "./predictions/SquatPrediction";
+import SquatPredict from "./predictions/SquatPrediction";
 export default {
   props: {
     url: {
@@ -40,7 +40,7 @@ export default {
   },
   components: {
     AllPredict,
-    SqautPredict,
+    SquatPredict,
   },
   data() {
     return {
