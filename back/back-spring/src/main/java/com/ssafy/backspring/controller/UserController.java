@@ -34,6 +34,7 @@ import com.ssafy.backspring.util.FileUploadProperties;
 import com.ssafy.backspring.util.Handler;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -144,31 +145,56 @@ public class UserController {
 
 	@ApiOperation("User 프로필을 수정하는 기능")
 	@PutMapping("/User/update")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user,
+	public ResponseEntity<Map<String, Object>> update(
+			@ApiParam(value = "The User ID", required = true)
+			@RequestParam(name = "user_no",required = true) final int user_no,
+	        @ApiParam(value = "The User NickName",required = false)
+			@RequestParam(name = "user_name",required = false) String user_name,
+			@ApiParam(value = "The User Sex",required = false)
+			@RequestParam(name = "user_sex",required = false) String user_sex,
+			@ApiParam(value = "The User BirthDay",required = false)
+			@RequestParam(name = "user_birthday",required = false) String user_birthday,
+			@ApiParam(value = "The User Image",required = false)
 			@RequestParam(required = false) MultipartFile file) {
+		/*
+		RequestBody로 하면 파일이랑 같이 못보내기 때문에 Request Param으로 수정함
+		 */
 		// 닉네임,성별,생년월일,이미지을 수정할 수 있다.
-		User updateUser = service.search(user.getUser_no());
-		if (user.getUser_birthday() != null) {
-			String[] birth = user.getUser_birthday().split("-");
-			user.setUser_age(
-					getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+		User updateUser = service.search(user_no);
+		if(updateUser != null) {
+			if (user_name != null) updateUser.setUser_name(user_name);
+			if (user_sex != null) {
+				if(user_sex == "남") updateUser.setUser_sex(0);
+				else if(user_sex =="여") updateUser.setUser_sex(1);
+			}
+			if (user_birthday != null) {
+				String[] birth = user_birthday.split("-");
+				updateUser.setUser_age(
+						getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+			}
+			Image img = i_service.searchForUserProfile(user_no);// 이런걸로 이미지 번호 찾고 이미지를 업데이트 할 것
+			System.out.println("img"+img);
+			if (file != null) {
+				// 만약에 이미지가 있으면 이미지의 파일명, 파일경로, 확장자를 수정해줘야한다.
+				// 이미지가 없으면 나머지만 수정해주고
+				String distingishString = "" + updateUser.getUser_no() + ((int) (Math.random() * 1000) + 1) + updateUser.hashCode();
+//				System.out.print(distingishString);
+				String fileName = f_service.storeFile(file, distingishString);
+//				System.out.println(fileName);
+				img.setImg_name(fileName);
+				img.setImg_path(prop.getUploadDir() + '/' + fileName);
+				img.setImg_extension(file.getContentType());
+				i_service.update(img);
+				// 파일저장하고 거기서 이름 가져와서 여기 이름 두고, 패스 만들어다 넣어주고, 확장자
+				// 이미지 삭제하는 것은 다른 기능으로 빼야한다.
+			}
+			service.update(updateUser);
+			Map<String,Object> data = new HashMap<String,Object>();
+			data.put("user", updateUser);
+			data.put("message", "유저 업데이트 완료");
+			return handler.handleSuccess(data);
 		}
-
-		Image img = i_service.searchForUserProfile(user.getUser_no());// 이런걸로 이미지 번호 찾고 이미지를 업데이트 할 것
-		if (img != null) {
-			// 만약에 이미지가 있으면 이미지의 파일명, 파일경로, 확장자를 수정해줘야한다.
-			// 이미지가 없으면 나머지만 수정해주고
-			String distingishString = "" + user.getUser_no() + ((int) (Math.random() * 1000) + 1) + user.hashCode();
-			String fileName = f_service.storeFile(file, distingishString);
-			img.setImg_name(fileName);
-			img.setImg_path(prop.getUploadDir() + '/' + fileName);
-			img.setImg_extension(file.getContentType());
-			i_service.update(img);
-			// 파일저장하고 거기서 이름 가져와서 여기 이름 두고, 패스 만들어다 넣어주고, 확장자
-			// 이미지 삭제하는 것은 다른 기능으로 빼야한다.
-		}
-		service.update(user);
-		return handler.handleSuccess("유저 프로필 업데이트 완료");
+		else return handler.handleFail("해당 유저는 없는 유저인데 어떻게 요청하셨나요?", HttpStatus.BAD_REQUEST);
 	}
 
 	@Autowired
