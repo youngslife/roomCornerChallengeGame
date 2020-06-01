@@ -16,4 +16,5 @@ public interface UserDao {
 	public void delete(int user_no);
 	
 	public User searchByEmail(String email);
+	public User searchUserDetail(int user_no);
 }

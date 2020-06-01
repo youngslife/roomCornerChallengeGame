@@ -4,16 +4,8 @@
     <!-- <div>All Prediction</div> -->
     <all-predict :predictions="predictions" :stage="stage"></all-predict>
     <div>Best Prediction</div>
-    <best-predict
-      :predictions="predictions"
-      :stage="stage"
-      @child="test"
-    ></best-predict>
-    <squat-prediction
-      :predictions="predictions"
-      :stage="stage"
-      @child="test"
-    ></squat-prediction>
+    <best-predict :predictions="predictions" :stage="stage" @child="test"></best-predict>
+    <squat-prediction :predictions="predictions" :stage="stage" @child="test"></squat-prediction>
   </div>
 </template>
 
@@ -27,31 +19,31 @@ export default {
   props: {
     url: {
       type: String,
-      required: true,
+      required: true
     },
     stage: {
       type: String,
-      required: true,
+      required: true
     },
     height: {
       type: Number,
-      required: true,
+      required: true
     },
     width: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AllPredict,
     BestPredict,
-    SquatPrediction,
+    SquatPrediction
   },
   data() {
     return {
       model: null,
       webcam: null,
-      predictions: [],
+      predictions: []
     };
   },
   async mounted() {
@@ -100,7 +92,7 @@ export default {
     },
     test(isJump) {
       this.$emit("child", isJump);
-    },
-  },
+    }
+  }
 };
 </script>

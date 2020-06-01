@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.CommentDao" >
 
  	<insert id="insert"		parameterType="comment">
- 		INSERT INTO COMMENT(
+ 		INSERT INTO Comment(
 			post_no,
 			user_no,
 			cmt_content)
@@ -15,7 +15,7 @@
 			#{cmt_content:VARCHAR});	
 	</insert> 
 	<insert id="insertReply"	parameterType="comment">
-		INSERT INTO COMMENT(
+		INSERT INTO Comment(
 			post_no,
 			user_no,
 			cmt_parent_no,
@@ -36,12 +36,12 @@
    	</update>
 
 	<select id="search"		parameterType="int"  resultType="comment">
-		SELECT * FROM COMMENT
+		SELECT * FROM Comment
 		WHERE cmt_no = #{cmt_no:INTEGER} 
 		AND cmt_del_check=FALSE
 	</select>
 	<select id="searchAll"	resultType="comment">
-		SELECT * FROM COMMENT
+		SELECT * FROM Comment
 		WHERE cmt_del_check=FALSE
 	</select>
 	<update id="addCmtRecommendation" parameterType="int">

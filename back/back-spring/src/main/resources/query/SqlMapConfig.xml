@@ -9,9 +9,9 @@
 		<typeAlias type="com.ssafy.backspring.model.dto.Image" alias="Image" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Faq" alias="Faq" />
 		<typeAlias type="com.ssafy.backspring.model.dto.Qna" alias="Qna" />
-		<typeAlias type="com.ssafy.backspring.model.dto.UserGameInfo" alias="UserGameInfo" />
-		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RUserInfo" alias="RUserInfo" />
-		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RGameInfo" alias="RGameInfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.UserGameInfo" alias="Usergameinfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RUserInfo" alias="RUserinfo" />
+		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RGameInfo" alias="RGameinfo" />
 		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RStage" alias="RStage" />
 		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RMap" alias="RMap" />
 		<typeAlias type="com.ssafy.backspring.model.dto.ringfit.RMonster" alias="RMonster" />
