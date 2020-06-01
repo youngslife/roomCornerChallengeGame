@@ -55,7 +55,7 @@
     }
 
     var count = 0
-    var status = ""
+    var status = "stop"
 
     async function predict() {
         // Prediction #1: run input through posenet
@@ -64,14 +64,16 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
 
-        if(prediction[0].probability.toFixed(2) == 1.00){
+        if(prediction[0].probability.toFixed(2) > 0.98){
             if(status == "left"){
                 count++
                 console.log(count)
             }
             status = "right"
-        }else if(prediction[2].probability.toFixed(2) == 1.00){
+        }else if(prediction[2].probability.toFixed(2) > 0.98){
             status = "left"
+        }else if(prediction[1].probability.toFixed(2) > 0.98){
+            status = "stop"
         }
 
         for (let i = 0; i < maxPredictions; i++) {

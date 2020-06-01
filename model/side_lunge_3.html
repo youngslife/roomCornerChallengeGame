@@ -71,11 +71,11 @@
                 console.log(count);
             }
             status = "stand";
-        } else if (prediction[2].probability.toFixed(2) > 0.97){
+        } else if (prediction[2].probability.toFixed(2) > 0.99){
             if(status == "stand"){
             status = "right"
             }    
-        }else if(prediction[4].probability.toFixed(2) > 0.97){
+        }else if(prediction[4].probability.toFixed(2) > 0.99){
             if(status == "stand"){
                 status = "left"
             }
