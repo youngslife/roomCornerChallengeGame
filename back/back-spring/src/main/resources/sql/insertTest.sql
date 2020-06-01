@@ -12,8 +12,8 @@ VALUES
 (2,'커뮤니티','자유'),		#6 -5
 (2,'커뮤니티','정보'),		#7 -
 (2,'커뮤니티','토론');		#8
-SELECT * FROM BOARD;
-
+SELECT * FROM Board;
+SELECT * FROM User;
 SELECt * FROM POST;
 # 공지사항
 INSERT INTO POST(board_no,user_no,post_type,post_title,post_content)
@@ -221,3 +221,100 @@ VALUES
 			ON c.user_no = u.user_no) as cc ON p.post_no = cc.post_no
 		WHERE p.post_no = 31 AND p.post_del_check = FALSE ORDER BY cc.cmt_no;
 SELECT * FROM QNA;
+
+
+INSERT INTO RStage(
+	rstage_name,
+	rstage_theme)
+VALUES(
+	'stage00',
+	'tutorial'
+),(
+	'stage01',
+	'첫만남'
+),(
+	'stage02',
+	'마지막'
+)
+;
+
+SELECT * FROM RUserinfo; #유저가 play시작하면 바로 입력
+select * From RGameinfo;
+Select * From RMap;
+insert into RMap(rstage_no, rmap_length) Values(1, 300),(2,1000),(3,1000);
+select * from RMonster;
+insert into RMonster(rmon_name, rmon_level, rmon_hp, rmon_grade, rmon_description)
+values 
+('다리우스',1,50,'ordinary','도끼를 들고 있는 악마로 도끼를 휘두르며 공격한다.'),
+('드라고',2,100,'middleboss','불을 뿜어내는 몬스터로, 용의 형상을 하고 있다.'),
+('거신',3,300,'finalboss','벼룩처럼 생겼지만, 레이저를 충전하여 쏘아대고, 벌레치곤 매우 크다.'),
+('짜오',1,50,'ordinary','창을 들고 있는 악마로, 상대를 찌른채로 창을 올려버리는 무서운 괴물이다.'),
+('아페오시카',2,100,'middleboss','뱀요괴로, 고대 그리스신화에 나오는 메두사의 형상을 하고 있고 눈빛으로 돌을 소환해서 상대를 찍어누른다.'),
+('밀리패드',3,300,'finalboss','거대한 지네로써 땅속에 숨어있다가 튀어나와서 공격하고 다시 숨는 습관이 있다. 지네의 서식지를 통과하고 싶다면 몸통을 쪼개는 수 밖에 없다.');
+
+select * from RMonster;
+
+select * from RUserinfo;
+select * 
+from RStage rs
+left join RUserinfo ru
+on rs.rstage_no = ru.rstage_no
+where ru.user_no = 1;
+
+select * from RGameinfo;
+select * from Image;
+select * from User;
+select * from Usergameinfo;
+
+select * from RMonster;
+
+SELECT
+rs.rstage_no,
+rs.rstage_name,
+rs.rstage_theme,
+rm.rmap_no,
+rm.rmap_length
+FROM RStage rs
+LEFT JOIN RMap rm
+ON rs.rstage_no = rm.rstage_no
+WHERE rs.rstage_del_check = FALSE AND rm.rmap_del_check = FALSE
+;
+
+SELECT 
+rui.ruserinfo_no,
+rui.rstage_no,
+rui.user_no,
+rui.ruserinfo_iscleared,
+rgi.rgameinfo_startdate,
+rgi.rgameinfo_playtime,
+rgi.rgameinfo_enddate,
+rgi.rgameinfo_level,
+rgi.rgameinfo_perfect_num,
+rgi.rgameinfo_great_num,
+rgi.rgameinfo_good_num,
+rgi.rgameinfo_miss_num,
+rgi.rgameinfo_rank,
+rgi.rgameinfo_kcal,
+rgi.rgameinfo_score
+FROM RUserinfo rui
+LEFT JOIN RGameinfo rgi
+ON rui.ruserinfo_no = rgi.ruserinfo_no;
+
+INSERT INTO RUserinfo(
+	rstage_no,
+	user_no,
+	ruserinfo_hp,
+	ruserinfo_golds)
+VALUES(
+	1,
+	24,
+	100,
+	0);
+INSERT INTO RGameinfo(
+	ruserinfo_no,
+	rgameinfo_level
+	)
+VALUES(
+	1,
+	1
+);

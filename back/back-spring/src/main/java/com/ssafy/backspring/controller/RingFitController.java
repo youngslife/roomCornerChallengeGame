@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.ringfit.RStage;
+import com.ssafy.backspring.model.dto.ringfit.RUserInfo;
 import com.ssafy.backspring.model.service.ringfit.RStageService;
 import com.ssafy.backspring.util.Handler;
 
@@ -39,17 +41,71 @@ public class RingFitController {
      @ApiOperation("유저별 스테이지 리스트 보여주는 기능")
 //     스테이지 리스트 보여줄 때는 유저별로 스테이지 클리어했는지랑 플레이시간, 총점수 이런거 가져다주고
 //     모든 스테이지를 가져다줘야하는데 유저의 게임정보들을 뒤져서 스테이지 클리어했는지
-     @GetMapping("/Ringfit/stage/searchAll")
-     public ResponseEntity<Map<String, Object>> searchAll() {
+     @GetMapping("/Ringfit/stage/searchAll/{user_no}")
+     public ResponseEntity<Map<String, Object>> searchAll(@PathVariable int user_no) {
     	 //유저별로 스테이지 클리어한 내용이 있다면 같이 주고 아니면 따로준다.
     	 //유저가 참가한 기록이 있는가를 판단해야하잖아.
     	 //가져오고 클리어했는지를 판단해서 같이 맹글어서 줘.
     	 //근데 또 클리어 안한애도 줘야돼.
     	 //그러면 이거를 찾아보고 있으면 이걸주는게 아니고 원래거에다가 붙여서 주자.
-	     final List<RStage> list = rs_service.searchAll();
 	     Map<String,Object> data = new HashMap<String,Object>();
-	     
-	     return handler.handleSuccess(list);
+	     List<RStage> list = rs_service.checkUserinfo(user_no);
+	     data.put("record", list);
+	     data.put("message", "클리어 전적이 없습니다.");
+	     for(int i = 0; i < list.size(); ++i) {
+	    	 List<RUserInfo> tempUserInfo = list.get(i).getRstage_usergameinfo();
+	    	 for(int j = 0; j < tempUserInfo.size(); ++j) {
+	    		 if(tempUserInfo.get(j).isRuserinfo_iscleared()) {
+	    			 data.put("message", "클리어 전적이 있습니다."); 
+	    			 break;
+	    		 }
+	    	 }
+	     }
+//	    
+	     //유저가 클리어한 내용이 있으면 stage별로 userinfo를 체크할 수 있음
+	     //게임한 적이 없으면  이런식으로 오니까 확인하면 되겠군
+//	     "rstage_usergameinfo": [
+//         {
+//             "ruserinfo_no": 0,
+//             "rstage_no": 3,
+//             "user_no": 0,
+//             "ruserinfo_hp": 0,
+//             "ruserinfo_iscleared": false,
+//             "ruserinfo_iswon": false,
+//             "ruserinfo_golds": 0,
+//             "rsuerinfo_del_check": false,
+//             "ruserinfo_gameinfo": null
+//           }
+//         ]
+	     //플레이한적 있으면 이렇게오고
+//	     "rstage_usergameinfo": [
+//             {
+//               "ruserinfo_no": 1,
+//               "rstage_no": 1,
+//               "user_no": 24,
+//               "ruserinfo_hp": 0,
+//               "ruserinfo_iscleared": true,
+//               "ruserinfo_iswon": false,
+//               "ruserinfo_golds": 0,
+//               "rsuerinfo_del_check": false,
+//               "ruserinfo_gameinfo": {
+//                 "rgameinfo_no": 0,
+//                 "ruserinfo_no": 1,
+//                 "rgameinfo_startdate": "2020-06-01 11:27:23",
+//                 "rgameinfo_playtime": "00:07:56",
+//                 "rgameinfo_enddate": "2020-06-01 11:35:19",
+//                 "rgameinfo_level": 1,
+//                 "rgameinfo_perfect_num": 8,
+//                 "rgameinfo_great_num": 6,
+//                 "rgameinfo_good_num": 4,
+//                 "rgameinfo_miss_num": 2,
+//                 "rgameinfo_rank": "A",
+//                 "rgameinfo_kcal": 203,
+//                 "rgameinfo_score": 89,
+//                 "rgameinfo_del_check": false
+//               }
+//             }
+	     return handler.handleSuccess(data);
      }
     // @ApiOperation("게임을 시작하는 기능")
     // 난이도, 스테이지, 유저정보 받고 유저관련 정보 추가(유저번호,난이도,스테이지,도전횟수,클리어여부,시작시간)하고

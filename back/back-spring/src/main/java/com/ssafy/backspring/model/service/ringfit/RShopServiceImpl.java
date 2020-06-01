@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.backspring.model.dao.ringfit.RShopDao;
 import com.ssafy.backspring.model.dto.ringfit.RShop;
 @Service
 public class RShopServiceImpl implements RShopService {
 	@Autowired
-	private RShopService dao;
+	private RShopDao dao;
 	@Override
 	public void insert(RShop rshop) {
 		try {

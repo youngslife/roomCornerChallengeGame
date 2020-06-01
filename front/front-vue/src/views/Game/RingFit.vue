@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -22,14 +20,16 @@
         id="map"
         class="col-9 slider-col"
         v-bind:class="{ pauseMap: isPause }"
-      ></div> -->
+      ></div>-->
       <div class="col-9">
-        <Game />
+        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
+        <Game v-show="!isMonster" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
         <img :src="require('../../assets/walking.gif')" />
-      </div> -->
+      </div>-->
       <div class="pause">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
@@ -37,12 +37,21 @@
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
           <web-cam
-            :url="url"
+            v-if="!isMonster"
+            :url="changeUrl"
             :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
           ></web-cam>
+          <squat-cam
+            v-if="isMonster"
+            :url="changeUrl"
+            :stage="stage"
+            :width="window.width"
+            :height="window.height"
+            @child="goAttack"
+          ></squat-cam>
         </div>
       </div>
     </div>
@@ -51,15 +60,19 @@
 
 <script>
 import WebCam from "../../components/WebCam";
+import SquatCam from "../../components/SquatCam";
+import RingfitAttack from "../Ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
 import { mapActions, mapState } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
   components: {
+    SquatCam,
     WebCam,
     QOverlay,
-    Game
+    Game,
+    RingfitAttack
   },
   data() {
     return {
@@ -74,7 +87,13 @@ export default {
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false
+      isPause: false,
+      isMonster: false,
+      AttackCnt: 0,
+      player: {
+        username: "방구석여포",
+        hp: 200
+      }
     };
   },
   computed: {
@@ -84,12 +103,18 @@ export default {
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
-    })
+    }),
+    changeUrl() {
+      console.log(this.url);
+      console.log(this.isMonster);
+      return this.url;
+    }
   },
   async mounted() {
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
+    // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
@@ -156,6 +181,20 @@ export default {
       } else if (status === "stand") {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
+      }
+    },
+    goAttack(count) {
+      this.AttackCnt = count;
+    },
+    changeToAttack() {
+      if (this.isMonster == false) {
+        this.url =
+          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+        this.isMonster = true;
+      } else if (this.isMonster == true) {
+        this.isMonster = false;
+        this.url =
+          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
       }
     }
   },

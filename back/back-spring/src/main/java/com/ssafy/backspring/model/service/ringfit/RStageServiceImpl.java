@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.backspring.model.dao.ringfit.RStageDao;
 import com.ssafy.backspring.model.dto.ringfit.RStage;
 @Service
 public class RStageServiceImpl implements RStageService {
 	@Autowired
-	private RStageService dao;
+	private RStageDao dao;
 	@Override
 	public void insert(RStage rstage) {
 		try {
@@ -56,5 +57,13 @@ public class RStageServiceImpl implements RStageService {
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public List<RStage> checkUserinfo(int ruser_no){
+		try {
+			return dao.checkUserinfo(ruser_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
