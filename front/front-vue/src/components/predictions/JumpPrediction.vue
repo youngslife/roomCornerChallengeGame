@@ -30,6 +30,7 @@ export default {
       },
       befAction: "",
       count: 0,
+      midCnt: 0,
     };
   },
   computed: {
@@ -61,26 +62,27 @@ export default {
       }, 100);
     },
   test() {
-      if(this.bestPrediction.className == "stand"){
+      if(this.bestPrediction.className == "down"){
           if(this.bestPrediction.probability.toFixed(2) == 1.00){
-            if(this.status == "right" || this.status == "left"){
+            if(this.midCnt== 1){
               this.count++;
               console.log(this.count);
+              this.midCnt = 0;
             }
-            this.status = "stand"
-            return this.count
+            this.status = "down"
+            // return this.count
           }
-      }else if(this.bestPrediction.className == "right_exact"){
-        if(this.bestPrediction.probability.toFixed(2) > 0.99){
-          if(this.status == "stand"){
-            this.status = "right";
+      }else if(this.bestPrediction.className == "middle"){
+        if(this.bestPrediction.probability.toFixed(2) == 1.00){
+          if(this.status == "down"){
+            this.midCnt++;
           }
+          console.log("midCnt: ", this.midCnt);
+          this.status = "mid";
         }
-      }else if(this.bestPrediction.className == "left_exact"){
-        if(this.bestPrediction.probability.toFixed(2) > 0.98){
-          if(this.status == "stand"){
-            this.status = "left"
-          }
+      }else if(this.bestPrediction.className == "up"){
+        if(this.bestPrediction.probability.toFixed(2) == 1.00){
+          this.status = "up"
         }
       }
       return this.count
