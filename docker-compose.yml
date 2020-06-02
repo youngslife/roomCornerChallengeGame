@@ -15,5 +15,5 @@ services:
           - 443:443
         volumes:
           - /home/ubuntu/letsencrypt:/etc/letsencryt
-            # - /home/ubuntu/image:/usr/share/nginx/image
+          - /home/ubuntu/image:/usr/share/nginx/uploads
 
