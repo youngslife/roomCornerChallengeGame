@@ -52,7 +52,7 @@ public class UserController {
 	private final Handler handler = Handler.getInstance();
 	@Autowired
 	private FileUploadProperties prop = FileUploadProperties.getInstance();
-
+	private final String ourDomain = "https://k02a3041.p.ssafy.io/";
 	@ApiOperation("전체 User 목록을 조회하는 기능")
 	@GetMapping("/User/searchAll")
 	public ResponseEntity<Map<String, Object>> searchAll() {
@@ -115,7 +115,7 @@ public class UserController {
 	private Image getDefaultObject(int user_no) {
 		String type = "user_profile";
 		String file = "default_profile.png";
-		String path = prop.getUploadDir() + '/' + file;
+		String path = ourDomain+prop.getUploadDir() + '/' + file;
 		String purpose = "기본 유저 이미지";
 		String extension = "png";
 		Image img = new Image(0, type, user_no, file, path, purpose, extension, false);
@@ -173,7 +173,7 @@ public class UserController {
 						getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
 			}
 			Image img = i_service.searchForUserProfile(user_no);// 이런걸로 이미지 번호 찾고 이미지를 업데이트 할 것
-			System.out.println("img"+img);
+//			System.out.println("img"+img);
 			if (file != null) {
 				// 만약에 이미지가 있으면 이미지의 파일명, 파일경로, 확장자를 수정해줘야한다.
 				// 이미지가 없으면 나머지만 수정해주고
@@ -182,7 +182,7 @@ public class UserController {
 				String fileName = f_service.storeFile(file, distingishString);
 //				System.out.println(fileName);
 				img.setImg_name(fileName);
-				img.setImg_path(prop.getUploadDir() + '/' + fileName);
+				img.setImg_path(ourDomain+prop.getUploadDir() + '/' + fileName);
 				img.setImg_extension(file.getContentType());
 				i_service.update(img);
 				// 파일저장하고 거기서 이름 가져와서 여기 이름 두고, 패스 만들어다 넣어주고, 확장자
