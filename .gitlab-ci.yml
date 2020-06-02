@@ -16,7 +16,7 @@ build:
     - docker-compose down
     - docker-compose up -d 
     - docker cp ./model s02p31a304_front_1:/usr/share/nginx/
-    - docker cp ./back/back-spring/uploads s02p31a304_front_1:/usr/share/nginx
+    - docker cp ./back/back-spring/uploads s02p31a304_front_1:/usr/share/nginx/
   tags:
     - test
     
