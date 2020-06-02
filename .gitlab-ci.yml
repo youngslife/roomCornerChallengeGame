@@ -11,12 +11,15 @@ build:
   services:
     - name: docker:stable-dind
   stage: build
+  before_script:
+    - cp -r /home/ubuntu/image /home/ubuntu/tmp
   script:
     - docker-compose build
     - docker-compose down
     - docker-compose up -d 
     - docker cp ./model s02p31a304_front_1:/usr/share/nginx/
- 
+  after_script:
+    - cp -r /home/ubuntu/tmp/image /home/ubuntu
   tags:
     - test
     
