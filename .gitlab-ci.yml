@@ -12,14 +12,14 @@ build:
     - name: docker:stable-dind
   stage: build
   before_script:
-    - cp /home/ubuntu/image /home/ubuntu/tmpImg
+    - mv /home/ubuntu/image /home/ubuntu/tmpImg
   script:
     - docker-compose build
     - docker-compose down
     - docker-compose up -d 
     - docker cp ./model s02p31a304_front_1:/usr/share/nginx/
   after_script:
-    - cp /home/ubuntu/tmpImg /home/ubuntu/image
+    - mv /home/ubuntu/tmpImg /home/ubuntu/image
   tags:
     - test
     
