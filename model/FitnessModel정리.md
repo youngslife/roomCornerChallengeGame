@@ -2,7 +2,13 @@
 
 1. Walk
 
-   class1(오) - class2(stop) - class3(왼)
+   1. class1(오른쪽) 
+
+   2. class2(stop) 
+
+   3. class3(왼)
+
+      
 
 2. Squat
 
@@ -12,20 +18,25 @@
 
    Class
 
-   	1. stand
+   1. stand
+   
     	2. right90
     	3. right_exact
     	4. left90
     	5. left_exact
-    	6. stop
-
-   문제점: 오른쪽 인식이 잘 안됨 
-
+ 	6. stop
    
 
+   
 4. Shoulder Press
 
-   down - middle - up
+   Class
+
+   1. down
+   2. down_mid
+   3. middle
+   4. up_mid
+   5. up
 
    
 
@@ -33,32 +44,34 @@
 
    무릎이 발끝보다 앞으로 나오지 않도록 엉덩이를 뒤로 뺀다.
 
-   side_lunge_1 : 두사람 영상 다 넣은거 stand middle right_mid right left_mid left
+   
 
-   ​							바닥 부분을 화면에 많이 하면 매우 잘 인식됨
+   side_lunge_3
 
-   side_lunge_2: middle-right_mid-right-left_mid-left
+   Class
 
-   side_lunge_3: middle-right_mid-right-left_mid-left 
+   1. middle
+2. right_mid
+   3. right
+4. left_mid
+   5. left 
 
-   ​						ㅂ닥부분 안보이는 부분에서는 mid 부분이 인식이 안됨..
-
-   ​							다 ㅈ라 인식되는 부분에서는 right 자세ㅣ...어려움...
-
-   ​							그래도 이게 젤 나음.
+   (화면상에 바닥 부분이 넓게 보일 수록 인식이 잘 됨)
 
    
 
-6. Arm jump ( PT 체조 )
+6. Jumping Jacks ( PT 체조 )
 
-   class 1:  down
+   Class
 
-   class2: middle
+   0: down
 
-   class3: up
+   1: down45
+   
+   2: middle
+   
+   3: up45
+   
+   4: up
 
 
-
-
-
-나무자세
