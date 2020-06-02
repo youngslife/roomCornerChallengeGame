@@ -70,7 +70,6 @@ export default {
               this.midCnt = 0;
             }
             this.status = "down"
-            // return this.count
           }
       }else if(this.bestPrediction.className == "middle"){
         if(this.bestPrediction.probability.toFixed(2) == 1.00){
