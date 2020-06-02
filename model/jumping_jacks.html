@@ -17,7 +17,7 @@
     // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
     // the link to your model provided by Teachable Machine export panel
-    const URL = "./fitness_model/arm_jump/";
+    const URL = "./jumping_jacks/";
     let model, webcam, ctx, labelContainer, maxPredictions;
 
     async function init() {
@@ -66,18 +66,27 @@
         const prediction = await model.predict(posenetOutput);
 
         if(prediction[0].probability.toFixed(2) == 1.00){ // 0: down 
-            if(midCnt % 2 == 0){
+            // console.log("down")
+            if(midCnt == 1){
                 count++;
                 console.log(count);
+                midCnt = 0
             }
             status = "down";
-        }else if(prediction[1].probability.toFixed(2) == 1.00){ // 1: middle
-            midCnt++;
-            console.log("midCnt: ", midCnt)
-            status == "mid";
-        }else if(prediction[2].probability.toFixed(2) == 1.00){ // 2: up
-            midCnt++;
-            console.log("midCnt: ", midCnt)
+            console.log(status)
+        }else if(prediction[2].probability.toFixed(2) == 1.00){ // 2: middle
+            if(status == "down"){
+                midCnt++;
+            } // else if(status == "up"){
+                // midCnt++;
+            // }
+            console.log("midCnt: ", midCnt);
+            status = "mid";
+            console.log(status)
+        }else if(prediction[4].probability.toFixed(2) == 1.00){ // 4: up
+            // console.log("up");
+            status = "up";
+            console.log(status)
         }
 
         for (let i = 0; i < maxPredictions; i++) {
