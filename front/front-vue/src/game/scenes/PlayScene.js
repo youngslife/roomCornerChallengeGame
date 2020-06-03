@@ -1,6 +1,9 @@
-import { Scene } from "phaser";
+import {
+  Scene
+} from "phaser";
 
 let player,
+  monster,
   layer,
   coinLayer,
   coins,
@@ -8,7 +11,9 @@ let player,
 
 export default class PlayScene extends Scene {
   constructor() {
-    super({ key: "PlayScene" });
+    super({
+      key: "PlayScene"
+    });
   }
   // Runs once, after all assets in preload are loaded
   create() {
@@ -16,7 +21,9 @@ export default class PlayScene extends Scene {
     this.physics.world.setBounds(0, 0, 3392);
     const backgroundImage = this.add.image(0, 0, "bg").setOrigin(0, 0);
     backgroundImage.setScale(2, 1);
-    this.map = this.make.tilemap({ key: "mario" });
+    this.map = this.make.tilemap({
+      key: "mario"
+    });
     let tileset = this.map.addTilesetImage("test", "tiles");
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
@@ -33,10 +40,11 @@ export default class PlayScene extends Scene {
     // player.setBounce(0.1);
     player.setCollideWorldBounds(true);
 
+
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
     this.physics.add.collider(player, layer);
-    this.physics.add.overlap(player, coins, this.collectCoin, null, this);
+    this.physics.add.overlap(player, coins, this.collectCoin);
     this.anims.create({
       key: "walk",
       frames: this.anims.generateFrameNames("player", {
@@ -49,21 +57,44 @@ export default class PlayScene extends Scene {
     });
     this.anims.create({
       key: "idle",
-      frames: [{ key: "player", frame: "robo_player_0" }],
+      frames: [{
+        key: "player",
+        frame: "robo_player_0"
+      }],
       frameRate: 10
     });
     this.anims.create({
       key: "jump",
-      frames: [{ key: "player", frame: "robo_player_1" }],
+      frames: [{
+        key: "player",
+        frame: "robo_player_1"
+      }],
       frameRate: 10
     });
     // this.cameras.main.setZoom(2);
+    this.anims.create({
+      key: "attack",
+      frames: this.anims.generateFrameNames("monster", {
+        prefix: "ATTAK_",
+        start: 1,
+        end: 2
+      }),
+      frameRate: 10,
+      repeat: -1
+    })
+    // monster
+    monster = this.physics.add.sprite(800, 400, "monster").play("attack");
+    monster.setSize(0.3)
+    monster.setDisplaySize(-250, 200)
+    monster.setCollideWorldBounds(true);
+    this.physics.add.collider(monster, layer);
+    this.physics.add.overlap(player, monster, this.meetMonster, null, this);
   }
   // Runs once per frame for the duration of the scene
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    document.addEventListener("keydown", function(e) {
+    document.addEventListener("keydown", function (e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
       else if (e.keyCode === 38) {
@@ -103,5 +134,8 @@ export default class PlayScene extends Scene {
     coin.destroy(coin.x, coin.y);
     // score++;
     return false;
+  }
+  meetMonster() {
+    console.log("뎀벼")
   }
 }

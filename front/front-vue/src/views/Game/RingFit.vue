@@ -187,12 +187,11 @@ export default {
       this.AttackCnt = count;
     },
     changeToAttack() {
-      if (this.isMonster == false) {
+      this.isMonster = !this.isMonster;
+      if (this.isMonster == true) {
         this.url =
           "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-        this.isMonster = true;
-      } else if (this.isMonster == true) {
-        this.isMonster = false;
+      } else if (this.isMonster == false) {
         this.url =
           "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
       }
