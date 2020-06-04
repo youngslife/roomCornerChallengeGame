@@ -1,12 +1,6 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      infinite
-      style="height:610px;"
-      autoplay
-    >
+    <q-carousel animated v-model="slide" infinite style="height:610px;" autoplay>
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -32,27 +26,21 @@
                 style="height:100px; width:100%;"
                 @click="change('first')"
                 class="flex flex-center"
-              >
-                마피아
-              </div>
+              >마피아</div>
             </template>
             <template v-slot:second>
               <div
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >
-                링피트
-              </div>
+              >링피트</div>
             </template>
             <template v-slot:third>
               <div
                 style="height:100px; width:100%;"
                 @click="change('third')"
                 class="flex flex-center"
-              >
-                후루추닌자?
-              </div>
+              >후루추닌자?</div>
             </template>
           </q-btn-toggle>
         </div>
@@ -60,23 +48,23 @@
     </q-carousel>
     <div class="row justify-center">
       <div class="col-7">
-        <div class="col"><h2>전체 게임</h2></div>
+        <div class="col">
+          <h2>전체 게임</h2>
+        </div>
         <div class="row">
           <q-card
             v-for="(game, index) in gameList"
             class="my-card col-3"
             style="margin-left:20px; height:400px; margin-top:20px;"
             :key="index"
-            :to="game.rink"
+            @click="goPath(game.link)"
           >
             <q-img :src="game.imgSrc" :ratio="4 / 3" />
             <q-card-section>
               <div class="text-h6">{{ game.name }}</div>
               <div class="text-subtitle2">{{ game.people }}</div>
             </q-card-section>
-            <q-card-section>
-              {{ game.descript }}
-            </q-card-section>
+            <q-card-section>{{ game.descript }}</q-card-section>
           </q-card>
         </div>
       </div>
@@ -85,14 +73,8 @@
           class="col flex flex-center"
           style="background:#b2bec3; margin-top:180px; height:300px"
         >
-          <div class="col-10  text-center">
-            <q-btn
-              class="col"
-              color="primary"
-              icon="check"
-              label="방구석 ID 로그인"
-              to="/login"
-            />
+          <div class="col-10 text-center">
+            <q-btn class="col" color="primary" icon="check" label="방구석 ID 로그인" to="/login" />
             <div class="col-10" style="margin-top:20px;">
               <span>다른계정 로그인</span>
               <q-icon name="print" />
@@ -101,7 +83,7 @@
               <q-icon name="print" />
             </div>
             <div class="col-10" style="margin-top:20px;">
-              <p class=" text-right">회원가입</p>
+              <p class="text-right">회원가입</p>
             </div>
           </div>
         </div>
@@ -109,24 +91,12 @@
           class="col flex flex-center"
           style="background:#b2bec3; margin-top:180px; height:300px"
         >
-          <div class="col-10  text-center">
+          <div class="col-10 text-center">
             <div class="col-10">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="공지사항"
-                to="/login"
-              />
+              <q-btn class="col-10" color="primary" icon="check" label="공지사항" to="/login" />
             </div>
             <div class="col-10" style="margin-top:20px;">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="QNA"
-                to="/login"
-              />
+              <q-btn class="col-10" color="primary" icon="check" label="QNA" to="/login" />
             </div>
           </div>
         </div>
@@ -151,36 +121,36 @@ export default {
           imgSrc: require("../assets/mapia.jpeg"),
           people: "4~8명",
           descript: "마피아게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         },
         {
           name: "링피트",
           imgSrc: require("../assets/ring.jpeg"),
           people: "1명",
           descript: "링피트게임에 대한 설명",
-          rink: "/fitness"
+          link: "/fitness"
         },
         {
           name: "방탈출",
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
           descript: "방탈출게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         },
         {
           name: "후루추닌자?",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
           descript: "게임게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         }
       ]
     };
   },
   methods: {
-    goPath(target) {
-      console.log(target);
-      this.$router.push("/fitness");
+    goPath(link) {
+      console.log(link);
+      this.$router.push(link);
     },
     change(target) {
       this.slide = target;

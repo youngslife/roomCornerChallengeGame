@@ -218,8 +218,8 @@ function addZeros(num, digit) {
 <style lang="scss" scoped>
 $img-w: 2000px;
 $img-h: 6000px;
-$shrink: 6.8;
-$ratio: 1 / $shrink;
+$shlink: 6.8;
+$ratio: 1 / $shlink;
 $speed: 7s;
 
 :root {

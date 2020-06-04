@@ -24,7 +24,7 @@
               :key="`menu-${Aindex}-${Bindex}-${menu.name}`"
               clickable
               v-ripple
-              :to="menu.rink"
+              :to="menu.link"
             >
               <q-item-section>
                 <q-item-label>{{ menu.name }}</q-item-label>
@@ -46,22 +46,22 @@ export default {
       menus: [
         {
           menu: [
-            { name: "링피트", rink: "/fitness" },
-            { name: " - 가이드", rink: "/fitness/guide" },
-            { name: " - 자유게시판", rink: "/fitness/community" }
+            { name: "링피트", link: "/fitness" },
+            { name: " - 가이드", link: "/fitness/guide" },
+            { name: " - 자유게시판", link: "/fitness/community" }
           ]
         },
         {
           menu: [
-            { name: "마피아", rink: "/mafia" },
-            { name: " - 가이드", rink: "/mafia/guide" },
-            { name: " - 자유게시판", rink: "/mafia/community" }
+            { name: "마피아", link: "/mafia" },
+            { name: " - 가이드", link: "/mafia/guide" },
+            { name: " - 자유게시판", link: "/mafia/community" }
           ]
         },
         {
           menu: [
-            { name: "고객 센터", rink: "/" },
-            { name: "질문게시판 ", rink: "/" }
+            { name: "고객 센터", link: "/" },
+            { name: "질문게시판 ", link: "/" }
           ]
         }
       ]

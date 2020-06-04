@@ -15,6 +15,7 @@
               :ratio="16 / 9"
               spinner-color="primary"
               spinner-size="82px"
+              style="height : 10vh"
             />
           </div>
           <q-btn
@@ -22,8 +23,8 @@
             :key="index"
             style=" color:white; font-size:25px;"
             :label="menu.name"
-            class="col-2 text-weight-bold"
-            :to="menu.rink"
+            class="col-2 text-weight-bold menu-button"
+            :to="menu.link"
           ></q-btn>
         </div>
         <div class="absolute-bottom">
@@ -53,10 +54,10 @@ export default {
     return {
       slide: "first",
       menus: [
-        { name: "소식", rink: "/mafia/info" },
-        { name: "가이드", rink: "/mafia/guide" },
-        { name: "랭킹", rink: "/mafia/rank" },
-        { name: "커뮤니티", rink: "/mafia/community" }
+        { name: "소식", link: "/mafia/info" },
+        { name: "가이드", link: "/mafia/guide" },
+        { name: "랭킹", link: "/mafia/rank" },
+        { name: "커뮤니티", link: "/mafia/community" }
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
