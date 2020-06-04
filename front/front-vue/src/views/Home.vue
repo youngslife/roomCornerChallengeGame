@@ -125,7 +125,7 @@
                 color="primary"
                 icon="check"
                 label="QNA"
-                to="/login"
+                to="/temp"
               />
             </div>
           </div>
