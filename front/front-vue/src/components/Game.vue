@@ -6,6 +6,12 @@
 <script>
 export default {
   name: "Game",
+  props: {
+    stage: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       downloaded: false,

@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -18,18 +16,10 @@
       </template>
     </q-overlay>
     <div class="row slider">
-      <!-- <div
-        id="map"
-        class="col-9 slider-col"
-        v-bind:class="{ pauseMap: isPause }"
-      ></div> -->
       <div class="col-9">
-        <Game />
+        <Game :stage="stage" />
       </div>
       <div id="time" class="playtime"></div>
-      <!-- <div id="character">
-        <img :src="require('../../assets/walking.gif')" />
-      </div> -->
       <div class="pause">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
@@ -52,7 +42,6 @@
 <script>
 import WebCam from "../../components/WebCam";
 import Game from "@/components/Game";
-import { mapActions, mapState } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
@@ -65,7 +54,6 @@ export default {
     return {
       url:
         "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
-      stage: "",
       window: {
         width: 0,
         height: 0
@@ -78,31 +66,24 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      // back이랑 통신하고 나면 받아오자
-      // stage: (state) => state.stage,
-      // hour: (state) => state.hour,
-      // minute: (state) => state.minute,
-      // second: (state) => state.second,
-    })
+    stage() {
+      return this.$store.state.stage;
+    }
   },
   async mounted() {
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
-    await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
   },
   methods: {
-    ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
         id: this.$store.state.id
       };
-      await this.getStage(params); // axios
+      await this.$store.dispatch("ringfit/getStageByUser");
     },
-    async drawBaseMap() {},
     printPlayTime() {
       var clock = document.getElementById("time");
       if (this.second++ >= 59) {
