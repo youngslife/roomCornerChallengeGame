@@ -1,6 +1,7 @@
 import {
   Scene
 } from "phaser";
+import RingFit from "../../views/Game/RingFit.vue"
 
 let player,
   monster,
@@ -136,6 +137,10 @@ export default class PlayScene extends Scene {
     return false;
   }
   meetMonster() {
-    console.log("뎀벼")
+    console.log("몬스터를 만났다")
+    if (RingFit.data().isMonster == false) {
+      RingFit.methods.changeToAttack()
+      RingFit.data().isMonster == true
+    }
   }
 }

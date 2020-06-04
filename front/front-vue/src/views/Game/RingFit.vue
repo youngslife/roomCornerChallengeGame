@@ -187,13 +187,18 @@ export default {
       this.AttackCnt = count;
     },
     changeToAttack() {
-      this.isMonster = !this.isMonster;
-      if (this.isMonster == true) {
+      if (this.isMonster == false) {
+        console.log(1, this.isMonster);
         this.url =
           "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-      } else if (this.isMonster == false) {
+        this.isMonster = true;
+        console.log(2, this.isMonster);
+      } else if (this.isMonster == true) {
+        console.log(3, this.isMonster);
+        this.isMonster = false;
         this.url =
           "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+        console.log(4, this.isMonster);
       }
     }
   },
