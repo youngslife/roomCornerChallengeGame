@@ -46,16 +46,16 @@ export default {
       menus: [
         {
           menu: [
-            { name: "링피트", rink: "/" },
-            { name: " - 가이드", rink: "/" },
-            { name: " - 자유게시판", rink: "/" }
+            { name: "링피트", rink: "/fitness" },
+            { name: " - 가이드", rink: "/fitness/guide" },
+            { name: " - 자유게시판", rink: "/fitness/community" }
           ]
         },
         {
           menu: [
-            { name: "마피아", rink: "/" },
-            { name: " - 가이드", rink: "/" },
-            { name: " - 자유게시판", rink: "/" }
+            { name: "마피아", rink: "/mafia" },
+            { name: " - 가이드", rink: "/mafia/guide" },
+            { name: " - 자유게시판", rink: "/mafia/community" }
           ]
         },
         {
