@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -24,13 +22,11 @@
         v-bind:class="{ pauseMap: isPause }"
       ></div>-->
       <div class="col-9">
+        <h3>Stage {{ getStageNum }}</h3>
+        <h4>이번 판 운동 : {{ getMotionName }}</h4>
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-show="!isMonster" />
-        <ringfit-attack
-          v-if="isMonster"
-          :AttackCnt="AttackCnt"
-          :player="player"
-        />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
@@ -69,7 +65,7 @@ import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../Ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
@@ -109,6 +105,10 @@ export default {
       // minute: (state) => state.minute,
       // second: (state) => state.second,
     }),
+    ...mapGetters({
+      getMotionName: "ringfit/getMotionName",
+      getStageNum: "ringfit/getStageNum"
+    }),
     changeUrl() {
       console.log(this.url);
       console.log(this.isMonster);
@@ -126,6 +126,7 @@ export default {
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
+    console.log("아마 vuex", this.motionName);
   },
   methods: {
     ...mapActions("game", ["getStage"]),
