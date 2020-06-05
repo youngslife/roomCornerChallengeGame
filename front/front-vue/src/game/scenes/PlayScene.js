@@ -21,6 +21,26 @@ export default class PlayScene extends Scene {
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
+    this.make.text({
+      x: 0,
+      y: 0,
+      padding: {
+        left: 64,
+        right: 16,
+        top: 20,
+        bottom: 40
+        //x: 32,    // 32px padding on the left/right
+        //y: 16     // 16px padding on the top/bottom
+      },
+      text: "Stage", // + this.$store.state.phaser.stage,
+      style: {
+        fontSize: "32px",
+        fontFamily: "Arial",
+        color: "#000000",
+        align: "center" // 'left'|'center'|'right'|'justify'
+      },
+      add: true
+    });
 
     coinLayer.forEach(el => {
       let obj = coins.create(el.x, el.y + 150, "coin");
@@ -104,4 +124,7 @@ export default class PlayScene extends Scene {
     // score++;
     return false;
   }
+  // meetMonster 마지막 몬스터랑 전투한 다음에 or
+  // user hp가 < 0 이면
+  // destroy or clear? 해주고
 }

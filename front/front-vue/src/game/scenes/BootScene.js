@@ -1,6 +1,4 @@
 import { Scene } from "phaser";
-// import road from "@/assets/road2.jpg";
-// import dude from "@/game/assets/sprite.png";
 import mario from "@/game/assets/tilemaps/maps/test.json";
 import tiles from "@/game/assets/tilemaps/tilesets/platformPack_tilesheet.png";
 import bg from "@/game/assets/tilemaps/background.png";
@@ -19,12 +17,17 @@ export default class BootScene extends Scene {
     this.textures.addBase64("coin", tile);
     this.load.atlas("player", player, atlas);
     this.textures.addBase64("tiles", tiles);
-    // this.load.image("tiles", "../assets/tilemaps/tiles/super_mario.png");
     this.load.tilemapTiledJSON("mario", mario);
-    // this.load.image("player", "../assets/sprites/phaser-dude.png");
   }
 
   create() {
+    //stage별로 scene을 다르게 start해주고
+    // if(this.events.store.phaser.stage == 0) // 튜토리얼이면
+    // this.scene.start("TutorialScene");
+    // if(this.events.store.phaser.stage == 1) // stage1이면
+    // this.scene.start("Stage1Scene");
+    // if(this.events.store.phaser.stage == 2) // stage2면
+    // this.scene.start("Stage2Scene");
     this.scene.start("PlayScene");
   }
 }
