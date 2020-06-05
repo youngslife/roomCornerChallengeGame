@@ -17,6 +17,7 @@ public class RStage implements Serializable {
 	private boolean rstage_del_check;
 	private RMap rstage_map;
 	private List<RMonster> rstage_monster;
+	private List<RUserInfo> rstage_usergameinfo;
 }
 /*
 스테이지 클래스

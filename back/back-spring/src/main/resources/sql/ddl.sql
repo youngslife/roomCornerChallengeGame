@@ -132,7 +132,7 @@ CREATE TABLE RGameinfo (
 	rgameinfo_no INT PRIMARY KEY AUTO_INCREMENT,
 	ruserinfo_no INT NOT NULL,
 	rgameinfo_startdate DATETIME DEFAULT CURRENT_TIMESTAMP(),
-	rgameinfo_playtime DATETIME,
+	rgameinfo_playtime TIME,
 	rgameinfo_enddate DATETIME,
 	rgameinfo_level INT DEFAULT 1,
 	rgameinfo_perfect_num INT DEFAULT 0,
@@ -183,6 +183,12 @@ CREATE TABLE RItem (
 
 
 
+select * from RStage;
+select * from RMonster;
+select * from RMap;
+select * from Image;
 
+select * from User;
 
+select * from RStage;
 

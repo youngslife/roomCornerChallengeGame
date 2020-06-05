@@ -28,8 +28,7 @@ const routes = [
   {
     path: "/fitness",
     component: () => import("../views/Fitness/Fitness.vue"),
-    children: [
-      {
+    children: [{
         path: "",
         name: "fitness",
         component: () => import("../views/Fitness/FitnessHome.vue")
