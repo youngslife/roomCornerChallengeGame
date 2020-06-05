@@ -11,7 +11,9 @@ function launch(containerId) {
     physics: {
       default: "arcade",
       arcade: {
-        gravity: { y: 200 },
+        gravity: {
+          y: 200
+        },
         debug: false
       }
     },
@@ -20,4 +22,6 @@ function launch(containerId) {
 }
 
 export default launch;
-export { launch };
+export {
+  launch
+};

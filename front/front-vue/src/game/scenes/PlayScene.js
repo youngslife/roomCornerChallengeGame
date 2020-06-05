@@ -138,9 +138,7 @@ export default class PlayScene extends Scene {
   }
   meetMonster() {
     console.log("몬스터를 만났다")
-    if (RingFit.data().isMonster == false) {
-      RingFit.methods.changeToAttack()
-      RingFit.data().isMonster == true
-    }
+    RingFit.methods.changeToAttack()
+    monster.destroy()
   }
 }
