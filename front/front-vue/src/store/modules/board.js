@@ -7,7 +7,8 @@ const getters = {};
 const actions = {
   getBoardListByType: (store, payLoad) => {
     BoardService.getBoardListByType(payLoad).then(Response => {
-      store.commit("changeBoard", { boardList: Response });
+      console.log(Response.data.data.result);
+      store.commit("changeBoard", { boardList: Response.data.data.result });
     });
   }
 };

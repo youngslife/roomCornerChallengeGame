@@ -8,7 +8,7 @@ class PostService {
         console.log(Response);
       })
       .catch(exp => {
-        console.log("Error insertPost : " + exp);
+        console.log("Error getPost : " + exp);
       });
   }
   async getPostDetail(post_no) {
@@ -18,7 +18,7 @@ class PostService {
         console.log(Response);
       })
       .catch(exp => {
-        console.log("Error insertPost : " + exp);
+        console.log("Error getPostDetail : " + exp);
       });
   }
   async insertPost(post) {
@@ -38,7 +38,7 @@ class PostService {
         console.log(Response);
       })
       .catch(exp => {
-        console.log("Error insertPost : " + exp);
+        console.log("Error updatePost : " + exp);
       });
   }
   async deletePost(post_no) {
@@ -48,21 +48,8 @@ class PostService {
         console.log(Response);
       })
       .catch(exp => {
-        console.log("Error insertPost : " + exp);
-      });
-  }
-  async getPost(board) {
-    console.log(board);
-    return Api.get(
-      `/Board/searchBoardTitle/${board.location}/${board.title}/${board.page_no}`
-    )
-      .then(Response => {
-        console.log(Response);
-        return Response;
-      })
-      .catch(exp => {
-        console.log("Error getBoardListByType : " + exp);
+        console.log("Error deletePost : " + exp);
       });
   }
 }
-export default new BoardService();
+export default new PostService();
