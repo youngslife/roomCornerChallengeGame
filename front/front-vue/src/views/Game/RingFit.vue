@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/base/",
       stage: "",
       window: {
         width: 0,
@@ -194,7 +194,7 @@ export default {
       } else if (this.isMonster == true) {
         this.isMonster = false;
         this.url =
-          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/base/";
       }
     }
   },

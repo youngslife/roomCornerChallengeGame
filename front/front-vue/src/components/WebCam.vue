@@ -49,11 +49,17 @@ export default {
   async mounted() {
     const modelURL = `${this.url}model.json`;
     const metadataURL = `${this.url}metadata.json`;
+    const options = {
+      headers: {
+        Accept: "application/json",
+    "Content-Type": "application/json"
+      },
+    };
     const webcamContainer = this.$refs.webcam;
     const flip = true; // whether to flip the webcam
     // load the model and metadata
     // or files from your local hard drive
-    this.model = await tmPose.load(modelURL, metadataURL);
+    this.model = await tmPose.load(modelURL, metadataURL, options);
     // Convenience function to setup a webcam
     this.webcam = new tmPose.Webcam(this.width, this.height, flip); // width, height, flip
     await this.webcam.setup(); // request access to the webcam
