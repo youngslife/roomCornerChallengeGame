@@ -43,13 +43,6 @@
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
           <web-cam
-            :url="this.$store.state.phaser.modelUrl"
-            :stage="stage"
-            :width="window.width"
-            :height="window.height"
-            @child="jump"
-          ></web-cam>
-       <!--   <web-cam
             v-if="!isMonster"
             :url="changeUrl"
             :stage="stage"
@@ -64,7 +57,7 @@
             :width="window.width"
             :height="window.height"
             @child="goAttack"
-          ></squat-cam> -->
+          ></squat-cam>
         </div>
       </div>
     </div>
@@ -73,15 +66,15 @@
 
 <script>
 import WebCam from "../../components/WebCam";
-// import SquatCam from "../../components/SquatCam";
+import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../Ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
-import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
   components: {
-    // SquatCam,
+    SquatCam,
     WebCam,
     QOverlay,
     Game,
@@ -89,8 +82,8 @@ export default {
   },
   data() {
     return {
-      // url:
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/base/",
+      url:
+        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       stage: "",
       window: {
         width: 0,
@@ -109,9 +102,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getModelUrl"
-    ]),
     ...mapState({
       // back이랑 통신하고 나면 받아오자
       // stage: (state) => state.stage,
@@ -125,8 +115,6 @@ export default {
       return this.url;
     },
     isMonster() {
-      this.setModelUrl("https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/");
-      console.log(this.$store.state.phaser.isMeet);
       return this.$store.state.phaser.isMeet;
     }
   },
@@ -140,9 +128,6 @@ export default {
     this.printPlayTime();
   },
   methods: {
-    ...mapMutations([
-      "setModelUrl",
-    ]),
     ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
@@ -208,7 +193,7 @@ export default {
     },
     goAttack(count) {
       this.AttackCnt = count;
-    },
+    }
     // 이 부분은 isMonster computed에 넣으면 될듯
     // changeToAttack() {
     //   if (this.isMonster == false) {
