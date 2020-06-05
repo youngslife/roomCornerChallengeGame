@@ -63,7 +63,7 @@
 <script>
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
-import RingfitAttack from "../Ringfit/RingfitAttack.vue";
+import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
 import { mapActions, mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
