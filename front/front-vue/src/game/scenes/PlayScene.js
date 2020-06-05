@@ -1,5 +1,7 @@
-import { Scene } from "phaser";
-import RingFit from "../../views/Game/RingFit.vue";
+import {
+  Scene
+} from "phaser";
+// import RingFit from "../../views/Game/RingFit.vue";
 
 let player,
   monster,
@@ -55,22 +57,18 @@ export default class PlayScene extends Scene {
     });
     this.anims.create({
       key: "idle",
-      frames: [
-        {
-          key: "player",
-          frame: "robo_player_0"
-        }
-      ],
+      frames: [{
+        key: "player",
+        frame: "robo_player_0"
+      }],
       frameRate: 10
     });
     this.anims.create({
       key: "jump",
-      frames: [
-        {
-          key: "player",
-          frame: "robo_player_1"
-        }
-      ],
+      frames: [{
+        key: "player",
+        frame: "robo_player_1"
+      }],
       frameRate: 10
     });
     // this.cameras.main.setZoom(2);
@@ -97,7 +95,7 @@ export default class PlayScene extends Scene {
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
 
-    document.addEventListener("keydown", function(e) {
+    document.addEventListener("keydown", function (e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
       else if (e.keyCode === 38) {
@@ -143,7 +141,7 @@ export default class PlayScene extends Scene {
 
     this.registry.events.emit("meetMonster");
     console.log(this.registry.events.store.state.phaser.isMeet);
-    RingFit.methods.changeToAttack();
+    // RingFit.methods.changeToAttack();
     monster.destroy();
   }
 }
