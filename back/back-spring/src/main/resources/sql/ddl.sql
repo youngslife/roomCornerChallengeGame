@@ -123,7 +123,7 @@ CREATE TABLE RUserinfo (
   ruserinfo_iscleared BOOLEAN DEFAULT FALSE,
   ruserinfo_iswon BOOLEAN DEFAULT FALSE,
   ruserinfo_golds INT DEFAULT 0,
-  rsuerinfo_del_check BOOLEAN DEFAULT FALSE,
+  ruserinfo_del_check BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (rstage_no) REFERENCES RStage (rstage_no),
   FOREIGN KEY (user_no) REFERENCES User (user_no)
 );

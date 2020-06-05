@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -22,9 +24,13 @@
         v-bind:class="{ pauseMap: isPause }"
       ></div>-->
       <div class="col-9">
-        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
+        <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-show="!isMonster" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :player="player"
+        />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
@@ -88,7 +94,6 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
-      isMonster: false,
       AttackCnt: 0,
       player: {
         username: "방구석여포",
@@ -108,6 +113,9 @@ export default {
       console.log(this.url);
       console.log(this.isMonster);
       return this.url;
+    },
+    isMonster() {
+      return this.$store.state.phaser.isMeet;
     }
   },
   async mounted() {
@@ -186,17 +194,22 @@ export default {
     goAttack(count) {
       this.AttackCnt = count;
     },
-    changeToAttack() {
-      if (this.isMonster == false) {
-        this.url =
-          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-        this.isMonster = true;
-      } else if (this.isMonster == true) {
-        this.isMonster = false;
-        this.url =
-          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/base/";
-      }
-    }
+    // 이 부분은 isMonster computed에 넣으면 될듯
+    // changeToAttack() {
+    //   if (this.isMonster == false) {
+    //     console.log(1, this.isMonster);
+    //     this.url =
+    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+    //     this.isMonster = true;
+    //     console.log(2, this.isMonster);
+    //   } else if (this.isMonster == true) {
+    //     console.log(3, this.isMonster);
+    //     this.isMonster = false;
+    //     this.url =
+    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+    //     console.log(4, this.isMonster);
+    //   }
+    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);
