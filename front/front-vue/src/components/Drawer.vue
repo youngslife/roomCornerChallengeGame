@@ -6,7 +6,8 @@
           :src="require('../assets/logo.png')"
           onclick="location.href ='/'"
           style="margin-top:20px;"
-        /><q-btn
+        />
+        <q-btn
           color="primary"
           icon="cancel"
           class="col-3"
@@ -47,20 +48,20 @@ export default {
           menu: [
             { name: "링피트", rink: "/" },
             { name: " - 가이드", rink: "/" },
-            { name: " - 자유계시판", rink: "/" }
+            { name: " - 자유게시판", rink: "/" }
           ]
         },
         {
           menu: [
             { name: "마피아", rink: "/" },
             { name: " - 가이드", rink: "/" },
-            { name: " - 자유계시판", rink: "/" }
+            { name: " - 자유게시판", rink: "/" }
           ]
         },
         {
           menu: [
             { name: "고객 센터", rink: "/" },
-            { name: "질문계시판 ", rink: "/" }
+            { name: "질문게시판 ", rink: "/" }
           ]
         }
       ]
