@@ -67,4 +67,33 @@ public class RUserInfoServiceImpl implements RUserInfoService {
 		}
 		return null;
 	}
+	@Override
+	public int getClear(RInfo rinfo) {
+		try {
+			return dao.getClear(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public int getWon(RInfo rinfo){
+		try {
+			return dao.getWon(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public RUserInfo searchInfo(int ruserinfo_no) {
+		try {
+			return dao.searchInfo(ruserinfo_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

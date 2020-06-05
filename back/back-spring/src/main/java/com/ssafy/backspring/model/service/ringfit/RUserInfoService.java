@@ -12,4 +12,7 @@ public interface RUserInfoService {
 	public void update(RUserInfo ruserinfo);
 	public void delete(int ruserinfo_no);
 	public RUserInfo getLast(RInfo rinfo);
+	public int getClear(RInfo rinfo);
+	public int getWon(RInfo rinfo);
+	public RUserInfo searchInfo(int ruserinfo_no);
 }

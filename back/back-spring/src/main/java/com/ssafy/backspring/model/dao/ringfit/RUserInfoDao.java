@@ -15,4 +15,7 @@ public interface RUserInfoDao {
 	public List<RUserInfo> searchAll();
 	public void update(RUserInfo ruserinfo);
 	public void delete(int ruserinfo_no);
+	public int getClear(RInfo rinfo);
+	public int getWon(RInfo rinfo);
+	public RUserInfo searchInfo(int ruserinfo_no);
 }
