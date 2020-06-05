@@ -83,7 +83,8 @@ export default {
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       stage: "",
       window: {
         width: 0,
