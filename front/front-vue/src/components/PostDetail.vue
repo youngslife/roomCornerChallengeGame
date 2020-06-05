@@ -1,28 +1,68 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
     <template v-if="isUpdate">
-      <writer :game="game" :type="type" :isUpdate.sync="isUpdate" :post="post"></writer>
+      <!-- <writer
+        :game="game"
+        :type="type"
+        :isUpdate.sync="isUpdate"
+        :post="post"
+      ></writer> -->
     </template>
     <template v-else>
       <h4 v-html="post.post_title" />
+      <span> 작성자 :</span><span v-html="post.post_user.user_name" />
+      <hr />
+
       <div v-html="post.post_content" />
       <q-btn color="white" text-color="black" label="목록으로" @click="back" />
-      <q-btn v-if="isSame" color="white" text-color="black" label="수정" @click="updatePost" />
-      <q-btn v-if="isSame" color="white" text-color="black" label="삭제" @click="deletePost" />
+      <q-btn
+        v-if="isSame"
+        color="white"
+        text-color="black"
+        label="수정"
+        @click="update"
+      />
+      <q-btn
+        v-if="isSame"
+        color="white"
+        text-color="black"
+        label="삭제"
+        @click="deletePost"
+      />
       <hr />
       <div class="row justify-end">
         <q-input outlined v-model="comment" label="댓글" :dense="false" />
-        <q-btn color="primary" icon="check" label="댓글쓰기" @click="insertCmt()" />
+        <q-btn
+          color="primary"
+          icon="check"
+          label="댓글쓰기"
+          @click="insertCmt()"
+        />
       </div>
       <q-list bordered>
-        <q-item v-for="(cmt,index) in post.post_cmtList" :key="index" clickable v-ripple>
-          <q-item-section>{{cmt.cmt_user.user_email}}</q-item-section>
+        <q-item
+          v-for="(cmt, index) in post.post_cmtList"
+          :key="index"
+          clickable
+          v-ripple
+        >
+          <q-item-section>{{ cmt.cmt_user.user_name }}</q-item-section>
           <template v-if="isUpdateCmt">
-            <q-input outlined v-model="cmt.cmt_content" label="댓글" :dense="false" />
-            <q-btn color="white" text-color="black" label="수정" @click="updateCmt(cmt.cmt_content)" />
+            <q-input
+              outlined
+              v-model="cmt.cmt_content"
+              label="댓글"
+              :dense="false"
+            />
+            <q-btn
+              color="white"
+              text-color="black"
+              label="수정"
+              @click="updateCmt(cmt.cmt_content)"
+            />
           </template>
           <template v-else>
-            <q-item-section>{{cmt.cmt_content}}</q-item-section>
+            <q-item-section>{{ cmt.cmt_content }}</q-item-section>
             <q-btn
               v-if="cmt.cmt_user.user_no === user_no"
               color="white"
@@ -45,33 +85,37 @@
 </template>
 
 <script>
-import writer from "./PostWrite";
+// import writer from "./PostWrite";
 export default {
-  name: "writer",
+  name: "detail",
   props: {
     game: String,
     type: String,
-    post: Object,
-    isDetail: Boolean
+    isDetail: Boolean,
+    post_no: Number
   },
   components: {
-    writer
+    // writer
   },
   data() {
     return {
-      isSame: false,
       isUpdate: false,
       isUpdateCmt: false,
       comment: "",
-      user_no: 0
+      user_no: ""
     };
   },
-  mounted() {
-    this.user_no = this.$store.state.user.user_no;
-    console.log(this.user_no);
-    if (this.post.post_user.user_no === this.user_no) {
-      this.isSame = true;
+  computed: {
+    post() {
+      return this.$store.state.post.post;
+    },
+    isSame() {
+      return this.post.post_user.user_no == this.user_no;
     }
+  },
+  mounted() {
+    this.user_no = window.sessionStorage.getItem("user_no");
+    this.$store.dispatch("post/getPost", this.post_no);
   },
   methods: {
     back() {
@@ -96,6 +140,12 @@ export default {
       this.$store.dispatch("comment/deleteCmt", {
         cmt_no: no
       });
+    },
+    update() {
+      this.isUpdate = true;
+    },
+    deletePost() {
+      this.$store.dispatch("post/deletePost", this.post.post_no);
     }
   }
 };

@@ -7,7 +7,7 @@ const getters = {};
 const actions = {
   getPost: (store, post_no) => {
     PostService.getPostDetail(post_no).then(Response => {
-      store.commit("setPost", { post: Response });
+      store.commit("setPost", { post: Response.data.data });
     });
   },
   insertPost: (store, post) => {

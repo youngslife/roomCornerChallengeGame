@@ -12,46 +12,87 @@
       </template>
       <template v-else>
         <template v-if="isDetail">
-          <detail game="링피트" :type="category" :post="post" :isDetail.sync="isDetail" />
+          <detail
+            game="링피트"
+            :type="category"
+            :post_no="post_no"
+            :isDetail.sync="isDetail"
+          />
         </template>
         <template v-else>
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="자유">
               <div class="row justify-end">
-                <q-btn color="primary" icon="check" label="글쓰기" @click="write()" />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="글쓰기"
+                  @click="write()"
+                />
               </div>
               <q-list bordered>
-                <q-item v-for="(post,index) in board" :key="index" clickable v-ripple>
+                <q-item
+                  v-for="(post, index) in board"
+                  :key="index"
+                  clickable
+                  v-ripple
+                >
                   <q-item-section avatar>
                     <q-icon color="primary" name="bluetooth" />
                   </q-item-section>
-                  <q-item-section>{{post}}</q-item-section>
+                  <q-item-section @click="goPostDetail(post.post_no)">{{
+                    post.post_title
+                  }}</q-item-section>
                 </q-item>
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="질문">
               <div class="row justify-end">
-                <q-btn color="primary" icon="check" label="글쓰기" @click="write()" />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="글쓰기"
+                  @click="write()"
+                />
               </div>
               <q-list bordered>
-                <q-item v-for="(post,index) in board" :key="index" clickable v-ripple>
+                <q-item
+                  v-for="(post, index) in board"
+                  :key="index"
+                  clickable
+                  v-ripple
+                >
                   <q-item-section avatar>
                     <q-icon color="primary" name="bluetooth" />
                   </q-item-section>
-                  <q-item-section>{{post}}</q-item-section>
+                  <q-item-section @click="goPostDetail(post.post_no)">{{
+                    post.post_title
+                  }}</q-item-section>
                 </q-item>
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="정보">
               <div class="row justify-end">
-                <q-btn color="primary" icon="check" label="글쓰기" @click="write()" />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="글쓰기"
+                  @click="write()"
+                />
               </div>
               <q-list bordered>
-                <q-item v-for="(post,index) in board" :key="index" clickable v-ripple>
+                <q-item
+                  v-for="(post, index) in board"
+                  :key="index"
+                  clickable
+                  v-ripple
+                >
                   <q-item-section avatar>
                     <q-icon color="primary" name="bluetooth" />
                   </q-item-section>
-                  <q-item-section @click="goPostDetail(post)">{{post.post_title}}</q-item-section>
+                  <q-item-section @click="goPostDetail(post.post_no)">{{
+                    post.post_title
+                  }}</q-item-section>
                 </q-item>
               </q-list>
             </q-tab-panel>
@@ -109,7 +150,7 @@ export default {
       category: "",
       isWrite: false,
       isDetail: false,
-      post: {}
+      post_no: 0
     };
   },
   components: {
@@ -142,6 +183,7 @@ export default {
     },
     check() {
       this.isWrite = false;
+      this.isDetail = false;
     },
     getBoardList() {
       this.$store.dispatch("board/getBoardListByType", {
@@ -150,8 +192,8 @@ export default {
         page_no: 1
       });
     },
-    goPostDetail(post) {
-      this.post = post;
+    goPostDetail(post_no) {
+      this.post_no = post_no;
       this.isDetail = true;
     }
   }

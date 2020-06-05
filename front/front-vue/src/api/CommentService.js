@@ -5,15 +5,25 @@ class CommentService {
     console.log(cmt_no);
     return Api.get(`/Comment/search/${cmt_no}`)
       .then(Response => {
-        console.log(Response);
+        return Response;
       })
       .catch(exp => {
         console.log("Error getComment : " + exp);
       });
   }
-  async insertComment(Comment) {
+  async insertCmt(Comment) {
     console.log(Comment);
-    return Api.Comment("/Comment/insert", { Comment: Comment })
+    return Api.post("/Comment/insert", Comment)
+      .then(Response => {
+        return Response;
+      })
+      .catch(exp => {
+        console.log("Error insertComment : " + exp);
+      });
+  }
+  async updateCmt(Comment) {
+    console.log(Comment);
+    return Api.put("/Comment/update", Comment)
       .then(Response => {
         console.log(Response);
       })
@@ -21,19 +31,9 @@ class CommentService {
         console.log("Error insertComment : " + exp);
       });
   }
-  async updateComment(Comment) {
-    console.log(Comment);
-    return Api.put("/Comment/update", { Comment: Comment })
-      .then(Response => {
-        console.log(Response);
-      })
-      .catch(exp => {
-        console.log("Error insertComment : " + exp);
-      });
-  }
-  async deleteComment(cmt_no) {
+  async deleteCmt(cmt_no) {
     console.log(cmt_no);
-    return Api.Comment(`/Comment/delete/${cmt_no}`)
+    return Api.delete(`/Comment/delete/${cmt_no}`)
       .then(Response => {
         console.log(Response);
       })

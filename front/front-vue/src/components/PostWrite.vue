@@ -3,8 +3,17 @@
     <q-select v-model="checkgame" :options="games" label="Standard" filled />
     <q-select v-model="checktype" :options="types" label="Standard" filled />
     <q-input outlined v-model="title" label="제목" :dense="false" />
-    <q-editor v-model="editor" min-height="5rem" placeholder="What you see is what you get." />
-    <q-btn color="white" text-color="black" label="저장" @click="isUpdate?update():insert()" />
+    <q-editor
+      v-model="editor"
+      min-height="5rem"
+      placeholder="What you see is what you get."
+    />
+    <q-btn
+      color="white"
+      text-color="black"
+      label="저장"
+      @click="isUpdate ? update() : insert()"
+    />
   </div>
 </template>
 
@@ -37,6 +46,7 @@ export default {
   },
   mounted() {
     this.user_no = this.$store.state.user_no;
+    console.log(this.post);
     if (this.post !== undefined) {
       this.title = this.post.post_title;
       this.editor = this.post.post_content;

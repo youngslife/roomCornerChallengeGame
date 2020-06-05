@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -24,7 +26,11 @@
       <div class="col-9">
         <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
         <Game v-show="!isMonster" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :player="player"
+        />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">

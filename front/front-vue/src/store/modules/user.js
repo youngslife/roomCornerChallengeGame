@@ -2,7 +2,7 @@ import fireService from "../../api/FirebaseService";
 import UserService from "../../api/UserService";
 
 import router from "../../router";
-const state = { user: {}, tempEmail: "", tempEmailType: 0, user_no: 0 };
+const state = { user: {}, tempEmail: "", tempEmailType: 0, user_no: "" };
 
 const getters = {};
 
