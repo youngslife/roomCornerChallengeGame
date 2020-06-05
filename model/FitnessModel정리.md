@@ -3,12 +3,36 @@
 1. Walk
 
    1. class1(오른쪽) 
-
    2. class2(stop) 
-
    3. class3(왼)
 
-      
+   
+
+   walk-jump
+
+   0. stop
+
+   1. right
+
+   2. left
+
+   3. jump
+
+      빠르게 뛰면 right-left 바로바로 반응 안하는 단점이 있음
+
+   walking
+
+   0. stop
+   1. right
+   2. left
+
+   walking-jumping
+
+   0. stop
+   1. walk
+   2. jump
+
+   
 
 2. Squat
 
@@ -24,10 +48,11 @@
     	3. right_exact
     	4. left90
     	5. left_exact
+   
  	6. stop
-   
 
-   
+
+
 4. Shoulder Press
 
    Class
@@ -52,6 +77,7 @@
 
    1. middle
 2. right_mid
+   
    3. right
 4. left_mid
    5. left 
