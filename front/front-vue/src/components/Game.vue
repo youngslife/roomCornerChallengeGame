@@ -1,11 +1,11 @@
 <template>
-  <!-- <div :id="containerId" v-if="downloaded" /> -->
-  <game-load ref="gameload" v-if="downloaded" :containerId="containerId"></game-load>
+  <div :id="containerId" v-if="downloaded" />
+  <!-- <game-load ref="gameload" v-if="downloaded" :containerId="containerId"></game-load> -->
   <div class="placeholder" v-else>Loading ...</div>
 </template>
 
 <script>
-import GameLoad from "../components/GameLoad.vue";
+// import GameLoad from "../components/GameLoad.vue";
 
 export default {
   name: "Game",
@@ -17,15 +17,18 @@ export default {
     };
   },
   components: {
-    GameLoad
+    // GameLoad
   },
   async mounted() {
     // await this.launch(this.containerId);
-    // const game = await import(/* webpackChunkName: "game" */ "@/game/game");
+    const game = await import(/* webpackChunkName: "game" */ "@/game/game");
     this.downloaded = true;
     this.$nextTick(() => {
-      this.gameInstance = this.$refs.gameload.launch(this.containerId);
-      // this.gameInstance = game.launch(this.containerId);
+      // this.gameInstance = this.$refs.gameload.launch(this.containerId);
+      this.gameInstance = game.launch({
+        containerId: this.containerId,
+        store: this.$store ? this.$store : null
+      });
     });
   },
   destroyed() {

@@ -1,9 +1,7 @@
-import {
-  Scene
-} from "phaser";
+import { Scene } from "phaser";
 // import road from "@/assets/road2.jpg";
 // import dude from "@/game/assets/sprite.png";
-import mario from "@/game/assets/tilemaps/maps/test.json";
+import map from "@/game/assets/tilemaps/maps/test.json";
 import tiles from "@/game/assets/tilemaps/tilesets/platformPack_tilesheet.png";
 import bg from "@/game/assets/tilemaps/background.png";
 import spike from "@/game/assets/tilemaps/spike.png";
@@ -26,9 +24,7 @@ export default class BootScene extends Scene {
     this.load.atlas("player", player, atlas);
     this.load.atlas("monster", monster, matlas);
     this.textures.addBase64("tiles", tiles);
-    // this.load.image("tiles", "../assets/tilemaps/tiles/super_mario.png");
-    this.load.tilemapTiledJSON("mario", mario);
-    // this.load.image("player", "../assets/sprites/phaser-dude.png");
+    this.load.tilemapTiledJSON("map", map);
   }
 
   create() {
