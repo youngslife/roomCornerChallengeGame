@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import BootScene from "./scenes/BootScene";
-import PlayScene from "./scenes/PlayScene";
+import TutorialScene from "./scenes/TutorialScene";
+import Stage1Scene from "./scenes/Stage1Scene";
+import Stage2Scene from "./scenes/Stage2Scene";
 import event from "./events";
 function launch({ containerId, store }) {
   const game = new Phaser.Game({
@@ -17,7 +19,7 @@ function launch({ containerId, store }) {
         debug: false
       }
     },
-    scene: [BootScene, PlayScene]
+    scene: [BootScene, TutorialScene, Stage1Scene, Stage2Scene]
     // stage별로 scene 추가해주고
   });
   game.registry.events = event;

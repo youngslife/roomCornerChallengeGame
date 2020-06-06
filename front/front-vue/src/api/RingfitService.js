@@ -1,10 +1,8 @@
 import Api from "./Api";
 class RingfitService {
   async getStageByUser(user_no) {
-    console.log(user_no);
     return Api.get(`/Ringfit/stage/searchAll/${user_no}`)
       .then(Response => {
-        console.log(Response);
         return Response;
       })
       .catch(exp => {
@@ -13,10 +11,12 @@ class RingfitService {
   }
   async gameStart(stageInfo) {
     console.log(stageInfo);
-    return Api.post("/Ringfit/stage/gameStart", {
-      user_no: stageInfo.user_no,
-      rstage_no: stageInfo.stage
-      // rgameinfo_level: stageInfo.level // 이걸 어디에쓰지
+    return Api.post("/Ringfit/stage/gameStart", null, {
+      params: {
+        user_no: stageInfo.user_no,
+        rstage_no: stageInfo.stage,
+        rgameinfo_level: stageInfo.level // 이걸 어디에쓰지
+      }
     })
       .then(Response => {
         console.log(Response);

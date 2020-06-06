@@ -2,7 +2,8 @@ import RingfitService from "../../api/RingfitService";
 
 const state = {
   stageNum: 0,
-  motionName: ""
+  motionName: "",
+  rgameInfo: {}
 };
 
 const getters = {
@@ -13,7 +14,12 @@ const getters = {
 const actions = {
   getStageByUser: (store, payLoad) => {
     RingfitService.getStageByUser(payLoad.no).then(Response => {
-      store.commit("setStageNum", { stage: Response });
+      const stage = Response.data.data;
+      console.log(stage.message);
+      let stNum;
+      if (stage.message === "클리어 전적이 없습니다.") stNum = 0;
+      else stNum = stage.record.rstage_no;
+      store.commit("setStageNum", stNum);
     });
   },
   gameStart: (store, payLoad) => {

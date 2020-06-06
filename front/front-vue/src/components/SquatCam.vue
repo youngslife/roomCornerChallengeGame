@@ -2,15 +2,9 @@
   <div>
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
-    <all-predict :predictions="predictions" :stage="stage"></all-predict>
-    <div>Squat Prediction</div>
-    <SqautPredict
-      :predictions="predictions"
-      :stage="stage"
-      @child="test"
-    >
-    </SqautPredict>
-
+    <all-predict :predictions="predictions"></all-predict>
+    <div>Prediction</div>
+    <SquatPredict :predictions="predictions" @child="test"></SquatPredict>
   </div>
 </template>
 
@@ -18,35 +12,31 @@
 import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
 import AllPredict from "./predictions/AllPredictions";
-import SqautPredict from "./predictions/SquatPrediction";
+import SquatPredict from "./predictions/SquatPrediction";
 export default {
   props: {
     url: {
       type: String,
-      required: true,
-    },
-    stage: {
-      type: String,
-      required: true,
+      required: true
     },
     height: {
       type: Number,
-      required: true,
+      required: true
     },
     width: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AllPredict,
-    SqautPredict,
+    SquatPredict
   },
   data() {
     return {
       model: null,
       webcam: null,
-      predictions: [],
+      predictions: []
     };
   },
   async mounted() {
@@ -95,7 +85,7 @@ export default {
     },
     test(count) {
       this.$emit("child", count);
-    },
-  },
+    }
+  }
 };
 </script>

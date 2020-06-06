@@ -25,7 +25,8 @@
         <h3>Stage {{ getStageNum }}</h3>
         <h4>이번 판 운동 : {{ getMotionName }}</h4>
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
-        <Game v-show="!isMonster" />
+        <Game v-if="!isStageSelect" v-show="!isMonster" />
+        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
         <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
@@ -38,7 +39,6 @@
           <web-cam
             v-if="!isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
@@ -46,7 +46,6 @@
           <squat-cam
             v-if="isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="goAttack"
@@ -62,6 +61,7 @@ import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
+import selectStage from "@/components/ringfit/SelectStage";
 import { mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
@@ -71,12 +71,15 @@ export default {
     WebCam,
     QOverlay,
     Game,
+    selectStage,
     RingfitAttack
   },
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      stage: "",
       window: {
         width: 0,
         height: 0
@@ -86,6 +89,8 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
+      isStageSelect: true,
+      isPoseSelect: false,
       AttackCnt: 0,
       player: {
         username: "방구석여포",
@@ -96,7 +101,7 @@ export default {
   computed: {
     ...mapState({
       // back이랑 통신하고 나면 받아오자
-      stage: state => state.stageNum
+      // stage: state => state.stageNum
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
@@ -115,19 +120,19 @@ export default {
     }
   },
   async mounted() {
-    console.log(this.$store.state.user.user);
+    console.log(this.$store.state.user_no);
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
     // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     this.printPlayTime();
-    console.log("아마 vuex", this.motionName);
+    // console.log("아마 vuex", this.motionName);
   },
   methods: {
     async getStageByUser() {
       const params = {
-        no: this.$store.state.user.user.user_no
+        no: this.$store.state.user_no
       };
       await this.$store.dispatch("ringfit/getStageByUser", params);
     },
