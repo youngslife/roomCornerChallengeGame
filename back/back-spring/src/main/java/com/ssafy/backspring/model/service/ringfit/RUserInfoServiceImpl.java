@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.backspring.model.dao.ringfit.RUserInfoDao;
 import com.ssafy.backspring.model.dto.ringfit.RUserInfo;
+import com.ssafy.backspring.util.RInfo;
 @Service
 public class RUserInfoServiceImpl implements RUserInfoService {
 	@Autowired
@@ -57,5 +58,42 @@ public class RUserInfoServiceImpl implements RUserInfoService {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public RUserInfo getLast(RInfo rinfo) {
+		try {
+			return dao.getLast(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public int getClear(RInfo rinfo) {
+		try {
+			return dao.getClear(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public int getWon(RInfo rinfo){
+		try {
+			return dao.getWon(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
+	@Override
+	public RUserInfo searchInfo(int ruserinfo_no) {
+		try {
+			return dao.searchInfo(ruserinfo_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

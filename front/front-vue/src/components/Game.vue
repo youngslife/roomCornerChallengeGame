@@ -28,6 +28,9 @@ export default {
   },
   destroyed() {
     this.gameInstance.destroy(false);
+    // if(isClear) this.$store.dispatch("ringfit/sendRes",{
+    //    클리어 정보 보내주자
+    //})
   }
 };
 </script>

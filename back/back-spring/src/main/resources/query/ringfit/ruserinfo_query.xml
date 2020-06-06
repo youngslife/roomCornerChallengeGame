@@ -3,7 +3,30 @@
 	
 
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RUserInfoDao" >
-
+	<resultMap id ="rugiMap" type="ruserinfo">
+		<result property="ruserinfo_no" column="ruserinfo_no"/>
+		<result property="rstage_no" column="rstage_no"/>
+		<result property="user_no" column="user_no"/>
+		<result property="ruserinfo_hp" column="ruserinfo_hp"/>
+		<result property="ruserinfo_iscleared" column="ruserinfo_iscleared"/>
+		<result property="ruserinfo_iswon" column="ruserinfo_iswon"/>
+		<result property="ruserinfo_golds" column="ruserinfo_golds"/>
+		<association property="ruserinfo_gameinfo" javaType="rgameinfo">
+			<result property="rgameinfo_no" column="rgameinfo_no"/>
+			<result property="ruserinfo_no" column="ruserinfo_no"/>
+			<result property="rgameinfo_startdate" column="rgameinfo_startdate"/>
+			<result property="rgameinfo_playtime" column="rgameinfo_playtime"/>
+			<result property="rgameinfo_enddate" column="rgameinfo_enddate"/>
+			<result property="rgameinfo_level" column="rgameinfo_level"/>
+			<result property="rgameinfo_perfect_num" column="rgameinfo_perfect_num"/>
+			<result property="rgameinfo_great_num" column="rgameinfo_great_num"/>
+			<result property="rgameinfo_good_num" column="rgameinfo_good_num"/>
+			<result property="rgameinfo_miss_num" column="rgameinfo_miss_num"/>
+			<result property="rgameinfo_rank" column="rgameinfo_rank"/>
+			<result property="rgameinfo_kcal" column="rgameinfo_kcal"/>
+			<result property="rgameinfo_score" column="rgameinfo_score"/>
+		</association>
+	</resultMap>
  	<insert id="insert"		parameterType="ruserinfo">
 	 	INSERT INTO RUserinfo(
 			rstage_no,
@@ -21,21 +44,69 @@
    	<update id="update"		parameterType="ruserinfo">
 	   	UPDATE RUserinfo
 		SET
-			rstage_no = #{rstage_no: INTEGER}>,
-			user_no = #{user_no: INTEGER}>,
+			rstage_no = #{rstage_no: INTEGER},
+			user_no = #{user_no: INTEGER},
 			ruserinfo_hp = #{ruserinfo_hp:INTEGER},
 			ruserinfo_iscleared = #{ruserinfo_iscleared:BOOLEAN},
 			ruserinfo_iswon = #{ruserinfo_iswon:BOOLEAN},
 			ruserinfo_golds = #{ruserinfo_golds: INTEGER},
-			rsuerinfo_del_check = #{rsuerinfo_del_check:BOOLEAN}
+			ruserinfo_del_check = #{ruserinfo_del_check:BOOLEAN}
 		WHERE ruserinfo_no = #{ruserinfo_no:INTEGER}
    	</update>
 	<select id="search"		parameterType="int"  resultType="ruserinfo">
 		SELECT * FROM RUserinfo WHERE ruserinfo_no = #{ruserinfo_no:INTEGER} AND ruserinfo_del_check=FALSE
 	</select>
+	<select id="searchInfo"		parameterType="int"  resultMap="rugiMap">
+		SELECT 
+			rui.ruserinfo_no,
+			rui.rstage_no,
+			rui.user_no,
+			rui.ruserinfo_iscleared,
+			rui.ruserinfo_iswon,
+			rui.ruserinfo_golds,
+			rgi.rgameinfo_startdate,
+			rgi.rgameinfo_playtime,
+			rgi.rgameinfo_enddate,
+			rgi.rgameinfo_level,
+			rgi.rgameinfo_perfect_num,
+			rgi.rgameinfo_great_num,
+			rgi.rgameinfo_good_num,
+			rgi.rgameinfo_miss_num,
+			rgi.rgameinfo_rank,
+			rgi.rgameinfo_kcal,
+			rgi.rgameinfo_score
+		FROM RUserinfo rui
+		LEFT JOIN RGameinfo rgi
+		ON rui.ruserinfo_no = rgi.ruserinfo_no
+		WHERE rui.ruserinfo_no = #{ruserinfo_no:INTEGER}
+		AND rui.ruserinfo_del_check = FALSE
+		AND rgi.rgameinfo_del_check = FALSE;
+	</select>
 	<select id="searchAll"	resultType="ruserinfo">
 		SELECT * FROM RUserinfo WHERE ruserinfo_del_check=FALSE
 	</select>
-	
+	<select id="getLast" parameterType = "hashmap" resultType="ruserinfo">
+		SELECT * FROM RUserinfo 
+		WHERE user_no = #{user_no:INTEGER}		 
+		AND rstage_no = #{rstage_no:INTEGER}
+		AND ruserinfo_del_check=FALSE
+		ORDER BY ruserinfo_no LIMIT 0,1;
+	</select>
+	<select id="getClear" parameterType="hashmap" resultType="int">
+    	 SELECT 
+    	 	COUNT(ruserinfo_iscleared) AS ruserinfo_iscleared 
+    	 FROM RUserinfo 
+    	 WHERE ruserinfo_iscleared = TRUE 
+    	 AND user_no = #{user_no:INTEGER}		 
+		 AND rstage_no = #{rstage_no:INTEGER};
+     </select>
+     <select id="getWon" parameterType="hashmap" resultType="int">
+    	 SELECT 
+    	 	COUNT(ruserinfo_iswon) AS ruserinfo_iswon 
+    	 FROM RUserinfo 
+    	 WHERE ruserinfo_iswon = TRUE 
+    	 AND user_no = #{user_no:INTEGER}		 
+		 AND rstage_no = #{rstage_no:INTEGER};
+     </select>
 </mapper>
 

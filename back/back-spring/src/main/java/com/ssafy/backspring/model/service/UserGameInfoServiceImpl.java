@@ -60,5 +60,13 @@ public class UserGameInfoServiceImpl implements UserGameInfoService {
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public UserGameInfo searchUser(int user_no) {
+		try {
+			return dao.searchUser(user_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

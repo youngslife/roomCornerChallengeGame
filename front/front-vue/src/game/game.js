@@ -16,6 +16,7 @@ function launch(containerId) {
       }
     },
     scene: [BootScene, PlayScene]
+    // stage별로 scene 추가해주고
   });
 }
 
