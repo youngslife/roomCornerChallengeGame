@@ -1,14 +1,38 @@
 # Fitness Model 정리
 
-1. Walk
+1. Walking
 
    1. class1(오른쪽) 
-
    2. class2(stop) 
-
    3. class3(왼)
 
-      
+   
+
+   walk-jump
+
+   0. stop
+
+   1. right
+
+   2. left
+
+   3. jump
+
+      빠르게 뛰면 right-left 바로바로 반응 안하는 단점이 있음
+
+   walk
+
+   0. stop
+   1. right
+   2. left
+
+   walking-jumping
+
+   0. stop
+   1. walk
+   2. jump
+
+   
 
 2. Squat
 
@@ -24,10 +48,11 @@
     	3. right_exact
     	4. left90
     	5. left_exact
+   
  	6. stop
-   
 
-   
+
+
 4. Shoulder Press
 
    Class
@@ -51,8 +76,11 @@
    Class
 
    1. middle
+   
 2. right_mid
+   
    3. right
+   
 4. left_mid
    5. left 
 
@@ -73,5 +101,36 @@
    3: up45
    
    4: up
+   
+9. ![`](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20200604151846603.png)
 
+ 
+
+
+
+
+
+1. 주요기술스택
+
+   spring, vue.js, node.js, tensorflow.js , teachablemachine
+
+2. 프로젝트 특장점
+
+   - 남녀노소 함께 즐길 수 있다 (?)
+   - 다양한 게임 컨텐츠로의 성장 가능성
+   - 글로벌 시장 조사 전문기업 뉴주(Newzoo)에 따르면
+
+3. 우리팀만의 차별점/독창점
+
+   - 장비가 필요 없는 모션 게임
+   - 점점 사라져가는 플래시 게임을
+   - 사회적 거리두기 캠페인 참여 및 심리적 거리 좁히기
+
+
+
+모션 인식을 통한 포즈 모델 활용
+
+다양한 즐거움 선사
+
+게임을 통하여 사람들과 심리적 거리는 좁히고, 체력을 증진하는 1석 2조 효과
 

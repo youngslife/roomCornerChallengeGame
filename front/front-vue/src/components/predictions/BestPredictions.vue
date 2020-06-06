@@ -41,14 +41,24 @@ export default {
       );
     },
     test() {
+      // const test2 =
+      //   this.bestPrediction.probability > 0.9
+      //     ? this.bestPrediction.className === "Class 2"
+      //       ? "jump"
+      //       : this.bestPrediction.className === "Class 3"
+      //       ? "walk"
+      //       : "stand"
+      //     : "None";
       const test2 =
         this.bestPrediction.probability > 0.9
-          ? this.bestPrediction.className === "Class 2"
+          ? this.bestPrediction.className === "up"
             ? "jump"
-            : this.bestPrediction.className === "Class 3"
+            : this.bestPrediction.className === "right"
+            ? "walk"
+            : this.bestPrediction.className === "left"
             ? "walk"
             : "stand"
-          : "None";
+          : "stand";
       return test2;
     }
   },
@@ -56,18 +66,32 @@ export default {
     this.action(0);
   },
   methods: {
+    // action(time) {
+    //   if (this.startTime.type !== this.test) {
+    //     this.startTime.time = Date.now();
+    //     this.startTime.type = this.test;
+    //   }
+    //   if (Date.now() - this.startTime.time >= 1500) {
+    //     this.$emit("child", this.startTime.type);
+    //   }
+    //   setTimeout(() => {
+    //     this.action(time + 100);
+    //   }, 100);
+    // },
+    //시간 지연 뺀 코드(걷는 반응이 느려서..)
     action(time) {
-      if (this.startTime.type !== this.test) {
-        this.startTime.time = Date.now();
-        this.startTime.type = this.test;
-      }
-      if (Date.now() - this.startTime.time >= 1500) {
-        this.$emit("child", this.startTime.type);
-      }
+
+      this.startTime.time = Date.now();
+      this.startTime.type = this.test;
+
+
+      this.$emit("child", this.startTime.type);
+
       setTimeout(() => {
         this.action(time + 100);
       }, 100);
-    }
+    },
+    
   }
 };
 </script>

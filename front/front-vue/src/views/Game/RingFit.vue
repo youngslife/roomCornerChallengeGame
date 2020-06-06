@@ -24,7 +24,7 @@
         v-bind:class="{ pauseMap: isPause }"
       ></div>-->
       <div class="col-9">
-        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
+        <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-show="!isMonster" />
         <ringfit-attack
           v-if="isMonster"
@@ -83,7 +83,8 @@ export default {
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       stage: "",
       window: {
         width: 0,
@@ -94,7 +95,6 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
-      isMonster: false,
       AttackCnt: 0,
       player: {
         username: "방구석여포",
@@ -114,6 +114,9 @@ export default {
       console.log(this.url);
       console.log(this.isMonster);
       return this.url;
+    },
+    isMonster() {
+      return this.$store.state.phaser.isMeet;
     }
   },
   async mounted() {
@@ -191,18 +194,23 @@ export default {
     },
     goAttack(count) {
       this.AttackCnt = count;
-    },
-    changeToAttack() {
-      if (this.isMonster == false) {
-        this.url =
-          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-        this.isMonster = true;
-      } else if (this.isMonster == true) {
-        this.isMonster = false;
-        this.url =
-          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
-      }
     }
+    // 이 부분은 isMonster computed에 넣으면 될듯
+    // changeToAttack() {
+    //   if (this.isMonster == false) {
+    //     console.log(1, this.isMonster);
+    //     this.url =
+    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+    //     this.isMonster = true;
+    //     console.log(2, this.isMonster);
+    //   } else if (this.isMonster == true) {
+    //     console.log(3, this.isMonster);
+    //     this.isMonster = false;
+    //     this.url =
+    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+    //     console.log(4, this.isMonster);
+    //   }
+    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);

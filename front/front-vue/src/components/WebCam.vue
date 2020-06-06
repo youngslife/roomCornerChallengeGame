@@ -5,7 +5,6 @@
     <all-predict :predictions="predictions" :stage="stage"></all-predict>
     <div>Best Prediction</div>
     <best-predict :predictions="predictions" :stage="stage" @child="test"></best-predict>
-    <squat-prediction :predictions="predictions" :stage="stage" @child="test"></squat-prediction>
   </div>
 </template>
 
@@ -14,7 +13,6 @@ import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
 import AllPredict from "./predictions/AllPredictions";
 import BestPredict from "./predictions/BestPredictions";
-import SquatPrediction from "./predictions/SquatPrediction";
 export default {
   props: {
     url: {
@@ -37,7 +35,6 @@ export default {
   components: {
     AllPredict,
     BestPredict,
-    SquatPrediction
   },
   data() {
     return {

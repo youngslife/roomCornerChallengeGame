@@ -7,9 +7,9 @@
       <p>{{ player.username }} hp : {{ pnowHp }}</p>
     </div>
     <div class="row skill-set">
-      <q-btn class="col-4" :label="skills.first.name" @click="playerAttck(skills.first.name)"></q-btn>
-      <q-btn class="col-4" :label="skills.second.name" @click="playerAttck(skills.second.name)"></q-btn>
-      <q-btn class="col-4" :label="skills.third.name" @click="playerAttck(skills.third.name)"></q-btn>
+      <q-btn class="col-4" :label="skills.first.name" @click="playerAttack(skills.first.name)"></q-btn>
+      <q-btn class="col-4" :label="skills.second.name" @click="playerAttack(skills.second.name)"></q-btn>
+      <q-btn class="col-4" :label="skills.third.name" @click="playerAttack(skills.third.name)"></q-btn>
     </div>
   </div>
 </template>
@@ -73,9 +73,10 @@ export default {
       if (this.monster.hp <= 0) {
         this.monster.image = require("../../assets/ryan3.png");
         this.monster.hp = 0;
-        // setTimeout(() => {
-        //   alert(`${this.monster.name} 처치 완료`);
-        // }, 500)
+        this.$store.state.phaser.isMeet = false;
+        setTimeout(() => {
+          //   alert(`${this.monster.name} 처치 완료`);
+        }, 500);
       } else {
         // setTimeout(() => {
         //   alert(`${this.monster.name}의 공격`)
@@ -112,9 +113,9 @@ export default {
   },
   mounted() {
     this.monster.image = require("../../assets/ryan1.png");
+    console.log(this);
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
