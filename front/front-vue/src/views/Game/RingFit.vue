@@ -132,7 +132,7 @@ export default {
     ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id
+        user_no: this.$store.state.user.user.user_no
       };
       await this.getStage(params); // axios
     },

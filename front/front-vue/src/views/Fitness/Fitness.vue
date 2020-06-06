@@ -1,12 +1,6 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      infinite
-      style="height:710px;"
-      autoplay
-    >
+    <q-carousel animated v-model="slide" infinite style="height:710px;" autoplay>
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -14,10 +8,7 @@
         :key="index"
       >
         <!--이부분은 컴포넌트화시키면 될듯  -->
-        <div
-          class="absolute-top justify-around row"
-          style="height:50px;margin-top:20px;"
-        >
+        <div class="absolute-top justify-around row" style="height:50px;margin-top:20px;">
           <div class="col-2 flex flex-center">
             <q-img
               :src="require('../../assets/fitrun.png')"
@@ -32,9 +23,8 @@
             style=" color:white; font-size:25px;"
             :label="menu.name"
             class="col-2 text-weight-bold"
-            :to="menu.rink"
-          >
-          </q-btn>
+            :to="menu.link"
+          ></q-btn>
         </div>
         <div class="absolute-bottom">
           <q-btn-toggle
@@ -63,10 +53,10 @@ export default {
     return {
       slide: "first",
       menus: [
-        { name: "소식", rink: "/fitness/info" },
-        { name: "가이드", rink: "/fitness/guide" },
-        { name: "랭킹", rink: "/fitness/rank" },
-        { name: "커뮤니티", rink: "/fitness/community" }
+        { name: "소식", link: "/fitness/info" },
+        { name: "가이드", link: "/fitness/guide" },
+        { name: "랭킹", link: "/fitness/rank" },
+        { name: "커뮤니티", link: "/fitness/community" }
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
