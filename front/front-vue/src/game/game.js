@@ -3,6 +3,7 @@ import BootScene from "./scenes/BootScene";
 import TutorialScene from "./scenes/TutorialScene";
 import Stage1Scene from "./scenes/Stage1Scene";
 import Stage2Scene from "./scenes/Stage2Scene";
+import WipeScene from "./scenes/WipeScene";
 import event from "./events";
 function launch({ containerId, store }) {
   const game = new Phaser.Game({
@@ -19,7 +20,7 @@ function launch({ containerId, store }) {
         debug: false
       }
     },
-    scene: [BootScene, TutorialScene, Stage1Scene, Stage2Scene]
+    scene: [BootScene, TutorialScene, Stage1Scene, Stage2Scene, WipeScene]
     // stage별로 scene 추가해주고
   });
   game.registry.events = event;

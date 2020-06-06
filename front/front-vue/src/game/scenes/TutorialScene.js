@@ -154,9 +154,10 @@ export default class TutorialScene extends Scene {
   // destroy or clear? 해주고
   meetMonster() {
     console.log("몬스터를 만났다");
-
-    this.registry.events.emit("meetMonster");
-    // RingFit.methods.changeToAttack();
+    this.registry.events.emit("saveScene", "TutorialScene");
+    this.scene.launch("WipeScene");
+    this.scene.pause();
+    // this.registry.events.emit("meetMonster");
     monster.destroy();
   }
   endGame() {

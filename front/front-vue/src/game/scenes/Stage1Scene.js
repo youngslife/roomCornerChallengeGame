@@ -55,13 +55,15 @@ export default class Stage1Scene extends Scene {
       obj.body.height = el.height;
     });
     player = this.physics.add.sprite(0, 400, "player");
+
     // player.setBounce(0.1);
     player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
     this.physics.add.collider(player, layer);
-    this.physics.add.overlap(player, coins, this.collectCoin);
+    this.physics.add.overlap(player, coins, this.collectCoin, null, this);
+
     this.anims.create({
       key: "walk",
       frames: this.anims.generateFrameNames("player", {
@@ -92,7 +94,6 @@ export default class Stage1Scene extends Scene {
       ],
       frameRate: 10
     });
-    // this.cameras.main.setZoom(2);
     this.anims.create({
       key: "attack",
       frames: this.anims.generateFrameNames("monster", {
@@ -161,10 +162,10 @@ export default class Stage1Scene extends Scene {
   // destroy or clear? 해주고
   meetMonster() {
     console.log("몬스터를 만났다");
-    console.log(this.registry.events.store.state.phaser.isMeet);
-
+    this.registry.events.emit("saveScene", "Stage1Scene");
+    this.scene.launch("WipeScene");
+    this.scene.pause();
     this.registry.events.emit("meetMonster");
-    console.log(this.registry.events.store.state.phaser.isMeet);
     // RingFit.methods.changeToAttack();
     monster.destroy();
   }

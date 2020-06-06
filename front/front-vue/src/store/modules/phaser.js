@@ -1,5 +1,6 @@
 const state = {
-  isMeet: false
+  isMeet: false,
+  scene: ""
 };
 
 const getters = {
@@ -15,6 +16,9 @@ const actions = {
 const mutations = {
   setIsMeet: (state, payload) => {
     state.isMeet = payload;
+  },
+  setScene: (state, payload) => {
+    state.scene = payload;
   }
 };
 

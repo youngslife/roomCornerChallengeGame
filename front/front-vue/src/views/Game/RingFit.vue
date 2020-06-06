@@ -16,11 +16,6 @@
       </template>
     </q-overlay>
     <div class="row slider">
-      <!-- <div
-        id="map"
-        class="col-9 slider-col"
-        v-bind:class="{ pauseMap: isPause }"
-      ></div>-->
       <div class="col-9">
         <h3>Stage {{ getStageNum }}</h3>
         <h4>이번 판 운동 : {{ getMotionName }}</h4>

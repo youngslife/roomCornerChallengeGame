@@ -161,10 +161,10 @@ export default class Stage2Scene extends Scene {
   // destroy or clear? 해주고
   meetMonster() {
     console.log("몬스터를 만났다");
-    console.log(this.registry.events.store.state.phaser.isMeet);
-
+    this.registry.events.emit("saveScene", "Stage2Scene");
+    this.scene.launch("WipeScene");
+    this.scene.pause();
     this.registry.events.emit("meetMonster");
-    console.log(this.registry.events.store.state.phaser.isMeet);
     // RingFit.methods.changeToAttack();
     monster.destroy();
   }
