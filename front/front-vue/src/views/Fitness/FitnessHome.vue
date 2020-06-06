@@ -10,11 +10,13 @@
         />
       </div>
       <div class="col-4 flex flex-center">
-        <button
+        <router-link
           style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
+          to="/game/Ringfit"
+          tag="button"
         >
           시작버튼
-        </button>
+        </router-link>
       </div>
       <div class="col-4 ">
         <div class="row justify-around" style="margin-top:20px;height:70px;">

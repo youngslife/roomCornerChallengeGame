@@ -6,7 +6,8 @@
           :src="require('../assets/logo.png')"
           onclick="location.href ='/'"
           style="margin-top:20px;"
-        /><q-btn
+        />
+        <q-btn
           color="primary"
           icon="cancel"
           class="col-3"
@@ -23,7 +24,7 @@
               :key="`menu-${Aindex}-${Bindex}-${menu.name}`"
               clickable
               v-ripple
-              :to="menu.rink"
+              :to="menu.link"
             >
               <q-item-section>
                 <q-item-label>{{ menu.name }}</q-item-label>
@@ -45,22 +46,22 @@ export default {
       menus: [
         {
           menu: [
-            { name: "링피트", rink: "/" },
-            { name: " - 가이드", rink: "/" },
-            { name: " - 자유계시판", rink: "/" }
+            { name: "링피트", link: "/fitness" },
+            { name: " - 가이드", link: "/fitness/guide" },
+            { name: " - 자유게시판", link: "/fitness/community" }
           ]
         },
         {
           menu: [
-            { name: "마피아", rink: "/" },
-            { name: " - 가이드", rink: "/" },
-            { name: " - 자유계시판", rink: "/" }
+            { name: "마피아", link: "/" },
+            { name: " - 가이드", link: "/" },
+            { name: " - 자유게시판", link: "/" }
           ]
         },
         {
           menu: [
-            { name: "고객 센터", rink: "/" },
-            { name: "질문계시판 ", rink: "/" }
+            { name: "고객 센터", link: "/" },
+            { name: "질문게시판 ", link: "/" }
           ]
         }
       ]

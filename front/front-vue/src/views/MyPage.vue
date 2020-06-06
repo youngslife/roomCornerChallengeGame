@@ -2,12 +2,9 @@
   <q-layout class="row">
     <div class="col-3">
       <q-card class="my-card" style="margin-top:20px;">
-        <img
-          src="https://cdn.quasar.dev/img/mountains.jpg"
-          style=" border-radius: 50%;"
-        />
+        <img src="https://cdn.quasar.dev/img/mountains.jpg" style=" border-radius: 50%;" />
         <q-card-section>
-          <div class="text-h3 text-center">김개똥</div>
+          <div class="text-h3 text-center">{{user.user_name}}</div>
           <div class="text-h6 text-center">19999등</div>
         </q-card-section>
         <q-card-section>
@@ -27,13 +24,7 @@
         <q-tab name="alarms" label="게임2" />
         <q-tab v-if="$q.screen.gt.sm" name="movies" label="게임3" />
         <q-tab v-if="$q.screen.gt.sm" name="photos" label="게임4" />
-        <q-btn-dropdown
-          v-if="$q.screen.lt.md"
-          auto-close
-          stretch
-          flat
-          label="More..."
-        >
+        <q-btn-dropdown v-if="$q.screen.lt.md" auto-close stretch flat label="More...">
           <q-list>
             <q-item clickable @click="tab = 'movies'">
               <q-item-section>Movies</q-item-section>
@@ -55,11 +46,7 @@
               style="height: 950px;"
             >
               <div v-for="n in 100" :key="n" class="q-py-sm q-px-md">
-                <q-checkbox
-                  right-label
-                  v-model="orange"
-                  label="뭔가 내용이 들어가겠지"
-                />
+                <q-checkbox right-label v-model="orange" label="뭔가 내용이 들어가겠지" />
               </div>
             </q-scroll-area>
             <div class="col-8 flex flex-cetner" style="margin-left:50px;">
@@ -77,19 +64,19 @@
                 </div>
                 <q-separator />
                 <div class="row">
-                  <div class=" col-6">
+                  <div class="col-6">
                     <h3 class="inline-block">perfect :</h3>
                     <h3 class="inline-block">12:23</h3>
                   </div>
-                  <div class=" col-6">
+                  <div class="col-6">
                     <h3 class="inline-block">great :</h3>
                     <h3 class="inline-block">12:23</h3>
                   </div>
-                  <div class=" col-6">
+                  <div class="col-6">
                     <h3 class="inline-block">good :</h3>
                     <h3 class="inline-block">12:23</h3>
                   </div>
-                  <div class=" col-6">
+                  <div class="col-6">
                     <h3 class="inline-block">miss :</h3>
                     <h3 class="inline-block">12:23</h3>
                   </div>
@@ -99,13 +86,11 @@
           </q-tab-panel>
 
           <q-tab-panel name="alarms">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Alarms</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
 
           <q-tab-panel name="movies">
-            <div class="text-h6">Movies</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Movies</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -120,8 +105,12 @@ export default {
       tab: "mails",
       drawerLeft: true,
       orange: false,
-      text: ""
+      text: "",
+      user: {}
     };
+  },
+  mounted() {
+    this.user = this.$store.state.user.user;
   }
 };
 </script>

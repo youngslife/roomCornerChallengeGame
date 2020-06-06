@@ -28,8 +28,7 @@ const routes = [
   {
     path: "/fitness",
     component: () => import("../views/Fitness/Fitness.vue"),
-    children: [
-      {
+    children: [{
         path: "",
         name: "fitness",
         component: () => import("../views/Fitness/FitnessHome.vue")
@@ -60,6 +59,16 @@ const routes = [
     path: "/game/RingFit",
     name: "RingFit",
     component: () => import("../views/Game/RingFit.vue")
+  },
+  {
+    path: "/temp/SelectMotion",
+    name: "SelectMotion",
+    component: () => import("../components/ringfit/SelectMotion.vue")
+  },
+  {
+    path: "/temp/SelectStage",
+    name: "SelectStage",
+    component: () => import("../components/ringfit/SelectStage.vue")
   }
 ];
 

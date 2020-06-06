@@ -74,7 +74,7 @@ public class ServiceCenterController {
 
     @ApiOperation("특정 Faq를 조회하는 기능")
     @GetMapping("/serviceCenter/faq/fsearchFaqCategory/{faq_category}")
-    public ResponseEntity<Map<String, Object>> fsearchFaqCategory(String faq_category) {
+    public ResponseEntity<Map<String, Object>> fsearchFaqCategory(@PathVariable String faq_category) {
         final List<Faq> list = f_service.searchFaqCategory(faq_category);
         return handler.handleSuccess(list);
     }
