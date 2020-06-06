@@ -1,13 +1,19 @@
 import RingfitService from "../../api/RingfitService";
 
-const state = { stage: [] };
+const state = {
+  stageNum: 0,
+  motionName: ""
+};
 
-const getters = {};
+const getters = {
+  getStageNum: state => state.stageNum,
+  getMotionName: state => state.motionName
+};
 
 const actions = {
   getStageByUser: (store, payLoad) => {
     RingfitService.getStageByUser(payLoad.no).then(Response => {
-      store.commit("setStage", { stage: Response });
+      store.commit("setStageNum", { stage: Response });
     });
   },
   gameStart: (store, payLoad) => {
@@ -18,8 +24,11 @@ const actions = {
   }
 };
 const mutations = {
-  setStage(state, payLoad) {
-    state.stage = payLoad.stage;
+  setStageNum: (state, payload) => {
+    state.stageNum = payload;
+  },
+  setMotionName: (state, payload) => {
+    state.motionName = payload;
   }
 };
 export default {

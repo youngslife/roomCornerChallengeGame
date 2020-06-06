@@ -16,8 +16,17 @@
       </template>
     </q-overlay>
     <div class="row slider">
+      <!-- <div
+        id="map"
+        class="col-9 slider-col"
+        v-bind:class="{ pauseMap: isPause }"
+      ></div>-->
       <div class="col-9">
-        <Game :stage="stage" />
+        <h3>Stage {{ getStageNum }}</h3>
+        <h4>이번 판 운동 : {{ getMotionName }}</h4>
+        <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
+        <Game v-show="!isMonster" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
       <div class="pause">
@@ -27,12 +36,21 @@
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
           <web-cam
-            :url="url"
+            v-if="!isMonster"
+            :url="changeUrl"
             :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
           ></web-cam>
+          <squat-cam
+            v-if="isMonster"
+            :url="changeUrl"
+            :stage="stage"
+            :width="window.width"
+            :height="window.height"
+            @child="goAttack"
+          ></squat-cam>
         </div>
       </div>
     </div>
@@ -41,14 +59,19 @@
 
 <script>
 import WebCam from "../../components/WebCam";
+import SquatCam from "../../components/SquatCam";
+import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
+import { mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
   components: {
+    SquatCam,
     WebCam,
     QOverlay,
-    Game
+    Game,
+    RingfitAttack
   },
   data() {
     return {
@@ -62,27 +85,51 @@ export default {
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false
+      isPause: false,
+      AttackCnt: 0,
+      player: {
+        username: "방구석여포",
+        hp: 200
+      }
     };
   },
   computed: {
-    stage() {
-      return this.$store.state.stage;
+    ...mapState({
+      // back이랑 통신하고 나면 받아오자
+      stage: state => state.stageNum
+      // hour: (state) => state.hour,
+      // minute: (state) => state.minute,
+      // second: (state) => state.second,
+    }),
+    ...mapGetters({
+      getMotionName: "ringfit/getMotionName",
+      getStageNum: "ringfit/getStageNum"
+    }),
+    changeUrl() {
+      console.log(this.url);
+      console.log(this.isMonster);
+      return this.url;
+    },
+    isMonster() {
+      return this.$store.state.phaser.isMeet;
     }
   },
   async mounted() {
+    console.log(this.$store.state.user.user);
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
+    // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     this.printPlayTime();
+    console.log("아마 vuex", this.motionName);
   },
   methods: {
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id
+        no: this.$store.state.user.user.user_no
       };
-      await this.$store.dispatch("ringfit/getStageByUser");
+      await this.$store.dispatch("ringfit/getStageByUser", params);
     },
     printPlayTime() {
       var clock = document.getElementById("time");
@@ -138,7 +185,26 @@ export default {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
       }
+    },
+    goAttack(count) {
+      this.AttackCnt = count;
     }
+    // 이 부분은 isMonster computed에 넣으면 될듯
+    // changeToAttack() {
+    //   if (this.isMonster == false) {
+    //     console.log(1, this.isMonster);
+    //     this.url =
+    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+    //     this.isMonster = true;
+    //     console.log(2, this.isMonster);
+    //   } else if (this.isMonster == true) {
+    //     console.log(3, this.isMonster);
+    //     this.isMonster = false;
+    //     this.url =
+    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+    //     console.log(4, this.isMonster);
+    //   }
+    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);

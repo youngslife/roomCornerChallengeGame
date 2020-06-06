@@ -1,17 +1,14 @@
 <template>
   <div :id="containerId" v-if="downloaded" />
+  <!-- <game-load ref="gameload" v-if="downloaded" :containerId="containerId"></game-load> -->
   <div class="placeholder" v-else>Loading ...</div>
 </template>
 
 <script>
+// import GameLoad from "../components/GameLoad.vue";
+
 export default {
   name: "Game",
-  props: {
-    stage: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
     return {
       downloaded: false,
@@ -19,11 +16,19 @@ export default {
       containerId: "game-container"
     };
   },
+  components: {
+    // GameLoad
+  },
   async mounted() {
+    // await this.launch(this.containerId);
     const game = await import(/* webpackChunkName: "game" */ "@/game/game");
     this.downloaded = true;
     this.$nextTick(() => {
-      this.gameInstance = game.launch(this.containerId);
+      // this.gameInstance = this.$refs.gameload.launch(this.containerId);
+      this.gameInstance = game.launch({
+        containerId: this.containerId,
+        store: this.$store ? this.$store : null
+      });
     });
   },
   destroyed() {

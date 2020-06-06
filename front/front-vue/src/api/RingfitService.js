@@ -1,6 +1,7 @@
 import Api from "./Api";
 class RingfitService {
   async getStageByUser(user_no) {
+    console.log(user_no);
     return Api.get(`/Ringfit/stage/searchAll/${user_no}`)
       .then(Response => {
         console.log(Response);
