@@ -9,17 +9,31 @@ class RingfitService {
       .catch(exp => {
         console.log("Error getStageByUser : " + exp);
       });
-    },
-    async updateStageInfo(stageInfo) {
-        console.log(stageInfo)
-        return Api.put(
-            `/Ringfit/stage/${stageInfo.user_no}`,
-            {stageInfo: stageInfo}
-        ).then(Response => {
-            console.log(Response)
-        }).catch(exp => {
-            console.log("Error updateStageInfo : " + exp);
-        })
-    }
+  }
+  async gameStart(stageInfo) {
+    console.log(stageInfo);
+    return Api.post("/Ringfit/stage/gameStart", {
+      user_no: stageInfo.user_no,
+      rstage_no: stageInfo.stage
+      // rgameinfo_level: stageInfo.level // 이걸 어디에쓰지
+    })
+      .then(Response => {
+        console.log(Response);
+      })
+      .catch(exp => {
+        console.log("Error gameStart : " + exp);
+      });
+  }
+  async gameEnd(stageInfo) {
+    console.log(stageInfo); // 여기엔 clear했는지, 퍼펙트 그레이트 등등
+    // kcal, score, gold,
+    return Api.post("/Ringfit/stage/gameEnd", stageInfo)
+      .then(Response => {
+        console.log(Response);
+      })
+      .catch(exp => {
+        console.log("Error gameEnd" + exp);
+      });
+  }
 }
 export default new RingfitService();

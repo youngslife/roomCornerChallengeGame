@@ -10,8 +10,11 @@ const actions = {
       store.commit("setStage", { stage: Response });
     });
   },
-  updateStageInfo: (store, payLoad) => {
-    RingfitService.updateStageInfo(payLoad);
+  gameStart: (store, payLoad) => {
+    RingfitService.gameStart(payLoad);
+  },
+  gameEnd: (store, payLoad) => {
+    RingfitService.gameEnd(payLoad);
   }
 };
 const mutations = {
