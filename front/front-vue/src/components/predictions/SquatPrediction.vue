@@ -12,10 +12,6 @@ export default {
       type: Array,
       required: true,
     },
-    stage: {
-      type: String,
-      required: true,
-    },
   },
   data() {
     return {

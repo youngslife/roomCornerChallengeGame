@@ -11,10 +11,6 @@ export default {
     predictions: {
       type: Array,
       required: true
-    },
-    stage: {
-      type: String,
-      required: true
     }
   },
   data() {
@@ -80,18 +76,15 @@ export default {
     // },
     //시간 지연 뺀 코드(걷는 반응이 느려서..)
     action(time) {
-
       this.startTime.time = Date.now();
       this.startTime.type = this.test;
-
 
       this.$emit("child", this.startTime.type);
 
       setTimeout(() => {
         this.action(time + 100);
       }, 100);
-    },
-    
+    }
   }
 };
 </script>

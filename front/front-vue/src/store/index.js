@@ -4,10 +4,10 @@ import user from "./modules/user";
 import header from "./modules/header";
 import board from "./modules/board";
 import phaser from "./modules/phaser";
+import ringfit from "./modules/ringfit";
 import post from "./modules/post";
 import comment from "./modules/comment";
 
-import ringfit from "./modules/ringfit";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -19,8 +19,8 @@ export default new Vuex.Store({
     header,
     board,
     phaser,
-    post,
-    comment,
     ringfit,
+    post,
+    comment
   }
 });
