@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.backspring.model.dto.UserGameInfo;
 import com.ssafy.backspring.model.dto.ringfit.RGameInfo;
 import com.ssafy.backspring.model.dto.ringfit.RMonster;
 import com.ssafy.backspring.model.dto.ringfit.RStage;
 import com.ssafy.backspring.model.dto.ringfit.RUserInfo;
+import com.ssafy.backspring.model.service.UserGameInfoService;
 import com.ssafy.backspring.model.service.ringfit.RGameInfoService;
 import com.ssafy.backspring.model.service.ringfit.RMonsterService;
 import com.ssafy.backspring.model.service.ringfit.RStageService;
@@ -42,6 +45,8 @@ public class RingFitController {
      private RStageService rs_service;
      @Autowired
      private RMonsterService rm_service;
+     @Autowired
+     private UserGameInfoService ugi_service;
     // @Autowired
     // private RMapService rui_service;
     // @Autowired
@@ -85,16 +90,24 @@ public class RingFitController {
     	 
     	 //1. 유저의 게임 정보를 생성 할 것
     	 //새롭게 유저의 링피트정보를 생성한뒤, 유저가 생성한 마지막 링피트정보를 가져오고, 게임정보를 새로 추가(난이도, 시작시간은 자동)해준다 
-    	 // 1) RUserInfo -> 스테이지, 유저체력
+    	 // 1) RUserInfo -> 스테이지, 유저체력 //이미 클리어했는지 여부도 알아야되네
+    	 
+    	 //유저 번호와 스테이지 번호를 담은 객체
+    	 RInfo rinfo = new RInfo();
+    	 rinfo.setUser_no(user_no);
+    	 rinfo.setRstage_no(rstage_no);
+    	 int cleared = rui_service.getClear(rinfo); //해당 스테이지를 해당 유저가 클리어한 개수가 0이면 클리어한적 없음
+    	 
+    	 //새로운 유저 정보를 삽입
     	 RUserInfo newinfo = new RUserInfo();
     	 newinfo.setRstage_no(rstage_no);
     	 newinfo.setUser_no(user_no);
     	 newinfo.setRuserinfo_hp(100*rgameinfo_level);
+    	 if(cleared>0) {
+    		 newinfo.setRuserinfo_iscleared(true);
+    	 }
     	 rui_service.insert(newinfo);
-
-    	 RInfo rinfo = new RInfo();
-    	 rinfo.setUser_no(user_no);
-    	 rinfo.setRstage_no(rstage_no);
+    	 //방금전에 삽입된 마지막 게임 기록을 찾아서 게임 관리번호 입력
     	 RUserInfo userinfo = rui_service.getLast(rinfo);
     	 rinfo.setRuserinfo_no(userinfo.getRuserinfo_no());
     	 
@@ -123,31 +136,76 @@ public class RingFitController {
     	 data.put("message", "유저게임 정보 생성 및 스테이지 "+rstage_no+" 관련 정보 반환. 게임 시작");
     	 return handler.handleSuccess(data);
      }
-     @ApiOperation("테스트기능")
-	 @PostMapping("/Ringfit/stage/play")
-     public ResponseEntity<Map<String, Object>> play(
-    		 @ApiParam(value = "The User ID", required = true)
-    		 @RequestParam(name = "user_no", required = true) int user_no,
-    		 @ApiParam(value = "The Stage ID", required = true)
-    		 @RequestParam(name = "rstage_no", required = true) int rstage_no,
-    		 @ApiParam(value = "The Stage Difficulty", required = true)
-    		 @RequestParam(name = "rgameinfo_level", required = true) int rgameinfo_level){
+     @ApiOperation("게임을 종료하는 기능")
+     @PostMapping("/Ringfit/stage/gameEnd")
+     public ResponseEntity<Map<String,Object>> gameEnd(@RequestBody RUserInfo ruserinfo){
     	 
-//    	 List<RMonster> list = rm_service.searchList(rstage_no); //1 tutorial 2-4 stage1 5-7 stage2  해당 몬스터 정보 담아서 줄것
-    	 RInfo rinfo = new RInfo();
-    	 rinfo.setUser_no(user_no);
-    	 rinfo.setRstage_no(rstage_no);
-    	 RUserInfo userinfo = rui_service.getLast(rinfo);
-    	 rinfo.setRuserinfo_no(userinfo.getRuserinfo_no());
+    	 RUserInfo updateUserInfo = rui_service.search(ruserinfo.getRuserinfo_no());
+    	 RGameInfo updateGameInfo = rgi_service.search(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_no());
+    	 //유저 링피트 정보 갱신. 승리 - 클리어 - 골드
+    	 //이번에 승리했으면 클리어 추가
+    	 if(ruserinfo.isRuserinfo_iswon()) {
+    		 if(!updateUserInfo.isRuserinfo_iscleared()) updateUserInfo.setRuserinfo_iscleared(true); //이전에 깬적이 없으면 업데이트
+    		 updateUserInfo.setRuserinfo_iswon(true);
+    	 }
+    	 updateUserInfo.setRuserinfo_golds(ruserinfo.getRuserinfo_golds());
     	 
-    	 RStage stageInfo = rs_service.searchInfo(rinfo);
-    	 Map<String, Object> data = new HashMap<String,Object>();
-    	 data.put("rInfo", rinfo);
-    	 data.put("stageInfo", stageInfo);
-    	 data.put("message", "유저게임 정보 생성 및 스테이지 "+rstage_no+" 관련 정보 반환");
+    	 //게임 정보 갱신 - 퍼펙트, 그레이트, 굿, 미스, 칼로리, 스코어 - 랭크
+    	//enddate, playtime은 함수 호출 시간을 기반으로 자동 갱신되도록 함
+    	 updateGameInfo.setRgameinfo_perfect_num(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_perfect_num());
+    	 updateGameInfo.setRgameinfo_great_num(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_great_num());
+    	 updateGameInfo.setRgameinfo_good_num(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_good_num());
+    	 updateGameInfo.setRgameinfo_miss_num(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_miss_num());
+    	 updateGameInfo.setRgameinfo_kcal(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_kcal());
+    	 updateGameInfo.setRgameinfo_score(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_score());
+    	 
+    	 double score = ruserinfo.getRuserinfo_gameinfo().getRgameinfo_score();
+    	 updateGameInfo.setRgameinfo_rank(getRank(score));
+    	 
+    	 //유저 게임 정보 갱신 - 기존 골드에 추가 골드
+    	 UserGameInfo ugi = ugi_service.searchUser(updateUserInfo.getUser_no());
+    	 ugi.setUginfo_gold(ugi.getUginfo_gold()+ruserinfo.getRuserinfo_golds());
+    	 System.out.println(updateUserInfo);
+    	 //업데이트
+    	 rui_service.update(updateUserInfo);
+    	 rgi_service.update(updateGameInfo);
+    	 ugi_service.update(ugi);
+    	 
+    	 //반환용 정보 - 플레이타임, 칼로리, 퍼펙트, 그레이트, 굿, 미스, 랭크, 스코어, 승리여부
+    	 Map<String,Object> data = new HashMap<String,Object>();
+    	 RUserInfo list = rui_service.searchInfo(updateUserInfo.getRuserinfo_no());
+    	 data.put("info", list);
+    	 data.put("message", "갱신된 정보 제공. 게임 종료");
+    	 
     	 return handler.handleSuccess(data);
      }
-     
+     public String getRank(Double score) {
+    	 String rank = "";
+    	 if(score >=95) {
+    		 rank = "S+";
+    	 }else if(score >= 90 && score < 95) {
+    		 rank = "S";
+    	 }else if(score >= 85 && score < 90) {
+    		 rank = "A+";
+    	 }else if(score >= 80 && score < 85) {
+    		 rank = "A";
+    	 }else if(score >= 75 && score < 80) {
+    		 rank = "B+";
+    	 }else if(score >= 70 && score < 75) {
+    		 rank = "B";
+    	 }else if(score >= 65 && score < 70) {
+    		 rank ="C+";
+    	 }else if(score >= 60 && score < 65) {
+    		 rank ="C";
+    	 }else if(score >= 55 && score < 60) {
+    		 rank ="D+";
+	     }else if(score >= 50 && score < 55) {
+	    	 rank ="D";
+	     }else{
+    		 rank="F";
+    	 }
+    	 return rank;
+     }
     // 난이도, 스테이지, 유저정보 받고 유저관련 정보 추가(유저번호,난이도,스테이지,클리어여부,시작시간)하고
     // 몬스터, 맵, 이미지 등 보내주기 이게 쉽지않네. 맵이 뭐뭐가 필요할지는 모르겠는데 용도가 다르자나. 캐릭터, 배경, 움직이는 것 //잡몹 2 중간1 잡몹 1 최종 1 끝 // 난이도에 따라서 애들 체력 레벨 증가
      //맵도 다 프론트에 저장해두고 알아서 맞춰 꺼내도록 하자. 여기서 뭐 해주려니까 서로 불편하네
@@ -160,7 +218,8 @@ public class RingFitController {
     // 몬스터 클래스, 파일 클래스, 맵 클래스 만들고, 스테이지 클래스? 스테이지에서 몬스터 리스트(+몬스터이미지리스트), 맵(+맵
     // 이미지리스트)를 가져오는거지
     // 몬스터
-
+     //게임종료 api랑 효과음 찾자
+     
 }
 
 /*

@@ -24,6 +24,8 @@
         v-bind:class="{ pauseMap: isPause }"
       ></div>-->
       <div class="col-9">
+        <h3>Stage {{ getStageNum }}</h3>
+        <h4>이번 판 운동 : {{ getMotionName }}</h4>
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-show="!isMonster" />
         <ringfit-attack
@@ -67,9 +69,9 @@
 <script>
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
-import RingfitAttack from "../Ringfit/RingfitAttack.vue";
+import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
@@ -110,6 +112,10 @@ export default {
       // minute: (state) => state.minute,
       // second: (state) => state.second,
     }),
+    ...mapGetters({
+      getMotionName: "ringfit/getMotionName",
+      getStageNum: "ringfit/getStageNum"
+    }),
     changeUrl() {
       console.log(this.url);
       console.log(this.isMonster);
@@ -127,6 +133,7 @@ export default {
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
+    console.log("아마 vuex", this.motionName);
   },
   methods: {
     ...mapActions("game", ["getStage"]),

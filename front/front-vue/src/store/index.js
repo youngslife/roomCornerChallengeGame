@@ -7,6 +7,7 @@ import phaser from "./modules/phaser";
 import post from "./modules/post";
 import comment from "./modules/comment";
 
+import ringfit from "./modules/ringfit";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     board,
     phaser,
     post,
-    comment
+    comment,
+    ringfit,
   }
 });
