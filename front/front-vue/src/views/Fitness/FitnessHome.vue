@@ -10,9 +10,7 @@
         />
       </div>
       <div class="col-4 flex flex-center">
-        <router-link to="/game/RingFit">
-          <button style="border-radius:50%; width:200px; height:200px; margin-top:20px;">시작버튼</button>
-        </router-link>
+        <button style="border-radius:50%; width:200px; height:200px; margin-top:20px;" @click="clickStart">시작버튼</button>
       </div>
       <div class="col-4">
         <div class="row justify-around" style="margin-top:20px;height:70px;">
@@ -131,11 +129,26 @@
 </template>
 
 <script>
+import router from "@/router"
 export default {
   data() {
     return {
-      slide2: "tv"
+      slide2: "tv",
+      userNo: 0
     };
+  },
+  mounted() {
+    this.userNo = window.sessionStorage.getItem("user_no");
+    console.log('dzdz', this.userNo)
+  },
+  methods: {
+    clickStart(){
+      if (this.userNo == 0) {
+        router.push("/signin")
+      } else {
+        router.push("/game/RingFit")
+      }
+    }
   }
 };
 </script>
