@@ -18,10 +18,10 @@ class JanusRoom {
 
       if (window.location.protocol === "http:") {
         instance.server =
-          "https://k02a3041.p.ssafy.io/janus";
+          "http://k02a3041.p.ssafy.io:8080/janus";
       } else {
         instance.server =
-          "https://k02a3041.p.ssafy.io/janus";
+          "https://k02a3041.p.ssafy.io:8089/janus";
       }
 
       instance.janus = null;
