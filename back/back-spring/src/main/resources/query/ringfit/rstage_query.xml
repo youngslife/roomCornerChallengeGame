@@ -109,7 +109,31 @@
 			WHERE rui.user_no = #{user_no:INTEGER}) AS RECORDS
 		ON STAGE.rstage_no = RECORDS.rstage_no;
  	</select>
-	
+	<select id ="searchStage" parameterType="int" resultMap="rstageMap">
+		SELECT * 
+			FROM
+				(SELECT
+					rs.rstage_no,
+					rs.rstage_name,
+					rs.rstage_theme,
+					rm.rmap_no,
+					rm.rmap_length
+				FROM RStage rs
+				LEFT JOIN RMap rm
+				ON rs.rstage_no = rm.rstage_no
+				WHERE rs.rstage_del_check = FALSE AND rm.rmap_del_check = FALSE) AS STAGE
+			RIGHT JOIN 
+				(SELECT 
+					rui.ruserinfo_no,
+					rui.rstage_no,
+					rui.user_no,
+					rui.ruserinfo_iscleared
+				FROM RUserinfo rui
+				LEFT JOIN RGameinfo rgi
+				ON rui.ruserinfo_no = rgi.ruserinfo_no
+				WHERE rui.user_no = #{user_no:INTEGER} AND rui.ruserinfo_iscleared=TRUE) AS RECORDS
+			ON STAGE.rstage_no = RECORDS.rstage_no ORDER BY STAGE.rstage_no desc LIMIT 0,1;
+	</select>
 	<select id="searchInfo" parameterType="hashmap" resultMap="rstageMap">
 		SELECT * 
 		FROM
@@ -131,6 +155,7 @@
 				rui.rstage_no,
 				rui.user_no,
 				rui.ruserinfo_iscleared,
+				rgi.rgameinfo_no,
 				rgi.rgameinfo_startdate,
 				rgi.rgameinfo_playtime,
 				rgi.rgameinfo_enddate,

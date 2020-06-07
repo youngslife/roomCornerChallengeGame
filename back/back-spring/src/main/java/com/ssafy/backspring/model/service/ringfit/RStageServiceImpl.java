@@ -76,4 +76,13 @@ public class RStageServiceImpl implements RStageService {
 		}
 		return null;
 	}
+	@Override
+	public RStage searchStage(int user_no) {
+		try {
+			return dao.searchStage(user_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

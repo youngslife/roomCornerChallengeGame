@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -15,17 +17,25 @@
         </div>
       </template>
     </q-overlay>
-    <div class="row slider">
+    <div class="row">
       <div class="col-9">
-        <h3>Stage {{ getStageNum }}</h3>
-        <h4>이번 판 운동 : {{ getMotionName }}</h4>
+        <h3 v-if="!isStageSelect" class="stage">Stage {{ getStageNum - 1 }}</h3>
+        <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
-        <Game v-if="!isStageSelect" v-show="!isMonster" />
-        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
+        <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
+        <select-stage
+          v-if="isStageSelect"
+          :isStageSelect.sync="isStageSelect"
+        />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :player="player"
+        />
+        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
       </div>
       <div id="time" class="playtime"></div>
-      <div class="pause">
+      <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
       <div id="right" class="col-2 column">
@@ -55,6 +65,7 @@
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
+import RingfitResult from "../../components/ringfit/RingfitResult";
 import Game from "@/components/Game";
 import selectStage from "@/components/ringfit/SelectStage";
 import { mapState, mapGetters } from "vuex";
@@ -67,7 +78,8 @@ export default {
     QOverlay,
     Game,
     selectStage,
-    RingfitAttack
+    RingfitAttack,
+    RingfitResult
   },
   data() {
     return {
@@ -106,16 +118,18 @@ export default {
       getStageNum: "ringfit/getStageNum"
     }),
     changeUrl() {
-      console.log(this.url);
-      console.log(this.isMonster);
+      // console.log(this.url);
+      // console.log(this.isMonster);
       return this.url;
     },
     isMonster() {
       return this.$store.state.phaser.isMeet;
+    },
+    isClear() {
+      return this.$store.state.phaser.isClear;
     }
   },
   async mounted() {
-    console.log(this.$store.state.user_no);
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
@@ -127,7 +141,7 @@ export default {
   methods: {
     async getStageByUser() {
       const params = {
-        no: this.$store.state.user_no
+        no: this.$store.state.user.user_no
       };
       await this.$store.dispatch("ringfit/getStageByUser", params);
     },
@@ -233,61 +247,28 @@ $speed: 7s;
 :root {
   --slider-speed: ;
 }
-// #character {
-//   position: absolute;
-//   top: 650px;
-//   left: 400px;
-// }
-.slider {
-  //   overflow: hidden;
-
-  //   .slider-col {
-  //     margin-right: 20px;
-  //     width: $img-w * $ratio * 4;
-  //     height: $img-h * $ratio;
-  //     background-image: url("../../assets/road.png");
-  //     background-size: $img-w * 4 * $ratio $img-h * $ratio;
-  //     animation: slide $speed linear infinite;
-  //   }
-  //   .pauseMap {
-  //     $speed: 0s;
-  //   }
-}
-
-// @keyframes slidePause {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: 0;
-//   }
-// }
-// @keyframes slide {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: $img-h * $ratio;
-//   }
-// }
 #additionalInfo {
   background-image: url("../../assets/additionalInfo.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  // margin-bottom: 3em;
 }
 
 .playtime {
   position: absolute;
-  top: 70px;
-  left: 60px;
+  top: 12.7%;
+  left: 62%;
   z-index: 1;
 }
-
+.stage {
+  position: absolute;
+  top: 8%;
+  left: 3%;
+  z-index: 1;
+}
 .pause {
   position: absolute;
-  top: 70px;
-  left: 1070px;
+  top: 12%;
+  left: 65%;
   z-index: 1;
 }
 .my-card {

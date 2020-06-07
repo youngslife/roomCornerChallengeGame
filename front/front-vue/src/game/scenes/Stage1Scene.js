@@ -1,10 +1,17 @@
 import { Scene } from "phaser";
-
+import map from "@/game/assets/tilemaps/maps/stage1.json";
+import m from "@/game/assets/tilemaps/troll_sprites1.png";
+import matlas from "@/game/assets/tilemaps/troll_sprites1_atlas.json";
 let player,
   monster,
+  monster2,
+  monster3,
   layer,
   coinLayer,
+  endLayer,
+  end,
   coins,
+  self,
   time = 0;
 
 export default class Stage1Scene extends Scene {
@@ -13,57 +20,54 @@ export default class Stage1Scene extends Scene {
       key: "Stage1Scene"
     });
   }
+  preload() {
+    console.log("test");
+    this.load.tilemapTiledJSON("stage1", map);
+    this.load.atlas("monster", m, matlas);
+  }
   // Runs once, after all assets in preload are loaded
   create() {
-    this.cameras.main.setBounds(0, 0, 3392, 100);
-    this.physics.world.setBounds(0, 0, 3392);
+    self = this;
+    this.cameras.main.setBounds(0, 0, 4032, 100);
+    this.physics.world.setBounds(0, 0, 4032);
     const backgroundImage = this.add.image(0, 0, "bg").setOrigin(0, 0);
-    backgroundImage.setScale(2, 1);
+    backgroundImage.setScale(4, 1);
     this.map = this.make.tilemap({
-      key: "map"
+      key: "stage1"
     });
     let tileset = this.map.addTilesetImage("test", "tiles");
+    console.log(tileset);
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
+    console.log(layer);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
-    this.make.text({
-      x: 0,
-      y: 0,
-      padding: {
-        left: 64,
-        right: 16,
-        top: 20,
-        bottom: 40
-        //x: 32,    // 32px padding on the left/right
-        //y: 16     // 16px padding on the top/bottom
-      },
-      text: "Stage", // + this.$store.state.phaser.stage,
-      style: {
-        fontSize: "32px",
-        fontFamily: "Arial",
-        color: "#000000",
-        align: "center" // 'left'|'center'|'right'|'justify'
-      },
-      add: true
+
+    endLayer = this.map.getObjectLayer("EndLayer")["objects"];
+    end = this.physics.add.staticGroup();
+    endLayer.forEach(el => {
+      let obj = end.create(el.x, el.y + 136, "end");
+      // obj.setScale(el.width / 16, el.height / 16);
+      obj.setOrigin(0);
+      obj.body.width = el.width;
+      obj.body.height = el.height;
     });
 
     coinLayer.forEach(el => {
-      let obj = coins.create(el.x, el.y + 150, "coin");
+      let obj = coins.create(el.x, el.y + 136, "coin");
       // obj.setScale(el.width / 16, el.height / 16);
       obj.setOrigin(0);
       obj.body.width = el.width;
       obj.body.height = el.height;
     });
     player = this.physics.add.sprite(0, 400, "player");
-
     // player.setBounce(0.1);
     player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
     this.physics.add.collider(player, layer);
-    this.physics.add.overlap(player, coins, this.collectCoin, null, this);
-
+    this.physics.add.overlap(player, coins, this.collectCoin);
+    this.physics.add.overlap(player, end, true, this.endGame);
     this.anims.create({
       key: "walk",
       frames: this.anims.generateFrameNames("player", {
@@ -94,6 +98,7 @@ export default class Stage1Scene extends Scene {
       ],
       frameRate: 10
     });
+    // this.cameras.main.setZoom(2);
     this.anims.create({
       key: "attack",
       frames: this.anims.generateFrameNames("monster", {
@@ -105,12 +110,24 @@ export default class Stage1Scene extends Scene {
       repeat: -1
     });
     // monster
-    monster = this.physics.add.sprite(800, 400, "monster").play("attack");
+    monster = this.physics.add.sprite(1280, 400, "monster").play("attack");
     monster.setSize(0.3);
     monster.setDisplaySize(-250, 200);
     monster.setCollideWorldBounds(true);
+    monster2 = this.physics.add.sprite(2560, 400, "monster").play("attack");
+    monster2.setSize(0.3);
+    monster2.setDisplaySize(-250, 200);
+    monster2.setCollideWorldBounds(true);
+    monster3 = this.physics.add.sprite(3840, 400, "monster").play("attack");
+    monster3.setSize(0.3);
+    monster3.setDisplaySize(-250, 200);
+    monster3.setCollideWorldBounds(true);
     this.physics.add.collider(monster, layer);
+    this.physics.add.collider(monster2, layer);
+    this.physics.add.collider(monster3, layer);
     this.physics.add.overlap(player, monster, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
   }
   // Runs once per frame for the duration of the scene
 
@@ -152,7 +169,6 @@ export default class Stage1Scene extends Scene {
     }
   }
   collectCoin(user, coin) {
-    // console.log(user, coin);
     coin.destroy(coin.x, coin.y);
     // score++;
     return false;
@@ -160,13 +176,20 @@ export default class Stage1Scene extends Scene {
   // meetMonster 마지막 몬스터랑 전투한 다음에 or
   // user hp가 < 0 이면
   // destroy or clear? 해주고
-  meetMonster() {
-    console.log("몬스터를 만났다");
-    this.registry.events.emit("saveScene", "Stage1Scene");
-    this.scene.launch("WipeScene");
-    this.scene.pause();
-    this.registry.events.emit("meetMonster");
-    // RingFit.methods.changeToAttack();
-    monster.destroy();
+  // meetMonster() {
+  //   this.registry.events.emit("saveScene", "TutorialScene");
+  //   this.scene.launch("WipeScene");
+  //   this.scene.pause();
+  //   // this.registry.events.emit("meetMonster");
+  //   monster.destroy();
+  // }
+  endGame() {
+    // game 끝내고 백으로 result 보내주자
+    // isClear 정보도 보내주고
+    self.registry.events.emit("setCoin");
+    self.registry.events.store.state.phaser.isClear = this;
+    // self.registry.events.store.dispatch(
+    //   "ringfit/gameEnd" // 이부분에 백에 넘겨줄 데이터 입력해야함
+    // );
   }
 }
