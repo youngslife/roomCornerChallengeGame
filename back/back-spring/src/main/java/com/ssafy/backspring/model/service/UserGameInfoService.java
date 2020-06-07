@@ -10,4 +10,5 @@ public interface UserGameInfoService {
 	public List<UserGameInfo> searchAll();
 	public void update(UserGameInfo uginfo);
 	public void delete(int uginfo_no);
+	public UserGameInfo searchUser(int user_no);
 }

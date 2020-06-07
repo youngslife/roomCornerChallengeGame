@@ -10,40 +10,35 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true,
-    },
-    stage: {
-      type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       average: 0,
       startTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       endTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       befAction: "",
       count: 0,
-      midCnt: 0,
+      midCnt: 0
     };
   },
   computed: {
     bestPrediction() {
-
       return this.predictions.reduce(
         (agg, prediction) => {
-            // console.log(prediction.className)
+          // console.log(prediction.className)
           return prediction.probability > agg.probability ? prediction : agg;
         },
         { probability: 0 }
       );
-    },
+    }
   },
   mounted() {
     this.action(0);
@@ -61,31 +56,31 @@ export default {
         this.action(time + 100);
       }, 100);
     },
-  test() {
-      if(this.bestPrediction.className == "down"){
-          if(this.bestPrediction.probability.toFixed(2) == 1.00){
-            if(this.midCnt== 1){
-              this.count++;
-              console.log(this.count);
-              this.midCnt = 0;
-            }
-            this.status = "down"
+    test() {
+      if (this.bestPrediction.className == "down") {
+        if (this.bestPrediction.probability.toFixed(2) == 1.0) {
+          if (this.midCnt == 1) {
+            this.count++;
+            console.log(this.count);
+            this.midCnt = 0;
           }
-      }else if(this.bestPrediction.className == "middle"){
-        if(this.bestPrediction.probability.toFixed(2) == 1.00){
-          if(this.status == "down"){
+          this.status = "down";
+        }
+      } else if (this.bestPrediction.className == "middle") {
+        if (this.bestPrediction.probability.toFixed(2) == 1.0) {
+          if (this.status == "down") {
             this.midCnt++;
           }
           console.log("midCnt: ", this.midCnt);
           this.status = "mid";
         }
-      }else if(this.bestPrediction.className == "up"){
-        if(this.bestPrediction.probability.toFixed(2) == 1.00){
-          this.status = "up"
+      } else if (this.bestPrediction.className == "up") {
+        if (this.bestPrediction.probability.toFixed(2) == 1.0) {
+          this.status = "up";
         }
       }
-      return this.count
-    },
-  },
+      return this.count;
+    }
+  }
 };
 </script>

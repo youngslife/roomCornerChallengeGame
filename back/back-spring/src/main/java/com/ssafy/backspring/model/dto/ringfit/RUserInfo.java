@@ -18,7 +18,7 @@ public class RUserInfo implements Serializable{
 	private boolean ruserinfo_iscleared;
 	private boolean ruserinfo_iswon;
 	private int ruserinfo_golds;
-	private boolean rsuerinfo_del_check;
+	private boolean ruserinfo_del_check;
 	private RGameInfo ruserinfo_gameinfo;
 }
 /*

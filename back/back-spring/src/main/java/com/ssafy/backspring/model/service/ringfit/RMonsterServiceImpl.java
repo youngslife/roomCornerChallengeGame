@@ -58,5 +58,13 @@ public class RMonsterServiceImpl implements RMonsterService {
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public List<RMonster> searchList(int inStage){
+		try {
+			return dao.searchList(inStage);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

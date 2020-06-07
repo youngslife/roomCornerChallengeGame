@@ -2,7 +2,7 @@
   <div>
     <!-- <div v-for="prediction in predictions" :key="prediction.className">
       {{ prediction.className }}: {{ prediction.probability.toFixed(2) }}
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -11,10 +11,6 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true
-    },
-    stage: {
-      type: String,
       required: true
     }
   },

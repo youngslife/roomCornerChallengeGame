@@ -1,12 +1,6 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      infinite
-      style="height:610px;"
-      autoplay
-    >
+    <q-carousel animated v-model="slide" infinite style="height:610px;" autoplay>
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -32,27 +26,21 @@
                 style="height:100px; width:100%;"
                 @click="change('first')"
                 class="flex flex-center"
-              >
-                마피아
-              </div>
+              >마피아</div>
             </template>
             <template v-slot:second>
               <div
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >
-                링피트
-              </div>
+              >링피트</div>
             </template>
             <template v-slot:third>
               <div
                 style="height:100px; width:100%;"
                 @click="change('third')"
                 class="flex flex-center"
-              >
-                후루추닌자?
-              </div>
+              >후루추닌자?</div>
             </template>
           </q-btn-toggle>
         </div>
@@ -60,7 +48,9 @@
     </q-carousel>
     <div class="row justify-center">
       <div class="col-7">
-        <div class="col"><h2>전체 게임</h2></div>
+        <div class="col">
+          <h2>전체 게임</h2>
+        </div>
         <div class="row">
           <q-card
             v-for="(game, index) in gameList"
@@ -74,42 +64,53 @@
               <div class="text-h6">{{ game.name }}</div>
               <div class="text-subtitle2">{{ game.people }}</div>
             </q-card-section>
-            <q-card-section>
-              {{ game.descript }}
-            </q-card-section>
+            <q-card-section>{{ game.descript }}</q-card-section>
           </q-card>
         </div>
       </div>
       <div class="col-3">
-        <div
-          class="col flex flex-center"
-          style="background:#b2bec3; margin-top:180px; height:300px"
-        >
-          <div class="col-10  text-center">
-            <q-btn
-              class="col"
-              color="primary"
-              icon="check"
-              label="방구석 ID 로그인"
-              to="/login"
-            />
-            <div class="col-10" style="margin-top:20px;">
-              <span>다른계정 로그인</span>
-              <q-icon name="print" />
-              <q-icon name="print" />
-              <q-icon name="print" />
-              <q-icon name="print" />
-            </div>
-            <div class="col-10" style="margin-top:20px;">
-              <p class=" text-right">회원가입</p>
+        <template v-if="user_no > 0">
+          <div
+            class="col flex flex-center"
+            style="background:#b2bec3; margin-top:180px; height:300px"
+          >
+            <div class="col-10 text-center">
+              <q-btn class="col" color="primary" icon="check" label="마이페이지" to="/mypage" />
+              <div class="col-10" style="margin-top:20px;">
+                <q-icon name="print" />
+                <q-icon name="print" />
+                <q-icon name="print" />
+                <q-icon name="print" />
+              </div>
+              <div class="col-10" style="margin-top:20px;"></div>
             </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <div
+            class="col flex flex-center"
+            style="background:#b2bec3; margin-top:180px; height:300px"
+          >
+            <div class="col-10 text-center">
+              <q-btn class="col" color="primary" icon="check" label="방구석 ID 로그인" to="/login" />
+              <div class="col-10" style="margin-top:20px;">
+                <span>다른계정 로그인</span>
+                <q-icon name="print" />
+                <q-icon name="print" />
+                <q-icon name="print" />
+                <q-icon name="print" />
+              </div>
+              <div class="col-10" style="margin-top:20px;">
+                <p class="text-right">회원가입</p>
+              </div>
+            </div>
+          </div>
+        </template>
         <div
           class="col flex flex-center"
           style="background:#b2bec3; margin-top:180px; height:300px"
         >
-          <div class="col-10  text-center">
+          <div class="col-10 text-center">
             <div class="col-10">
               <q-btn
                 class="col-10"
@@ -174,8 +175,13 @@ export default {
           descript: "게임게임에 대한 설명",
           rink: "/mapia"
         }
-      ]
+      ],
+      user_no: {}
     };
+  },
+  mounted() {
+    this.user_no = window.sessionStorage.getItem("user_no");
+    console.log(this.user_no);
   },
   methods: {
     goPath(target) {

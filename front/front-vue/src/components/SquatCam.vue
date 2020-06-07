@@ -2,15 +2,9 @@
   <div>
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
-    <all-predict :predictions="predictions" :stage="stage"></all-predict>
+    <all-predict :predictions="predictions"></all-predict>
     <div>Prediction</div>
-    <SquatPredict
-      :predictions="predictions"
-      :stage="stage"
-      @child="test"
-    >
-    </SquatPredict>
-
+    <SquatPredict :predictions="predictions" @child="test"></SquatPredict>
   </div>
 </template>
 
@@ -23,30 +17,26 @@ export default {
   props: {
     url: {
       type: String,
-      required: true,
-    },
-    stage: {
-      type: String,
-      required: true,
+      required: true
     },
     height: {
       type: Number,
-      required: true,
+      required: true
     },
     width: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AllPredict,
-    SquatPredict,
+    SquatPredict
   },
   data() {
     return {
       model: null,
       webcam: null,
-      predictions: [],
+      predictions: []
     };
   },
   async mounted() {
@@ -95,7 +85,7 @@ export default {
     },
     test(count) {
       this.$emit("child", count);
-    },
-  },
+    }
+  }
 };
 </script>

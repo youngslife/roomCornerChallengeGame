@@ -16,20 +16,15 @@
       </template>
     </q-overlay>
     <div class="row slider">
-      <!-- <div
-        id="map"
-        class="col-9 slider-col"
-        v-bind:class="{ pauseMap: isPause }"
-      ></div>-->
       <div class="col-9">
-        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
-        <Game v-show="!isMonster" />
+        <h3>Stage {{ getStageNum }}</h3>
+        <h4>이번 판 운동 : {{ getMotionName }}</h4>
+        <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
+        <Game v-if="!isStageSelect" v-show="!isMonster" />
+        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
         <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
       </div>
       <div id="time" class="playtime"></div>
-      <!-- <div id="character">
-        <img :src="require('../../assets/walking.gif')" />
-      </div>-->
       <div class="pause">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
@@ -39,7 +34,6 @@
           <web-cam
             v-if="!isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
@@ -47,7 +41,6 @@
           <squat-cam
             v-if="isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="goAttack"
@@ -61,9 +54,10 @@
 <script>
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
-import RingfitAttack from "../Ringfit/RingfitAttack.vue";
+import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
 import Game from "@/components/Game";
-import { mapActions, mapState } from "vuex";
+import selectStage from "@/components/ringfit/SelectStage";
+import { mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
@@ -72,12 +66,14 @@ export default {
     WebCam,
     QOverlay,
     Game,
+    selectStage,
     RingfitAttack
   },
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       stage: "",
       window: {
         width: 0,
@@ -88,7 +84,8 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
-      isMonster: false,
+      isStageSelect: true,
+      isPoseSelect: false,
       AttackCnt: 0,
       player: {
         username: "방구석여포",
@@ -99,35 +96,41 @@ export default {
   computed: {
     ...mapState({
       // back이랑 통신하고 나면 받아오자
-      // stage: (state) => state.stage,
+      // stage: state => state.stageNum
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
+    }),
+    ...mapGetters({
+      getMotionName: "ringfit/getMotionName",
+      getStageNum: "ringfit/getStageNum"
     }),
     changeUrl() {
       console.log(this.url);
       console.log(this.isMonster);
       return this.url;
+    },
+    isMonster() {
+      return this.$store.state.phaser.isMeet;
     }
   },
   async mounted() {
+    console.log(this.$store.state.user_no);
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
     // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
-    await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
+    // console.log("아마 vuex", this.motionName);
   },
   methods: {
-    ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id
+        no: this.$store.state.user_no
       };
-      await this.getStage(params); // axios
+      await this.$store.dispatch("ringfit/getStageByUser", params);
     },
-    async drawBaseMap() {},
     printPlayTime() {
       var clock = document.getElementById("time");
       if (this.second++ >= 59) {
@@ -185,18 +188,23 @@ export default {
     },
     goAttack(count) {
       this.AttackCnt = count;
-    },
-    changeToAttack() {
-      if (this.isMonster == false) {
-        this.url =
-          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-        this.isMonster = true;
-      } else if (this.isMonster == true) {
-        this.isMonster = false;
-        this.url =
-          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
-      }
     }
+    // 이 부분은 isMonster computed에 넣으면 될듯
+    // changeToAttack() {
+    //   if (this.isMonster == false) {
+    //     console.log(1, this.isMonster);
+    //     this.url =
+    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+    //     this.isMonster = true;
+    //     console.log(2, this.isMonster);
+    //   } else if (this.isMonster == true) {
+    //     console.log(3, this.isMonster);
+    //     this.isMonster = false;
+    //     this.url =
+    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+    //     console.log(4, this.isMonster);
+    //   }
+    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);

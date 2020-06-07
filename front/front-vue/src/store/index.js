@@ -3,8 +3,16 @@ import Vuex from "vuex";
 import user from "./modules/user";
 import header from "./modules/header";
 import board from "./modules/board";
+<<<<<<< HEAD
 import JanusService from "../api/JanusService";
 // import JanusRoomService from "../api/JanusRoomService"
+=======
+import phaser from "./modules/phaser";
+import ringfit from "./modules/ringfit";
+import post from "./modules/post";
+import comment from "./modules/comment";
+
+>>>>>>> fb444f23e94c48ef3e74d9ad78302aa350cf7f09
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -69,7 +77,11 @@ const store = new Vuex.Store({
   modules: {
     user,
     header,
-    board
+    board,
+    phaser,
+    ringfit,
+    post,
+    comment
   }
 });
 
