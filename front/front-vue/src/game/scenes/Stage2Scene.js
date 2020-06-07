@@ -1,7 +1,4 @@
-import {
-  Scene
-} from "phaser";
-// import RingFit from "../../views/Game/RingFit.vue";
+import { Scene } from "phaser";
 
 let player,
   monster,
@@ -10,10 +7,10 @@ let player,
   coins,
   time = 0;
 
-export default class PlayScene extends Scene {
+export default class Stage2Scene extends Scene {
   constructor() {
     super({
-      key: "PlayScene"
+      key: "Stage2Scene"
     });
   }
   // Runs once, after all assets in preload are loaded
@@ -29,6 +26,26 @@ export default class PlayScene extends Scene {
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
+    this.make.text({
+      x: 0,
+      y: 0,
+      padding: {
+        left: 64,
+        right: 16,
+        top: 20,
+        bottom: 40
+        //x: 32,    // 32px padding on the left/right
+        //y: 16     // 16px padding on the top/bottom
+      },
+      text: "Stage", // + this.$store.state.phaser.stage,
+      style: {
+        fontSize: "32px",
+        fontFamily: "Arial",
+        color: "#000000",
+        align: "center" // 'left'|'center'|'right'|'justify'
+      },
+      add: true
+    });
 
     coinLayer.forEach(el => {
       let obj = coins.create(el.x, el.y + 150, "coin");
@@ -57,18 +74,22 @@ export default class PlayScene extends Scene {
     });
     this.anims.create({
       key: "idle",
-      frames: [{
-        key: "player",
-        frame: "robo_player_0"
-      }],
+      frames: [
+        {
+          key: "player",
+          frame: "robo_player_0"
+        }
+      ],
       frameRate: 10
     });
     this.anims.create({
       key: "jump",
-      frames: [{
-        key: "player",
-        frame: "robo_player_1"
-      }],
+      frames: [
+        {
+          key: "player",
+          frame: "robo_player_1"
+        }
+      ],
       frameRate: 10
     });
     // this.cameras.main.setZoom(2);
@@ -95,7 +116,7 @@ export default class PlayScene extends Scene {
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
 
-    document.addEventListener("keydown", function (e) {
+    document.addEventListener("keydown", function(e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
       else if (e.keyCode === 38) {
@@ -135,12 +156,15 @@ export default class PlayScene extends Scene {
     // score++;
     return false;
   }
+  // meetMonster 마지막 몬스터랑 전투한 다음에 or
+  // user hp가 < 0 이면
+  // destroy or clear? 해주고
   meetMonster() {
     console.log("몬스터를 만났다");
-    console.log(this.registry.events.store.state.phaser.isMeet);
-
+    this.registry.events.emit("saveScene", "Stage2Scene");
+    this.scene.launch("WipeScene");
+    this.scene.pause();
     this.registry.events.emit("meetMonster");
-    console.log(this.registry.events.store.state.phaser.isMeet);
     // RingFit.methods.changeToAttack();
     monster.destroy();
   }

@@ -10,31 +10,26 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true,
-    },
-    stage: {
-      type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       average: 0,
       startTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       endTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       befAction: "",
-      count: 0,
+      count: 0
     };
   },
   computed: {
     bestPrediction() {
-
       return this.predictions.reduce(
         (agg, prediction) => {
           return prediction.probability > agg.probability ? prediction : agg;
@@ -69,33 +64,32 @@ export default {
       setTimeout(() => {
         this.action(time + 100);
       }, 100);
-    },
-  // test() {
-  //     if(this.bestPrediction.className == "stop"){ 
+    }
+    // test() {
+    //     if(this.bestPrediction.className == "stop"){
 
-  //         if(this.bestPrediction.probability > 0.95){
-  //           if(this.status == "left"){
-  //             this.count++;
-  //             console.log(this.count);
-  //           }
-  //           this.status = "right"
-  //           return this.count
-  //         }
-  //     }else if(this.bestPrediction.className == "class3"){ // 왼쪽
-  //       if(this.bestPrediction.probability > 0.98){
-  //         this.status = "left";
-  //       }
-  //     }
-  //     // this.status = "stop"
-  //     // else if(this.bestPrediction.className == "class2"){ // stop
-  //     //   if(this.bestPrediction.probability == 1.00){
-  //     //       this.status = "stop"
-  //     //   }
+    //         if(this.bestPrediction.probability > 0.95){
+    //           if(this.status == "left"){
+    //             this.count++;
+    //             console.log(this.count);
+    //           }
+    //           this.status = "right"
+    //           return this.count
+    //         }
+    //     }else if(this.bestPrediction.className == "class3"){ // 왼쪽
+    //       if(this.bestPrediction.probability > 0.98){
+    //         this.status = "left";
+    //       }
+    //     }
+    //     // this.status = "stop"
+    //     // else if(this.bestPrediction.className == "class2"){ // stop
+    //     //   if(this.bestPrediction.probability == 1.00){
+    //     //       this.status = "stop"
+    //     //   }
 
-  //     return this.count
-      
-      
-  //   },
-  },
+    //     return this.count
+
+    //   },
+  }
 };
 </script>

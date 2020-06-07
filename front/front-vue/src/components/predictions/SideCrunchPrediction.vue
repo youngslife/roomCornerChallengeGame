@@ -10,39 +10,34 @@ export default {
   props: {
     predictions: {
       type: Array,
-      required: true,
-    },
-    stage: {
-      type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       average: 0,
       startTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       endTime: {
         type: "",
-        time: 0,
+        time: 0
       },
       befAction: "",
-      count: 0,
+      count: 0
     };
   },
   computed: {
     bestPrediction() {
-
       return this.predictions.reduce(
         (agg, prediction) => {
-            // console.log(prediction.className)
+          // console.log(prediction.className)
           return prediction.probability > agg.probability ? prediction : agg;
         },
         { probability: 0 }
       );
-    },
+    }
   },
   mounted() {
     this.action(0);
@@ -60,31 +55,31 @@ export default {
         this.action(time + 100);
       }, 100);
     },
-  test() {
-      if(this.bestPrediction.className == "stand"){
-          if(this.bestPrediction.probability.toFixed(2) == 1.00){
-            if(this.status == "right" || this.status == "left"){
-              this.count++;
-              console.log(this.count);
-            }
-            this.status = "stand"
-            return this.count
+    test() {
+      if (this.bestPrediction.className == "stand") {
+        if (this.bestPrediction.probability.toFixed(2) == 1.0) {
+          if (this.status == "right" || this.status == "left") {
+            this.count++;
+            console.log(this.count);
           }
-      }else if(this.bestPrediction.className == "right_exact"){
-        if(this.bestPrediction.probability.toFixed(2) > 0.99){
-          if(this.status == "stand"){
+          this.status = "stand";
+          return this.count;
+        }
+      } else if (this.bestPrediction.className == "right_exact") {
+        if (this.bestPrediction.probability.toFixed(2) > 0.99) {
+          if (this.status == "stand") {
             this.status = "right";
           }
         }
-      }else if(this.bestPrediction.className == "left_exact"){
-        if(this.bestPrediction.probability.toFixed(2) > 0.98){
-          if(this.status == "stand"){
-            this.status = "left"
+      } else if (this.bestPrediction.className == "left_exact") {
+        if (this.bestPrediction.probability.toFixed(2) > 0.98) {
+          if (this.status == "stand") {
+            this.status = "left";
           }
         }
       }
-      return this.count
-    },
-  },
+      return this.count;
+    }
+  }
 };
 </script>

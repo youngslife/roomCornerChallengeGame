@@ -2,11 +2,11 @@
   <div>
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
-    <all-predict :predictions="predictions" :stage="stage"></all-predict>
-    <div> Walk Best Prediction</div>
-    <!-- <best-predict :predictions="predictions" :stage="stage" @child="test"></best-predict>-->
-    <walk-predict :predictions="predictions" :stage="stage" @child="test"></walk-predict>
-    <squat-prediction :predictions="predictions" :stage="stage" @child="test"></squat-prediction>
+    <all-predict :predictions="predictions"></all-predict>
+    <div>Walk Best Prediction</div>
+    <!-- <best-predict :predictions="predictions" @child="test"></best-predict>-->
+    <walk-predict :predictions="predictions" @child="test"></walk-predict>
+    <squat-prediction :predictions="predictions" @child="test"></squat-prediction>
   </div>
 </template>
 
@@ -20,10 +20,6 @@ import SquatPrediction from "./predictions/SquatPrediction";
 export default {
   props: {
     url: {
-      type: String,
-      required: true
-    },
-    stage: {
       type: String,
       required: true
     },
@@ -94,7 +90,7 @@ export default {
       this.predictions = prediction;
     },
     test(isJump) {
-        console.log('walkcam', isJump)
+      console.log("walkcam", isJump);
       this.$emit("child", isJump);
     }
   }
