@@ -90,7 +90,7 @@
 		WHERE user_no = #{user_no:INTEGER}		 
 		AND rstage_no = #{rstage_no:INTEGER}
 		AND ruserinfo_del_check=FALSE
-		ORDER BY ruserinfo_no LIMIT 0,1;
+		ORDER BY ruserinfo_no desc LIMIT 0,1;
 	</select>
 	<select id="getClear" parameterType="hashmap" resultType="int">
     	 SELECT 

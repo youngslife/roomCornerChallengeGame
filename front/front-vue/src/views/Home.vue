@@ -169,7 +169,6 @@ export default {
   },
   mounted() {
     this.user_no = window.sessionStorage.getItem("user_no");
-    console.log(this.user_no);
   },
   methods: {
     goPath(target) {

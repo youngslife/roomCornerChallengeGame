@@ -1,6 +1,7 @@
 const state = {
   isMeet: false,
-  scene: ""
+  scene: "",
+  isClear: false
 };
 
 const getters = {

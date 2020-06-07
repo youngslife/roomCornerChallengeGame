@@ -35,6 +35,24 @@ export default {
       good: 10,
       bad: 5
     };
+  },
+  mounted() {
+    this.$store.dispatch("ringfit/gameEnd", {
+      ruserinfo_no: this.$store.state.ringfit.ruserInfo_no,
+      user_no: 22,
+      ruserinfo_iswon: true,
+      ruserinfo_golds: 1,
+      ruserinfo_gameinfo: {
+        rgameinfo_no: this.$store.state.ringfit.rgameInfo_no,
+        rgameinfo_level: 1,
+        rgameinfo_perfect_num: 1,
+        rgameinfo_great_num: 1,
+        rgameinfo_good_num: 1,
+        rgameinfo_miss_num: 1,
+        rgameinfo_kcal: 100,
+        rgameinfo_score: 90
+      }
+    });
   }
 };
 </script>
