@@ -4,7 +4,7 @@
     <q-btn color="primary" icon="check" label="방만들" @click="createRoom" />
     <div class="row">
          <q-card class="my-card col-3" v-for="index in 8" :key="index">
-        <video :id="'feed' + index" style="display: flex;width: 100%;border-radius: 0px 0px 10px 10px;" controls="controls" autoplay="autoplay"></video>
+        <video :id="'feed' + (index-1)" style="display: flex;width: 100%;border-radius: 0px 0px 10px 10px;" controls="controls" autoplay="autoplay"></video>
     </q-card>
     </div>
    
@@ -36,29 +36,29 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted !!!!!!!!!!!!!!!!!!!");
-    console.log(this.account);
-    console.log(this.roomName);
-    console.log(this.roomNameFromRoute);
+    // console.log("mounted !!!!!!!!!!!!!!!!!!!");
+    // console.log(this.account);
+    // console.log(this.roomName);
+    // console.log(this.roomNameFromRoute);
 
     this.roomName = this.roomNameFromRoute;
 
     if (this.account === null || this.account === undefined) {
-      console.log("this.userName: " + this.account);
+    //   console.log("this.userName: " + this.account);
       this.showCreateRoomDialog = true;
       return;
     }
 
     if (this.roomName === null || this.roomName === undefined) {
-      console.log("this.userName: " + this.account);
+    //   console.log("this.userName: " + this.account);
       this.showCreateRoomDialog = true;
       return;
     }
 
     if (this.roomNameFromRoute !== undefined) {
-      console.log("ih");
+    //   console.log("ih");
       this.janus = new JanusWrapper(this.roomName);
-      console.log(this.janus);
+    //   console.log(this.janus);
     } else {
       // don't join the room
     }
@@ -66,7 +66,7 @@ export default {
   methods: {
     confirmRoomName() {
       this.showCreateRoomDialog = false;
-      console.log("Helloooooo: " + this.roomName);
+    //   console.log("Helloooooo: " + this.roomName);
       this.createRoom();
     },
     createRoom(events) {
@@ -75,30 +75,30 @@ export default {
       console.log(this.janus);
     },
     leave() {
-      console.log("We are going to attempt to disconnect.");
+    //   console.log("We are going to attempt to disconnect.");
       this.janus.disconnect();
     },
     join() {
-      console.log("We are going to attempt to connect.");
+    //   console.log("We are going to attempt to connect.");
       this.janus.connect(this.roomName);
     },
     showUsers() {
-      console.log("showUsers in room ", this.roomName);
+    //   console.log("showUsers in room ", this.roomName);
       this.janus.showUsers(this.roomName);
     },
     toggleMute() {
-      console.log("Toggling microphone");
+    //   console.log("Toggling microphone");
 
       var isMuted = this.janus.toggleMute();
       this.muted = isMuted;
     },
     unpublish() {
-      console.log("Unpublishing feed");
+    //   console.log("Unpublishing feed");
       this.janus.unpublishOwnFeed();
       this.published = !this.published;
     },
     publish() {
-      console.log("Publishing feed");
+    //   console.log("Publishing feed");
       this.janus.publishOwnFeed(true);
       this.published = !this.published;
     }

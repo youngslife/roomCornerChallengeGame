@@ -302,7 +302,7 @@ Janus.init = function(options) {
 			if(Janus.webRTCAdapter.browserDetails.browser === 'chrome') {
 				var chromever = Janus.webRTCAdapter.browserDetails.version;
 				if(chromever >= 52) {
-					console.log(element)
+					// console.log(element)
 					element.srcObject = stream;
 				} else if(typeof element.src !== 'undefined') {
 					element.src = URL.createObjectURL(stream);
@@ -1771,7 +1771,7 @@ function Janus(gatewayCallbacks) {
 					return;
 				Janus.log("Adding onended callback to track:", event.track);
 				event.track.onended = function(ev) {
-					Janus.log("Remote track muted/removed:", ev);
+					// Janus.log("Remote track muted/removed:", ev);
 					if(config.remoteStream) {
 						config.remoteStream.removeTrack(ev.target);
 						pluginHandle.onremotestream(config.remoteStream);
@@ -1779,7 +1779,7 @@ function Janus(gatewayCallbacks) {
 				};
 				event.track.onmute = event.track.onended;
 				event.track.onunmute = function(ev) {
-					Janus.log("Remote track flowing again:", ev);
+					// Janus.log("Remote track flowing again:", ev);
 					try {
 						config.remoteStream.addTrack(ev.target);
 						pluginHandle.onremotestream(config.remoteStream);

@@ -8,12 +8,7 @@ class JanusRoom {
       instance = this;
       instance.tmpId = 0;
       instance.roomName = roomName;
-
-      console.log('시발roomName: ', roomName)
-
       for (var i = 0; i < roomName.length; i++) {
-        
-        console.log("개새끼야"+roomName.charCodeAt(i))
         instance.tmpId = instance.tmpId + roomName.charCodeAt(i);
       }
 
@@ -643,11 +638,11 @@ class JanusRoom {
       onremotestream: function(stream) {
         
         var video;
-        console.log(remoteFeed.rfindex)
+        // console.log(remoteFeed.rfindex)
         if (document.getElementById("feed" + remoteFeed.rfindex) !== null) {
-          console.log(
-            "feed.id : " + remoteFeed.id + " has already been attached."
-          );
+        //   console.log(
+        //     "feed.id : " + remoteFeed.id + " has already been attached."
+        //   );
           video = document.getElementById("feed" + remoteFeed.rfindex);
           video.setAttribute("autoplay", "true");
         }
