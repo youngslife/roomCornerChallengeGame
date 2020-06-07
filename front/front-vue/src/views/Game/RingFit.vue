@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -18,11 +20,19 @@
     <div class="row slider">
       <div class="col-9">
         <h3>Stage {{ getStageNum }}</h3>
+        <div>{{ getIdx }}</div>
         <h4>이번 판 운동 : {{ getMotionName }}</h4>
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-if="!isStageSelect" v-show="!isMonster" />
-        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
+        <select-stage
+          v-if="isStageSelect"
+          :isStageSelect.sync="isStageSelect"
+        />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :player="player"
+        />
       </div>
       <div id="time" class="playtime"></div>
       <div class="pause">
@@ -31,20 +41,22 @@
       <div id="right" class="col-2 column">
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
-          <web-cam
-            v-if="!isMonster"
-            :url="changeUrl"
-            :width="window.width"
-            :height="window.height"
-            @child="jump"
-          ></web-cam>
-          <squat-cam
-            v-if="isMonster"
-            :url="changeUrl"
-            :width="window.width"
-            :height="window.height"
-            @child="goAttack"
-          ></squat-cam>
+          <template v-if="isMonster">
+            <squat-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="goAttack"
+            ></squat-cam>
+          </template>
+          <template v-else>
+            <web-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="jump"
+            ></web-cam>
+          </template>
         </div>
       </div>
     </div>
@@ -71,9 +83,17 @@ export default {
   },
   data() {
     return {
-      url:
-        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      // url: [
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_shoulder_press/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
+      // ],
+      // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+      // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/",
       stage: "",
       window: {
         width: 0,
@@ -90,7 +110,8 @@ export default {
       player: {
         username: "방구석여포",
         hp: 200
-      }
+      },
+      modelIdx: 0
     };
   },
   computed: {
@@ -103,7 +124,8 @@ export default {
     }),
     ...mapGetters({
       getMotionName: "ringfit/getMotionName",
-      getStageNum: "ringfit/getStageNum"
+      getStageNum: "ringfit/getStageNum",
+      getIdx: "ringfit/getIdx"
     }),
     changeUrl() {
       console.log(this.url);
@@ -112,6 +134,22 @@ export default {
     },
     isMonster() {
       return this.$store.state.phaser.isMeet;
+    },
+    url() {
+      const urlArr = [
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_shoulder_press/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
+      ];
+
+      console.log("gettttttttttttttttt", this.getIdx);
+      if (this.getIdx < 1) {
+        return urlArr[0];
+      }
+      return urlArr[this.getIdx];
     }
   },
   async mounted() {
@@ -184,11 +222,18 @@ export default {
       } else if (status === "stand") {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
+      } else {
+        this.AttackCnt = status;
       }
     },
     goAttack(count) {
       this.AttackCnt = count;
     }
+    // changeMotionArr(modelArr) {
+    //   console.log("과연 체인지모션", modelArr)
+    //   this.motionArr = modelArr;
+    //   console.log("djdklfkjjkla", this.motionArr)
+    // }
     // 이 부분은 isMonster computed에 넣으면 될듯
     // changeToAttack() {
     //   if (this.isMonster == false) {

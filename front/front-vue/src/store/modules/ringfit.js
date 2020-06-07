@@ -3,12 +3,14 @@ import RingfitService from "../../api/RingfitService";
 const state = {
   stageNum: 0,
   motionName: "",
-  rgameInfo: {}
+  rgameInfo: {},
+  idx: 0,
 };
 
 const getters = {
   getStageNum: state => state.stageNum,
-  getMotionName: state => state.motionName
+  getMotionName: state => state.motionName,
+  getIdx: state => state.idx
 };
 
 const actions = {
@@ -35,6 +37,9 @@ const mutations = {
   },
   setMotionName: (state, payload) => {
     state.motionName = payload;
+  },
+  setIdx: (state, payload) => {
+    state.idx = payload
   }
 };
 export default {
