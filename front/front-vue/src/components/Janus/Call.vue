@@ -12,13 +12,13 @@
 
     <div class="video-controls">
       <q-btn icon="icon" large error v-on:click.native="onHangup">
-        <!-- <v-icon large>call_end</v-icon> -->
+      종료
       </q-btn>
       <q-btn icon="icon" large v-on:click.native="onMicToggle">
-        <!-- <v-icon large>{{ micIcon }}</v-icon> -->
+        마이크 끄기
       </q-btn>
       <q-btn icon="icon" large v-on:click.native="onCamToggle">
-        <!-- <q-icon large>{{ camIcon }}</q-icon> -->
+        캠끄기
       </q-btn>
     </div>
     <q-dialog v-model="snackbarOn" seamless position="bottom">

@@ -145,7 +145,7 @@ function onRegistered(username) {
 }
 
 function registerUsername() {
-  var register = { request: "register", username: "test@h1" };
+  var register = { request: "register", username: "test@h11" };
   videocall.send({ message: register });
 }
 

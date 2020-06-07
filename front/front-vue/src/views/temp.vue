@@ -12,6 +12,11 @@
     ></incomingcall>
 
     <q-btn
+    
+      v-on:click.native="onHangup()"
+      >hangup</q-btn
+    >
+    <q-btn
       :primary="callReady"
       :disabled="!callReady"
       v-on:click.native="call()"
@@ -37,12 +42,16 @@ export default {
   methods: {
     call() {
       this.$store.dispatch("initOutgoing", {
-        username: "test@h2"
+        username: "main@h11"
       });
+    },
+    onHangup: function() {
+      this.$store.dispatch("hangup");
     }
   },
   computed: {
     incomingCalls: function() {
+      console.log(this.$store.getters.getIncoming)
       return this.$store.getters.getIncoming;
     },
     callReady: function() {

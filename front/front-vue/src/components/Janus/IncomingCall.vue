@@ -1,16 +1,14 @@
 <template>
-  <v-card class="blue white--text incomingcallcard ">
-    <v-card-row height="3em">
-      <v-card-title>
+  <q-card class="blue white--text incomingcallcard ">
+    
         {{ caller }}
-      </v-card-title>
-    </v-card-row>
-    <v-card-row actions>
-      <v-btn flat dark v-on:click.native="onAnswer()">Answer</v-btn>
-      <v-spacer></v-spacer>
-      <v-btn flat dark>Decline</v-btn>
-    </v-card-row>
-  </v-card>
+     
+    <q-card row actions>
+      <q-btn flat dark v-on:click.native="onAnswer()">Answer</q-btn>
+      <q-spacer></q-spacer>
+      <q-btn flat dark>Decline</q-btn>
+    </q-card>
+  </q-card>
 </template>
 
 <script>

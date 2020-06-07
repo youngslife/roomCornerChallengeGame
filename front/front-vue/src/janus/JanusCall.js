@@ -1,6 +1,7 @@
 import Janus from "./janus";
 
 class JanusCall {
+  //생성자
   constructor(plugin, id) {
     this.plugin = plugin;
     this.id = id;

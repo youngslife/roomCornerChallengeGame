@@ -64,6 +64,11 @@ const routes = [
     path:"/temp",
     name:"temp",
     component: () => import("../views/temp.vue")
+  },
+  {
+    path:"/jump",
+    name:"jump",
+    component: () => import("../views/jump.vue")
   }
 ];
 

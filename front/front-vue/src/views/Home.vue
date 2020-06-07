@@ -116,7 +116,7 @@
                 color="primary"
                 icon="check"
                 label="공지사항"
-                to="/login"
+                to="/jump"
               />
             </div>
             <div class="col-10" style="margin-top:20px;">

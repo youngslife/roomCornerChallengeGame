@@ -4,6 +4,7 @@ import user from "./modules/user";
 import header from "./modules/header";
 import board from "./modules/board";
 import JanusService from "../api/JanusService";
+// import JanusRoomService from "../api/JanusRoomService"
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -72,7 +73,9 @@ const store = new Vuex.Store({
   }
 });
 
-JanusService.init(store)
+// JanusService.init(store)
+// JanusRoomService(store)
 console.log("index add");
+
 
 export default store;
