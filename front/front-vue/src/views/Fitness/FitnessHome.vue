@@ -139,14 +139,13 @@ export default {
   },
   mounted() {
     this.userNo = window.sessionStorage.getItem("user_no");
-    console.log('dzdz', this.userNo)
   },
   methods: {
     clickStart(){
-      if (this.userNo == 0) {
-        router.push("/signin")
-      } else {
+      if (this.userNo > 0) {
         router.push("/game/RingFit")
+      } else {
+        router.push("/login")
       }
     }
   }

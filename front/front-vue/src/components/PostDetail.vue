@@ -6,62 +6,27 @@
         :type="type"
         :isUpdate.sync="isUpdate"
         :post="post"
-      ></writer> -->
+      ></writer>-->
     </template>
     <template v-else>
       <h4 v-html="post.post_title" />
-      <span> 작성자 :</span><span v-html="post.post_user.user_name" />
+      <span>작성자 :</span>
+      <span v-html="post.post_user.user_name" />
       <hr />
 
       <div v-html="post.post_content" />
       <q-btn color="white" text-color="black" label="목록으로" @click="back" />
-      <q-btn
-        v-if="isSame"
-        color="white"
-        text-color="black"
-        label="수정"
-        @click="update"
-      />
-      <q-btn
-        v-if="isSame"
-        color="white"
-        text-color="black"
-        label="삭제"
-        @click="deletePost"
-      />
+      <q-btn v-if="isSame" color="white" text-color="black" label="수정" @click="update" />
+      <q-btn v-if="isSame" color="white" text-color="black" label="삭제" @click="deletePost" />
       <hr />
       <div class="row justify-end">
         <q-input outlined v-model="comment" label="댓글" :dense="false" />
-        <q-btn
-          color="primary"
-          icon="check"
-          label="댓글쓰기"
-          @click="insertCmt()"
-        />
+        <q-btn color="primary" icon="check" label="댓글쓰기" @click="insertCmt()" />
       </div>
-      <q-list bordered>
-        <q-item
-          v-for="(cmt, index) in post.post_cmtList"
-          :key="index"
-          clickable
-          v-ripple
-        >
+      <q-list bordered v-if="post.post_cmtList[0].cmt_user != null">
+        <q-item v-for="(cmt, index) in post.post_cmtList" :key="index" clickable v-ripple>
           <q-item-section>{{ cmt.cmt_user.user_name }}</q-item-section>
-          <template v-if="isUpdateCmt">
-            <q-input
-              outlined
-              v-model="cmt.cmt_content"
-              label="댓글"
-              :dense="false"
-            />
-            <q-btn
-              color="white"
-              text-color="black"
-              label="수정"
-              @click="updateCmt(cmt.cmt_content)"
-            />
-          </template>
-          <template v-else>
+          <template>
             <q-item-section>{{ cmt.cmt_content }}</q-item-section>
             <q-btn
               v-if="cmt.cmt_user.user_no === user_no"
@@ -114,8 +79,9 @@ export default {
     }
   },
   mounted() {
-    this.user_no = window.sessionStorage.getItem("user_no");
+    this.user_no = Number(window.sessionStorage.getItem("user_no"));
     this.$store.dispatch("post/getPost", this.post_no);
+    console.log("test", this.post.post_cmtList);
   },
   methods: {
     back() {
