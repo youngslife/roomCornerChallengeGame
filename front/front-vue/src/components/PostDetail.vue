@@ -23,7 +23,7 @@
         <q-input outlined v-model="comment" label="댓글" :dense="false" />
         <q-btn color="primary" icon="check" label="댓글쓰기" @click="insertCmt()" />
       </div>
-      <q-list bordered v-if="cmtList[0].cmt_user.user_name != null">
+      <q-list bordered v-if="cmtList[0].cmt_user != null">
         <q-item v-for="(cmt, index) in cmtList" :key="index" clickable v-ripple>
           <q-item-section>{{ cmt.cmt_user.user_name }}</q-item-section>
           <template>
