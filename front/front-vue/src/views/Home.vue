@@ -57,7 +57,7 @@
             class="my-card col-3"
             style="margin-left:20px; height:400px; margin-top:20px;"
             :key="index"
-            :to="game.rink"
+            @click="goPath(game.link)"
           >
             <q-img :src="game.imgSrc" :ratio="4 / 3" />
             <q-card-section>
@@ -140,28 +140,28 @@ export default {
           imgSrc: require("../assets/mapia.jpeg"),
           people: "4~8명",
           descript: "마피아게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         },
         {
           name: "링피트",
           imgSrc: require("../assets/ring.jpeg"),
           people: "1명",
           descript: "링피트게임에 대한 설명",
-          rink: "/fitness"
+          link: "/fitness"
         },
         {
           name: "방탈출",
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
           descript: "방탈출게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         },
         {
           name: "후루추닌자?",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
           descript: "게임게임에 대한 설명",
-          rink: "/mapia"
+          link: "/mafia"
         }
       ],
       user_no: {}
@@ -172,9 +172,9 @@ export default {
     console.log(this.user_no);
   },
   methods: {
-    goPath(target) {
-      console.log(target);
-      this.$router.push("/fitness");
+    goPath(link) {
+      console.log(link);
+      this.$router.push(link);
     },
     change(target) {
       this.slide = target;

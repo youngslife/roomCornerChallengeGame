@@ -55,6 +55,37 @@ const routes = [
       }
     ]
   },
+  //마피아 게임
+  {
+    path: "/mafia",
+    component: () => import("../views/Mafia/Mafia.vue"),
+    children: [{
+        path: "",
+        name: "mafia",
+        component: () => import("../views/Mafia/MafiaHome.vue")
+      },
+      {
+        path: "community",
+        name: "mafiacommunity",
+        component: () => import("../views/Mafia/MafiaCommunity.vue")
+      },
+      {
+        path: "guide",
+        name: "mafiaguide",
+        component: () => import("../views/Mafia/MafiaGuide.vue")
+      },
+      {
+        path: "rank",
+        name: "mafiarank",
+        component: () => import("../views/Mafia/MafiaRank.vue")
+      },
+      {
+        path: "info",
+        name: "mafiainfo",
+        component: () => import("../views/Mafia/MafiaInfo.vue")
+      }
+    ]
+  },
   {
     path: "/game/RingFit",
     name: "RingFit",

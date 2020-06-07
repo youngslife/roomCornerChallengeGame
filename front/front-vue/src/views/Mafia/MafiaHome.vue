@@ -5,14 +5,12 @@
         <q-btn
           color="primary"
           icon="check"
-          label="어떠한 공간"
+          label="어떠한 공간22222"
           style="width:90%; height:200px; margin-top:20px; margin-bottom:20px;"
         />
       </div>
       <div class="col-4 flex flex-center">
-        <router-link to="/game/RingFit">
-          <button style="border-radius:50%; width:200px; height:200px; margin-top:20px;">시작버튼</button>
-        </router-link>
+        <button style="border-radius:50%; width:200px; height:200px; margin-top:20px;">시작버튼</button>
       </div>
       <div class="col-4">
         <div class="row justify-around" style="margin-top:20px;height:70px;">
@@ -88,7 +86,7 @@
     <div class="row justify-around" style="margin-top:20px;">
       <div class="col-3"></div>
       <div class="col-6 text-center">
-        <h2>링피트 커뮤니티</h2>
+        <h2>마피아 커뮤니티</h2>
       </div>
       <div class="col-3 text-center">
         <q-btn color="primary" icon="add" style="margin-top:50px" />
@@ -109,7 +107,7 @@
     <div class="row justify-around" style="margin-top:20px;">
       <div class="col-3"></div>
       <div class="col-6 text-center">
-        <h2>링피트 랭킹</h2>
+        <h2>마피아 랭킹</h2>
       </div>
       <div class="col-3 text-center">
         <q-btn color="primary" icon="add" style="margin-top:50px" />
