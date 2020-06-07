@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,9 +34,11 @@ import com.ssafy.backspring.util.FileUploadProperties;
 import com.ssafy.backspring.util.Handler;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
@@ -49,7 +52,7 @@ public class UserController {
 	private final Handler handler = Handler.getInstance();
 	@Autowired
 	private FileUploadProperties prop = FileUploadProperties.getInstance();
-
+	private final String ourDomain = "https://k02a3041.p.ssafy.io/";
 	@ApiOperation("전체 User 목록을 조회하는 기능")
 	@GetMapping("/User/searchAll")
 	public ResponseEntity<Map<String, Object>> searchAll() {
@@ -69,8 +72,8 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> insert(@RequestBody User user) {
 		// 일단 검증이나 실패는 빼두고
 		// email 검증
-		System.out.println("wlrma");
-		System.out.println(user);
+		// System.out.println("wlrma");
+		// System.out.println(user);
 		String uemail = user.getUser_email();
 		if (!service.isValidEmail(uemail)) {
 			return handler.handleFail("올바르지 않은 형식의 아이디 입니다", HttpStatus.BAD_REQUEST);
@@ -78,6 +81,12 @@ public class UserController {
 		if (service.searchByEmail(uemail) != null) {
 			return handler.handleFail("이미 존재하는 아이디 입니다", HttpStatus.BAD_REQUEST);
 		}
+		if (user.getUser_birthday() != null) {
+			String[] birth = user.getUser_birthday().split("-");
+			user.setUser_age(
+					getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+		}
+
 		service.insert(user);
 		User extraInfo = service.searchByEmail(uemail);
 		Image default_object = getDefaultObject(extraInfo.getUser_no());
@@ -106,7 +115,7 @@ public class UserController {
 	private Image getDefaultObject(int user_no) {
 		String type = "user_profile";
 		String file = "default_profile.png";
-		String path = prop.getUploadDir() + '/' + file;
+		String path = ourDomain+prop.getUploadDir() + '/' + file;
 		String purpose = "기본 유저 이미지";
 		String extension = "png";
 		Image img = new Image(0, type, user_no, file, path, purpose, extension, false);
@@ -136,30 +145,56 @@ public class UserController {
 
 	@ApiOperation("User 프로필을 수정하는 기능")
 	@PutMapping("/User/update")
-	public ResponseEntity<Map<String, Object>> update(User user, @RequestParam(required = false) MultipartFile file) {
+	public ResponseEntity<Map<String, Object>> update(
+			@ApiParam(value = "The User ID", required = true)
+			@RequestParam(name = "user_no",required = true) final int user_no,
+	        @ApiParam(value = "The User NickName",required = false)
+			@RequestParam(name = "user_name",required = false) String user_name,
+			@ApiParam(value = "The User Sex",required = false)
+			@RequestParam(name = "user_sex",required = false) String user_sex,
+			@ApiParam(value = "The User BirthDay",required = false)
+			@RequestParam(name = "user_birthday",required = false) String user_birthday,
+			@ApiParam(value = "The User Image",required = false)
+			@RequestParam(required = false) MultipartFile file) {
+		/*
+		RequestBody로 하면 파일이랑 같이 못보내기 때문에 Request Param으로 수정함
+		 */
 		// 닉네임,성별,생년월일,이미지을 수정할 수 있다.
-		User updateUser = service.search(user.getUser_no());
-		if (user.getUser_birthday() != null) {
-			String[] birth = user.getUser_birthday().split("-");
-			user.setUser_age(
-					getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+		User updateUser = service.search(user_no);
+		if(updateUser != null) {
+			if (user_name != null) updateUser.setUser_name(user_name);
+			if (user_sex != null) {
+				if(user_sex == "남") updateUser.setUser_sex(0);
+				else if(user_sex =="여") updateUser.setUser_sex(1);
+			}
+			if (user_birthday != null) {
+				String[] birth = user_birthday.split("-");
+				updateUser.setUser_age(
+						getAge(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2])));
+			}
+			Image img = i_service.searchForUserProfile(user_no);// 이런걸로 이미지 번호 찾고 이미지를 업데이트 할 것
+//			System.out.println("img"+img);
+			if (file != null) {
+				// 만약에 이미지가 있으면 이미지의 파일명, 파일경로, 확장자를 수정해줘야한다.
+				// 이미지가 없으면 나머지만 수정해주고
+				String distingishString = "" + updateUser.getUser_no() + ((int) (Math.random() * 1000) + 1) + updateUser.hashCode();
+//				System.out.print(distingishString);
+				String fileName = f_service.storeFile(file, distingishString);
+//				System.out.println(fileName);
+				img.setImg_name(fileName);
+				img.setImg_path(ourDomain+prop.getUploadDir() + '/' + fileName);
+				img.setImg_extension(file.getContentType());
+				i_service.update(img);
+				// 파일저장하고 거기서 이름 가져와서 여기 이름 두고, 패스 만들어다 넣어주고, 확장자
+				// 이미지 삭제하는 것은 다른 기능으로 빼야한다.
+			}
+			service.update(updateUser);
+			Map<String,Object> data = new HashMap<String,Object>();
+			data.put("user", updateUser);
+			data.put("message", "유저 업데이트 완료");
+			return handler.handleSuccess(data);
 		}
-
-		Image img = i_service.searchForUserProfile(user.getUser_no());// 이런걸로 이미지 번호 찾고 이미지를 업데이트 할 것
-		if (img != null) {
-			// 만약에 이미지가 있으면 이미지의 파일명, 파일경로, 확장자를 수정해줘야한다.
-			// 이미지가 없으면 나머지만 수정해주고
-			String distingishString = "" + user.getUser_no() + ((int) (Math.random() * 1000) + 1) + user.hashCode();
-			String fileName = f_service.storeFile(file, distingishString);
-			img.setImg_name(fileName);
-			img.setImg_path(prop.getUploadDir() + '/' + fileName);
-			img.setImg_extension(file.getContentType());
-			i_service.update(img);
-			// 파일저장하고 거기서 이름 가져와서 여기 이름 두고, 패스 만들어다 넣어주고, 확장자
-			// 이미지 삭제하는 것은 다른 기능으로 빼야한다.
-		}
-		service.update(user);
-		return handler.handleSuccess("유저 프로필 업데이트 완료");
+		else return handler.handleFail("해당 유저는 없는 유저인데 어떻게 요청하셨나요?", HttpStatus.BAD_REQUEST);
 	}
 
 	@Autowired

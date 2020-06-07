@@ -3,6 +3,10 @@ import Vuex from "vuex";
 import user from "./modules/user";
 import header from "./modules/header";
 import board from "./modules/board";
+import phaser from "./modules/phaser";
+import post from "./modules/post";
+import comment from "./modules/comment";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,6 +16,9 @@ export default new Vuex.Store({
   modules: {
     user,
     header,
-    board
+    board,
+    phaser,
+    post,
+    comment
   }
 });

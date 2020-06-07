@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RMonsterDao" >
 
  	<insert id="insert"		parameterType="rmonster">
-	 	INSERT INTO RMONSTER(
+	 	INSERT INTO RMonster(
 			rmon_name,
 			rmon_level,
 			rmon_hp,
@@ -23,7 +23,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="rmonster">
-	   	UPDATE RMONSTER
+	   	UPDATE RMonster
 		SET
 			rmon_name = #{rmon_name:VARCHAR},
 			rmon_level = #{rmon_level:INTEGER},
@@ -34,11 +34,32 @@
 		WHERE rmon_no = #{rmon_no:INTEGER}
    	</update>
 	<select id="search"		parameterType="int"  resultType="rmonster">
-		SELECT * FROM RMONSTER WHERE rmon_no=#{rmon_no:INTEGER} AND rmon_del_check = FALSE
+		SELECT
+			*, 
+			CASE 
+				WHEN (rmon_no BETWEEN 1 AND 1) THEN 1
+				WHEN (rmon_no BETWEEN 2 AND 4) THEN 2
+				ELSE 3	
+			END AS inStage
+		from RMonster
+		WHERE rmon_no= #{rmon_no:INTEGER} AND rmon_del_check = FALSE;
 	</select>
 	<select id="searchAll"	resultType="rmonster">
-		SELECT * FROM RMONSTER WHERE rmon_del_check = FALSE
+		SELECT * FROM RMonster WHERE rmon_del_check = FALSE
 	</select>
-	
+	<select id="searchList" parameterType="int"  resultType="rmonster">
+		SELECT *
+		FROM (
+			SELECT
+				*, 
+				CASE 
+					WHEN (rmon_no BETWEEN 1 AND 1) THEN 1
+					WHEN (rmon_no BETWEEN 2 AND 4) THEN 2
+					ELSE 3	
+				END AS inStage
+			from RMonster
+			WHERE rmon_del_check = FALSE) as A
+		WHERE A.inStage = #{inStage:INTEGER};
+	</select>
 </mapper>
 

@@ -29,11 +29,19 @@
  	<insert id="insert"		parameterType="user">
 	 	INSERT INTO User(
 			user_email,
-			user_login_type
+			user_login_type,
+			user_name,
+			user_sex,
+			user_birthday,
+			user_age		
 		)
 		VALUES(
 			#{user_email:VARCHAR},
-			#{user_login_type:INTEGER}
+			#{user_login_type:INTEGER},
+			#{user_name:VARCHAR},
+			#{user_sex:INTEGER},
+			#{user_birthday:VARCHAR},
+			#{user_age:INTEGER}
 		);
 	</insert> 
 	

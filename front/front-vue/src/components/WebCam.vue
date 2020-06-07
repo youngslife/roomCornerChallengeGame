@@ -4,11 +4,7 @@
     <!-- <div>All Prediction</div> -->
     <all-predict :predictions="predictions" :stage="stage"></all-predict>
     <div>Best Prediction</div>
-    <best-predict
-      :predictions="predictions"
-      :stage="stage"
-      @child="test"
-    ></best-predict>
+    <best-predict :predictions="predictions" :stage="stage" @child="test"></best-predict>
   </div>
 </template>
 
@@ -38,7 +34,7 @@ export default {
   },
   components: {
     AllPredict,
-    BestPredict
+    BestPredict,
   },
   data() {
     return {

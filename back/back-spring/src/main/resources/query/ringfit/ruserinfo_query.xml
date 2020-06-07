@@ -3,9 +3,32 @@
 	
 
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RUserInfoDao" >
-
+	<resultMap id ="rugiMap" type="ruserinfo">
+		<result property="ruserinfo_no" column="ruserinfo_no"/>
+		<result property="rstage_no" column="rstage_no"/>
+		<result property="user_no" column="user_no"/>
+		<result property="ruserinfo_hp" column="ruserinfo_hp"/>
+		<result property="ruserinfo_iscleared" column="ruserinfo_iscleared"/>
+		<result property="ruserinfo_iswon" column="ruserinfo_iswon"/>
+		<result property="ruserinfo_golds" column="ruserinfo_golds"/>
+		<association property="ruserinfo_gameinfo" javaType="rgameinfo">
+			<result property="rgameinfo_no" column="rgameinfo_no"/>
+			<result property="ruserinfo_no" column="ruserinfo_no"/>
+			<result property="rgameinfo_startdate" column="rgameinfo_startdate"/>
+			<result property="rgameinfo_playtime" column="rgameinfo_playtime"/>
+			<result property="rgameinfo_enddate" column="rgameinfo_enddate"/>
+			<result property="rgameinfo_level" column="rgameinfo_level"/>
+			<result property="rgameinfo_perfect_num" column="rgameinfo_perfect_num"/>
+			<result property="rgameinfo_great_num" column="rgameinfo_great_num"/>
+			<result property="rgameinfo_good_num" column="rgameinfo_good_num"/>
+			<result property="rgameinfo_miss_num" column="rgameinfo_miss_num"/>
+			<result property="rgameinfo_rank" column="rgameinfo_rank"/>
+			<result property="rgameinfo_kcal" column="rgameinfo_kcal"/>
+			<result property="rgameinfo_score" column="rgameinfo_score"/>
+		</association>
+	</resultMap>
  	<insert id="insert"		parameterType="ruserinfo">
-	 	INSERT INTO RUSERINFO(
+	 	INSERT INTO RUserinfo(
 			rstage_no,
 			user_no,
 			ruserinfo_hp,
@@ -19,7 +42,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="ruserinfo">
-	   	UPDATE RUSERINFO
+	   	UPDATE RUserinfo
 		SET
 			rstage_no = #{rstage_no: INTEGER}>,
 			user_no = #{user_no: INTEGER}>,
@@ -31,10 +54,23 @@
 		WHERE ruserinfo_no = #{ruserinfo_no:INTEGER}
    	</update>
 	<select id="search"		parameterType="int"  resultType="ruserinfo">
-		SELECT * FROM RUSERINFO WHERE ruserinfo_no = #{ruserinfo_no:INTEGER} AND ruserinfo_del_check=FALSE
+		SELECT * FROM RUserinfo WHERE ruserinfo_no = #{ruserinfo_no:INTEGER} AND ruserinfo_del_check=FALSE
+	</select>
+	<select id="searchInfo"		parameterType="hashmap"  resultMap="rugiMap">
+		SELECT * FROM RUserinfo 
+		WHERE user_no = #{user_no:INTEGER}		 
+		AND rstage_no = #{rstage_no:INTEGER}
+		AND ruserinfo_del_check=FALSE
 	</select>
 	<select id="searchAll"	resultType="ruserinfo">
-		SELECT * FROM RUSERINFO WHERE ruserinfo_del_check=FALSE
+		SELECT * FROM RUserinfo WHERE ruserinfo_del_check=FALSE
+	</select>
+	<select id="getLast" parameterType = "hashmap" resultType="ruserinfo">
+		SELECT * FROM RUserinfo 
+		WHERE user_no = #{user_no:INTEGER}		 
+		AND rstage_no = #{rstage_no:INTEGER}
+		AND ruserinfo_del_check=FALSE
+		ORDER BY ruserinfo_no LIMIT 0,1;
 	</select>
 	
 </mapper>

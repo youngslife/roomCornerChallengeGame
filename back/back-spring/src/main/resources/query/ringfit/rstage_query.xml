@@ -3,9 +3,53 @@
 	
 
 <mapper namespace="com.ssafy.backspring.model.dao.ringfit.RStageDao" >
+	<resultMap id="rmonsterMap" type="rmonster">
+		<result property="rmon_no" column="rmon_no"/>
+		<result property="rmon_name" column="rmon_name"/>
+		<result property="rmon_level" column="rmon_level"/>
+		<result property="rmon_hp" column="rmon_hp"/>
+		<result property="rmon_grade" column="rmon_grade"/>
+		<result property="rmon_description" column="rmon_description"/>
+	</resultMap>
 
+	<resultMap id ="rugiMap" type="ruserinfo">
+		<result property="ruserinfo_no" column="ruserinfo_no"/>
+		<result property="rstage_no" column="rstage_no"/>
+		<result property="user_no" column="user_no"/>
+		<result property="ruserinfo_hp" column="ruserinfo_hp"/>
+		<result property="ruserinfo_iscleared" column="ruserinfo_iscleared"/>
+		<result property="ruserinfo_iswon" column="ruserinfo_iswon"/>
+		<result property="ruserinfo_golds" column="ruserinfo_golds"/>
+		<association property="ruserinfo_gameinfo" javaType="rgameinfo">
+			<result property="rgameinfo_no" column="rgameinfo_no"/>
+			<result property="ruserinfo_no" column="ruserinfo_no"/>
+			<result property="rgameinfo_startdate" column="rgameinfo_startdate"/>
+			<result property="rgameinfo_playtime" column="rgameinfo_playtime"/>
+			<result property="rgameinfo_enddate" column="rgameinfo_enddate"/>
+			<result property="rgameinfo_level" column="rgameinfo_level"/>
+			<result property="rgameinfo_perfect_num" column="rgameinfo_perfect_num"/>
+			<result property="rgameinfo_great_num" column="rgameinfo_great_num"/>
+			<result property="rgameinfo_good_num" column="rgameinfo_good_num"/>
+			<result property="rgameinfo_miss_num" column="rgameinfo_miss_num"/>
+			<result property="rgameinfo_rank" column="rgameinfo_rank"/>
+			<result property="rgameinfo_kcal" column="rgameinfo_kcal"/>
+			<result property="rgameinfo_score" column="rgameinfo_score"/>
+		</association>
+	</resultMap>
+	<resultMap id="rstageMap" type="rstage">
+		<result property="rstage_no" column="rstage_no"/>
+		<result property="rstage_name" column="rstage_name"/>
+		<result property="rstage_theme" column="rstage_theme"/>
+		<association property="rstage_map" javaType="rmap">
+			<id property="rmap_no" column="rmap_no" />
+			<result property="rstage_no" column="rstage_no" />
+			<result property="rmap_length" column="rmap_length" />
+		</association>
+		<collection property="rstage_usergameinfo" ofType="ruserinfo" resultMap="rugiMap" />
+	</resultMap>
+	
  	<insert id="insert"		parameterType="rstage">
-	 	INSERT INTO RSTAGE(
+	 	INSERT INTO RStage(
 			rstage_name,
 			rstage_theme)
 		VALUES(
@@ -16,7 +60,7 @@
    	<delete id="delete" 	parameterType="int">
 	</delete>
    	<update id="update"		parameterType="rstage">
-	   	UPDATE RSTAGE
+	   	UPDATE RStage
 		SET
 			rstage_name 		= #{rstage_name:VARCHAR},
 			rstage_theme 		= #{rstage_theme:VARCHAR},
@@ -24,11 +68,87 @@
 		WHERE rstage_no 		= #{rstage_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="rstage">
-		SELECT * FROM RSTAGE WHERE rstage_no = #{rstage_no:INTEGER} AND rstage_del_check=FALSE
+		SELECT * FROM RStage WHERE rstage_no = #{rstage_no:INTEGER} AND rstage_del_check=FALSE
 	</select>
 	<select id="searchAll"	resultType="rstage">
-		SELECT * FROM RSTAGE WHERE rstage_del_check=FALSE
+		SELECT * FROM RStage WHERE rstage_del_check=FALSE
 	</select>
+ 	<select id="checkUserinfo" parameterType="int" resultMap="rstageMap">
+ 		SELECT * 
+		FROM
+			(SELECT
+				rs.rstage_no,
+				rs.rstage_name,
+				rs.rstage_theme,
+				rm.rmap_no,
+				rm.rmap_length
+			FROM RStage rs
+			LEFT JOIN RMap rm
+			ON rs.rstage_no = rm.rstage_no
+			WHERE rs.rstage_del_check = FALSE AND rm.rmap_del_check = FALSE) AS STAGE
+		LEFT JOIN 
+			(SELECT 
+				rui.ruserinfo_no,
+				rui.rstage_no,
+				rui.user_no,
+				rui.ruserinfo_iscleared,
+				rgi.rgameinfo_startdate,
+				rgi.rgameinfo_playtime,
+				rgi.rgameinfo_enddate,
+				rgi.rgameinfo_level,
+				rgi.rgameinfo_perfect_num,
+				rgi.rgameinfo_great_num,
+				rgi.rgameinfo_good_num,
+				rgi.rgameinfo_miss_num,
+				rgi.rgameinfo_rank,
+				rgi.rgameinfo_kcal,
+				rgi.rgameinfo_score
+			FROM RUserinfo rui
+			LEFT JOIN RGameinfo rgi
+			ON rui.ruserinfo_no = rgi.ruserinfo_no
+			WHERE rui.user_no = #{user_no:INTEGER}) AS RECORDS
+		ON STAGE.rstage_no = RECORDS.rstage_no;
+ 	</select>
 	
+	<select id="searchInfo" parameterType="hashmap" resultMap="rstageMap">
+		SELECT * 
+		FROM
+			(SELECT
+				rs.rstage_no,
+				rs.rstage_name,
+				rs.rstage_theme,
+				rm.rmap_no,
+				rm.rmap_length
+			FROM RStage rs
+			LEFT JOIN RMap rm
+			ON rs.rstage_no = rm.rstage_no
+			WHERE rs.rstage_del_check = FALSE 
+	        AND rm.rmap_del_check = FALSE
+	        AND rs.rstage_no = #{rstage_no:INTEGER}) AS STAGE
+		LEFT JOIN 
+			(SELECT 
+				rui.ruserinfo_no,
+				rui.rstage_no,
+				rui.user_no,
+				rui.ruserinfo_iscleared,
+				rgi.rgameinfo_startdate,
+				rgi.rgameinfo_playtime,
+				rgi.rgameinfo_enddate,
+				rgi.rgameinfo_level,
+				rgi.rgameinfo_perfect_num,
+				rgi.rgameinfo_great_num,
+				rgi.rgameinfo_good_num,
+				rgi.rgameinfo_miss_num,
+				rgi.rgameinfo_rank,
+				rgi.rgameinfo_kcal,
+				rgi.rgameinfo_score
+			FROM RUserinfo rui
+			LEFT JOIN RGameinfo rgi
+			ON rui.ruserinfo_no = rgi.ruserinfo_no
+			WHERE rui.ruserinfo_no = #{ruserinfo_no:INTEGER} 
+	        AND rui.ruserinfo_del_check = FALSE
+	        AND rgi.rgameinfo_del_check = FALSE) AS RECORDS
+		ON STAGE.rstage_no = RECORDS.rstage_no;
+	</select>
 </mapper>
 

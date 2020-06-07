@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.backspring.model.dao.ringfit.RMonsterDao;
 import com.ssafy.backspring.model.dto.ringfit.RMonster;
 @Service
 public class RMonsterServiceImpl implements RMonsterService {
 
 	@Autowired
-	private RMonsterService dao;
+	private RMonsterDao dao;
 	@Override
 	public void insert(RMonster rmonster) {
 		try {
@@ -57,5 +58,13 @@ public class RMonsterServiceImpl implements RMonsterService {
 			e.printStackTrace();
 		}
 	}
-
+	@Override
+	public List<RMonster> searchList(int inStage){
+		try {
+			return dao.searchList(inStage);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
