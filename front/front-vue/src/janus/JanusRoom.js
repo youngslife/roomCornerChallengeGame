@@ -18,10 +18,10 @@ class JanusRoom {
 
       if (window.location.protocol === "http:") {
         instance.server =
-          "http://k02a3011.p.ssafy.io:8088/janus";
+          "http://k02a3041.p.ssafy.io:8088/janus";
       } else {
         instance.server =
-          "http://k02a3011.p.ssafy.io:8088/janus";
+          "https://k02a3041.p.ssafy.io:8089/janus";
       }
 
       instance.janus = null;
@@ -162,8 +162,7 @@ class JanusRoom {
       debug: "all",
       callback: function() {
         instance.janus = new Janus({
-          server:
-            "http://k02a3041.p.ssafy.io:8088/janus",
+          server:instance.server,
           success: function() {
             // console.log('janus success')
 
