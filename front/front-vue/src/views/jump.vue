@@ -2,6 +2,12 @@
   <section>
     <q-btn color="primary" icon="check" label="유저보기" @click="showUsers" />
     <q-btn color="primary" icon="check" label="방만들" @click="createRoom" />
+    <div class="row">
+         <q-card class="my-card col-3" v-for="index in 8" :key="index">
+        <video :id="'feed' + index" style="display: flex;width: 100%;border-radius: 0px 0px 10px 10px;" controls="controls" autoplay="autoplay"></video>
+    </q-card>
+    </div>
+   
   </section>
 </template>
 

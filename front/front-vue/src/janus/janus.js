@@ -23,7 +23,7 @@
 	OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import adapter from './adapter'
+import adapter from 'webrtc-adapter'
 // List of sessions
 Janus.sessions = {};
 
@@ -302,6 +302,7 @@ Janus.init = function(options) {
 			if(Janus.webRTCAdapter.browserDetails.browser === 'chrome') {
 				var chromever = Janus.webRTCAdapter.browserDetails.version;
 				if(chromever >= 52) {
+					console.log(element)
 					element.srcObject = stream;
 				} else if(typeof element.src !== 'undefined') {
 					element.src = URL.createObjectURL(stream);

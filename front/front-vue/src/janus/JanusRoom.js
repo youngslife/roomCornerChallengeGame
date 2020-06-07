@@ -330,7 +330,7 @@ class JanusRoom {
                       var leaving = msg["leaving"];
                       // Janus.log('Publisher left: ' + leaving)
                       var remoteFeed = null;
-                      for (var i = 1; i < 6; i++) {
+                      for (var i = 1; i < 8; i++) {
                         if (
                           instance.feeds[i] != null &&
                           instance.feeds[i] !== undefined &&
@@ -360,7 +360,7 @@ class JanusRoom {
                         return;
                       }
                       let remoteFeed = null;
-                      for (let i = 1; i < 6; i++) {
+                      for (let i = 1; i < 8; i++) {
                         if (
                           instance.feeds[i] != null &&
                           instance.feeds[i] !== undefined &&
@@ -567,7 +567,7 @@ class JanusRoom {
         } else if (event !== undefined && event != null) {
           if (event === "attached") {
             // Subscriber created and attached
-            for (var i = 1; i < 6; i++) {
+            for (var i = 1; i < 8; i++) {
               if (
                 instance.feeds[i] === undefined ||
                 instance.feeds[i] === null
@@ -641,32 +641,9 @@ class JanusRoom {
         // The subscriber stream is recvonly, we don't expect anything here
       },
       onremotestream: function(stream) {
-        // Janus.debug('Remote feed #' + remoteFeed.rfindex)
-        // console.log('Remote feed #' + remoteFeed.rfindex)
-        console.log("Incomming onremotestream !!!! !!!!");
-        console.log(stream);
-        console.log(remoteFeed);
-        // console.log('@@@ Attaching media stream ... ', stream)
-        // console.log('streamstreamstreamstreamstreamstreamstreamstreamstream')
-        // console.log(stream)
-
-        // var video
-
-        // if (document.getElementById('feed' + remoteFeed.rfindex) === null) {
-        //   console.log('Attaching remoteFeed.id : ' + remoteFeed.id + '.')
-        //   video = document.createElement('video')
-        //   video.id = 'feed' + remoteFeed.rfindex
-        //   video.setAttribute('autoplay', 'true')
-        //   document.getElementById('videos').appendChild(video)
-        // } else {
-        //   console.log('feed.id : ' + remoteFeed.id + ' has already been attached.')
-        //   video = document.getElementById('feed' + remoteFeed.rfindex)
-        //   video.setAttribute('autoplay', 'true')
-        // }
-
-        // Janus.attachMediaStream(video, stream)
+        
         var video;
-
+        console.log(remoteFeed.rfindex)
         if (document.getElementById("feed" + remoteFeed.rfindex) !== null) {
           console.log(
             "feed.id : " + remoteFeed.id + " has already been attached."
@@ -676,11 +653,7 @@ class JanusRoom {
         }
 
         Janus.attachMediaStream(video, stream);
-        // let participant = document.getElementById('participant1')
-        // participant.removeAttribute('hidden')
-        // Janus.attachMediaStream(participant, stream)
-        // console.log('Atteching media stream onremotestream .... ')
-        // console.log(stream.id, remoteFeed.rfindex)
+       
       },
       oncleanup: function() {
         // Janus.log(' ::: Got a cleanup notification (remote feed ' + id + ') :::')
