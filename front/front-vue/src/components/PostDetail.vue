@@ -23,8 +23,8 @@
         <q-input outlined v-model="comment" label="댓글" :dense="false" />
         <q-btn color="primary" icon="check" label="댓글쓰기" @click="insertCmt()" />
       </div>
-      <q-list bordered v-if="post.post_cmtList[0].cmt_user != null">
-        <q-item v-for="(cmt, index) in post.post_cmtList" :key="index" clickable v-ripple>
+      <q-list bordered v-if="cmtList[0].cmt_user.user_name != null">
+        <q-item v-for="(cmt, index) in cmtList" :key="index" clickable v-ripple>
           <q-item-section>{{ cmt.cmt_user.user_name }}</q-item-section>
           <template>
             <q-item-section>{{ cmt.cmt_content }}</q-item-section>
@@ -76,12 +76,16 @@ export default {
     },
     isSame() {
       return this.post.post_user.user_no == this.user_no;
+    },
+    cmtList() {
+      return this.$store.state.post.post.post_cmtList;
     }
   },
   mounted() {
     this.user_no = Number(window.sessionStorage.getItem("user_no"));
     this.$store.dispatch("post/getPost", this.post_no);
-    console.log("test", this.post.post_cmtList);
+    // console.log("test", this.post.post_cmtList);
+    console.log('dddd', this.$store.state.comment.comment)
   },
   methods: {
     back() {
