@@ -102,6 +102,7 @@ public class RingFitController {
     	 RUserInfo newinfo = new RUserInfo();
     	 newinfo.setRstage_no(rstage_no);
     	 newinfo.setUser_no(user_no);
+    	 if(rgameinfo_level==0) rgameinfo_level = 1;
     	 newinfo.setRuserinfo_hp(100*rgameinfo_level);
     	 if(cleared>0) {
     		 newinfo.setRuserinfo_iscleared(true);
@@ -122,7 +123,7 @@ public class RingFitController {
     	 // 2) 필요 몬스터 데이터 담아서 줄 것(집합의 형태로 중복 x)
     	 /*
     	  * 몬스터를 튜토리얼은 1개, 스테이지별로 3개를 줄 수 있는 상황이 되었으니
-    	  * 배열로 순서대로 주려던 것은 제거하고, 몬스터 info를 담아서 줄것
+    	  * 배열로 순서대로 주려던 것은 제거하고, 몬스터 info를 담아서 줄 것
     	  * 스테이지는 맵정보, 몬스터리스트를 가지고 있고 프론트에서 1개씩 꺼내도록 하자.
     	  * 배경음악 등은 front asset에 담아놓자.
     	  * 게임이 종료되고 업데이트를 하려면 ruserinfo_no가 있어야해. 이거를 포함해서 주고 게임이 진행되고 난뒤, 받아와서 업데이트를 하는거야.

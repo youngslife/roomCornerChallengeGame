@@ -13,10 +13,9 @@
 		<result property="cmt_regtime" column="cmt_regtime" />
 		<result property="cmt_updatetime" column="cmt_updatetime" />
 		<association property="cmt_user" javaType="user">
-			<result property="user_no" column="user_no" />
-			<result property="user_email" column="user_email" />
-			<result property="user_name" column="user_name" />
-			<result property="user_lastlogin" column="user_lastlogin" />
+			<result property="user_no" column="cmt_user_no" />
+			<result property="user_email" column="cmt_user_email" />
+			<result property="user_name" column="cmt_user_name" />
 		</association>
 	</resultMap>
 	<resultMap id="puMap" type="Post">
