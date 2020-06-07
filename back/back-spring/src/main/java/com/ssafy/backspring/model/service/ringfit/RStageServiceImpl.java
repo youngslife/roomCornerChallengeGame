@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.backspring.model.dao.ringfit.RStageDao;
 import com.ssafy.backspring.model.dto.ringfit.RStage;
+import com.ssafy.backspring.util.RInfo;
 @Service
 public class RStageServiceImpl implements RStageService {
 	@Autowired
@@ -61,6 +62,24 @@ public class RStageServiceImpl implements RStageService {
 	public List<RStage> checkUserinfo(int ruser_no){
 		try {
 			return dao.checkUserinfo(ruser_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public RStage searchInfo(RInfo rinfo) {
+		try {
+			return dao.searchInfo(rinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public RStage searchStage(int user_no) {
+		try {
+			return dao.searchStage(user_no);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

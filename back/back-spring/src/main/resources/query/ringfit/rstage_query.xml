@@ -35,10 +35,10 @@
 			<result property="rgameinfo_kcal" column="rgameinfo_kcal"/>
 			<result property="rgameinfo_score" column="rgameinfo_score"/>
 		</association>
-
 	</resultMap>
-	<resultMap id="rstageCheckMap" type="rstage">
+	<resultMap id="rstageMap" type="rstage">
 		<result property="rstage_no" column="rstage_no"/>
+		<result property="rstage_name" column="rstage_name"/>
 		<result property="rstage_theme" column="rstage_theme"/>
 		<association property="rstage_map" javaType="rmap">
 			<id property="rmap_no" column="rmap_no" />
@@ -73,7 +73,7 @@
 	<select id="searchAll"	resultType="rstage">
 		SELECT * FROM RStage WHERE rstage_del_check=FALSE
 	</select>
- 	<select id="checkUserinfo" parameterType="int" resultMap="rstageCheckMap">
+ 	<select id="checkUserinfo" parameterType="int" resultMap="rstageMap">
  		SELECT * 
 		FROM
 			(SELECT
@@ -109,19 +109,71 @@
 			WHERE rui.user_no = #{user_no:INTEGER}) AS RECORDS
 		ON STAGE.rstage_no = RECORDS.rstage_no;
  	</select>
-	<!--private int rstage_no;
-	private String rstage_name;
-	private String rstage_theme;
-	private boolean rstage_del_check;
-	private RMap rstage_map;
-	private List<RMonster> rstage_monster;
-	private List<RUserInfo> rstage_usergameinfo; 
-	private int rmap_no;
-	private int rstage_no;
-	private int rmap_length;
-	private boolean rmap_del_check;
-	private List<Image> rmap_imgs;
-	-->
-
+	<select id ="searchStage" parameterType="int" resultMap="rstageMap">
+		SELECT * 
+			FROM
+				(SELECT
+					rs.rstage_no,
+					rs.rstage_name,
+					rs.rstage_theme,
+					rm.rmap_no,
+					rm.rmap_length
+				FROM RStage rs
+				LEFT JOIN RMap rm
+				ON rs.rstage_no = rm.rstage_no
+				WHERE rs.rstage_del_check = FALSE AND rm.rmap_del_check = FALSE) AS STAGE
+			RIGHT JOIN 
+				(SELECT 
+					rui.ruserinfo_no,
+					rui.rstage_no,
+					rui.user_no,
+					rui.ruserinfo_iscleared
+				FROM RUserinfo rui
+				LEFT JOIN RGameinfo rgi
+				ON rui.ruserinfo_no = rgi.ruserinfo_no
+				WHERE rui.user_no = #{user_no:INTEGER} AND rui.ruserinfo_iscleared=TRUE) AS RECORDS
+			ON STAGE.rstage_no = RECORDS.rstage_no ORDER BY STAGE.rstage_no desc LIMIT 0,1;
+	</select>
+	<select id="searchInfo" parameterType="hashmap" resultMap="rstageMap">
+		SELECT * 
+		FROM
+			(SELECT
+				rs.rstage_no,
+				rs.rstage_name,
+				rs.rstage_theme,
+				rm.rmap_no,
+				rm.rmap_length
+			FROM RStage rs
+			LEFT JOIN RMap rm
+			ON rs.rstage_no = rm.rstage_no
+			WHERE rs.rstage_del_check = FALSE 
+	        AND rm.rmap_del_check = FALSE
+	        AND rs.rstage_no = #{rstage_no:INTEGER}) AS STAGE
+		LEFT JOIN 
+			(SELECT 
+				rui.ruserinfo_no,
+				rui.rstage_no,
+				rui.user_no,
+				rui.ruserinfo_iscleared,
+				rgi.rgameinfo_no,
+				rgi.rgameinfo_startdate,
+				rgi.rgameinfo_playtime,
+				rgi.rgameinfo_enddate,
+				rgi.rgameinfo_level,
+				rgi.rgameinfo_perfect_num,
+				rgi.rgameinfo_great_num,
+				rgi.rgameinfo_good_num,
+				rgi.rgameinfo_miss_num,
+				rgi.rgameinfo_rank,
+				rgi.rgameinfo_kcal,
+				rgi.rgameinfo_score
+			FROM RUserinfo rui
+			LEFT JOIN RGameinfo rgi
+			ON rui.ruserinfo_no = rgi.ruserinfo_no
+			WHERE rui.ruserinfo_no = #{ruserinfo_no:INTEGER} 
+	        AND rui.ruserinfo_del_check = FALSE
+	        AND rgi.rgameinfo_del_check = FALSE) AS RECORDS
+		ON STAGE.rstage_no = RECORDS.rstage_no;
+	</select>
 </mapper>
 

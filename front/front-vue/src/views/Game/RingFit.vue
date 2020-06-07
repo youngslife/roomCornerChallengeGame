@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -15,22 +17,25 @@
         </div>
       </template>
     </q-overlay>
-    <div class="row slider">
-      <!-- <div
-        id="map"
-        class="col-9 slider-col"
-        v-bind:class="{ pauseMap: isPause }"
-      ></div>-->
+    <div class="row">
       <div class="col-9">
-        <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn>
-        <Game v-show="!isMonster" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :player="player" />
+        <h3 v-if="!isStageSelect" class="stage">Stage {{ getStageNum - 1 }}</h3>
+        <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
+        <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
+        <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
+        <select-stage
+          v-if="isStageSelect"
+          :isStageSelect.sync="isStageSelect"
+        />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :player="player"
+        />
+        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
       </div>
       <div id="time" class="playtime"></div>
-      <!-- <div id="character">
-        <img :src="require('../../assets/walking.gif')" />
-      </div>-->
-      <div class="pause">
+      <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
       <div id="right" class="col-2 column">
@@ -39,7 +44,6 @@
           <web-cam
             v-if="!isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="jump"
@@ -47,7 +51,6 @@
           <squat-cam
             v-if="isMonster"
             :url="changeUrl"
-            :stage="stage"
             :width="window.width"
             :height="window.height"
             @child="goAttack"
@@ -61,9 +64,11 @@
 <script>
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
-import RingfitAttack from "../Ringfit/RingfitAttack.vue";
+import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
+import RingfitResult from "../../components/ringfit/RingfitResult";
 import Game from "@/components/Game";
-import { mapActions, mapState } from "vuex";
+import selectStage from "@/components/ringfit/SelectStage";
+import { mapState, mapGetters } from "vuex";
 import { QOverlay } from "@quasar/quasar-ui-qoverlay";
 
 export default {
@@ -72,12 +77,15 @@ export default {
     WebCam,
     QOverlay,
     Game,
-    RingfitAttack
+    selectStage,
+    RingfitAttack,
+    RingfitResult
   },
   data() {
     return {
       url:
-        "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       stage: "",
       window: {
         width: 0,
@@ -88,7 +96,8 @@ export default {
       minute: 0,
       second: 0,
       isPause: false,
-      isMonster: false,
+      isStageSelect: true,
+      isPoseSelect: false,
       AttackCnt: 0,
       player: {
         username: "방구석여포",
@@ -99,15 +108,25 @@ export default {
   computed: {
     ...mapState({
       // back이랑 통신하고 나면 받아오자
-      // stage: (state) => state.stage,
+      // stage: state => state.stageNum
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
     }),
+    ...mapGetters({
+      getMotionName: "ringfit/getMotionName",
+      getStageNum: "ringfit/getStageNum"
+    }),
     changeUrl() {
-      console.log(this.url);
-      console.log(this.isMonster);
+      // console.log(this.url);
+      // console.log(this.isMonster);
       return this.url;
+    },
+    isMonster() {
+      return this.$store.state.phaser.isMeet;
+    },
+    isClear() {
+      return this.$store.state.phaser.isClear;
     }
   },
   async mounted() {
@@ -116,18 +135,16 @@ export default {
     this.window.height = right.offsetWidth;
     // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
-    await this.drawBaseMap(); // 기본 맵 불러오고
     this.printPlayTime();
+    // console.log("아마 vuex", this.motionName);
   },
   methods: {
-    ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id
+        no: this.$store.state.user.user_no
       };
-      await this.getStage(params); // axios
+      await this.$store.dispatch("ringfit/getStageByUser", params);
     },
-    async drawBaseMap() {},
     printPlayTime() {
       var clock = document.getElementById("time");
       if (this.second++ >= 59) {
@@ -185,18 +202,23 @@ export default {
     },
     goAttack(count) {
       this.AttackCnt = count;
-    },
-    changeToAttack() {
-      if (this.isMonster == false) {
-        this.url =
-          "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-        this.isMonster = true;
-      } else if (this.isMonster == true) {
-        this.isMonster = false;
-        this.url =
-          "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
-      }
     }
+    // 이 부분은 isMonster computed에 넣으면 될듯
+    // changeToAttack() {
+    //   if (this.isMonster == false) {
+    //     console.log(1, this.isMonster);
+    //     this.url =
+    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
+    //     this.isMonster = true;
+    //     console.log(2, this.isMonster);
+    //   } else if (this.isMonster == true) {
+    //     console.log(3, this.isMonster);
+    //     this.isMonster = false;
+    //     this.url =
+    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
+    //     console.log(4, this.isMonster);
+    //   }
+    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);
@@ -225,61 +247,28 @@ $speed: 7s;
 :root {
   --slider-speed: ;
 }
-// #character {
-//   position: absolute;
-//   top: 650px;
-//   left: 400px;
-// }
-.slider {
-  //   overflow: hidden;
-
-  //   .slider-col {
-  //     margin-right: 20px;
-  //     width: $img-w * $ratio * 4;
-  //     height: $img-h * $ratio;
-  //     background-image: url("../../assets/road.png");
-  //     background-size: $img-w * 4 * $ratio $img-h * $ratio;
-  //     animation: slide $speed linear infinite;
-  //   }
-  //   .pauseMap {
-  //     $speed: 0s;
-  //   }
-}
-
-// @keyframes slidePause {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: 0;
-//   }
-// }
-// @keyframes slide {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: $img-h * $ratio;
-//   }
-// }
 #additionalInfo {
   background-image: url("../../assets/additionalInfo.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  // margin-bottom: 3em;
 }
 
 .playtime {
   position: absolute;
-  top: 70px;
-  left: 60px;
+  top: 12.7%;
+  left: 62%;
   z-index: 1;
 }
-
+.stage {
+  position: absolute;
+  top: 8%;
+  left: 3%;
+  z-index: 1;
+}
 .pause {
   position: absolute;
-  top: 70px;
-  left: 1070px;
+  top: 12%;
+  left: 65%;
   z-index: 1;
 }
 .my-card {

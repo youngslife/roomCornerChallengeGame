@@ -15,13 +15,16 @@
 			user_no = #{user_no: INTEGER},
 			uginfo_level = #{uginfo_level:INTEGER},
 			uginfo_experience = #{uginfo_experience:INTEGER},
-			uginfo_golds = #{uginfo_golds:INTEGER},
+			uginfo_gold = #{uginfo_gold:INTEGER},
 			uginfo_active_score = #{uginfo_active_score:DOUBLE},
 			uginfo_del_check = #{uginfo_del_check:BOOLEAN}
 		WHERE uginfo_no = #{uginfo_no:INTEGER};
    	</update>
 	<select id="search"		parameterType="int"  resultType="usergameinfo">
 		SELECT * FROM Usergameinfo WHERE uginfo_no = #{uginfo_no:INTEGER} AND uginfo_del_check = FALSE
+	</select>
+	<select id="searchUser"		parameterType="int"  resultType="usergameinfo">
+		SELECT * FROM Usergameinfo WHERE user_no = #{user_no:INTEGER} AND uginfo_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="usergameinfo">
 		SELECT * FROM Usergameinfo WHERE uginfo_del_check = FALSE

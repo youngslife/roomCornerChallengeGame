@@ -23,6 +23,16 @@ class UserService {
         return {};
       });
   }
+  async getUserDetailFromNo(userNo) {
+    return await Api.get(`/User/searchDetail/${userNo}`)
+      .then(Response => {
+        return Response;
+      })
+      .catch(exp => {
+        console.log("Error getUserDetailFromNo : " + exp);
+        return {};
+      });
+  }
   // 유저 회원 가입
   async insertUser(user) {
     return await Api.post("/User/insert", user)

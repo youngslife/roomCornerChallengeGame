@@ -3,23 +3,24 @@
     <q-bar class="bg-white q-header" style="height:80px;">
       <div class="col text-left text-weight-bold">
         <button class="button button1" @click="changeIsDrawer">
-          <q-icon name="menu" style="size:100px;" /> 메뉴
+          <q-icon name="menu" style="size:100px;" />메뉴
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <img
-          :src="require('../assets/logo.png')"
-          onclick="location.href ='/'"
-        />
+        <img :src="require('../assets/logo.png')" onclick="location.href ='/'" />
       </div>
-      <div class="col text-right text-weight-bold">
-        <button class="button button1" onclick="location.href ='signin'">
-          회원가입
-        </button>
-        <button class="button button2" onclick="location.href ='/login'">
-          로그인
-        </button>
-      </div>
+      <template v-if="user_no > 0">
+        <div class="col text-right text-weight-bold">
+          <button class="button button1" onclick="location.href ='mypage'">마이페이지</button>
+          <button class="button button2" @click="logout">로그아웃</button>
+        </div>
+      </template>
+      <template v-else>
+        <div class="col text-right text-weight-bold">
+          <button class="button button1" onclick="location.href ='signin'">회원가입</button>
+          <button class="button button2" onclick="location.href ='/login'">로그인</button>
+        </div>
+      </template>
     </q-bar>
     <q-separator />
   </div>
@@ -71,7 +72,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions("header", ["changeIsDrawer"])
+    ...mapActions("header", ["changeIsDrawer"]),
+    logout() {
+      window.sessionStorage.setItem("user_no", 0);
+    }
+  },
+  computed: {
+    user_no: {
+      get() {
+        return this.$store.state.user.user_no;
+      },
+      set(val) {
+        this.$store.commit("user/setUserNo", { user_no: val });
+      }
+    }
+  },
+  mounted() {
+    this.$store.state.user.user_no = window.sessionStorage.getItem("user_no");
+    this.user_no = this.$store.state.user.user_no;
   }
 };
 </script>
