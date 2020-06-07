@@ -23,10 +23,10 @@ class JanusRoom {
 
       if (window.location.protocol === "http:") {
         instance.server =
-          "http://ec2-3-133-158-185.us-east-2.compute.amazonaws.com:8088/janus";
+          "http://k02a3011.p.ssafy.io:8088/janus";
       } else {
         instance.server =
-          "http://ec2-3-133-158-185.us-east-2.compute.amazonaws.com:8088/janus";
+          "http://k02a3011.p.ssafy.io:8088/janus";
       }
 
       instance.janus = null;
@@ -168,7 +168,7 @@ class JanusRoom {
       callback: function() {
         instance.janus = new Janus({
           server:
-            "http://ec2-3-133-158-185.us-east-2.compute.amazonaws.com:8088/janus",
+            "http://k02a3041.p.ssafy.io:8088/janus",
           success: function() {
             // console.log('janus success')
 
