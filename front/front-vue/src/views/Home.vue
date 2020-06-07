@@ -112,10 +112,22 @@
         >
           <div class="col-10 text-center">
             <div class="col-10">
-              <q-btn class="col-10" color="primary" icon="check" label="공지사항" to="/login" />
+              <q-btn
+                class="col-10"
+                color="primary"
+                icon="check"
+                label="공지사항"
+                to="/jump"
+              />
             </div>
             <div class="col-10" style="margin-top:20px;">
-              <q-btn class="col-10" color="primary" icon="check" label="QNA" to="/login" />
+              <q-btn
+                class="col-10"
+                color="primary"
+                icon="check"
+                label="QNA"
+                to="/temp"
+              />
             </div>
           </div>
         </div>
