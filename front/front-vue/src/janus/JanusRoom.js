@@ -219,7 +219,8 @@ class JanusRoom {
                           room: instance.tmpId,
                           description: instance.roomName,
                           publishers: 100,
-                          is_private: false
+                          is_private: false,
+                          videocodec:"vp9"
                         },
                         error: err => {
                           console.log("Error creating room: ", err);
@@ -325,7 +326,7 @@ class JanusRoom {
                       var leaving = msg["leaving"];
                       // Janus.log('Publisher left: ' + leaving)
                       var remoteFeed = null;
-                      for (var i = 1; i < 8; i++) {
+                      for (var i = 1; i < 6; i++) {
                         if (
                           instance.feeds[i] != null &&
                           instance.feeds[i] !== undefined &&
@@ -355,7 +356,7 @@ class JanusRoom {
                         return;
                       }
                       let remoteFeed = null;
-                      for (let i = 1; i < 8; i++) {
+                      for (let i = 1; i < 6; i++) {
                         if (
                           instance.feeds[i] != null &&
                           instance.feeds[i] !== undefined &&
@@ -502,7 +503,7 @@ class JanusRoom {
           request: "configure",
           audio: useAudio,
           video: true,
-          bitrate : 100000
+        //   bitrate : 100000
         };
 
         instance.sfutest.send({
@@ -546,7 +547,7 @@ class JanusRoom {
           }
           subscribe["offer_video"] = false;
         }
-        remoteFeed.videoCodec = video;
+        remoteFeed.videoCodec = "vp9";
         remoteFeed.send({
           message: subscribe
         });
@@ -564,7 +565,7 @@ class JanusRoom {
         } else if (event !== undefined && event != null) {
           if (event === "attached") {
             // Subscriber created and attached
-            for (var i = 1; i < 8; i++) {
+            for (var i = 1; i < 6; i++) {
               if (
                 instance.feeds[i] === undefined ||
                 instance.feeds[i] === null
