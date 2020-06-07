@@ -21,7 +21,7 @@ class JanusRoom {
           "http://k02a3041.p.ssafy.io:8088/janus";
       } else {
         instance.server =
-          "https://k02a3041.p.ssafy.io/janus";
+          "https://k02a3041.p.ssafy.io:8089/janus";
       }
 
       instance.janus = null;
