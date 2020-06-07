@@ -2,7 +2,7 @@ import fireService from "../../api/FirebaseService";
 import UserService from "../../api/UserService";
 
 import router from "../../router";
-const state = { user: {}, tempEmail: "", tempEmailType: 0 };
+const state = { user: {}, tempEmail: "", tempEmailType: 0, user_no: "" };
 
 const getters = {};
 
@@ -36,7 +36,7 @@ const actions = {
       .then(check => {
         if (check) {
           UserService.login(payLoad.user_email).then(result => {
-            store.commit("postLogIn", { user: result });
+            store.commit("postLogIn", { user: result.data.data });
           });
           router.push("/");
         } else {
@@ -54,7 +54,8 @@ const actions = {
             store.commit("signUpSubEmail", { email: email, type: 1 });
             router.push("/signin");
           } else {
-            store.commit("postLogIn", { user: Response });
+            console.log(Response);
+            store.commit("postLogIn", { user: Response.data.data });
             router.push("/");
           }
         });
@@ -73,9 +74,17 @@ const mutations = {
   },
   postLogIn(state, payLoad) {
     state.user = payLoad.user;
+    state.user_no = payLoad.user.user_no;
+    window.sessionStorage.setItem("user_no", payLoad.user.user_no);
   },
   postGoogleLogIn: (state, payLoad) => {
     state.user = payLoad.user;
+    state.user_no = payLoad.user.user_no;
+    window.sessionStorage.setItem("user_no", payLoad.user.user_no);
+  },
+  setUserNo: (state, payLoad) => {
+    state.user_no = payLoad.user_no;
+    window.sessionStorage.setItem("user_no", payLoad.user_no);
   }
 };
 export default {

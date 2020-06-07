@@ -5,6 +5,8 @@ services:
         build: back/back-spring/
         ports:
           - 8081:8081
+        volumes:
+          - /home/ubuntu/image:/uploads
 
     front:
         build: front/front-vue/
@@ -12,5 +14,7 @@ services:
           - 80:80
           - 443:443
         volumes:
-          - /home/ubuntu/letsencrypt:/etc/letsencrypt           
+          - /home/ubuntu/letsencrypt:/etc/letsencrypt
+          - /home/ubuntu/image:/usr/share/nginx/uploads
+
 
