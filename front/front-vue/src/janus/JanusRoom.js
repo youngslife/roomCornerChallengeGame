@@ -484,6 +484,7 @@ class JanusRoom {
   }
 
   publishOwnFeed(useAudio) {
+      console.log("my video")
     instance.sfutest.createOffer({
       media: {
         audioRecv: false,
@@ -500,7 +501,8 @@ class JanusRoom {
         var publish = {
           request: "configure",
           audio: useAudio,
-          video: true
+          video: true,
+          bitrate : 100000
         };
 
         instance.sfutest.send({

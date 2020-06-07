@@ -2935,7 +2935,7 @@ function Janus(gatewayCallbacks) {
 							}
 						}
 					});
-				}, 200);
+				}, 1000);
 				return 0;	// We don't have a volume to return yet
 			}
 			return config.volume[stream].value;
