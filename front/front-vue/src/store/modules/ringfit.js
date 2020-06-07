@@ -5,7 +5,9 @@ const state = {
   motionName: "",
   ruserInfo_no: 0,
   rgameInfo_no: 0,
-  stages: []
+  stages: [],
+  coin: 0,
+  isPause: false
 };
 
 const getters = {
@@ -41,7 +43,9 @@ const actions = {
     });
   },
   gameEnd: (store, payLoad) => {
-    RingfitService.gameEnd(payLoad);
+    RingfitService.gameEnd(payLoad).then(() => {
+      store.commit("setCoin", 0);
+    });
   }
 };
 const mutations = {
@@ -59,6 +63,9 @@ const mutations = {
   },
   setStages: (state, payload) => {
     for (let i = 1; i < payload; i++) state.stages.push(i);
+  },
+  setCoin: (state, payload) => {
+    state.coin = payload;
   }
 };
 export default {

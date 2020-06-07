@@ -182,10 +182,10 @@ export default class Stage2Scene extends Scene {
   //   // this.registry.events.emit("meetMonster");
   //   monster.destroy();
   // }
-  endGame(user, end) {
+  endGame() {
     // game 끝내고 백으로 result 보내주자
     // isClear 정보도 보내주고
-    end.destroy(end.x, end.y);
+    self.registry.events.emit("setCoin");
     self.registry.events.store.state.phaser.isClear = this;
     // self.registry.events.store.dispatch(
     //   "ringfit/gameEnd" // 이부분에 백에 넘겨줄 데이터 입력해야함

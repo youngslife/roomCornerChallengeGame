@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div>
-      <img :src="userImage" style="width: 30vw" />
+      <img :src="user.user_image" style="width: 30vw" />
       <br />
-      <h3>{{ nickname }}</h3>
+      <h3>{{ user.user_name }}</h3>
     </div>
     <div>
       <h1>링피트 결과</h1>
@@ -16,7 +16,12 @@
         <h4>GOOD: {{ good }}</h4>
         <h4>BAD: {{ bad }}</h4>
       </div>
-      <q-btn label="한판 더?" />
+      <q-btn label="스테이지 선택 화면" @click="selectStage" />
+      <q-btn
+        v-if="this.$store.state.ringfit.stageNum < 3"
+        label="다음 스테이지로"
+        @click="nextStage"
+      />
     </div>
   </div>
 </template>
@@ -26,6 +31,7 @@ export default {
   name: "RingfitResult",
   data() {
     return {
+      user: {},
       nickname: "nickname",
       userImage: require("../../assets/default_image.jpg"),
       resultTime: "30:00",
@@ -37,11 +43,12 @@ export default {
     };
   },
   mounted() {
+    this.user = this.$store.state.user.user;
     this.$store.dispatch("ringfit/gameEnd", {
       ruserinfo_no: this.$store.state.ringfit.ruserInfo_no,
       user_no: 22,
       ruserinfo_iswon: true,
-      ruserinfo_golds: 1,
+      ruserinfo_golds: this.$store.state.ringfit.coin,
       ruserinfo_gameinfo: {
         rgameinfo_no: this.$store.state.ringfit.rgameInfo_no,
         rgameinfo_level: 1,
@@ -53,9 +60,21 @@ export default {
         rgameinfo_score: 90
       }
     });
+  },
+  methods: {
+    selectStage() {
+      this.$store.commit("setStage", this.$store.state.ringfit.stageNum + 1);
+      this.$emit("update:isStageSelect", true);
+    },
+    nextStage() {
+      this.$store.dispatch("ringfit/gameStart", {
+        user_no: this.$store.state.user.user_no,
+        stage: this.$store.state.ringfit.stageNum + 1,
+        level: 1
+      });
+    }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>

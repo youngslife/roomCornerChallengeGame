@@ -10,6 +10,7 @@ let player,
   end,
   coins,
   self,
+  score = 0,
   time = 0;
 
 export default class TutorialScene extends Scene {
@@ -116,7 +117,10 @@ export default class TutorialScene extends Scene {
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-
+    if (this.registry.events.store.ringfit.isPause) {
+      this.scene.launch("PauseScene");
+      this.scene.pause();
+    }
     document.addEventListener("keydown", function(e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
@@ -153,7 +157,7 @@ export default class TutorialScene extends Scene {
   }
   collectCoin(user, coin) {
     coin.destroy(coin.x, coin.y);
-    // score++;
+    score++;
     return false;
   }
   // meetMonster 마지막 몬스터랑 전투한 다음에 or
@@ -166,11 +170,12 @@ export default class TutorialScene extends Scene {
   //   // this.registry.events.emit("meetMonster");
   //   monster.destroy();
   // }
-  endGame(user, end) {
+  endGame() {
     // game 끝내고 백으로 result 보내주자
     // isClear 정보도 보내주고
-    end.destroy(end.x, end.y);
+    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
+    // end.destroy(end.x, end.y);
     // self.registry.events.store.dispatch(
     //   "ringfit/gameEnd" // 이부분에 백에 넘겨줄 데이터 입력해야함
     // );
