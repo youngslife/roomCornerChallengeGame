@@ -4,7 +4,7 @@
     <!-- <div>All Prediction</div> -->
     <!-- <all-predict :predictions="predictions"></all-predict> -->
     <div>Motion Prediction</div>
-    <div>{{ url }}</div>
+    <!-- <div>{{ url }}</div> -->
     <!-- <SquatPredict :predictions="predictions" @child="test"></SquatPredict> -->
     <!-- <best-predict :predictions="predictions" @child="test"></best-predict> -->
     <motion-predict :predictions="predictions" @child="test"></motion-predict>

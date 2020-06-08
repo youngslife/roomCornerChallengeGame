@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -23,40 +21,24 @@
         <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
-        <select-stage
-          v-if="isStageSelect"
-          :isStageSelect.sync="isStageSelect"
-        />
-        <ringfit-attack
-          v-if="isMonster"
-          :AttackCnt="AttackCnt"
-          :attackType="attackType"
-          :player="player"
-        />
-        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
+        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :attackType="attackType" />
+        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" :gameInfo="gameInfo" />
       </div>
       <div id="time" class="playtime"></div>
-      <div class="pause" v-if="!isStageSelect">
+      <!-- <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
-      </div>
+      </div>-->
       <div id="right" class="col-2 column">
-        <div id="additionalInfo" class="col-5"></div>
+        <div v-if="isMonster" id="additionalInfo" class="col-5">
+          <img :src="example" />
+        </div>
         <div class="col-6 self-end">
           <template v-if="isMonster">
-            <squat-cam
-              :url="url"
-              :width="window.width"
-              :height="window.height"
-              @child="goAttack"
-            ></squat-cam>
+            <squat-cam :url="url" :width="window.width" :height="window.height" @child="goAttack"></squat-cam>
           </template>
           <template v-else>
-            <web-cam
-              :url="walkUrl"
-              :width="window.width"
-              :height="window.height"
-              @child="jump"
-            ></web-cam>
+            <web-cam :url="walkUrl" :width="window.width" :height="window.height" @child="jump"></web-cam>
           </template>
         </div>
       </div>
@@ -86,9 +68,9 @@ export default {
   },
   data() {
     return {
-      walkUrl: 
+      walkUrl:
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", // 개발 시 사용할 url
-        // "https://k02a3041.p.ssafy.io/model/new_walk/", // 최종 배포시 사용할 url
+      // "https://k02a3041.p.ssafy.io/model/new_walk/", // 최종 배포시 사용할 url
       stage: "",
       window: {
         width: 0,
@@ -105,7 +87,8 @@ export default {
       player: {
         username: "방구석여포",
         hp: 200
-      }
+      },
+      gameInfo: {}
     };
   },
   computed: {
@@ -129,10 +112,21 @@ export default {
     isMonster() {
       return this.$store.state.phaser.isMeet;
     },
+    example() {
+      const exArr = [
+        require("../../assets/example/shoulder.gif"),
+        require("../../assets/example/side_lunge.gif"),
+        require("../../assets/example/crunch.gif"),
+        require("../../assets/example/squat.gif"),
+        require("../../assets/example/jack.gif")
+      ];
+
+      return exArr[this.getIdx - 1];
+    },
     url() {
       // 개발 시 사용할 url
       const urlArr = [
-        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
+        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
@@ -163,6 +157,7 @@ export default {
   },
   async mounted() {
     const right = document.getElementById("right");
+    this.gameInfo = this.$store.state.ringfit.gameInfo;
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
     // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
@@ -233,26 +228,23 @@ export default {
     },
     goAttack(status) {
       // status {type: "bad", cnt: this.count}
-      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@?@@@@@@@@@@@");
       this.attackType = status.type;
+      if (this.attackType === "perfect") {
+        this.gameInfo.perfect++;
+        console.log(this.attackType);
+      } else if (this.attackType === "great") {
+        this.gameInfo.great++;
+        console.log(this.attackType);
+      } else if (this.attackType === "good") {
+        this.gameInfo.good++;
+        console.log(this.attackType);
+      } else if (this.attackType === "bad") {
+        this.gameInfo.bad++;
+        console.log(this.attackType);
+      }
       this.AttackCnt = status.cnt;
     }
-    // 이 부분은 isMonster computed에 넣으면 될듯
-    // changeToAttack() {
-    //   if (this.isMonster == false) {
-    //     console.log(1, this.isMonster);
-    //     this.url =
-    //       "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/";
-    //     this.isMonster = true;
-    //     console.log(2, this.isMonster);
-    //   } else if (this.isMonster == true) {
-    //     console.log(3, this.isMonster);
-    //     this.isMonster = false;
-    //     this.url =
-    //       "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/";
-    //     console.log(4, this.isMonster);
-    //   }
-    // }
   },
   beforeDestroy() {
     clearTimeout(this.time);
@@ -280,11 +272,6 @@ $speed: 7s;
 
 :root {
   --slider-speed: ;
-}
-#additionalInfo {
-  background-image: url("../../assets/additionalInfo.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
 }
 
 .playtime {
