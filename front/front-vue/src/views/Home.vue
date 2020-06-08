@@ -33,28 +33,26 @@
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >링피트</div>
+              >피트런</div>
             </template>
             <template v-slot:third>
               <div
                 style="height:100px; width:100%;"
                 @click="change('third')"
                 class="flex flex-center"
-              >후루추닌자?</div>
+              >방탈출(예정)</div>
             </template>
           </q-btn-toggle>
         </div>
       </q-carousel-slide>
     </q-carousel>
     <div class="row justify-center">
-      <div class="col-7">
-        <div class="col">
-          <h2>전체 게임</h2>
-        </div>
+      <div class="col-10" style="padding-left: 100px">
+        <h4 id="game-list-title">전체 게임</h4>
         <div class="row">
           <q-card
             v-for="(game, index) in gameList"
-            class="my-card col-3"
+            class="my-card col-3 game-description"
             style="margin-left:20px; height:400px; margin-top:20px;"
             :key="index"
             @click="goPath(game.link)"
@@ -64,72 +62,20 @@
               <div class="text-h6">{{ game.name }}</div>
               <div class="text-subtitle2">{{ game.people }}</div>
             </q-card-section>
-            <q-card-section>{{ game.descript }}</q-card-section>
+            <q-card-section v-if="!game.developing">{{ game.descript }}</q-card-section>
+            <img class="developing" v-if="game.developing" src="../assets/developing.png" />
           </q-card>
         </div>
       </div>
-      <div class="col-3">
-        <template v-if="user_no > 0">
-          <div
-            class="col flex flex-center"
-            style="background:#b2bec3; margin-top:180px; height:300px"
-          >
-            <div class="col-10 text-center">
-              <q-btn class="col" color="primary" icon="check" label="마이페이지" to="/mypage" />
-              <div class="col-10" style="margin-top:20px;">
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-              </div>
-              <div class="col-10" style="margin-top:20px;"></div>
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div
-            class="col flex flex-center"
-            style="background:#b2bec3; margin-top:180px; height:300px"
-          >
-            <div class="col-10 text-center">
-              <q-btn class="col" color="primary" icon="check" label="방구석 ID 로그인" to="/login" />
-              <div class="col-10" style="margin-top:20px;">
-                <span>다른계정 로그인</span>
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-              </div>
-              <div class="col-10" style="margin-top:20px;">
-                <p class="text-right">회원가입</p>
-              </div>
-            </div>
-          </div>
-        </template>
-        <div
-          class="col flex flex-center"
-          style="background:#b2bec3; margin-top:180px; height:300px"
-        >
-          <div class="col-10 text-center">
-            <div class="col-10">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="공지사항"
-                to="/jump"
-              />
-            </div>
-            <div class="col-10" style="margin-top:20px;">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="QNA"
-                to="/temp"
-              />
-            </div>
-          </div>
+      <!-- menu bar -->
+      <div class="col-1 menus">
+        <div class="menus-contents flex flex-center">
+          <div v-if="user_no > 0" @click="goPath('/mypage')">
+          마이페이지</div>
+          <div v-if="user_no == 0" @click="goPath('/login')">방구석 ID 로그인</div>
+          <div v-if="user_no == 0">회원가입</div>
+          <div @click="goPath('/jump')">공지사항</div>
+          <div>QNA</div>
         </div>
       </div>
     </div>
@@ -142,38 +88,44 @@ export default {
     return {
       slide: "first",
       mainCard: [
-        { name: "first", imgSrc: require("../assets/mapia.jpeg") },
+        { name: "first", imgSrc: require("../assets/mafia.png") },
         { name: "second", imgSrc: require("../assets/ring.jpeg") },
         { name: "third", imgSrc: require("../assets/room.png") }
       ],
       gameList: [
         {
           name: "마피아",
-          imgSrc: require("../assets/mapia.jpeg"),
+          imgSrc: require("../assets/mafia.png"),
           people: "4~8명",
-          descript: "마피아게임에 대한 설명",
-          link: "/mafia"
+          descript:
+            "마피아는 정보를 가진 소수와 정보를 가지지 못한 다수의 싸움을 모델로 한 파티용 게임",
+          link: "/mafia",
+          developing: false
         },
         {
-          name: "링피트",
+          name: "피트런",
           imgSrc: require("../assets/ring.jpeg"),
           people: "1명",
-          descript: "링피트게임에 대한 설명",
-          link: "/fitness"
+          descript:
+            "운동으로 몬스터를 처치할 수 있다? 웹캠으로 즐기는 네모의 어드벤처 게임",
+          link: "/fitness",
+          developing: false
         },
         {
           name: "방탈출",
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
-          descript: "방탈출게임에 대한 설명",
-          link: "/mafia"
+          descript: "",
+          link: "",
+          developing: true
         },
         {
-          name: "후루추닌자?",
+          name: "후루추닌자",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
-          descript: "게임게임에 대한 설명",
-          link: "/mafia"
+          descript: "",
+          link: "",
+          developing: true
         }
       ],
       user_no: {}
@@ -195,11 +147,35 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .text-brand {
   color: white;
 }
 .bg-brand {
-  background: rgba(0, 102, 255, 0.4);
+  background: rgba(218, 0, 0, 0.4);
+}
+.game-list-title {
+  margin-bottom: 0px !important;
+  margin-top: 10px !important;
+  font-family: "SDKukdetopokki-Lt";
+}
+.developing {
+  width: 70%;
+  margin: auto;
+  transform: rotate(-10deg);
+}
+.menus {
+  padding: 150px 0;
+}
+.menus-contents {
+  border: black 2px solid;
+  margin: 0 10px;
+  padding: 10px;
+  height: 500px;
+  justify-content: space-between;
+  text-align: center;
+}
+.menus-contents > div {
+  cursor: pointer;
 }
 </style>

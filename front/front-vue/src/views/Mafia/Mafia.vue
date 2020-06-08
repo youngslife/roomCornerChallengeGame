@@ -60,7 +60,7 @@ export default {
         { name: "커뮤니티", link: "/mafia/community" }
       ],
       mainCard: [
-        { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
+        { name: "first", imgSrc: require("../../assets/mafia.png") },
         { name: "second", imgSrc: require("../../assets/ring.jpeg") },
         { name: "third", imgSrc: require("../../assets/room.png") }
       ],
