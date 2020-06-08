@@ -46,6 +46,9 @@ const actions = {
     RingfitService.gameEnd(payLoad).then(() => {
       store.commit("setCoin", 0);
     });
+  },
+  gamePause: (store, payLoad) => {
+    store.commit("setIsPause", payLoad);
   }
 };
 const mutations = {
@@ -66,6 +69,9 @@ const mutations = {
   },
   setCoin: (state, payload) => {
     state.coin = payload;
+  },
+  setIsPause: (state, payload) => {
+    state.isPause = payload;
   }
 };
 export default {

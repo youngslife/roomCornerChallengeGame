@@ -95,7 +95,6 @@ export default {
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false,
       isStageSelect: true,
       isPoseSelect: false,
       AttackCnt: 0,
@@ -127,6 +126,9 @@ export default {
     },
     isClear() {
       return this.$store.state.phaser.isClear;
+    },
+    isPause() {
+      return this.$store.state.ringfit.isPause;
     }
   },
   async mounted() {
@@ -170,12 +172,11 @@ export default {
     },
     pause() {
       clearTimeout(this.time);
-      var map = document.getElementsByClassName("slider-col")[0];
-      console.log(map);
       if (this.isPause) {
         this.printPlayTime();
       }
-      this.isPause = !this.isPause;
+      console.log(this.isPause);
+      this.$store.commit("ringfit/setIsPause", !this.isPause);
     },
     jump(status) {
       // const map = document.getElementById("map");

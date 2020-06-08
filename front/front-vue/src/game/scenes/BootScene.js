@@ -6,6 +6,8 @@ import coin from "@/game/assets/sprites/tile.png";
 import end from "@/game/assets/sprites/end.png";
 import player from "@/game/assets/tilemaps/kenney_player.png";
 import atlas from "@/game/assets/tilemaps/kenney_player_atlas.json";
+import coinAudio from "@/assets/sound/coin.mp3";
+import wipeAudio from "@/assets/sound/wipe.mp3";
 export default class BootScene extends Scene {
   constructor() {
     super({
@@ -16,6 +18,8 @@ export default class BootScene extends Scene {
   preload() {
     this.load.image("bg", bg);
     this.load.atlas("player", player, atlas);
+    this.load.audio("coinAudio", [coinAudio]);
+    this.load.audio("wipeAudio", [wipeAudio]);
     this.textures.addBase64("coin", coin);
     this.textures.addBase64("end", end);
     this.load.spritesheet("wipe", wipe, { frameWidth: 160, frameHeight: 142 });
