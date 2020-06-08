@@ -15,6 +15,7 @@
               :ratio="16 / 9"
               spinner-color="primary"
               spinner-size="82px"
+              @click="goToPage('/fitness')"
             />
           </div>
           <q-btn
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+import router from "@/router"
 export default {
   data() {
     return {
@@ -66,7 +68,11 @@ export default {
       slide2: "tv"
     };
   },
-  methods: {},
+  methods: {
+    goToPage(link) {
+      router.push(link)
+    }
+  },
   computed: {}
 };
 </script>
