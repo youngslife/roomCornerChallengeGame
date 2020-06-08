@@ -117,8 +117,12 @@ export default {
   methods: {
     ...mapActions({ getUserInfo: "user/getUserInfo" }),
     getInfo() {
+      // console.log('1111111dfadfewwr', this.user)
       this.getUserInfo(this.$store.state.user.user_no)
-      this.user = this.$store.state.user.user.data.data
+      setTimeout( () => {
+        this.user = this.$store.state.user.user
+      }, 300)
+      console.log('dfadfewwr', this.user)
     }
   }
 };

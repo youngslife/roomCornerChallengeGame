@@ -40,7 +40,7 @@ const actions = {
           });
           router.push("/");
         } else {
-          alert("등록되지 않거나 비밀번호를 잘못입력하셧습니다.");
+          alert("등록되지 않거나 비밀번호를 잘못입력하셨습니다.");
         }
       });
   },
@@ -68,7 +68,7 @@ const actions = {
   },
   getUserInfo: (store, payLoad) => {
     UserService.getUserDetailFromNo(payLoad).then(res => {
-      store.commit("setUser", res)
+      store.commit("setUser", res.data.data)
     })
   }
 };
