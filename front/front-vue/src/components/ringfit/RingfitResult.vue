@@ -11,10 +11,10 @@
         <h2>시간: {{ resultTime }}</h2>
         <h2>칼로리: {{ calories }}</h2>
         <hr />
-        <h4>PERFECT: {{ perfect }}</h4>
-        <h4>GREAT: {{ great }}</h4>
-        <h4>GOOD: {{ good }}</h4>
-        <h4>BAD: {{ bad }}</h4>
+        <h4>PERFECT: {{ getGameInfo.perfect }}</h4>
+        <h4>GREAT: {{ getGameInfo.great }}</h4>
+        <h4>GOOD: {{ getGameInfo.good }}</h4>
+        <h4>BAD: {{ getGameInfo.bad }}</h4>
       </div>
       <q-btn label="스테이지 선택 화면" @click="selectStage" />
       <q-btn
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "RingfitResult",
   data() {
@@ -41,6 +43,11 @@ export default {
       good: 10,
       bad: 5
     };
+  },
+  computed: {
+  ...mapGetters({
+      getGameInfo: "ringfit/getGameInfo"
+    })
   },
   mounted() {
     this.user = this.$store.state.user.user;

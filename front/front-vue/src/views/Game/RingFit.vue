@@ -152,7 +152,7 @@ export default {
       // if (this.getIdx < 1) {
       //   return urlArr[0];
       // }
-      return urlArr[this.getIdx];
+      return urlArr[this.getIdx - 1];
     },
     isClear() {
       return this.$store.state.phaser.isClear;

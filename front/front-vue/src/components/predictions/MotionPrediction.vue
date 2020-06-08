@@ -87,7 +87,7 @@ export default {
         this.befAction = 0;
         // console.log("avgggggggggggg", this.avg);
 
-        console.log("카운트증가", this.count);
+        console.log("카운트증가", this.count, this.avg);
         if (this.avg > 0.95) {
           this.count++;
           this.accuracy = "perfect";
@@ -271,7 +271,7 @@ export default {
           }
           // return this.count;
           // 동작 3, Side_Crunch
-        } else if (this.getIdx == 4) {
+        } else if (this.getIdx == 3) {
           // 3. side_crunch
           if (this.predictions[0].probability.toFixed(2) > 0.9) {
             // stand
@@ -333,7 +333,7 @@ export default {
           }
 
           // 4번 동작 new_squat
-        } else if (this.getIdx == 3) {
+        } else if (this.getIdx == 4) {
           // 4. new_squat
           if (
             this.predictions[0].probability.toFixed(2) > 0.97 ||
