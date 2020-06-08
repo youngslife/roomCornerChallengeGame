@@ -38,6 +38,7 @@
                   :type="isPwd ? 'password' : 'text'"
                   hint
                   style="width:80%"
+                  @keydown.enter="DefaultLogin()"
                 />
                 <q-btn
                   color="primary"

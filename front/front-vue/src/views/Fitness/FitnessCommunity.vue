@@ -143,6 +143,7 @@
 <script>
 import writer from "../../components/PostWrite";
 import detail from "../../components/PostDetail";
+import router from "@/router"
 export default {
   data() {
     return {
@@ -174,12 +175,16 @@ export default {
   },
   methods: {
     write() {
-      if (this.tab === "자유") {
-        this.category = "자유게시판";
-      } else if (this.tab === "질문") {
-        this.category = "질문게시판";
-      } else this.category = "팁과공략";
-      this.isWrite = true;
+      if (this.$store.state.user_no > 0) {
+        if (this.tab === "자유") {
+          this.category = "자유게시판";
+        } else if (this.tab === "질문") {
+          this.category = "질문게시판";
+        } else this.category = "팁과공략";
+        this.isWrite = true;
+      } else {
+        router.push("/login")
+      }
     },
     check() {
       this.isWrite = false;

@@ -106,12 +106,14 @@
           <img src="https://cdn.quasar.dev/img/mountains.jpg" />
           <q-card-section>
             <div class="text-h6">{{ board.board_subtitle }}</div>
-            <q-card
+            <div
               class="text-subtitle2"
               v-for="(post, j) in board.board_postList.slice(0, 5)"
               :key="j"
             ><span>{{ post.post_user.user_name }}</span>
-            <span>{{ post.post_title }}</span></q-card>
+            <span>{{ post.post_title }}</span>
+            <hr />
+            </div>
           </q-card-section>
         </q-card>
       </div>
