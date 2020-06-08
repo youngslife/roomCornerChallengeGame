@@ -502,7 +502,7 @@ class JanusRoom {
           request: "configure",
           audio: useAudio,
           video: true,
-        //   bitrate : 100000
+          bitrate : 100000
         };
 
         instance.sfutest.send({
