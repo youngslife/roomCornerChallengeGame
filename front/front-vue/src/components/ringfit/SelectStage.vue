@@ -7,7 +7,7 @@
       <h4>
         여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자
       </h4>
-      <q-btn label="튜토리얼 시작" @click="goToNextPage(1)" />
+      <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" />
     </template>
     <template v-else>
       <h2>스테이지 선택</h2>
@@ -38,15 +38,15 @@ export default {
       this.setStageNum(stageNum + 1);
       this.$emit("update:isStageSelect", false);
 
-      if (stageNum === 1) {
+      if (stageNum === 0) {
         // tutorial
         this.setIdx(0);
-      } else if (stageNum === 2) {
+      } else if (stageNum === 1) {
         // stage 1
-        this.setIdx(1);
-      } else if (stageNum === 3) {
+        this.setIdx(0);
+      } else if (stageNum === 2) {
         // stage 2
-        this.setIdx(3);
+        this.setIdx(2);
       }
     }
   },
