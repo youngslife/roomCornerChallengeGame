@@ -89,7 +89,9 @@ export default {
       // url:
       //   "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
-      walkUrl: "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
+      walkUrl: 
+        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
+        "https://k02a3041.p.ssafy.io/model/new_walk/",
       stage: "",
       window: {
         width: 0,
@@ -132,7 +134,7 @@ export default {
     },
     url() {
       const urlArr = [
-        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
