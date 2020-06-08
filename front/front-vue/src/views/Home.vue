@@ -32,21 +32,27 @@
                 style="height:100px; width:100%;"
                 @click="change('first')"
                 class="flex flex-center"
-              >마피아를 찾아라</div>
+              >
+                마피아를 찾아라
+              </div>
             </template>
             <template v-slot:second>
               <div
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >피트런 : 케니의 모험</div>
+              >
+                피트런 : 케니의 모험
+              </div>
             </template>
             <template v-slot:third>
               <div
                 style="height:100px; width:100%;"
                 @click="change('third')"
                 class="flex flex-center"
-              >방탈출(예정)</div>
+              >
+                방탈출(예정)
+              </div>
             </template>
           </q-btn-toggle>
         </div>
@@ -77,8 +83,14 @@
               <div class="text-h6">{{ game.name }}</div>
               <div class="text-subtitle2">{{ game.people }}</div>
             </q-card-section>
-            <q-card-section v-if="!game.developing">{{ game.descript }}</q-card-section>
-            <img class="developing" v-if="game.developing" src="../assets/developing.png" />
+            <q-card-section v-if="!game.developing">{{
+              game.descript
+            }}</q-card-section>
+            <img
+              class="developing"
+              v-if="game.developing"
+              src="../assets/developing.png"
+            />
           </q-card>
         </div>
       </div>
@@ -129,7 +141,6 @@ export default {
           people: "1명",
           descript: "",
           developing: true,
-          descript: "게임게임에 대한 설명",
           link: "/mapmafiaia"
         }
       ],

@@ -60,7 +60,8 @@ const routes = [
   {
     path: "/mafia",
     component: () => import("../views/Mafia/Mafia.vue"),
-    children: [{
+    children: [
+      {
         path: "",
         name: "mafia",
         component: () => import("../views/Mafia/MafiaHome.vue")
@@ -122,7 +123,7 @@ const routes = [
     path: "/game/mafia/start/:roomNo",
     name: "mafiastart",
     component: () => import("../views/Mafia/MafiaGameStart.vue"),
-    props: true 
+    props: true
   },
   {
     path: "/game/mafia/lobby",
@@ -133,17 +134,12 @@ const routes = [
     path: "/game/mafia/room/:roomNo",
     name: "mafiaroom",
     component: () => import("../views/Mafia/MafiaGameWait.vue"),
-    props: true 
+    props: true
   },
   {
     path: "/game/RingFit",
     name: "RingFit",
     component: () => import("../views/Game/RingFit.vue")
-  },
-  {
-    path: "/jump",
-    name: "jump",
-    component: () => import("../views/jump.vue")
   },
   {
     path: "/temp/SelectMotion",

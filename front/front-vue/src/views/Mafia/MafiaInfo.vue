@@ -1,12 +1,6 @@
 <template>
   <div>
-<<<<<<< HEAD
     <div class=" text-center"><h2>소식</h2></div>
-=======
-    <div class="text-center">
-      <h2>소식</h2>
-    </div>
->>>>>>> feature/maifasite
     <div
       class="col-10 row justify-around"
       style="height:700px; margin-top:20px"
@@ -17,7 +11,6 @@
         v-for="(board, index) in boardList"
         :key="index"
       >
-<<<<<<< HEAD
         {{ board }}
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
         <q-card-section>
@@ -27,19 +20,6 @@
         <q-card-section>
           우리 업데이트 해써용 ~^
         </q-card-section>
-=======
-        <!-- {{ board }} -->
-        <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-        <q-card-section>
-          <div class="text-h6">{{ board.board_subtitle }}</div>
-          <div class="text-subtitle2">
-            {{ board.board_postList[0].post_regtime }}
-          </div>
-        </q-card-section>
-        <q-card-section
-          v-html="board.board_postList[0].post_content"
-        ></q-card-section>
->>>>>>> feature/maifasite
       </q-card>
     </div>
   </div>

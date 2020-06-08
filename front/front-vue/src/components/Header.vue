@@ -14,14 +14,31 @@
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
-          <button class="button account-button button1" onclick="location.href ='mypage'">마이페이지</button>
-          <button class="button account-button button2" @click="logout">로그아웃</button>
+          <button
+            class="button account-button button1"
+            onclick="location.href ='mypage'"
+          >
+            마이페이지
+          </button>
+          <button class="button account-button button2" @click="logout">
+            로그아웃
+          </button>
         </div>
       </template>
       <template v-else>
         <div class="col text-right text-weight-bold">
-          <button class="button account-button button1" onclick="location.href ='signin'">회원가입</button>
-          <button class="button account-button button2" onclick="location.href ='/login'">로그인</button>
+          <button
+            class="button account-button button1"
+            onclick="location.href ='signin'"
+          >
+            회원가입
+          </button>
+          <button
+            class="button account-button button2"
+            onclick="location.href ='/login'"
+          >
+            로그인
+          </button>
         </div>
       </template>
     </q-bar>

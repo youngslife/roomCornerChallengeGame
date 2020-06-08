@@ -69,7 +69,12 @@
             <template v-if="wuser.data.user_nickname != ''">
               <h4>준비 완료</h4>
             </template>
-            <template v-else-if='wuser.data.user_no == user.user_no && wuser.data.user_nickname == ""'>
+            <template
+              v-else-if="
+                wuser.data.user_no == user.user_no &&
+                  wuser.data.user_nickname == ''
+              "
+            >
               <q-input v-model="myname" type="text" label="닉네임" />
               <q-btn
                 color="primary"
@@ -141,12 +146,12 @@ export default {
     },
     gamestart() {
       console.log("start");
-      this.$router.push("/game/mafia/start/"+this.$route.params.roomNo)
+      this.$router.push("/game/mafia/start/" + this.$route.params.roomNo);
     }
   },
   destroyed() {
     console.log("Destroyed lifecycle .... ");
-    console.log("exit room function call")
+    console.log("exit room function call");
   }
 };
 </script>

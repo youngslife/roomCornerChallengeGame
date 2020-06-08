@@ -24,10 +24,7 @@
               :ratio="16 / 9"
               spinner-color="primary"
               spinner-size="82px"
-<<<<<<< HEAD
               style="height : 10vh"
-=======
->>>>>>> feature/maifasite
             />
           </div>
           <q-btn
@@ -35,11 +32,7 @@
             :key="index"
             style=" color:white; font-size:25px;"
             :label="menu.name"
-<<<<<<< HEAD
             class="col-2 text-weight-bold menu-button"
-=======
-            class="col-2 text-weight-bold"
->>>>>>> feature/maifasite
             :to="menu.link"
           ></q-btn>
         </div>
@@ -50,15 +43,9 @@
             text-color="white"
             toggle-color="brand"
             :options="[
-<<<<<<< HEAD
               { label: '마피아1', value: 'first' },
               { label: '마피아2', value: 'second' },
               { label: '마피아3', value: 'third' }
-=======
-              { label: '링피트1', value: 'first' },
-              { label: '링피트2', value: 'second' },
-              { label: '링피트3', value: 'third' }
->>>>>>> feature/maifasite
             ]"
             style="height:100px; width:100%;"
           />
@@ -82,13 +69,8 @@ export default {
         { name: "커뮤니티", link: "/mafia/community" }
       ],
       mainCard: [
-<<<<<<< HEAD
         { name: "first", imgSrc: require("../../assets/mafia.png") },
         { name: "second", imgSrc: require("../../assets/ring.png") },
-=======
-        { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
-        { name: "second", imgSrc: require("../../assets/ring.jpeg") },
->>>>>>> feature/maifasite
         { name: "third", imgSrc: require("../../assets/room.png") }
       ],
       slide2: "tv"

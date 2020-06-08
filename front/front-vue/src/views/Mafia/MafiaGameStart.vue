@@ -93,7 +93,7 @@ export default {
     roomNameFromRoute() {
       return this.$route.params.roomNo;
     },
-    user(){
+    user() {
       return this.$store.state.user.user;
     }
   },
@@ -119,7 +119,11 @@ export default {
 
     if (this.roomNameFromRoute !== undefined) {
       //   console.log("ih");
-      this.janus = new JanusWrapper(this.roomName,this.user.user_no,this.user.user_name);
+      this.janus = new JanusWrapper(
+        this.roomName,
+        this.user.user_no,
+        this.user.user_name
+      );
       //   console.log(this.janus);
     } else {
       // don't join the room

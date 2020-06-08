@@ -86,9 +86,9 @@ export default {
   },
   data() {
     return {
-      walkUrl: 
+      walkUrl:
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", // 개발 시 사용할 url
-        // "https://k02a3041.p.ssafy.io/model/new_walk/", // 최종 배포시 사용할 url
+      // "https://k02a3041.p.ssafy.io/model/new_walk/", // 최종 배포시 사용할 url
       stage: "",
       window: {
         width: 0,
@@ -132,7 +132,7 @@ export default {
     url() {
       // 개발 시 사용할 url
       const urlArr = [
-        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
+        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",

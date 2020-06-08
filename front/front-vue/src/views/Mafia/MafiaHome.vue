@@ -5,16 +5,11 @@
         <q-btn
           color="primary"
           icon="check"
-<<<<<<< HEAD
           label="어떠한 공간22222"
-=======
-          label="어떠한 공간"
->>>>>>> feature/maifasite
           style="width:90%; height:200px; margin-top:20px; margin-bottom:20px;"
         />
       </div>
       <div class="col-4 flex flex-center">
-<<<<<<< HEAD
         <button
           style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
         >
@@ -22,17 +17,6 @@
         </button>
       </div>
       <div class="col-4">
-=======
-        <router-link
-          style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
-          to="/game/mafia/lobby"
-          tag="button"
-        >
-          시작버튼
-        </router-link>
-      </div>
-      <div class="col-4 ">
->>>>>>> feature/maifasite
         <div class="row justify-around" style="margin-top:20px;height:70px;">
           <q-btn color="primary" icon="check" label="로그인" class="col-5" />
           <q-btn color="primary" icon="check" label="회원가입" class="col-5" />
@@ -85,11 +69,7 @@
       </div>
       <div class="col-6 row">
         <div class="col-7">
-<<<<<<< HEAD
           <q-list bordered class="col">
-=======
-          <q-list bordered class="col ">
->>>>>>> feature/maifasite
             <q-item
               v-for="index in 4"
               clickable
@@ -107,11 +87,7 @@
         </div>
         <q-separator spaced inset vertical />
         <div class="col-4 justify-around" style="background:gray">
-<<<<<<< HEAD
           <q-card class="my-card col-4">
-=======
-          <q-card class="my-card col-4 ">
->>>>>>> feature/maifasite
             <img
               src="https://cdn.quasar.dev/img/mountains.jpg"
               style="height:100px"
@@ -127,15 +103,10 @@
       </div>
     </div>
     <div class="row justify-around" style="margin-top:20px;">
-<<<<<<< HEAD
       <div class="col-3"></div>
       <div class="col-6 text-center">
         <h2>마피아 커뮤니티</h2>
       </div>
-=======
-      <div class="col-3 "></div>
-      <div class="col-6 text-center"><h2>링피트 커뮤니티</h2></div>
->>>>>>> feature/maifasite
       <div class="col-3 text-center">
         <q-btn color="primary" icon="add" style="margin-top:50px" />
       </div>
@@ -148,29 +119,18 @@
             <div class="text-h6">Our Changing Planet</div>
             <div class="text-subtitle2">by John Doe</div>
           </q-card-section>
-<<<<<<< HEAD
           <q-card-section
             >Lorem ipsum dolor sit amet, consectetur adipiscing
             elit</q-card-section
           >
-=======
-          <q-card-section>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </q-card-section>
->>>>>>> feature/maifasite
         </q-card>
       </div>
     </div>
     <div class="row justify-around" style="margin-top:20px;">
-<<<<<<< HEAD
       <div class="col-3"></div>
       <div class="col-6 text-center">
         <h2>마피아 랭킹</h2>
       </div>
-=======
-      <div class="col-3 "></div>
-      <div class="col-6 text-center"><h2>링피트 랭킹</h2></div>
->>>>>>> feature/maifasite
       <div class="col-3 text-center">
         <q-btn color="primary" icon="add" style="margin-top:50px" />
       </div>
@@ -183,16 +143,10 @@
             <div class="text-h6">Our Changing Planet</div>
             <div class="text-subtitle2">by John Doe</div>
           </q-card-section>
-<<<<<<< HEAD
           <q-card-section
             >Lorem ipsum dolor sit amet, consectetur adipiscing
             elit</q-card-section
           >
-=======
-          <q-card-section>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </q-card-section>
->>>>>>> feature/maifasite
         </q-card>
       </div>
     </div>
