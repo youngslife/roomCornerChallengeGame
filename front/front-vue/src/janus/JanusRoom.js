@@ -14,15 +14,15 @@ class JanusRoom {
 
       console.log("Room name translates to id: " + instance.tmpId);
 
-      instance.server = "https://k02a3041.p.ssafy.io/janus";
+    //   instance.server = "https://k02a3041.p.ssafy.io/janus";
 
-    //   if (window.location.protocol === "http:") {
-    //     instance.server =
-    //       "http://k02a3041.p.ssafy.io:8088/janus";
-    //   } else {
-    //     instance.server =
-    //       "https://k02a3041.p.ssafy.io:8089/janus";
-    //   }
+      if (window.location.protocol === "http:") {
+        instance.server =
+          "http://k02a3041.p.ssafy.io:8088/janus";
+      } else {
+        instance.server =
+          "https://k02a3041.p.ssafy.io:8089/janus";
+      }
 
       instance.janus = null;
       instance.sfutest = null;
