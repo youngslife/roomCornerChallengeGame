@@ -63,7 +63,10 @@ export default {
   },
   methods: {
     selectStage() {
-      this.$store.commit("setStage", this.$store.state.ringfit.stageNum + 1);
+      this.$store.commit(
+        "ringfit/setStage",
+        this.$store.state.ringfit.stageNum + 1
+      );
       this.$emit("update:isStageSelect", true);
     },
     nextStage() {

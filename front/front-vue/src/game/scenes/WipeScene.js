@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+
 let wipe;
 
 export default class WipeScene extends Scene {
@@ -20,7 +21,7 @@ export default class WipeScene extends Scene {
     wipe = this.physics.add.sprite(width, height, "wipe");
     wipe.body.setAllowGravity(0, 0);
     wipe.setScale(width / 80, height / 70);
-
+    console.log("test");
     wipe.anims.play("playWipe", true);
 
     wipe.on("animationcomplete", () => {
@@ -31,8 +32,5 @@ export default class WipeScene extends Scene {
   }
   // Runs once per frame for the duration of the scene
 
-  update() {
-    // if (!this.registry.events.store.state.phaser.isMeet) {
-    // }
-  }
+  update() {}
 }
