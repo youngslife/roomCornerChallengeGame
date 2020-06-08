@@ -86,12 +86,9 @@ export default {
   },
   data() {
     return {
-      // url:
-      //   "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       walkUrl: 
-        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
-        "https://k02a3041.p.ssafy.io/model/new_walk/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", // 개발 시 사용할 url
+        // "https://k02a3041.p.ssafy.io/model/new_walk/", // 최종 배포시 사용할 url
       stage: "",
       window: {
         width: 0,
@@ -133,6 +130,7 @@ export default {
       return this.$store.state.phaser.isMeet;
     },
     url() {
+      // 개발 시 사용할 url
       const urlArr = [
         // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
@@ -141,6 +139,14 @@ export default {
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
       ];
+      // 배포시 사용할 url
+      // const urlArr = [
+      //   "https://k02a3041.p.ssafy.io/model/shoulder_press/",
+      //   "https://k02a3041.p.ssafy.io/model/side_lunge/",
+      //   "https://k02a3041.p.ssafy.io/model/side_crunch/",
+      //   "https://k02a3041.p.ssafy.io/model/new_squat/",
+      //   "https://k02a3041.p.ssafy.io/model/jumping_jacks/"
+      // ];
 
       console.log("gettttttttttttttttt", this.getIdx);
       // if (this.getIdx < 1) {
