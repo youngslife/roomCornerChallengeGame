@@ -59,8 +59,6 @@
           <!-- menu bar -->
           <div class="col-2 menus" style="margin-left: auto">
             <div class="menus-contents flex flex-center">
-              <div v-if="user_no == 0" @click="goPath('/login')">방구석 ID 로그인</div>
-              <div v-if="user_no == 0">회원가입</div>
               <div @click="goPath('/jump')">공지</div>
               <div>QNA</div>
             </div>
