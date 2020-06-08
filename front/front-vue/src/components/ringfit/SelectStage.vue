@@ -7,7 +7,7 @@
       <h4>
         여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자
       </h4>
-      <q-btn label="튜토리얼 시작" @click="goToNextPage(1)"/>
+      <q-btn label="튜토리얼 시작" @click="goToNextPage(1)" />
     </template>
     <template v-else>
       <h2>스테이지 선택</h2>
@@ -26,7 +26,7 @@
 import { mapMutations } from "vuex";
 export default {
   props: {
-    isStageSelect: Boolean,
+    isStageSelect: Boolean
   },
   data() {
     return {
@@ -49,34 +49,24 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({ setStageNum: "ringfit/setStageNum", setIdx: "ringfit/setIdx" }),
+    ...mapMutations({
+      setStageNum: "ringfit/setStageNum",
+      setIdx: "ringfit/setIdx"
+    }),
     goToNextPage(stageNum) {
       this.setStageNum(stageNum);
       this.$emit("update:isStageSelect", false);
-      
-      if(stageNum === 1){ // tutorial
-        this.setIdx(0)
-      }else if(stageNum === 2){ // stage 1
-        this.setIdx(1)
-      }else if(stageNum === 3){ // stage 2
-        this.setIdx(3)
+
+      if (stageNum === 1) {
+        // tutorial
+        this.setIdx(0);
+      } else if (stageNum === 2) {
+        // stage 1
+        this.setIdx(1);
+      } else if (stageNum === 3) {
+        // stage 2
+        this.setIdx(3);
       }
-      
-      
-      // this.setIdx(1);
-
-      // var modelArr = []
-
-      // if(stageNum === 0) { // tutorial
-      //   modelArr = ["new_walk", "new_shoulder_press", "new_walk", "new_squat", "new_walk", "side_lunge_3"]
-      // }else if(stageNum === 2){ // stage 1
-      //   modelArr = ["new_walk", "new_squat", "new_walk", "side_lunge_3", "new_walk", "side_crunch"]
-      // }else if(stageNum === 3){ // stage 2
-      //   modelArr = ["new_walk", "side_lunge_3", "new_walk", "side_crunch", "new_walk", "jumping_jacks"]
-      // }
-      // // console.log("어레이확인", modelArr);
-      // // this.$emit("child", modelArr);
-      // this.$emit("update:motionArr", modelArr)
     }
   },
   destroyed() {

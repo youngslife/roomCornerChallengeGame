@@ -141,7 +141,7 @@ export default {
       const urlArr = [
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
@@ -226,10 +226,11 @@ export default {
         // map.style.webkitAnimationPlayState = "paused";
       }
     },
-    goAttack(status) { // status {type: "bad", cnt: this.count}
-      console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-      this.attackType = status.type
-      this.AttackCnt = status.cnt
+    goAttack(status) {
+      // status {type: "bad", cnt: this.count}
+      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      this.attackType = status.type;
+      this.AttackCnt = status.cnt;
     }
     // changeMotionArr(modelArr) {
     //   console.log("과연 체인지모션", modelArr)

@@ -31,11 +31,14 @@ export default {
         time: 0
       },
       befAction: 0,
+      time: 0,
       count: 0,
       midCnt: 0,
       avg: 0,
       prob: 0,
-      isAction: false
+      isAction: false,
+      pose: "",
+      accuracy: ""
     };
   },
   computed: {
@@ -73,44 +76,43 @@ export default {
     // return test2;
     // }
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     action(time) {
       // console.log("testtttttttttttt", this.test())
+      this.time = time;
+      if (time == 250) {
+        // console.log("summmmmmmmmmm", this.befAction);
+        this.avg = this.befAction / 50;
+        this.befAction = 0;
+        // console.log("avgggggggggggg", this.avg);
 
-      if (time == 2000){
-        console.log("summmmmmmmmmm", this.befAction)
-        this.avg = this.befAction / 20
-        this.befAction = 0
-        console.log("avgggggggggggg", this.avg)
-        
-        console.log("카운트증가", this.count)
-        if (this.avg > 0.99){
+        console.log("카운트증가", this.count);
+        if (this.avg > 0.95) {
           this.count++;
-          this.$emit("child", {type: "perfect", cnt: this.count})
-        }else if(this.avg > 0.95){
+          this.accuracy = "perfect";
+          // this.$emit("child", { type: "perfect", cnt: this.count });
+        } else if (this.avg > 0.87) {
           this.count++;
-          this.$emit("child", {type: "great", cnt: this.count})
-        }else if(this.avg > 0.90){
+          this.accuracy = "great";
+          // this.$emit("child", { type: "great", cnt: this.count });
+        } else if (this.avg > 0.8) {
           this.count++;
-          this.$emit("child", {type: "good", cnt: this.count})
-        }else {
-          this.$emit("child", {type: "bad", cnt: this.count})
+          this.accuracy = "good";
+          // this.$emit("child", { type: "good", cnt: this.count });
+        } else {
+          this.accuracy = "bad";
+          // this.$emit("child", { type: "bad", cnt: this.count });
         }
         this.isAction = false;
-        return
+        return;
       } else {
-        console.log(this.test(), "!!!!!!!!!!!!!")
-        if (this.test()){
+        // console.log(this.test(), "!!!!!!!!!!!!!");
+        if (this.test()) {
           this.prop = this.test();
-        this.befAction += this.prop;
+          this.befAction += this.prop;
         }
       }
-      
-        
-      
 
       // if (this.startTime.type !== this.test) {
       //   this.startTime.time = Date.now();
@@ -124,8 +126,8 @@ export default {
       //   }
       // }
       setTimeout(() => {
-        this.action(time + 100);
-      }, 100);
+        this.action(time + 5);
+      }, 5);
     },
     // action(time) {
     //   if (this.startTime.type !== this.test) {
@@ -151,146 +153,277 @@ export default {
     //   }, 100);
     // },
     test() {
-      
-      if(this.predictions.length != 0){
-      if (this.getIdx === 0) {
+      if (this.predictions.length != 0) {
+        // if (this.getIdx === 0) {
         // new_walk
-        if (this.predictions[0].probability > 0.9) {
-          /// stop
-          return "stnad";
-        } else if (
-          this.predictions[1].probability > 0.95 ||
-          this.predictions[2].probability > 0.95
-        ) {
-          // right, left
-          return "walk";
-        } else if (this.predictions[3].probability > 0.95) {
-          // up
-          return "jump";
-        }
-        return "stand";
-
-      } else if (this.getIdx === 1) {
-        // shoulder_press
-        // console.log(typeof(this.predictions[0].probability))
-        if (this.predictions[0].probability.toFixed(2) > 0.85) {
-          // down
-          if (this.status == "up") {
-            if(this.isAction === false){
-              this.isAction = true;
-              console.log("Start Action")
-              this.action(0);
+        //   if (this.predictions[0].probability > 0.90) {
+        //     /// stop
+        //     return "stand";
+        //   } else if (
+        //     this.predictions[1].probability > 0.95 ||
+        //     this.predictions[2].probability > 0.95
+        //   ) {
+        //     // right, left
+        //     return "walk";
+        //   } else if (this.predictions[3].probability > 0.95) {
+        //     // up
+        //     return "jump";
+        //   }
+        //   return "stand";
+        // } else
+        // 1번 동작 shoulder_press
+        if (this.getIdx === 1) {
+          // shoulder_press
+          // console.log(typeof(this.predictions[0].probability))
+          if (this.predictions[0].probability.toFixed(2) > 0.8) {
+            // down, action 시작
+            if (this.pose == "up") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action");
+                this.action(0);
+              }
+              // this.count++;
+              // console.log(this.count);
+              this.pose = "down";
+              return this.predictions[0].probability;
+            } else if (this.pose == "middle") {
+              if (this.isAction === true) {
+                this.$emit("child", { type: "bad", cnt: this.count });
+                this.isAction = false;
+              }
+              console.log("더 위로 올려");
+              // this.$emit("child", {type: "bad", cnt: this.count})
             }
-            // this.count++;
-            // console.log(this.count);
-            this.status = "down";
-            return this.predictions[0].probability
-          } else if (this.status == "middle") {
-            console.log("더 위로 올려");
-            // this.$emit("child", {type: "bad", cnt: this.count})
+            this.pose = "down";
+            // return {type: "pass", prob: this.predictions[0].probability.toFixed(2)}
+          } else if (this.predictions[1].probability.toFixed(2) == 1.0) {
+            // middle
+            if (this.pose == "down") {
+              this.pose = "middle";
+            }
+          } else if (this.predictions[2].probability.toFixed(2) == 1.0) {
+            // up
+            this.pose = "up";
+            if (this.time < 250 && this.isAction) {
+              console.log(this.time);
+              console.log("자세를 더 유지해주세요!!!!!!!유지시간이 짧아요!");
+              this.$emit("child", { type: "bad", cnt: this.count });
+              this.isAction = false;
+              this.time = 0;
+            } else {
+              this.$emit("child", { type: this.accuracy, cnt: this.count });
+              this.time = 0;
+            }
           }
-          this.status = "down";
-          // return {type: "pass", prob: this.predictions[0].probability.toFixed(2)}
-        } else if (this.predictions[1].probability.toFixed(2) == 1.0) {
-          // middle
-          if (this.status == "down") {
-            this.status = "middle";
+          return this.predictions[0].probability;
+          // 2번 동작 side_lunge
+        } else if (this.getIdx === 2) {
+          // side_lunge
+          if (this.predictions[0].probability.toFixed(2) > 0.95) {
+            // middle
+            if (this.pose == "right" || this.pose == "left") {
+              if (this.time < 250 && this.isAction) {
+                console.log(this.time);
+                console.log("자세를 더 유지해주세요!!!");
+                this.$emit("child", { type: "bad", cnt: this.count });
+                this.isAction = false;
+                this.time = 0;
+              } else {
+                this.$emit("child", { type: this.accuracy, cnt: this.count });
+                this.time = 0;
+              }
+              // this.count++;
+              // console.log(this.count);
+            }
+            // console.log("이전 자세가 정확치 않아요");
+            // this.$emit("child", {type: "bad", cnt: this.count });
+
+            this.pose = "stand";
+            // return this.count;
+          } else if (this.predictions[2].probability.toFixed(2) > 0.8) {
+            // right, action 시작
+            if (this.pose == "stand") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action Right");
+                this.action(0);
+              }
+              this.pose = "right";
+              return this.predictions[2].probability;
+            }
+          } else if (this.predictions[4].probability.toFixed(2) > 0.8) {
+            // left, action 시작
+            if (this.pose == "stand") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action Left");
+                this.action(0);
+              }
+              this.pose = "left";
+              return this.predictions[4].probability;
+            }
           }
-        } else if (this.predictions[2].probability.toFixed(2) == 1.0) {
-          // up
-          this.status = "up";
+          if (this.pose === "right") {
+            return this.predictions[2].probability;
+          } else {
+            return this.predictions[4].probability;
+          }
+          // return this.count;
+          // 동작 4, Side_Crunch
+        } else if (this.getIdx == 4) {
+          // 4. side_crunch
+          if (this.predictions[0].probability.toFixed(2) > 0.9) {
+            // stand
+            if (this.pose == "right" || this.pose == "left") {
+              if (this.time < 250 && this.isAction) {
+                console.log(this.time);
+                console.log(" 자세를 더 오래 유지해주세요!!!!!!!!");
+                this.$emit("child", { type: "bad", cnt: this.count });
+                this.isAction = false;
+                this.time = 0;
+              } else {
+                this.$emit("child", { type: this.accuracy, cnt: this.count });
+                this.time = 0;
+              }
+              // this.count++;
+              // console.log(this.count);
+            }
+            // else {
+            //   console.log("오른쪽/왼쪽 정확한 자세 부탁1!")
+            //   this.$emit("child", {type: "bad", cnt: this.count });
+            //   this.time = 0;
+            // }
+            this.pose = "stand";
+            //   if (this.predictions[2].probability > this.predictions[4].probability){
+            //   return this.predictions[2].probability
+            // } else {
+            //   return this.predictions[4].probability
+            // }
+            // return this.count;
+          } else if (this.predictions[2].probability.toFixed(2) > 0.8) {
+            // right_exact
+            if (this.pose == "stand") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action Right");
+                this.action(0);
+              }
+              this.pose = "right";
+              return this.predictions[2].probability;
+            }
+          } else if (this.predictions[4].probability.toFixed(2) > 0.8) {
+            // left_exact
+            if (this.pose == "stand") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action Left");
+                this.action(0);
+              }
+              this.pose = "left";
+              return this.predictions[4].probability;
+            }
+            // this.pose = "left";
+          }
+          // return this.count;
+          if (this.pose === "right") {
+            return this.predictions[2].probability;
+          } else {
+            return this.predictions[4].probability;
+          }
+
+          // 3번 동작 new_squat
+        } else if (this.getIdx == 3) {
+          // 3. new_squat
+          if (
+            this.predictions[0].probability.toFixed(2) > 0.97 ||
+            this.predictions[1].probability.toFixed(2) > 0.97
+          ) {
+            // stand & step2
+            if (this.pose == "squat") {
+              if (this.time < 250 && this.isAction) {
+                console.log(this.time);
+                console.log("자세를 더 유지해주세요!!!");
+                this.$emit("child", { type: "bad", cnt: this.count });
+                this.isAction = false;
+                this.time = 0;
+              } else {
+                this.$emit("child", { type: this.accuracy, cnt: this.count });
+                this.time = 0;
+              }
+              // this.count++;
+              // console.log(this.count);
+            }
+            this.pose = "stand";
+            // return this.count;
+          } else if (this.predictions[3].probability.toFixed(2) > 0.8) {
+            // squat
+            if (this.pose == "stand") {
+              if (this.isAction === false) {
+                this.isAction = true;
+                console.log("Start Action");
+                this.action(0);
+              }
+              this.pose = "squat";
+              return this.predictions[3].probability;
+            } else {
+              if (this.isAction === true) {
+                this.$emit("child", { type: "bad", cnt: this.count });
+                this.isAction = false;
+              }
+              console.log("똑바로 섰다가 다시 앉으세요.!!");
+            }
+            this.pose = "squat";
+          }
+          return this.predictions[3].probability;
+          // return this.count;
+          // 동작 5: Jumping Jacks
+        } else if (this.getIdx == 5) {
+          // jumping_jacks
+          if (this.predictions[0].probability.toFixed(2) > 0.85) {
+            // 0: down
+            // console.log("down")
+            console.log("downnnnn innnnnnnnnnnnn");
+            if (this.midCnt == 1) {
+              if (this.pose === "bad" || this.pose === "mid") {
+                this.pose = "bad";
+                console.log("제대로 끝까지 손을 올려라!!!");
+              } else {
+                this.count++;
+                console.log(this.count);
+              }
+              this.$emit("child", { type: this.pose, cnt: this.count });
+              this.midCnt = 0;
+              console.log("before emit  포즈!!!", this.pose);
+              this.$emit("child", { type: this.pose, cnt: this.count });
+            }
+            this.pose = "down";
+          } else if (this.predictions[2].probability.toFixed(2) == 1.0) {
+            // 2: middle
+            if (this.pose == "down") {
+              this.midCnt++;
+            }
+            console.log("midCnt: ", this.midCnt);
+            this.pose = "mid";
+          } else if (this.predictions[4].probability.toFixed(2) > 0.96) {
+            // 4: up
+            // this.pose = "up";
+            if (this.predictions[4].probability.toFixed(2) > 0.98) {
+              this.pose = "perfect";
+            } else if (this.predictions[4].probability.toFixed(2) > 0.95) {
+              this.pose = "great";
+            } else if (this.predictions[4].probability.toFixed(2) > 0.9) {
+              this.pose = "good";
+            } else {
+              this.pose = "bad";
+            }
+          }
+          // return this.count;
         }
-        return this.predictions[0].probability;
-        }
+        // return "우리가 원하는 범위의 인덱스가 아니야!";
+        // return ;
       }
-      // } else if (this.getIdx === 2) {
-      //   // side_lunge
-      //   if (this.predictions[0].probability.toFixed(2) == 1.0) {
-      //     // middle
-      //     if (this.status == "right" || this.status == "left") {
-      //       this.count++;
-      //       console.log(this.count);
-      //     }
-      //     this.status = "stand";
-      //     return this.count;
-      //   } else if (this.predictions[2].probability.toFixed(2) > 0.99) {
-      //     // right
-      //     if (this.status == "stand") {
-      //       this.status = "right";
-      //     }
-      //   } else if (this.predictions[4].probability.toFixed(2) > 0.99) {
-      //     // left
-      //     if (this.status == "stand") {
-      //       this.status = "left";
-      //     }
-      //   }
-      //   return this.count;
-      // } else if (this.getIdx == 3) {
-      //   // new_squat
-      //   if (
-      //     this.predictions[0].probability.toFixed(2) > 0.97 ||
-      //     this.predictions[1].probability.toFixed(2) > 0.97
-      //   ) {
-      //     // stand , step2
-      //     if (this.status == "squat") {
-      //       this.count++;
-      //       console.log(this.count);
-      //     }
-      //     this.status = "stand";
-      //     return this.count;
-      //   } else if (this.predictions[3].probability.toFixed(2) > 0.97) {
-      //     if (this.status == "stand") {
-      //       this.status = "squat";
-      //     }
-      //   }
-      //   return this.count;
-      // } else if (this.getIdx == 4) {
-      //   // side_crunch
-      //   if (this.predictions[0].probability.toFixed(2) == 1.0) {
-      //     // stand
-      //     if (this.status == "right" || this.status == "left") {
-      //       this.count++;
-      //       console.log(this.count);
-      //     }
-      //     this.status = "stand";
-      //     return this.count;
-      //   } else if (this.predictions[2].probability.toFixed(2) > 0.99) {
-      //     // right_exact
-      //     if (this.status == "stand") {
-      //       this.status = "right";
-      //     }
-      //   } else if (this.predictions[4].probability.toFixed(2) > 0.98) {
-      //     // left_exact
-      //     if (this.status == "stand") {
-      //       this.status = "left";
-      //     }
-      //   }
-      //   return this.count;
-      // } else if (this.getIdx == 5) {
-      //   // jumping_jacks
-      //   if (this.predictions[0].probability.toFixed(2) == 1.0) {
-      //     // 0: down
-      //     // console.log("down")
-      //     if (this.midCnt == 1) {
-      //       this.count++;
-      //       console.log(this.count);
-      //       this.midCnt = 0;
-      //     }
-      //     this.status = "down";
-      //   } else if (this.predictions[2].probability.toFixed(2) == 1.0) {
-      //     // 2: middle
-      //     if (this.status == "down") {
-      //       this.midCnt++;
-      //     }
-      //     console.log("midCnt: ", this.midCnt);
-      //     this.status = "mid";
-      //   } else if (this.predictions[4].probability.toFixed(2) == 1.0) {
-      //     // 4: up
-      //     this.status = "up";
-      //   }
-      //   return this.count;
-      // }
-      // return "우리가 원하는 범위의 인덱스가 아니야!";
+      // return;
     }
   }
 };
