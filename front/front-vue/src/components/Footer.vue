@@ -3,7 +3,7 @@
     <q-separator spaced />
     <q-bar class="bg-white" style="height:100px;">
       <div class="col text-center text-weight-bold">
-        © room-corner-chalenge Korea Corporation All Rights Reserved.
+        © room-corner-challenge Korea Corporation All Rights Reserved.
       </div>
     </q-bar>
   </div>

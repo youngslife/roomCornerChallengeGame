@@ -61,7 +61,7 @@ export default {
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mafia.png") },
-        { name: "second", imgSrc: require("../../assets/ring.jpeg") },
+        { name: "second", imgSrc: require("../../assets/ring.png") },
         { name: "third", imgSrc: require("../../assets/room.png") }
       ],
       slide2: "tv"

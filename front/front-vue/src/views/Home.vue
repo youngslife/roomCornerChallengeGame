@@ -6,7 +6,7 @@
         :name="card.name"
         :img-src="card.imgSrc"
         :key="index"
-        @click="goPath(this)"
+        @click="goPath(gameList[index].link)"
       >
         <div class="absolute-bottom">
           <q-btn-toggle
@@ -26,14 +26,14 @@
                 style="height:100px; width:100%;"
                 @click="change('first')"
                 class="flex flex-center"
-              >마피아</div>
+              >마피아를 찾아라</div>
             </template>
             <template v-slot:second>
               <div
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >피트런</div>
+              >피트런 : 케니의 모험</div>
             </template>
             <template v-slot:third>
               <div
@@ -48,7 +48,18 @@
     </q-carousel>
     <div class="row justify-center">
       <div class="col-10" style="padding-left: 100px">
-        <h4 id="game-list-title">전체 게임</h4>
+        <div class="row">
+          <h4 class="col-5" id="game-list-title">전체 게임</h4>
+          <!-- menu bar -->
+          <div class="col-2 menus" style="margin-left: auto">
+            <div class="menus-contents flex flex-center">
+              <div v-if="user_no == 0" @click="goPath('/login')">방구석 ID 로그인</div>
+              <div v-if="user_no == 0">회원가입</div>
+              <div @click="goPath('/jump')">공지</div>
+              <div>QNA</div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <q-card
             v-for="(game, index) in gameList"
@@ -67,17 +78,6 @@
           </q-card>
         </div>
       </div>
-      <!-- menu bar -->
-      <div class="col-1 menus">
-        <div class="menus-contents flex flex-center">
-          <div v-if="user_no > 0" @click="goPath('/mypage')">
-          마이페이지</div>
-          <div v-if="user_no == 0" @click="goPath('/login')">방구석 ID 로그인</div>
-          <div v-if="user_no == 0">회원가입</div>
-          <div @click="goPath('/jump')">공지사항</div>
-          <div>QNA</div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -89,25 +89,25 @@ export default {
       slide: "first",
       mainCard: [
         { name: "first", imgSrc: require("../assets/mafia.png") },
-        { name: "second", imgSrc: require("../assets/ring.jpeg") },
+        { name: "second", imgSrc: require("../assets/ring.png") },
         { name: "third", imgSrc: require("../assets/room.png") }
       ],
       gameList: [
         {
-          name: "마피아",
+          name: "마피아를 찾아라",
           imgSrc: require("../assets/mafia.png"),
           people: "4~8명",
           descript:
-            "마피아는 정보를 가진 소수와 정보를 가지지 못한 다수의 싸움을 모델로 한 파티용 게임",
+            "웹캠으로 하는 고도의 심리 게임 마피아! 과연 이번 판의 저격수는 누가 될 것인가?",
           link: "/mafia",
           developing: false
         },
         {
-          name: "피트런",
-          imgSrc: require("../assets/ring.jpeg"),
+          name: "피트런: 케니의 모험",
+          imgSrc: require("../assets/ring.png"),
           people: "1명",
           descript:
-            "운동으로 몬스터를 처치할 수 있다? 웹캠으로 즐기는 네모의 어드벤처 게임",
+            "운동으로 몬스터를 처치할 수 있다? 웹캠으로 즐기는 케니의 어드벤처 게임",
           link: "/fitness",
           developing: false
         },
@@ -165,17 +165,23 @@ export default {
   transform: rotate(-10deg);
 }
 .menus {
-  padding: 150px 0;
+  padding-top: 50px;
 }
 .menus-contents {
-  border: black 2px solid;
   margin: 0 10px;
-  padding: 10px;
-  height: 500px;
   justify-content: space-between;
-  text-align: center;
 }
 .menus-contents > div {
   cursor: pointer;
+  width: 70px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+.menus-contents > div:hover {
+  background: rgb(199, 199, 199);
+  color: white;
 }
 </style>
