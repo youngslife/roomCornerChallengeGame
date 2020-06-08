@@ -15,7 +15,7 @@
               :ratio="16 / 9"
               spinner-color="primary"
               spinner-size="82px"
-              @click="goToPage('/fitness')"
+              style="height : 10vh"
             />
           </div>
           <q-btn
@@ -23,7 +23,7 @@
             :key="index"
             style=" color:white; font-size:25px;"
             :label="menu.name"
-            class="col-2 text-weight-bold"
+            class="col-2 text-weight-bold menu-button"
             :to="menu.link"
           ></q-btn>
         </div>
@@ -34,9 +34,9 @@
             text-color="white"
             toggle-color="brand"
             :options="[
-              { label: '링피트1', value: 'first' },
-              { label: '링피트2', value: 'second' },
-              { label: '링피트3', value: 'third' }
+              { label: '마피아1', value: 'first' },
+              { label: '마피아2', value: 'second' },
+              { label: '마피아3', value: 'third' }
             ]"
             style="height:100px; width:100%;"
           />
@@ -49,16 +49,15 @@
 </template>
 
 <script>
-import router from "@/router"
 export default {
   data() {
     return {
       slide: "first",
       menus: [
-        { name: "소식", link: "/fitness/info" },
-        { name: "가이드", link: "/fitness/guide" },
-        { name: "랭킹", link: "/fitness/rank" },
-        { name: "커뮤니티", link: "/fitness/community" }
+        { name: "소식", link: "/mafia/info" },
+        { name: "가이드", link: "/mafia/guide" },
+        { name: "랭킹", link: "/mafia/rank" },
+        { name: "커뮤니티", link: "/mafia/community" }
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
@@ -68,11 +67,7 @@ export default {
       slide2: "tv"
     };
   },
-  methods: {
-    goToPage(link) {
-      router.push(link)
-    }
-  },
+  methods: {},
   computed: {}
 };
 </script>

@@ -4,7 +4,9 @@
     <!-- <div>All Prediction</div> -->
     <all-predict :predictions="predictions"></all-predict>
     <div>Prediction</div>
-    <SquatPredict :predictions="predictions" @child="test"></SquatPredict>
+    <div>{{ url }}</div>
+    <!-- <SquatPredict :predictions="predictions" @child="test"></SquatPredict> -->
+    <best-predict :predictions="predictions" @child="test"></best-predict>
   </div>
 </template>
 
@@ -12,7 +14,8 @@
 import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
 import AllPredict from "./predictions/AllPredictions";
-import SquatPredict from "./predictions/SquatPrediction";
+// import SquatPredict from "./predictions/SquatPrediction";
+import BestPredict from "./predictions/BestPredictions";
 export default {
   props: {
     url: {
@@ -30,7 +33,8 @@ export default {
   },
   components: {
     AllPredict,
-    SquatPredict
+    // SquatPredict
+    BestPredict
   },
   data() {
     return {

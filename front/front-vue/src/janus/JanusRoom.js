@@ -14,7 +14,7 @@ class JanusRoom {
 
       console.log("Room name translates to id: " + instance.tmpId);
 
-      instance.server = null;
+    //   instance.server = "https://k02a3041.p.ssafy.io/janus";
 
       if (window.location.protocol === "http:") {
         instance.server =
@@ -502,7 +502,7 @@ class JanusRoom {
           request: "configure",
           audio: useAudio,
           video: true,
-        //   bitrate : 100000
+          bitrate : 100000
         };
 
         instance.sfutest.send({

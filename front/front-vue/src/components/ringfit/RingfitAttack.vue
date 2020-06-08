@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "RingfitAttack",
   data() {
@@ -53,6 +55,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setIdx: "ringfit/setIdx"
+    }),
     playerAttack() {
       let demage;
       // if (skillName == this.skills.first.name) {
@@ -74,6 +79,7 @@ export default {
         this.monster.image = require("../../assets/ryan3.png");
         this.monster.hp = 0;
         this.$store.state.phaser.isMeet = false;
+        this.setIdx(0)
         setTimeout(() => {
           //   alert(`${this.monster.name} 처치 완료`);
         }, 500);

@@ -2,6 +2,7 @@ const { Events } = require("phaser");
 const events = new Events.EventEmitter();
 events.on("meetMonster", () => {
   events.store.commit("phaser/setIsMeet", true);
+  events.store.commit("ringfit/setIdx", 5);
 });
 
 events.on("saveScene", scene => {

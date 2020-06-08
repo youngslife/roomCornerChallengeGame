@@ -5,15 +5,12 @@
         <q-btn
           color="primary"
           icon="check"
-          label="어떠한 공간"
+          label="어떠한 공간22222"
           style="width:90%; height:200px; margin-top:20px; margin-bottom:20px;"
         />
       </div>
       <div class="col-4 flex flex-center">
-        <button
-          style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
-          @click="clickStart"
-        >시작버튼</button>
+        <button style="border-radius:50%; width:200px; height:200px; margin-top:20px;">시작버튼</button>
       </div>
       <div class="col-4">
         <div class="row justify-around" style="margin-top:20px;height:70px;">
@@ -89,50 +86,31 @@
     <div class="row justify-around" style="margin-top:20px;">
       <div class="col-3"></div>
       <div class="col-6 text-center">
-        <h2>링피트 커뮤니티</h2>
+        <h2>마피아 커뮤니티</h2>
       </div>
       <div class="col-3 text-center">
-        <q-btn
-          @click="goToPage('/fitness/community')"
-          color="primary"
-          icon="add"
-          style="margin-top:50px"
-        />
+        <q-btn color="primary" icon="add" style="margin-top:50px" />
       </div>
     </div>
     <div class="row justify-center">
       <div class="col-10 row justify-around">
-        <q-card v-for="(board, i) in boardList" class="my-card col-3" :key="i">
+        <q-card v-for="index in 4" class="my-card col-2" :key="index">
           <img src="https://cdn.quasar.dev/img/mountains.jpg" />
           <q-card-section>
-            <div class="text-h6">{{ board.board_subtitle }}</div>
-            <div
-              class="text-subtitle2"
-              v-for="(post, j) in board.board_postList.slice(0, 5)"
-              :key="j"
-            >
-              <hr />
-              <div style="display: flex; justify-content: space-between">
-                <span>{{ post.post_title }}</span>
-                <span>by. {{ post.post_user.user_name }}</span>
-              </div>
-            </div>
+            <div class="text-h6">Our Changing Planet</div>
+            <div class="text-subtitle2">by John Doe</div>
           </q-card-section>
+          <q-card-section>Lorem ipsum dolor sit amet, consectetur adipiscing elit</q-card-section>
         </q-card>
       </div>
     </div>
     <div class="row justify-around" style="margin-top:20px;">
       <div class="col-3"></div>
       <div class="col-6 text-center">
-        <h2>링피트 랭킹</h2>
+        <h2>마피아 랭킹</h2>
       </div>
       <div class="col-3 text-center">
-        <q-btn
-          @click="goToPage('/fitness/rank')"
-          color="primary"
-          icon="add"
-          style="margin-top:50px"
-        />
+        <q-btn color="primary" icon="add" style="margin-top:50px" />
       </div>
     </div>
     <div class="row justify-center">
@@ -151,44 +129,11 @@
 </template>
 
 <script>
-import router from "@/router";
 export default {
   data() {
     return {
-      slide2: "tv",
-      userNo: 0,
-      commuList: {}
+      slide2: "tv"
     };
-  },
-  mounted() {
-    this.userNo = window.sessionStorage.getItem("user_no");
-    this.$store.dispatch("board/getBoardListByType", {
-      location: 2,
-      title: "커뮤니티",
-      page_no: 1
-    });
-  },
-  methods: {
-    clickStart() {
-      if (this.userNo > 0) {
-        router.push("/game/RingFit");
-      } else {
-        router.push("/login");
-      }
-    },
-    goToPage(link) {
-      router.push(link);
-    }
-    // goToPostDetail(post_no){
-    //   각 글 제목 눌렀을 때 해당 글 페이지로 가게 하자
-    //   console.log('hi there')
-    //   this.$store.dispatch("post/getPost", post_no)
-    // }
-  },
-  computed: {
-    boardList() {
-      return this.$store.state.board.boardList;
-    }
   }
 };
 </script>
