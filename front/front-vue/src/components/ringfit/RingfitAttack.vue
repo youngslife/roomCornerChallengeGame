@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align: center;">
-      <h3>{{ cnt }}</h3>
+      <h3>{{ cnt }} {{ attackType }}</h3>
       <h3>{{ monster.name }} hp : {{ mnowHp }}</h3>
       <img :src="mimageChange" />
       <p>{{ player.username }} hp : {{ pnowHp }}</p>
@@ -49,6 +49,7 @@ export default {
   },
   props: {
     AttackCnt: Number,
+    attackType: String,
     player: {
       username: String,
       hp: Number
@@ -110,8 +111,11 @@ export default {
       return this.monster.image;
     },
     cnt() {
-      if (this.AttackCnt != 0) this.playerAttack();
+      if (this.AttackCnt != 0 && this.attackType != "bad") this.playerAttack();
       return this.AttackCnt;
+    },
+    atType() {
+      return this.attackType
     }
   },
   created() {

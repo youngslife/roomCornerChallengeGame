@@ -27,7 +27,6 @@ import { mapMutations } from "vuex";
 export default {
   props: {
     isStageSelect: Boolean,
-    motionArr: [],
   },
   data() {
     return {
@@ -56,7 +55,7 @@ export default {
       this.$emit("update:isStageSelect", false);
       
       if(stageNum === 1){ // tutorial
-        this.setIdx(1)
+        this.setIdx(0)
       }else if(stageNum === 2){ // stage 1
         this.setIdx(1)
       }else if(stageNum === 3){ // stage 2

@@ -31,6 +31,7 @@
         <ringfit-attack
           v-if="isMonster"
           :AttackCnt="AttackCnt"
+          :attackType="attackType"
           :player="player"
         />
       </div>
@@ -85,7 +86,7 @@ export default {
     return {
       // url: [
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_shoulder_press/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
@@ -107,6 +108,7 @@ export default {
       isStageSelect: true,
       isPoseSelect: false,
       AttackCnt: 0,
+      attackType: "",
       player: {
         username: "방구석여포",
         hp: 200
@@ -138,7 +140,7 @@ export default {
     url() {
       const urlArr = [
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_shoulder_press/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
@@ -222,12 +224,12 @@ export default {
       } else if (status === "stand") {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
-      } else {
-        this.AttackCnt = status;
       }
     },
-    goAttack(count) {
-      this.AttackCnt = count;
+    goAttack(status) { // status {type: "bad", cnt: this.count}
+      console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      this.attackType = status.type
+      this.AttackCnt = status.cnt
     }
     // changeMotionArr(modelArr) {
     //   console.log("과연 체인지모션", modelArr)
