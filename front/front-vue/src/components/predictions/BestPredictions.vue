@@ -117,7 +117,6 @@ export default {
         this.action(time + 100);
       }, 100);
     }
-    
   }
 };
 </script>

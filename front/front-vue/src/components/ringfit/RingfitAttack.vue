@@ -3,14 +3,15 @@
     <div style="text-align: center;">
       <h3>
         <!--{{ monster.name }}-->
+        <h3>{{ cnt }}</h3>
+        <h3>{{ attackType }}</h3>
         hp : {{ mnowHp }}
       </h3>
       <!-- <div :class={}>  -->
-      <img :src="chnImage" />
+      <img :src="chnImage" class="img" />
     </div>
   </div>
 </template>
-
 <script>
 import { mapMutations } from "vuex";
 
@@ -27,60 +28,74 @@ export default {
           {
             name: "0",
             hp: 100,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
+            image: require("../../assets/monster_sprites/tutorial/01_ordinary/idle.gif"),
             hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
             dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
           }
-        ][
-          ({
-            name: "1-1",
-            hp: 100,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          },
-          {
-            name: "1-2",
-            hp: 100,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          },
-          {
-            name: "1-3",
-            hp: 100,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          })
         ],
         [
-          {
-            name: "2-1",
-            hp: 150,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          },
-          {
-            name: "2-2",
-            hp: 150,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          },
-          {
-            name: "2-3",
-            hp: 150,
-            image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-            hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-            dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
-          }
+          [
+            {
+              name: "1-1",
+              hp: 100,
+              image: require("../../assets/monster_sprites/stage1/01_ordinary/idle.gif"),
+              hurt: require("../../assets/monster_sprites/stage1/01_ordinary/hurt.gif"),
+              dead: require("../../assets/monster_sprites/stage1/01_ordinary/dead.gif")
+            }
+          ],
+          [
+            {
+              name: "1-2",
+              hp: 100,
+              image: require("../../assets/monster_sprites/stage1/02_middleboss/idle.gif"),
+              hurt: require("../../assets/monster_sprites/stage1/02_middleboss/hurt.gif"),
+              dead: require("../../assets/monster_sprites/stage1/02_middleboss/dead.gif")
+            }
+          ],
+          [
+            {
+              name: "1-3",
+              hp: 100,
+              image: require("../../assets/monster_sprites/stage1/03_finalboss/idle.gif"),
+              hurt: require("../../assets/monster_sprites/stage1/03_finalboss/hurt.gif"),
+              dead: require("../../assets/monster_sprites/stage1/03_finalboss/dead.gif")
+            }
+          ]
+        ],
+        [
+          [
+            {
+              name: "2-1",
+              hp: 150,
+              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
+              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
+              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+            }
+          ],
+          [
+            {
+              name: "2-2",
+              hp: 150,
+              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
+              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
+              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+            }
+          ],
+          [
+            {
+              name: "2-3",
+              hp: 150,
+              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
+              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
+              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+            }
+          ]
         ]
       ],
       count: 0,
       monster: {},
-      image: ""
+      image: "",
+      gameInfo: {}
     };
   },
   computed: {
@@ -91,6 +106,7 @@ export default {
       return this.image;
     },
     cnt() {
+      console.log(this.AttackCnt);
       if (this.AttackCnt != 0) this.playerAttack();
       return this.AttackCnt;
     },
@@ -99,9 +115,10 @@ export default {
     }
   },
   mounted() {
+    this.gameInfo = this.$store.state.ringfit.gameInfo;
     this.monster = this.monsterArr[this.$store.state.ringfit.stageNum - 1][
       this.$store.state.ringfit.count
-    ];
+    ][0];
     this.image = this.monster.image;
     this.AttackCnt = 0;
   },
@@ -110,17 +127,9 @@ export default {
       setIdx: "ringfit/setIdx"
     }),
     playerAttack() {
-      let demage;
-      // if (skillName == this.skills.first.name) {
-      //   demage = this.skills.first.strength;
-      // } else if (skillName == this.skills.second.name) {
-      //   demage = this.skills.second.strength;
-      // } else if (skillName == this.skills.third.name) {
-      //   demage = this.skills.third.strength;
-      // }
-      demage = 10;
+      const damage = 20;
       this.image = this.monster.hurt;
-      this.monster.hp -= demage;
+      this.monster.hp -= damage;
       if (this.monster.hp > 0) {
         setTimeout(() => {
           this.image = this.monster.image;
@@ -134,9 +143,19 @@ export default {
     }
   },
   destroyed() {
+    this.$store.commit("ringfit/setGameInfo", this.gameInfo);
     this.$store.commit("ringfit/setCount", this.$store.state.ringfit.count + 1);
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.body {
+  width: 95%;
+  height: 95%;
+}
+.img {
+  min-width: 300px;
+  min-height: 300px;
+}
+</style>
