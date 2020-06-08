@@ -7,19 +7,19 @@
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <img
-          :src="require('../assets/logo.png')"
-          onclick="location.href ='/'"
-        />
+        <router-link to="/">
+          <img :src="require('../assets/logo.png')" />
+        </router-link>
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
-          <button
+          <router-link
             class="button account-button button1"
-            onclick="location.href ='mypage'"
+            to="/mypage"
+            tag="button"
           >
             마이페이지
-          </button>
+          </router-link>
           <button class="button account-button button2" @click="logout">
             로그아웃
           </button>
@@ -27,18 +27,20 @@
       </template>
       <template v-else>
         <div class="col text-right text-weight-bold">
-          <button
+          <router-link
             class="button account-button button1"
-            onclick="location.href ='signin'"
+            to="/signin"
+            tag="button"
           >
             회원가입
-          </button>
-          <button
+          </router-link>
+          <router-link
             class="button account-button button2"
-            onclick="location.href ='/login'"
+            to="/login"
+            tag="button"
           >
             로그인
-          </button>
+          </router-link>
         </div>
       </template>
     </q-bar>
