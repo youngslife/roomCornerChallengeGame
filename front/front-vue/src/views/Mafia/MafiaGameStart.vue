@@ -2,7 +2,6 @@
   <div class="bg-grey-7" style="height:1100px;">
     <!-- <q-btn color="primary" icon="check" label="유저보기" @click="showUsers" />
     <q-btn color="primary" icon="check" label="방만들" @click="createRoom" /> -->
-    {{user}}
     <div class="row">
       <div class="col-6 justify-around row">
         <q-card
@@ -72,12 +71,9 @@
 </template>
 
 <script>
-import JanusWrapper from "../janus/JanusRoom";
+import JanusWrapper from "../../janus/JanusRoom";
 
 export default {
-  name: "jump",
-  components: {},
-  props: [],
   data() {
     return {
       seamless: true,
@@ -95,9 +91,9 @@ export default {
   },
   computed: {
     roomNameFromRoute() {
-      return "123";
+      return this.$route.params.roomNo;
     },
-    user() {
+    user(){
       return this.$store.state.user.user;
     }
   },
@@ -123,7 +119,7 @@ export default {
 
     if (this.roomNameFromRoute !== undefined) {
       //   console.log("ih");
-      this.janus = new JanusWrapper(this.roomName);
+      this.janus = new JanusWrapper(this.roomName,this.user.user_no,this.user.user_name);
       //   console.log(this.janus);
     } else {
       // don't join the room

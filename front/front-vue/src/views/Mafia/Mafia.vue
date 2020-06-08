@@ -62,10 +62,10 @@ export default {
     return {
       slide: "first",
       menus: [
-        { name: "소식", link: "/fitness/info" },
-        { name: "가이드", link: "/fitness/guide" },
-        { name: "랭킹", link: "/fitness/rank" },
-        { name: "커뮤니티", link: "/fitness/community" }
+        { name: "소식", link: "/mafia/info" },
+        { name: "가이드", link: "/mafia/guide" },
+        { name: "랭킹", link: "/mafia/rank" },
+        { name: "커뮤니티", link: "/mafia/community" }
       ],
       mainCard: [
         { name: "first", imgSrc: require("../../assets/mapia.jpeg") },

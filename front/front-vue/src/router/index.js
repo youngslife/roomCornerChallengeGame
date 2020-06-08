@@ -57,14 +57,57 @@ const routes = [
     ]
   },
   {
+    path: "/mafia",
+    component: () => import("../views/Mafia/Mafia.vue"),
+    children: [
+      {
+        path: "",
+        name: "mafia",
+        component: () => import("../views/Mafia/MafiaHome.vue")
+      },
+      {
+        path: "community",
+        name: "maifacommunity",
+        component: () => import("../views/Mafia/MafiaCommunity.vue")
+      },
+      {
+        path: "guide",
+        name: "maifaguide",
+        component: () => import("../views/Mafia/MafiaGuide.vue")
+      },
+      {
+        path: "rank",
+        name: "maifarank",
+        component: () => import("../views/Mafia/MafiaRank.vue")
+      },
+      {
+        path: "info",
+        name: "maifainfo",
+        component: () => import("../views/Mafia/MafiaInfo.vue")
+      }
+    ]
+  },
+  {
+    path: "/game/mafia/start/:roomNo",
+    name: "mafiastart",
+    component: () => import("../views/Mafia/MafiaGameStart.vue"),
+    props: true 
+  },
+  {
+    path: "/game/mafia/lobby",
+    name: "mafialobby",
+    component: () => import("../views/Mafia/MafiaGameLobby.vue")
+  },
+  {
+    path: "/game/mafia/room/:roomNo",
+    name: "mafiaroom",
+    component: () => import("../views/Mafia/MafiaGameWait.vue"),
+    props: true 
+  },
+  {
     path: "/game/RingFit",
     name: "RingFit",
     component: () => import("../views/Game/RingFit.vue")
-  },
-  {
-    path: "/temp",
-    name: "temp",
-    component: () => import("../views/temp.vue")
   },
   {
     path: "/jump",

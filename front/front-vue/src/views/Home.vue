@@ -1,12 +1,18 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" infinite style="height:610px;" autoplay>
+    <q-carousel
+      animated
+      v-model="slide"
+      infinite
+      style="height:610px;"
+      autoplay
+    >
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
         :img-src="card.imgSrc"
         :key="index"
-        @click="goPath(this)"
+        @click="goPath(card.rink)"
       >
         <div class="absolute-bottom">
           <q-btn-toggle
@@ -26,21 +32,27 @@
                 style="height:100px; width:100%;"
                 @click="change('first')"
                 class="flex flex-center"
-              >마피아</div>
+              >
+                마피아
+              </div>
             </template>
             <template v-slot:second>
               <div
                 style="height:100px; width:100%;"
                 @click="change('second')"
                 class="flex flex-center"
-              >링피트</div>
+              >
+                링피트
+              </div>
             </template>
             <template v-slot:third>
               <div
                 style="height:100px; width:100%;"
                 @click="change('third')"
                 class="flex flex-center"
-              >후루추닌자?</div>
+              >
+                후루추닌자?
+              </div>
             </template>
           </q-btn-toggle>
         </div>
@@ -75,7 +87,13 @@
             style="background:#b2bec3; margin-top:180px; height:300px"
           >
             <div class="col-10 text-center">
-              <q-btn class="col" color="primary" icon="check" label="마이페이지" to="/mypage" />
+              <q-btn
+                class="col"
+                color="primary"
+                icon="check"
+                label="마이페이지"
+                to="/mypage"
+              />
               <div class="col-10" style="margin-top:20px;">
                 <q-icon name="print" />
                 <q-icon name="print" />
@@ -92,7 +110,13 @@
             style="background:#b2bec3; margin-top:180px; height:300px"
           >
             <div class="col-10 text-center">
-              <q-btn class="col" color="primary" icon="check" label="방구석 ID 로그인" to="/login" />
+              <q-btn
+                class="col"
+                color="primary"
+                icon="check"
+                label="방구석 ID 로그인"
+                to="/login"
+              />
               <div class="col-10" style="margin-top:20px;">
                 <span>다른계정 로그인</span>
                 <q-icon name="print" />
@@ -121,13 +145,7 @@
               />
             </div>
             <div class="col-10" style="margin-top:20px;">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="QNA"
-                to="/temp"
-              />
+              <q-btn class="col-10" color="primary" icon="check" label="QNA" />
             </div>
           </div>
         </div>
@@ -142,9 +160,21 @@ export default {
     return {
       slide: "first",
       mainCard: [
-        { name: "first", imgSrc: require("../assets/mapia.jpeg") },
-        { name: "second", imgSrc: require("../assets/ring.jpeg") },
-        { name: "third", imgSrc: require("../assets/room.png") }
+        {
+          name: "first",
+          imgSrc: require("../assets/mapia.jpeg"),
+          rink: "/mafia"
+        },
+        {
+          name: "second",
+          imgSrc: require("../assets/ring.jpeg"),
+          rink: "/fitness"
+        },
+        {
+          name: "third",
+          imgSrc: require("../assets/room.png"),
+          rink: "/fitness"
+        }
       ],
       gameList: [
         {
@@ -152,7 +182,7 @@ export default {
           imgSrc: require("../assets/mapia.jpeg"),
           people: "4~8명",
           descript: "마피아게임에 대한 설명",
-          rink: "/mapia"
+          rink: "/mafia"
         },
         {
           name: "링피트",
@@ -166,14 +196,14 @@ export default {
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
           descript: "방탈출게임에 대한 설명",
-          rink: "/mapia"
+          rink: "/mafia"
         },
         {
           name: "후루추닌자?",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
           descript: "게임게임에 대한 설명",
-          rink: "/mapia"
+          rink: "/mapmafiaia"
         }
       ],
       user_no: {}
@@ -184,8 +214,7 @@ export default {
   },
   methods: {
     goPath(target) {
-      console.log(target);
-      this.$router.push("/fitness");
+      this.$router.push(target);
     },
     change(target) {
       this.slide = target;

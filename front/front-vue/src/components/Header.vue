@@ -7,18 +7,27 @@
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <img :src="require('../assets/logo.png')" onclick="location.href ='/'" />
+        <img
+          :src="require('../assets/logo.png')"
+          onclick="location.href ='/'"
+        />
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
-          <button class="button button1" onclick="location.href ='mypage'">마이페이지</button>
+          <button class="button button1" onclick="location.href ='mypage'">
+            마이페이지
+          </button>
           <button class="button button2" @click="logout">로그아웃</button>
         </div>
       </template>
       <template v-else>
         <div class="col text-right text-weight-bold">
-          <button class="button button1" onclick="location.href ='signin'">회원가입</button>
-          <button class="button button2" onclick="location.href ='/login'">로그인</button>
+          <button class="button button1" onclick="location.href ='signin'">
+            회원가입
+          </button>
+          <button class="button button2" onclick="location.href ='/login'">
+            로그인
+          </button>
         </div>
       </template>
     </q-bar>
