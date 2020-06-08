@@ -2,17 +2,22 @@
   <div>
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
-    <all-predict :predictions="predictions"></all-predict>
-    <div>Prediction</div>
-    <SquatPredict :predictions="predictions" @child="test"></SquatPredict>
+    <!-- <all-predict :predictions="predictions"></all-predict> -->
+    <div>Motion Prediction</div>
+    <div>{{ url }}</div>
+    <!-- <SquatPredict :predictions="predictions" @child="test"></SquatPredict> -->
+    <!-- <best-predict :predictions="predictions" @child="test"></best-predict> -->
+    <motion-predict :predictions="predictions" @child="test"></motion-predict>
   </div>
 </template>
 
 <script>
 import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
-import AllPredict from "./predictions/AllPredictions";
-import SquatPredict from "./predictions/SquatPrediction";
+// import AllPredict from "./predictions/AllPredictions";
+// import SquatPredict from "./predictions/SquatPrediction";
+// import BestPredict from "./predictions/BestPredictions";
+import MotionPredict from "./predictions/MotionPrediction";
 export default {
   props: {
     url: {
@@ -29,8 +34,10 @@ export default {
     }
   },
   components: {
-    AllPredict,
-    SquatPredict
+    // AllPredict,
+    // SquatPredict
+    // BestPredict
+    MotionPredict
   },
   data() {
     return {
@@ -83,8 +90,9 @@ export default {
       // console.log(prediction[0].probability + ", " + prediction[1].probability);
       this.predictions = prediction;
     },
-    test(count) {
-      this.$emit("child", count);
+    test(res) {
+      // res : {type: "bad", cnt: this.count}
+      this.$emit("child", res);
     }
   }
 };

@@ -53,9 +53,9 @@ export default {
         },
         {
           menu: [
-            { name: "마피아", link: "/" },
-            { name: " - 가이드", link: "/" },
-            { name: " - 자유게시판", link: "/" }
+            { name: "마피아", link: "/mafia" },
+            { name: " - 가이드", link: "/mafia/guide" },
+            { name: " - 자유게시판", link: "/mafia/community" }
           ]
         },
         {

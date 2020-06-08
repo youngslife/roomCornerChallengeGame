@@ -4,12 +4,16 @@
     <template v-if="this.$store.state.ringfit.stageNum === 1">
       <h2>링피트 가이드</h2>
       <h3>blah blah</h3>
-      <h4>여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자</h4>
+      <h4>
+        여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자
+      </h4>
       <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" />
     </template>
     <template v-else>
       <h2>스테이지 선택</h2>
-      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">stage {{ stage }}</h3>
+      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">
+        stage {{ stage }}
+      </h3>
     </template>
   </div>
 </template>
@@ -26,10 +30,24 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({ setStageNum: "ringfit/setStageNum" }),
+    ...mapMutations({
+      setStageNum: "ringfit/setStageNum",
+      setIdx: "ringfit/setIdx"
+    }),
     goToNextPage(stageNum) {
       this.setStageNum(stageNum + 1);
       this.$emit("update:isStageSelect", false);
+
+      if (stageNum === 0) {
+        // tutorial
+        this.setIdx(0);
+      } else if (stageNum === 1) {
+        // stage 1
+        this.setIdx(0);
+      } else if (stageNum === 2) {
+        // stage 2
+        this.setIdx(2);
+      }
     }
   },
   destroyed() {
@@ -42,5 +60,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -14,12 +14,14 @@ const state = {
     great: 0,
     good: 0,
     bad: 0
-  }
+  },
+  idx: 0
 };
 
 const getters = {
   getStageNum: state => state.stageNum,
-  getMotionName: state => state.motionName
+  getMotionName: state => state.motionName,
+  getIdx: state => state.idx
 };
 
 const actions = {
@@ -93,6 +95,9 @@ const mutations = {
   },
   setGameInfo: (state, payload) => {
     state.gameInfo = payload;
+  },
+  setIdx: (state, payload) => {
+    state.idx = payload;
   }
 };
 export default {

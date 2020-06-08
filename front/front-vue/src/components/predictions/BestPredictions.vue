@@ -1,11 +1,17 @@
 <template>
   <div>
-    {{ bestPrediction.className }}: {{ bestPrediction.probability.toFixed(2) }}
+    <div>{{ getIdx }}</div>
+    <div v-for="prediction in predictions" :key="prediction.className">
+      {{ prediction.className }}: {{ prediction.probability.toFixed(2) }}
+    </div>
+    <!-- {{ bestPrediction.className }}: {{ bestPrediction.probability.toFixed(2) }} -->
     <div id="test">{{ test }}</div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     predictions: {
@@ -24,18 +30,24 @@ export default {
         type: "",
         time: 0
       },
-      befAction: ""
+      befAction: "",
+      count: 0,
+      midCnt: 0
     };
   },
   computed: {
-    bestPrediction() {
-      return this.predictions.reduce(
-        (agg, prediction) => {
-          return prediction.probability > agg.probability ? prediction : agg;
-        },
-        { probability: 0 }
-      );
-    },
+    ...mapGetters({
+      getIdx: "ringfit/getIdx"
+    }),
+
+    // bestPrediction() {
+    //   return this.predictions.reduce(
+    //     (agg, prediction) => {
+    //       return prediction.probability > agg.probability ? prediction : agg;
+    //     },
+    //     { probability: 0 }
+    //   );
+    // },
     test() {
       // const test2 =
       //   this.bestPrediction.probability > 0.9
@@ -45,17 +57,37 @@ export default {
       //       ? "walk"
       //       : "stand"
       //     : "None";
-      const test2 =
-        this.bestPrediction.probability > 0.9
-          ? this.bestPrediction.className === "up"
-            ? "jump"
-            : this.bestPrediction.className === "right"
-            ? "walk"
-            : this.bestPrediction.className === "left"
-            ? "walk"
-            : "stand"
-          : "stand";
-      return test2;
+
+      // const test2 =
+      //   this.bestPrediction.probability > 0.9
+      //     ? this.bestPrediction.className === "up"
+      //       ? "jump"
+      //       : this.bestPrediction.className === "right"
+      //       ? "walk"
+      //       : this.bestPrediction.className === "left"
+      //       ? "walk"
+      //       : "stand"
+      //     : "stand";
+
+      // new_walk
+      if (this.predictions.length != 0) {
+        if (this.predictions[0].probability > 0.9) {
+          /// stop
+          return "stand";
+        } else if (
+          this.predictions[1].probability > 0.95 ||
+          this.predictions[2].probability > 0.95
+        ) {
+          // right, left
+          return "walk";
+        } else if (this.predictions[3].probability > 0.95) {
+          // up
+          return "jump";
+        }
+        return "stand";
+        // return test2;
+      }
+      return "stand";
     }
   },
   mounted() {
@@ -85,6 +117,7 @@ export default {
         this.action(time + 100);
       }, 100);
     }
+    
   }
 };
 </script>

@@ -11,6 +11,9 @@
         <writer game="링피트" :type="category" :isWrite.sync="isWrite"></writer>
       </template>
       <template v-else>
+        <div class="row justify-end">
+          <q-btn color="primary" icon="check" label="글쓰기" @click="write()" />
+        </div>
         <template v-if="isDetail">
           <detail
             game="링피트"
@@ -22,14 +25,6 @@
         <template v-else>
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="자유">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
@@ -47,14 +42,6 @@
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="질문">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
@@ -72,14 +59,6 @@
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="정보">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
@@ -143,6 +122,7 @@
 <script>
 import writer from "../../components/PostWrite";
 import detail from "../../components/PostDetail";
+import router from "@/router";
 export default {
   data() {
     return {
@@ -174,12 +154,16 @@ export default {
   },
   methods: {
     write() {
-      if (this.tab === "자유") {
-        this.category = "자유게시판";
-      } else if (this.tab === "질문") {
-        this.category = "질문게시판";
-      } else this.category = "팁과공략";
-      this.isWrite = true;
+      if (this.$store.state.user_no > 0) {
+        if (this.tab === "자유") {
+          this.category = "자유게시판";
+        } else if (this.tab === "질문") {
+          this.category = "질문게시판";
+        } else this.category = "팁과공략";
+        this.isWrite = true;
+      } else {
+        router.push("/login");
+      }
     },
     check() {
       this.isWrite = false;

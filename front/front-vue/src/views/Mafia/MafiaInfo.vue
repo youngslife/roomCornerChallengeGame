@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="text-center">
-      <h2>소식</h2>
-    </div>
+    <div class=" text-center"><h2>소식</h2></div>
     <div
       class="col-10 row justify-around"
       style="height:700px; margin-top:20px"
@@ -13,17 +11,15 @@
         v-for="(board, index) in boardList"
         :key="index"
       >
-        <!-- {{ board }} -->
+        {{ board }}
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
         <q-card-section>
-          <div class="text-h6">{{ board.board_subtitle }}</div>
-          <div class="text-subtitle2">
-            {{ board.board_postList[0].post_regtime }}
-          </div>
+          <div class="text-h6">X월 X일 공지사항</div>
+          <div class="text-subtitle2">2020-02-02</div>
         </q-card-section>
-        <q-card-section
-          v-html="board.board_postList[0].post_content"
-        ></q-card-section>
+        <q-card-section>
+          우리 업데이트 해써용 ~^
+        </q-card-section>
       </q-card>
     </div>
   </div>

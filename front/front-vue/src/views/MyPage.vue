@@ -2,10 +2,11 @@
   <q-layout class="row">
     <div class="col-3">
       <q-card class="my-card" style="margin-top:20px;">
-        <img src="https://cdn.quasar.dev/img/mountains.jpg" style=" border-radius: 50%;" />
+        <img :src="user.user_profile.img_path" style=" border-radius: 50%;" />
         <q-card-section>
-          <div class="text-h3 text-center">{{user.user_name}}</div>
-          <div class="text-h6 text-center">19999등</div>
+          <div class="text-h3 text-center">{{ user.user_name }}</div>
+          <div class="text-h7 text-center">{{ user.user_email }}</div>
+          <div class="text-h6 text-center">37426등</div>
         </q-card-section>
         <q-card-section>
           <q-input v-model="text" type="text" label="자기소개칸" />
@@ -24,7 +25,13 @@
         <q-tab name="alarms" label="게임2" />
         <q-tab v-if="$q.screen.gt.sm" name="movies" label="게임3" />
         <q-tab v-if="$q.screen.gt.sm" name="photos" label="게임4" />
-        <q-btn-dropdown v-if="$q.screen.lt.md" auto-close stretch flat label="More...">
+        <q-btn-dropdown
+          v-if="$q.screen.lt.md"
+          auto-close
+          stretch
+          flat
+          label="More..."
+        >
           <q-list>
             <q-item clickable @click="tab = 'movies'">
               <q-item-section>Movies</q-item-section>
@@ -46,7 +53,11 @@
               style="height: 950px;"
             >
               <div v-for="n in 100" :key="n" class="q-py-sm q-px-md">
-                <q-checkbox right-label v-model="orange" label="뭔가 내용이 들어가겠지" />
+                <q-checkbox
+                  right-label
+                  v-model="orange"
+                  label="뭔가 내용이 들어가겠지"
+                />
               </div>
             </q-scroll-area>
             <div class="col-8 flex flex-cetner" style="margin-left:50px;">
@@ -86,11 +97,13 @@
           </q-tab-panel>
 
           <q-tab-panel name="alarms">
-            <div class="text-h6">Alarms</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Alarms</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
 
           <q-tab-panel name="movies">
-            <div class="text-h6">Movies</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Movies</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -99,6 +112,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -110,7 +124,18 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$store.state.user.user;
+    this.getInfo();
+  },
+  methods: {
+    ...mapActions({ getUserInfo: "user/getUserInfo" }),
+    getInfo() {
+      // console.log('1111111dfadfewwr', this.user)
+      this.getUserInfo(this.$store.state.user.user_no);
+      setTimeout(() => {
+        this.user = this.$store.state.user.user;
+      }, 300);
+      console.log("dfadfewwr", this.user);
+    }
   }
 };
 </script>

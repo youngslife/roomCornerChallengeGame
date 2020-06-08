@@ -12,10 +12,13 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "RingfitAttack",
   props: {
-    AttackCnt: Number
+    AttackCnt: Number,
+    attackType: String
   },
   data() {
     return {
@@ -90,6 +93,9 @@ export default {
     cnt() {
       if (this.AttackCnt != 0) this.playerAttack();
       return this.AttackCnt;
+    },
+    atType() {
+      return this.attackType;
     }
   },
   mounted() {
@@ -100,6 +106,9 @@ export default {
     this.AttackCnt = 0;
   },
   methods: {
+    ...mapMutations({
+      setIdx: "ringfit/setIdx"
+    }),
     playerAttack() {
       let demage;
       // if (skillName == this.skills.first.name) {

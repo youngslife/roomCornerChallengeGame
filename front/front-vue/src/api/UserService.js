@@ -24,7 +24,7 @@ class UserService {
       });
   }
   async getUserDetailFromNo(userNo) {
-    return await Api.get(`/User/searchDetail/${userNo}`)
+    return await Api.get(`/User/searchUserDetail/${userNo}`)
       .then(Response => {
         return Response;
       })
