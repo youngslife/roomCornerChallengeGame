@@ -1,6 +1,5 @@
 package com.ssafy.backspring.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backspring.model.dto.UserGameInfo;
 import com.ssafy.backspring.model.dto.ringfit.RGameInfo;
-import com.ssafy.backspring.model.dto.ringfit.RMonster;
 import com.ssafy.backspring.model.dto.ringfit.RStage;
 import com.ssafy.backspring.model.dto.ringfit.RUserInfo;
 import com.ssafy.backspring.model.service.UserGameInfoService;
@@ -78,6 +76,15 @@ public class RingFitController {
 	     }
 	     return handler.handleSuccess(data);
      }
+     @ApiOperation("유저별 스테이지 리스트 보여주는 기능")
+     @GetMapping("/Ringfit/stage/searchStage/{user_no}")
+     public ResponseEntity<Map<String, Object>> searchStage(@PathVariable int user_no) {
+	     Map<String,Object> data = new HashMap<String,Object>();
+	     RStage stage = rs_service.searchStage(user_no);
+	     data.put("record", stage);
+	     if(stage == null) data.put("message", "클리어 전적이 없습니다.");
+	     return handler.handleSuccess(data);
+     }
      @ApiOperation("게임을 시작하는 기능")
 	 @PostMapping("/Ringfit/stage/gameStart")
      public ResponseEntity<Map<String, Object>> gameStart(
@@ -102,6 +109,7 @@ public class RingFitController {
     	 RUserInfo newinfo = new RUserInfo();
     	 newinfo.setRstage_no(rstage_no);
     	 newinfo.setUser_no(user_no);
+    	 if(rgameinfo_level==0) rgameinfo_level = 1;
     	 newinfo.setRuserinfo_hp(100*rgameinfo_level);
     	 if(cleared>0) {
     		 newinfo.setRuserinfo_iscleared(true);
@@ -109,6 +117,7 @@ public class RingFitController {
     	 rui_service.insert(newinfo);
     	 //방금전에 삽입된 마지막 게임 기록을 찾아서 게임 관리번호 입력
     	 RUserInfo userinfo = rui_service.getLast(rinfo);
+    	 System.out.println(userinfo);
     	 rinfo.setRuserinfo_no(userinfo.getRuserinfo_no());
     	 
     	 // 2) RGameInfo -> 시작시간, 난이도 입력
@@ -122,7 +131,7 @@ public class RingFitController {
     	 // 2) 필요 몬스터 데이터 담아서 줄 것(집합의 형태로 중복 x)
     	 /*
     	  * 몬스터를 튜토리얼은 1개, 스테이지별로 3개를 줄 수 있는 상황이 되었으니
-    	  * 배열로 순서대로 주려던 것은 제거하고, 몬스터 info를 담아서 줄것
+    	  * 배열로 순서대로 주려던 것은 제거하고, 몬스터 info를 담아서 줄 것
     	  * 스테이지는 맵정보, 몬스터리스트를 가지고 있고 프론트에서 1개씩 꺼내도록 하자.
     	  * 배경음악 등은 front asset에 담아놓자.
     	  * 게임이 종료되고 업데이트를 하려면 ruserinfo_no가 있어야해. 이거를 포함해서 주고 게임이 진행되고 난뒤, 받아와서 업데이트를 하는거야.
@@ -140,8 +149,10 @@ public class RingFitController {
      @PostMapping("/Ringfit/stage/gameEnd")
      public ResponseEntity<Map<String,Object>> gameEnd(@RequestBody RUserInfo ruserinfo){
     	 
+    	 System.out.println(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_perfect_num());
     	 RUserInfo updateUserInfo = rui_service.search(ruserinfo.getRuserinfo_no());
     	 RGameInfo updateGameInfo = rgi_service.search(ruserinfo.getRuserinfo_gameinfo().getRgameinfo_no());
+    	 System.out.println(updateGameInfo);
     	 //유저 링피트 정보 갱신. 승리 - 클리어 - 골드
     	 //이번에 승리했으면 클리어 추가
     	 if(ruserinfo.isRuserinfo_iswon()) {

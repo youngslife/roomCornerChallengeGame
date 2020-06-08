@@ -27,7 +27,6 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import router from "@/router"
 const menuList = [
   {
     icon: "inbox",
@@ -74,11 +73,8 @@ export default {
   },
   methods: {
     ...mapActions("header", ["changeIsDrawer"]),
-    async logout() {
-      await window.sessionStorage.setItem("user_no", 0);
-      if (this.sessoinUser == 0) {
-        await router.go()
-      }
+    logout() {
+      window.sessionStorage.setItem("user_no", 0);
     }
   },
   computed: {
@@ -89,15 +85,12 @@ export default {
       set(val) {
         this.$store.commit("user/setUserNo", { user_no: val });
       }
-    },
-    sessoinUser() {
-      return window.sessionStorage.getItem("user_no")
     }
   },
   mounted() {
-    this.$store.state.user_no = window.sessionStorage.getItem("user_no");
-    this.user_no = this.$store.state.user_no;
-  },
+    this.$store.state.user.user_no = window.sessionStorage.getItem("user_no");
+    this.user_no = this.$store.state.user.user_no;
+  }
 };
 </script>
 

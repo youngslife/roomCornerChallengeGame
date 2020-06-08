@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    this.user_no = this.$store.state.user_no;
+    this.user_no = this.$store.state.user.user_no;
     console.log(this.post);
     if (this.post !== undefined) {
       this.title = this.post.post_title;

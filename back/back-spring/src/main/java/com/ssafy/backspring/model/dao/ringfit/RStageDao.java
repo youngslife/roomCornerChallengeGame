@@ -17,4 +17,5 @@ public interface RStageDao {
 	public void delete(int rstage_no);
 	public List<RStage> checkUserinfo(int ruser_no);
 	public RStage searchInfo(RInfo rinfo);
+	public RStage searchStage(int user_no);
 }
