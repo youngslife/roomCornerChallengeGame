@@ -151,6 +151,7 @@ export default class TutorialScene extends Scene {
     coin.destroy(coin.x, coin.y);
     self.sound.add("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster() {

@@ -186,6 +186,7 @@ export default class Stage2Scene extends Scene {
     coin.destroy(coin.x, coin.y);
     self.sound.play("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster(user, monster) {

@@ -6,7 +6,9 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
+              <div class="text-subtitle2">
+                게임 가이드 버튼 + 다시 하기 버튼 + 끝내기 버튼
+              </div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -21,24 +23,47 @@
         <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
-        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
-        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :attackType="attackType" />
-        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" :gameInfo="gameInfo" />
+        <select-stage
+          v-if="isStageSelect"
+          :isStageSelect.sync="isStageSelect"
+        />
+        <ringfit-attack
+          v-if="isMonster"
+          :AttackCnt="AttackCnt"
+          :attackType="attackType"
+        />
+        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
       </div>
-      <div id="time" class="playtime"></div>
-      <!-- <div class="pause" v-if="!isStageSelect">
+      <!-- <div id="time" class="playtime"></div> -->
+      <div v-if="!isStageSelect && !isMonster">
+        <div class="coinImg">
+          <img :src="coinImage" />
+        </div>
+        <div class="coin">{{ $store.state.ringfit.coin }}</div>
+      </div>
+      <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
-      </div>-->
+      </div>
       <div id="right" class="col-2 column">
         <div v-if="isMonster" id="additionalInfo" class="col-5">
           <img :src="example" />
         </div>
         <div class="col-6 self-end">
           <template v-if="isMonster">
-            <squat-cam :url="url" :width="window.width" :height="window.height" @child="goAttack"></squat-cam>
+            <squat-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="goAttack"
+            ></squat-cam>
           </template>
           <template v-else>
-            <web-cam :url="walkUrl" :width="window.width" :height="window.height" @child="jump"></web-cam>
+            <web-cam
+              :url="walkUrl"
+              :width="window.width"
+              :height="window.height"
+              @child="jump"
+            ></web-cam>
           </template>
         </div>
       </div>
@@ -88,7 +113,8 @@ export default {
         username: "방구석여포",
         hp: 200
       },
-      gameInfo: {}
+      gameInfo: {},
+      coinImage: require("../../game/assets/sprites/tile.png")
     };
   },
   computed: {
@@ -228,7 +254,7 @@ export default {
     },
     goAttack(status) {
       // status {type: "bad", cnt: this.count}
-      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@?@@@@@@@@@@@");
+      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
       this.attackType = status.type;
       if (this.attackType === "perfect") {
         this.gameInfo.perfect++;
@@ -274,10 +300,16 @@ $speed: 7s;
   --slider-speed: ;
 }
 
-.playtime {
+.coinImg {
   position: absolute;
-  top: 12.7%;
-  left: 62%;
+  top: 10.7%;
+  left: 60%;
+  z-index: 1;
+}
+.coin {
+  position: absolute;
+  top: 12.6%;
+  left: 63%;
   z-index: 1;
 }
 .stage {
