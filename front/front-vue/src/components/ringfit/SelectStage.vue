@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 게임 처음해보는 유저면 가이드를 보여주고 튜토리얼부터 시작할 수 있게 하자-->
-    <template v-if="this.$store.state.ringfit.stageNum === 0">
+    <template v-if="this.$store.state.ringfit.stageNum === 1">
       <h2>링피트 가이드</h2>
       <h3>blah blah</h3>
       <h4>
@@ -11,13 +11,7 @@
     </template>
     <template v-else>
       <h2>스테이지 선택</h2>
-      <h3
-        v-for="(stage, i) in stages"
-        :key="i"
-        @click="goToNextPage(stage.num)"
-      >
-        stage {{ stage.num }}
-      </h3>
+      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">stage {{ stage }}</h3>
     </template>
   </div>
 </template>
@@ -28,34 +22,24 @@ export default {
   props: {
     isStageSelect: Boolean
   },
-  data() {
-    return {
-      stages: [
-        // {
-        //   num: 1,
-        //   url: "" // 맵세팅 하기 위한 api가 있는지?
-        // },
-        // {
-        //   num: 2,
-        //   url: ""
-        // }
-      ]
-    };
-  },
-  mounted() {
-    this.stages = [];
-    for (let i = 0; i < this.$store.state.ringfit.stageNum; i++) {
-      this.stages[i].num = i + 1;
+  computed: {
+    stages() {
+      return this.$store.state.ringfit.stages;
     }
   },
   methods: {
+<<<<<<< HEAD
     ...mapMutations({
       setStageNum: "ringfit/setStageNum",
       setIdx: "ringfit/setIdx"
     }),
+=======
+    ...mapMutations({ setStageNum: "ringfit/setStageNum" }),
+>>>>>>> 4dc0e146e6a8051b317b9ef46987c1d4ce8af3df
     goToNextPage(stageNum) {
-      this.setStageNum(stageNum);
+      this.setStageNum(stageNum + 1);
       this.$emit("update:isStageSelect", false);
+<<<<<<< HEAD
 
       if (stageNum === 1) {
         // tutorial
@@ -67,17 +51,19 @@ export default {
         // stage 2
         this.setIdx(3);
       }
+=======
+>>>>>>> 4dc0e146e6a8051b317b9ef46987c1d4ce8af3df
     }
   },
   destroyed() {
-    console.log(this.$store.state);
     this.$store.dispatch("ringfit/gameStart", {
-      user_no: this.$store.state.user_no,
+      user_no: this.$store.state.user.user_no,
       stage: this.$store.state.ringfit.stageNum,
-      level: 0
+      level: 1
     });
   }
 };
 </script>
 
-<style></style>
+<style>
+</style>

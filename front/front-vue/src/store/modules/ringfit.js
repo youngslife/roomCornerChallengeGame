@@ -3,14 +3,16 @@ import RingfitService from "../../api/RingfitService";
 const state = {
   stageNum: 0,
   motionName: "",
-  rgameInfo: {},
-  idx: 0,
+  ruserInfo_no: 0,
+  rgameInfo_no: 0,
+  stages: [],
+  coin: 0,
+  isPause: false
 };
 
 const getters = {
   getStageNum: state => state.stageNum,
-  getMotionName: state => state.motionName,
-  getIdx: state => state.idx
+  getMotionName: state => state.motionName
 };
 
 const actions = {
@@ -19,16 +21,34 @@ const actions = {
       const stage = Response.data.data;
       console.log(stage.message);
       let stNum;
-      if (stage.message === "클리어 전적이 없습니다.") stNum = 0;
-      else stNum = stage.record.rstage_no;
+      if (stage.message === "클리어 전적이 없습니다.") stNum = 1;
+      else stNum = stage.record.rstage_no + 1;
+      console.log(stNum);
       store.commit("setStageNum", stNum);
+      store.commit("setStages", stNum);
     });
   },
   gameStart: (store, payLoad) => {
-    RingfitService.gameStart(payLoad);
+    RingfitService.gameStart(payLoad).then(Response => {
+      console.log(Response.data.data.stageInfo);
+      store.commit(
+        "setUserInfo_no",
+        Response.data.data.stageInfo.rstage_usergameinfo[0].ruserinfo_no
+      );
+      store.commit(
+        "setGameInfo_no",
+        Response.data.data.stageInfo.rstage_usergameinfo[0].ruserinfo_gameinfo
+          .rgameinfo_no
+      );
+    });
   },
   gameEnd: (store, payLoad) => {
-    RingfitService.gameEnd(payLoad);
+    RingfitService.gameEnd(payLoad).then(() => {
+      store.commit("setCoin", 0);
+    });
+  },
+  gamePause: (store, payLoad) => {
+    store.commit("setIsPause", payLoad);
   }
 };
 const mutations = {
@@ -38,8 +58,20 @@ const mutations = {
   setMotionName: (state, payload) => {
     state.motionName = payload;
   },
-  setIdx: (state, payload) => {
-    state.idx = payload
+  setUserInfo_no: (state, payload) => {
+    state.ruserInfo_no = payload;
+  },
+  setGameInfo_no: (state, payload) => {
+    state.rgameInfo_no = payload;
+  },
+  setStages: (state, payload) => {
+    for (let i = 1; i < payload; i++) state.stages.push(i);
+  },
+  setCoin: (state, payload) => {
+    state.coin = payload;
+  },
+  setIsPause: (state, payload) => {
+    state.isPause = payload;
   }
 };
 export default {

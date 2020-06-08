@@ -40,7 +40,7 @@ const actions = {
           });
           router.push("/");
         } else {
-          alert("등록되지 않거나 비밀번호를 잘못입력하셧습니다.");
+          alert("등록되지 않거나 비밀번호를 잘못입력하셨습니다.");
         }
       });
   },
@@ -65,6 +65,11 @@ const actions = {
   changeDeafultPw: (store, payLoad) => {
     fireService.resetPw(payLoad.email);
     router.push("/login");
+  },
+  getUserInfo: (store, payLoad) => {
+    UserService.getUserDetailFromNo(payLoad).then(res => {
+      store.commit("setUser", res.data.data)
+    })
   }
 };
 const mutations = {
@@ -85,6 +90,9 @@ const mutations = {
   setUserNo: (state, payLoad) => {
     state.user_no = payLoad.user_no;
     window.sessionStorage.setItem("user_no", payLoad.user_no);
+  },
+  setUser: (state, payLoad) => {
+    state.user = payLoad
   }
 };
 export default {

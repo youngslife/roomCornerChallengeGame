@@ -1,11 +1,20 @@
 import { Scene } from "phaser";
-
+import map from "@/game/assets/tilemaps/maps/stage2.json";
+import m from "@/assets/monster_sprites/stage2/01_ordinary/demon_sprites.png";
+import m2 from "@/assets/monster_sprites/stage2/02_middleboss/troll2.png";
+import m3 from "@/assets/monster_sprites/stage2/03_finalboss/mage.png";
 let player,
   monster,
+  monster2,
+  monster3,
   layer,
   coinLayer,
+  endLayer,
+  end,
   coins,
-  time = 0;
+  self,
+  time = 0,
+  score = 0;
 
 export default class Stage2Scene extends Scene {
   constructor() {
@@ -13,12 +22,31 @@ export default class Stage2Scene extends Scene {
       key: "Stage2Scene"
     });
   }
+  preload() {
+    this.load.tilemapTiledJSON("map", map);
+    this.load.spritesheet("monster", m, {
+      frameWidth: 194,
+      frameHeight: 194
+    });
+    this.load.spritesheet("monster2", m2, {
+      frameWidth: 195,
+      frameHeight: 139
+    });
+
+    this.load.spritesheet("monster3", m3, {
+      frameWidth: 121,
+      frameHeight: 103
+    });
+  }
   // Runs once, after all assets in preload are loaded
   create() {
-    this.cameras.main.setBounds(0, 0, 3392, 100);
-    this.physics.world.setBounds(0, 0, 3392);
+    self = this;
+    this.sound.add("wipeAudio");
+    this.sound.add("coinAudio");
+    this.cameras.main.setBounds(0, 0, 4032, 100);
+    this.physics.world.setBounds(0, 0, 4032);
     const backgroundImage = this.add.image(0, 0, "bg").setOrigin(0, 0);
-    backgroundImage.setScale(2, 1);
+    backgroundImage.setScale(4, 1);
     this.map = this.make.tilemap({
       key: "map"
     });
@@ -26,42 +54,30 @@ export default class Stage2Scene extends Scene {
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
-    this.make.text({
-      x: 0,
-      y: 0,
-      padding: {
-        left: 64,
-        right: 16,
-        top: 20,
-        bottom: 40
-        //x: 32,    // 32px padding on the left/right
-        //y: 16     // 16px padding on the top/bottom
-      },
-      text: "Stage", // + this.$store.state.phaser.stage,
-      style: {
-        fontSize: "32px",
-        fontFamily: "Arial",
-        color: "#000000",
-        align: "center" // 'left'|'center'|'right'|'justify'
-      },
-      add: true
+
+    endLayer = this.map.getObjectLayer("EndLayer")["objects"];
+    end = this.physics.add.staticGroup();
+    endLayer.forEach(el => {
+      let obj = end.create(el.x, el.y + 136, "end");
+      obj.setOrigin(0);
+      obj.body.width = el.width;
+      obj.body.height = el.height;
     });
 
     coinLayer.forEach(el => {
-      let obj = coins.create(el.x, el.y + 150, "coin");
-      // obj.setScale(el.width / 16, el.height / 16);
+      let obj = coins.create(el.x, el.y + 136, "coin");
       obj.setOrigin(0);
       obj.body.width = el.width;
       obj.body.height = el.height;
     });
     player = this.physics.add.sprite(0, 400, "player");
-    // player.setBounce(0.1);
     player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
     this.physics.add.collider(player, layer);
     this.physics.add.overlap(player, coins, this.collectCoin);
+    this.physics.add.overlap(player, end, true, this.endGame);
     this.anims.create({
       key: "walk",
       frames: this.anims.generateFrameNames("player", {
@@ -92,7 +108,6 @@ export default class Stage2Scene extends Scene {
       ],
       frameRate: 10
     });
-    // this.cameras.main.setZoom(2);
     this.anims.create({
       key: "attack",
       frames: this.anims.generateFrameNames("monster", {
@@ -104,18 +119,35 @@ export default class Stage2Scene extends Scene {
       repeat: -1
     });
     // monster
-    monster = this.physics.add.sprite(800, 400, "monster").play("attack");
+    monster = this.physics.add.sprite(1280, 400, "monster");
     monster.setSize(0.3);
-    monster.setDisplaySize(-250, 200);
+    monster.setDisplaySize(400, 350);
     monster.setCollideWorldBounds(true);
+    monster2 = this.physics.add.sprite(2460, 0, "monster2");
+    monster2.setSize(0.3);
+    monster2.setDisplaySize(250, 250);
+    monster2.setCollideWorldBounds(true);
+    monster2.setScale(1.5, 1.5);
+    monster3 = this.physics.add.sprite(3740, 0, "monster3");
+    monster3.setSize(0.3);
+    monster3.setDisplaySize(-310, 310);
+    monster3.setCollideWorldBounds(true);
     this.physics.add.collider(monster, layer);
+    this.physics.add.collider(monster2, layer);
+    this.physics.add.collider(monster3, layer);
     this.physics.add.overlap(player, monster, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
   }
   // Runs once per frame for the duration of the scene
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-
+    if (this.registry.events.store.state.ringfit.isPause) {
+      this.registry.events.emit("saveScene", "Stage2Scene");
+      this.scene.launch("PauseScene");
+      this.scene.pause();
+    }
     document.addEventListener("keydown", function(e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
@@ -151,21 +183,20 @@ export default class Stage2Scene extends Scene {
     }
   }
   collectCoin(user, coin) {
-    // console.log(user, coin);
     coin.destroy(coin.x, coin.y);
-    // score++;
+    self.sound.play("coinAudio");
+    score++;
     return false;
   }
-  // meetMonster 마지막 몬스터랑 전투한 다음에 or
-  // user hp가 < 0 이면
-  // destroy or clear? 해주고
-  meetMonster() {
-    console.log("몬스터를 만났다");
+  meetMonster(user, monster) {
+    self.sound.play("wipeAudio");
     this.registry.events.emit("saveScene", "Stage2Scene");
+    monster.destroy();
     this.scene.launch("WipeScene");
     this.scene.pause();
-    this.registry.events.emit("meetMonster");
-    // RingFit.methods.changeToAttack();
-    monster.destroy();
+  }
+  endGame() {
+    self.registry.events.emit("setCoin", score);
+    self.registry.events.store.state.phaser.isClear = this;
   }
 }

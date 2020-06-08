@@ -1,4 +1,6 @@
 import { Scene } from "phaser";
+import map from "@/game/assets/tilemaps/maps/test.json";
+import m from "@/assets/monster_sprites/tutorial/01_ordinary/slime_sprites.png";
 
 let player,
   monster,
@@ -7,6 +9,8 @@ let player,
   endLayer,
   end,
   coins,
+  self,
+  score = 0,
   time = 0;
 
 export default class TutorialScene extends Scene {
@@ -15,8 +19,18 @@ export default class TutorialScene extends Scene {
       key: "TutorialScene"
     });
   }
+  preload() {
+    this.load.tilemapTiledJSON("map", map);
+    this.load.spritesheet("monster", m, {
+      frameWidth: 128,
+      frameHeight: 128
+    });
+  }
   // Runs once, after all assets in preload are loaded
   create() {
+    self = this;
+    this.sound.add("wipeAudio");
+    this.sound.add("coinAudio");
     this.cameras.main.setBounds(0, 0, 1920, 100);
     this.physics.world.setBounds(0, 0, 1920);
     const backgroundImage = this.add.image(0, 0, "bg").setOrigin(0, 0);
@@ -32,8 +46,7 @@ export default class TutorialScene extends Scene {
     endLayer = this.map.getObjectLayer("EndLayer")["objects"];
     end = this.physics.add.staticGroup();
     endLayer.forEach(el => {
-      let obj = end.create(el.x, el.y + 150, "end");
-      // obj.setScale(el.width / 16, el.height / 16);
+      let obj = end.create(el.x, el.y + 136, "end");
       obj.setOrigin(0);
       obj.body.width = el.width;
       obj.body.height = el.height;
@@ -41,20 +54,18 @@ export default class TutorialScene extends Scene {
 
     coinLayer.forEach(el => {
       let obj = coins.create(el.x, el.y + 150, "coin");
-      // obj.setScale(el.width / 16, el.height / 16);
       obj.setOrigin(0);
       obj.body.width = el.width;
       obj.body.height = el.height;
     });
     player = this.physics.add.sprite(0, 400, "player");
-    // player.setBounce(0.1);
     player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
     this.physics.add.collider(player, layer);
     this.physics.add.overlap(player, coins, this.collectCoin);
-    this.physics.add.overlap(player, end, this.endGame);
+    this.physics.add.overlap(player, end, true, this.endGame);
     this.anims.create({
       key: "walk",
       frames: this.anims.generateFrameNames("player", {
@@ -85,21 +96,10 @@ export default class TutorialScene extends Scene {
       ],
       frameRate: 10
     });
-    // this.cameras.main.setZoom(2);
-    this.anims.create({
-      key: "attack",
-      frames: this.anims.generateFrameNames("monster", {
-        prefix: "ATTAK_",
-        start: 1,
-        end: 2
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
     // monster
-    monster = this.physics.add.sprite(800, 400, "monster").play("attack");
+    monster = this.physics.add.sprite(1600, 400, "monster");
     monster.setSize(0.3);
-    monster.setDisplaySize(-250, 200);
+    monster.setDisplaySize(200, 150);
     monster.setCollideWorldBounds(true);
     this.physics.add.collider(monster, layer);
     this.physics.add.overlap(player, monster, this.meetMonster, null, this);
@@ -108,7 +108,11 @@ export default class TutorialScene extends Scene {
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-
+    if (this.registry.events.store.state.ringfit.isPause) {
+      this.registry.events.emit("saveScene", "TutorialScene");
+      this.scene.launch("PauseScene");
+      this.scene.pause();
+    }
     document.addEventListener("keydown", function(e) {
       if (e.keyCode === 39) cursors.right.isDown = true;
       else if (e.keyCode === 37) cursors.left.isDown = true;
@@ -144,25 +148,20 @@ export default class TutorialScene extends Scene {
     }
   }
   collectCoin(user, coin) {
-    // console.log(user, coin);
     coin.destroy(coin.x, coin.y);
-    // score++;
+    self.sound.add("coinAudio");
+    score++;
     return false;
   }
-  // meetMonster 마지막 몬스터랑 전투한 다음에 or
-  // user hp가 < 0 이면
-  // destroy or clear? 해주고
   meetMonster() {
-    console.log("몬스터를 만났다");
+    self.sound.play("wipeAudio");
     this.registry.events.emit("saveScene", "TutorialScene");
     this.scene.launch("WipeScene");
     this.scene.pause();
-    // this.registry.events.emit("meetMonster");
     monster.destroy();
   }
   endGame() {
-    // game 끝내고 백으로 result 보내주자
-    // isClear 정보도 보내주고
-    console.log("test");
+    self.registry.events.emit("setCoin", score);
+    self.registry.events.store.state.phaser.isClear = this;
   }
 }

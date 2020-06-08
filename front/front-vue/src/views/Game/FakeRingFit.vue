@@ -6,9 +6,7 @@
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
               <div class="text-h5">일시정지 화면</div>
-              <div class="text-subtitle2">
-                시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ
-              </div>
+              <div class="text-subtitle2">시간만 멈추지 말고 다른것도 멈춰야돼ㅠㅠㅠ</div>
             </q-card-section>
             <q-card-actions>
               <q-btn color="primary" label="exit" @click="pause"></q-btn>
@@ -22,14 +20,14 @@
         id="map"
         class="col-9 slider-col"
         v-bind:class="{ pauseMap: isPause }"
-      ></div> -->
+      ></div>-->
       <div class="col-9">
         <Game />
       </div>
       <div id="time" class="playtime"></div>
       <!-- <div id="character">
         <img :src="require('../../assets/walking.gif')" />
-      </div> -->
+      </div>-->
       <div class="pause">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
@@ -60,7 +58,7 @@ export default {
   components: {
     WebCam,
     QOverlay,
-    Game,
+    Game
   },
   data() {
     return {
@@ -70,13 +68,13 @@ export default {
       stage: "",
       window: {
         width: 0,
-        height: 0,
+        height: 0
       },
       time: null,
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false,
+      isPause: false
     };
   },
   computed: {
@@ -86,7 +84,7 @@ export default {
       // hour: (state) => state.hour,
       // minute: (state) => state.minute,
       // second: (state) => state.second,
-    }),
+    })
   },
   async mounted() {
     const right = document.getElementById("right");
@@ -100,7 +98,7 @@ export default {
     ...mapActions("game", ["getStage"]),
     async getStageByUser() {
       const params = {
-        id: this.$store.state.id,
+        id: this.$store.state.id
       };
       await this.getStage(params); // axios
     },
@@ -143,14 +141,14 @@ export default {
         // 걷는 모션
         let arrowRight = new KeyboardEvent("keydown");
         Object.defineProperty(arrowRight, "keyCode", {
-          get: () => 39,
+          get: () => 39
         });
         document.dispatchEvent(arrowRight);
         // map.style.webkitAnimationPlayState = "running";
       } else if (status === "jump") {
         let arrowUp = new KeyboardEvent("keydown");
         Object.defineProperty(arrowUp, "keyCode", {
-          get: () => 38,
+          get: () => 38
         });
         document.dispatchEvent(arrowUp);
         // map.style.webkitAnimationPlayState = "running";
@@ -159,11 +157,11 @@ export default {
         // 멈춰
         // map.style.webkitAnimationPlayState = "paused";
       }
-    },
+    }
   },
   beforeDestroy() {
     clearTimeout(this.time);
-  },
+  }
 };
 function addZeros(num, digit) {
   // 자릿수 맞춰주기
@@ -181,8 +179,8 @@ function addZeros(num, digit) {
 <style lang="scss" scoped>
 $img-w: 2000px;
 $img-h: 6000px;
-$shrink: 6.8;
-$ratio: 1 / $shrink;
+$shlink: 6.8;
+$ratio: 1 / $shlink;
 $speed: 7s;
 
 :root {

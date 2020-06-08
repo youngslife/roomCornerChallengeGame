@@ -27,15 +27,16 @@
          "name":"EndLayer",
          "objects":[
                 {
-                 "height":0,
-                 "id":9,
+                 "gid":107,
+                 "height":64,
+                 "id":10,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":0,
-                 "x":1884.18019111179,
-                 "y":282.481419687547
+                 "width":64,
+                 "x":1858.0045502806,
+                 "y":318.849689064159
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -79,7 +80,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":10,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.3.5",

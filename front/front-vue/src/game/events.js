@@ -8,5 +8,7 @@ events.on("meetMonster", () => {
 events.on("saveScene", scene => {
   events.store.commit("phaser/setScene", scene);
 });
-
+events.on("setCoin", coin => {
+  events.store.commit("ringfit/setCoin", coin);
+});
 export default events;

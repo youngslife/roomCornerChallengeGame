@@ -88,8 +88,8 @@ export default {
     }
   },
   mounted() {
-    this.$store.state.user_no = window.sessionStorage.getItem("user_no");
-    this.user_no = this.$store.state.user_no;
+    this.$store.state.user.user_no = window.sessionStorage.getItem("user_no");
+    this.user_no = this.$store.state.user.user_no;
   }
 };
 </script>

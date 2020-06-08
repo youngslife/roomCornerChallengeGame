@@ -28,7 +28,8 @@ const routes = [
   {
     path: "/fitness",
     component: () => import("../views/Fitness/Fitness.vue"),
-    children: [{
+    children: [
+      {
         path: "",
         name: "fitness",
         component: () => import("../views/Fitness/FitnessHome.vue")
@@ -55,10 +56,51 @@ const routes = [
       }
     ]
   },
+  //마피아 게임
+  {
+    path: "/mafia",
+    component: () => import("../views/Mafia/Mafia.vue"),
+    children: [{
+        path: "",
+        name: "mafia",
+        component: () => import("../views/Mafia/MafiaHome.vue")
+      },
+      {
+        path: "community",
+        name: "mafiacommunity",
+        component: () => import("../views/Mafia/MafiaCommunity.vue")
+      },
+      {
+        path: "guide",
+        name: "mafiaguide",
+        component: () => import("../views/Mafia/MafiaGuide.vue")
+      },
+      {
+        path: "rank",
+        name: "mafiarank",
+        component: () => import("../views/Mafia/MafiaRank.vue")
+      },
+      {
+        path: "info",
+        name: "mafiainfo",
+        component: () => import("../views/Mafia/MafiaInfo.vue")
+      }
+    ]
+  },
   {
     path: "/game/RingFit",
     name: "RingFit",
     component: () => import("../views/Game/RingFit.vue")
+  },
+  {
+    path: "/temp",
+    name: "temp",
+    component: () => import("../views/temp.vue")
+  },
+  {
+    path: "/jump",
+    name: "jump",
+    component: () => import("../views/jump.vue")
   },
   {
     path: "/temp/SelectMotion",

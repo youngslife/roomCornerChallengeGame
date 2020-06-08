@@ -17,13 +17,12 @@
         </div>
       </template>
     </q-overlay>
-    <div class="row slider">
+    <div class="row">
       <div class="col-9">
-        <h3>Stage {{ getStageNum }}</h3>
-        <div>{{ getIdx }}</div>
-        <h4>이번 판 운동 : {{ getMotionName }}</h4>
+        <h3 v-if="!isStageSelect" class="stage">Stage {{ getStageNum - 1 }}</h3>
+        <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
-        <Game v-if="!isStageSelect" v-show="!isMonster" />
+        <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
         <select-stage
           v-if="isStageSelect"
           :isStageSelect.sync="isStageSelect"
@@ -34,9 +33,10 @@
           :attackType="attackType"
           :player="player"
         />
+        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
       </div>
       <div id="time" class="playtime"></div>
-      <div class="pause">
+      <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
       </div>
       <div id="right" class="col-2 column">
@@ -68,6 +68,7 @@
 import WebCam from "../../components/WebCam";
 import SquatCam from "../../components/SquatCam";
 import RingfitAttack from "../../components/ringfit/RingfitAttack.vue";
+import RingfitResult from "../../components/ringfit/RingfitResult";
 import Game from "@/components/Game";
 import selectStage from "@/components/ringfit/SelectStage";
 import { mapState, mapGetters } from "vuex";
@@ -80,21 +81,14 @@ export default {
     QOverlay,
     Game,
     selectStage,
-    RingfitAttack
+    RingfitAttack,
+    RingfitResult
   },
   data() {
     return {
-      // url: [
+      // url:
+      //   "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge_3/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
-      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
-      // ],
-      // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
-      // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
-      // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/",
       stage: "",
       window: {
         width: 0,
@@ -104,7 +98,6 @@ export default {
       hour: 0,
       minute: 0,
       second: 0,
-      isPause: false,
       isStageSelect: true,
       isPoseSelect: false,
       AttackCnt: 0,
@@ -112,8 +105,7 @@ export default {
       player: {
         username: "방구석여포",
         hp: 200
-      },
-      modelIdx: 0
+      }
     };
   },
   computed: {
@@ -126,12 +118,11 @@ export default {
     }),
     ...mapGetters({
       getMotionName: "ringfit/getMotionName",
-      getStageNum: "ringfit/getStageNum",
-      getIdx: "ringfit/getIdx"
+      getStageNum: "ringfit/getStageNum"
     }),
     changeUrl() {
-      console.log(this.url);
-      console.log(this.isMonster);
+      // console.log(this.url);
+      // console.log(this.isMonster);
       return this.url;
     },
     isMonster() {
@@ -154,8 +145,14 @@ export default {
       return urlArr[this.getIdx];
     }
   },
+    isClear() {
+      return this.$store.state.phaser.isClear;
+    },
+    isPause() {
+      return this.$store.state.ringfit.isPause;
+    }
+  },
   async mounted() {
-    console.log(this.$store.state.user_no);
     const right = document.getElementById("right");
     this.window.width = right.offsetWidth;
     this.window.height = right.offsetWidth;
@@ -167,7 +164,7 @@ export default {
   methods: {
     async getStageByUser() {
       const params = {
-        no: this.$store.state.user_no
+        no: this.$store.state.user.user_no
       };
       await this.$store.dispatch("ringfit/getStageByUser", params);
     },
@@ -196,12 +193,11 @@ export default {
     },
     pause() {
       clearTimeout(this.time);
-      var map = document.getElementsByClassName("slider-col")[0];
-      console.log(map);
       if (this.isPause) {
         this.printPlayTime();
       }
-      this.isPause = !this.isPause;
+      console.log(this.isPause);
+      this.$store.commit("ringfit/setIsPause", !this.isPause);
     },
     jump(status) {
       // const map = document.getElementById("map");
@@ -232,11 +228,6 @@ export default {
       this.attackType = status.type;
       this.AttackCnt = status.cnt;
     }
-    // changeMotionArr(modelArr) {
-    //   console.log("과연 체인지모션", modelArr)
-    //   this.motionArr = modelArr;
-    //   console.log("djdklfkjjkla", this.motionArr)
-    // }
     // 이 부분은 isMonster computed에 넣으면 될듯
     // changeToAttack() {
     //   if (this.isMonster == false) {
@@ -281,61 +272,28 @@ $speed: 7s;
 :root {
   --slider-speed: ;
 }
-// #character {
-//   position: absolute;
-//   top: 650px;
-//   left: 400px;
-// }
-.slider {
-  //   overflow: hidden;
-
-  //   .slider-col {
-  //     margin-right: 20px;
-  //     width: $img-w * $ratio * 4;
-  //     height: $img-h * $ratio;
-  //     background-image: url("../../assets/road.png");
-  //     background-size: $img-w * 4 * $ratio $img-h * $ratio;
-  //     animation: slide $speed linear infinite;
-  //   }
-  //   .pauseMap {
-  //     $speed: 0s;
-  //   }
-}
-
-// @keyframes slidePause {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: 0;
-//   }
-// }
-// @keyframes slide {
-//   from {
-//     background-position-y: 0;
-//   }
-//   to {
-//     background-position-y: $img-h * $ratio;
-//   }
-// }
 #additionalInfo {
   background-image: url("../../assets/additionalInfo.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  // margin-bottom: 3em;
 }
 
 .playtime {
   position: absolute;
-  top: 70px;
-  left: 60px;
+  top: 12.7%;
+  left: 62%;
   z-index: 1;
 }
-
+.stage {
+  position: absolute;
+  top: 8%;
+  left: 3%;
+  z-index: 1;
+}
 .pause {
   position: absolute;
-  top: 70px;
-  left: 1070px;
+  top: 12%;
+  left: 65%;
   z-index: 1;
 }
 .my-card {
