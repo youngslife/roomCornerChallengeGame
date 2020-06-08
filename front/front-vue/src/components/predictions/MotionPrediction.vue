@@ -270,9 +270,9 @@ export default {
             return this.predictions[4].probability;
           }
           // return this.count;
-          // 동작 4, Side_Crunch
+          // 동작 3, Side_Crunch
         } else if (this.getIdx == 4) {
-          // 4. side_crunch
+          // 3. side_crunch
           if (this.predictions[0].probability.toFixed(2) > 0.9) {
             // stand
             if (this.pose == "right" || this.pose == "left") {
@@ -332,9 +332,9 @@ export default {
             return this.predictions[4].probability;
           }
 
-          // 3번 동작 new_squat
+          // 4번 동작 new_squat
         } else if (this.getIdx == 3) {
-          // 3. new_squat
+          // 4. new_squat
           if (
             this.predictions[0].probability.toFixed(2) > 0.97 ||
             this.predictions[1].probability.toFixed(2) > 0.97

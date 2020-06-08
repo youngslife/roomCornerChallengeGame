@@ -11,11 +11,7 @@
       :key="call.username"
     ></incomingcall>
 
-    <q-btn
-    
-      v-on:click.native="onHangup()"
-      >hangup</q-btn
-    >
+    <q-btn v-on:click.native="onHangup()">hangup</q-btn>
     <q-btn
       :primary="callReady"
       :disabled="!callReady"
@@ -51,7 +47,7 @@ export default {
   },
   computed: {
     incomingCalls: function() {
-      console.log(this.$store.getters.getIncoming)
+      console.log(this.$store.getters.getIncoming);
       return this.$store.getters.getIncoming;
     },
     callReady: function() {

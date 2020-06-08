@@ -18,12 +18,22 @@
             <div class="col-md-6 col-xs-12">
               <div class="q-my-lg text-center">
                 <q-chip clickable size="20px" class="q-mx-lg">
-                  <q-avatar :icon="service.icon" color="red" text-color="white" />
+                  <q-avatar
+                    :icon="service.icon"
+                    color="red"
+                    text-color="white"
+                  />
                   <span class="text-weight-bold">{{ service.name }}</span>
                 </q-chip>
               </div>
-              <div class="gt-md text-center text-h6" v-html="service.content"></div>
-              <div class="lt-lg text-center text-body1" v-html="service.content"></div>
+              <div
+                class="gt-md text-center text-h6"
+                v-html="service.content"
+              ></div>
+              <div
+                class="lt-lg text-center text-body1"
+                v-html="service.content"
+              ></div>
             </div>
           </div>
         </q-tab-panel>
@@ -39,12 +49,22 @@
             <div class="col-md-6 col-xs-12">
               <div class="q-my-lg text-center">
                 <q-chip clickable size="20px" class="q-mx-lg">
-                  <q-avatar :icon="service.icon" color="red" text-color="white" />
+                  <q-avatar
+                    :icon="service.icon"
+                    color="red"
+                    text-color="white"
+                  />
                   <span class="text-weight-bold">{{ service.name }}</span>
                 </q-chip>
               </div>
-              <div class="gt-md text-center text-h6" v-html="service.content"></div>
-              <div class="lt-lg text-center text-body1" v-html="service.content"></div>
+              <div
+                class="gt-md text-center text-h6"
+                v-html="service.content"
+              ></div>
+              <div
+                class="lt-lg text-center text-body1"
+                v-html="service.content"
+              ></div>
             </div>
           </div>
         </q-tab-panel>

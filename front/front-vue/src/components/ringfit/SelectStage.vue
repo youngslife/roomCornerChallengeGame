@@ -11,7 +11,9 @@
     </template>
     <template v-else>
       <h2>스테이지 선택</h2>
-      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">stage {{ stage }}</h3>
+      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">
+        stage {{ stage }}
+      </h3>
     </template>
   </div>
 </template>
@@ -28,18 +30,13 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
     ...mapMutations({
       setStageNum: "ringfit/setStageNum",
       setIdx: "ringfit/setIdx"
     }),
-=======
-    ...mapMutations({ setStageNum: "ringfit/setStageNum" }),
->>>>>>> 4dc0e146e6a8051b317b9ef46987c1d4ce8af3df
     goToNextPage(stageNum) {
       this.setStageNum(stageNum + 1);
       this.$emit("update:isStageSelect", false);
-<<<<<<< HEAD
 
       if (stageNum === 1) {
         // tutorial
@@ -51,8 +48,6 @@ export default {
         // stage 2
         this.setIdx(3);
       }
-=======
->>>>>>> 4dc0e146e6a8051b317b9ef46987c1d4ce8af3df
     }
   },
   destroyed() {
@@ -65,5 +60,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

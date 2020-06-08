@@ -118,7 +118,8 @@ export default {
     }),
     ...mapGetters({
       getMotionName: "ringfit/getMotionName",
-      getStageNum: "ringfit/getStageNum"
+      getStageNum: "ringfit/getStageNum",
+      getIdx: "ringfit/getIdx"
     }),
     changeUrl() {
       // console.log(this.url);
@@ -133,8 +134,8 @@ export default {
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
       ];
 
@@ -143,8 +144,7 @@ export default {
         return urlArr[0];
       }
       return urlArr[this.getIdx];
-    }
-  },
+    },
     isClear() {
       return this.$store.state.phaser.isClear;
     },

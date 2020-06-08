@@ -7,12 +7,14 @@ const state = {
   rgameInfo_no: 0,
   stages: [],
   coin: 0,
-  isPause: false
+  isPause: false,
+  idx: 0
 };
 
 const getters = {
   getStageNum: state => state.stageNum,
-  getMotionName: state => state.motionName
+  getMotionName: state => state.motionName,
+  getIdx: state => state.idx
 };
 
 const actions = {
@@ -72,6 +74,9 @@ const mutations = {
   },
   setIsPause: (state, payload) => {
     state.isPause = payload;
+  },
+  setIdx: (state, payload) => {
+    state.idx = payload;
   }
 };
 export default {

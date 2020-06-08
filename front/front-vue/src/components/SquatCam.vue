@@ -90,7 +90,8 @@ export default {
       // console.log(prediction[0].probability + ", " + prediction[1].probability);
       this.predictions = prediction;
     },
-    test(res) { // res : {type: "bad", cnt: this.count}
+    test(res) {
+      // res : {type: "bad", cnt: this.count}
       this.$emit("child", res);
     }
   }

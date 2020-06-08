@@ -1,8 +1,7 @@
 <template>
   <q-card class="blue white--text incomingcallcard ">
-    
-        {{ caller }}
-     
+    {{ caller }}
+
     <q-card row actions>
       <q-btn flat dark v-on:click.native="onAnswer()">Answer</q-btn>
       <q-spacer></q-spacer>
