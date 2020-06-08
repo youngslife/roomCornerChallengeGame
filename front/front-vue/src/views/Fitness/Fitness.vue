@@ -4,7 +4,7 @@
       animated
       v-model="slide"
       infinite
-      style="height:710px;"
+      style="height:450px;"
       autoplay
     >
       <q-carousel-slide
@@ -25,6 +25,7 @@
               spinner-color="primary"
               spinner-size="82px"
               @click="goToPage('/fitness')"
+              style="height: 60px"
             />
           </div>
           <q-btn
@@ -35,20 +36,6 @@
             class="col-2 text-weight-bold"
             :to="menu.link"
           ></q-btn>
-        </div>
-        <div class="absolute-bottom">
-          <q-btn-toggle
-            v-model="slide"
-            spread
-            text-color="white"
-            toggle-color="brand"
-            :options="[
-              { label: '링피트1', value: 'first' },
-              { label: '링피트2', value: 'second' },
-              { label: '링피트3', value: 'third' }
-            ]"
-            style="height:100px; width:100%;"
-          />
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -70,8 +57,8 @@ export default {
         { name: "커뮤니티", link: "/fitness/community" }
       ],
       mainCard: [
-        { name: "first", imgSrc: require("../../assets/mapia.jpeg") },
-        { name: "second", imgSrc: require("../../assets/ring.jpeg") },
+        { name: "first", imgSrc: require("../../assets/mafia.png") },
+        { name: "second", imgSrc: require("../../assets/ring.png") },
         { name: "third", imgSrc: require("../../assets/room.png") }
       ],
       slide2: "tv"

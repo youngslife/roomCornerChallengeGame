@@ -2,32 +2,45 @@
   <div>
     <q-bar class="bg-white q-header" style="height:80px;">
       <div class="col text-left text-weight-bold">
-        <button class="button button1" @click="changeIsDrawer">
-          <q-icon name="menu" style="size:100px;" />메뉴
+        <button class="button button3" @click="changeIsDrawer">
+          <q-icon name="menu" style="font-size:30px;" />
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <img
-          :src="require('../assets/logo.png')"
-          onclick="location.href ='/'"
-        />
+        <router-link to="/">
+          <img :src="require('../assets/logo.png')" />
+        </router-link>
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
-          <button class="button button1" onclick="location.href ='mypage'">
+          <router-link
+            class="button account-button button1"
+            to="/mypage"
+            tag="button"
+          >
             마이페이지
+          </router-link>
+          <button class="button account-button button2" @click="logout">
+            로그아웃
           </button>
-          <button class="button button2" @click="logout">로그아웃</button>
         </div>
       </template>
       <template v-else>
         <div class="col text-right text-weight-bold">
-          <button class="button button1" onclick="location.href ='signin'">
+          <router-link
+            class="button account-button button1"
+            to="/signin"
+            tag="button"
+          >
             회원가입
-          </button>
-          <button class="button button2" onclick="location.href ='/login'">
+          </router-link>
+          <router-link
+            class="button account-button button2"
+            to="/login"
+            tag="button"
+          >
             로그인
-          </button>
+          </router-link>
         </div>
       </template>
     </q-bar>
@@ -105,37 +118,47 @@ export default {
 
 <style>
 .button {
+  border-radius: 10px;
   border: none;
   color: white;
-  padding: 16px 32px;
+  padding: 5px 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  font-size: 15px;
   transition-duration: 0.4s;
   cursor: pointer;
 }
-
+.account-button {
+  margin: 4px 2px;
+  width: 100px;
+}
 .button1 {
   background-color: white;
   color: black;
-  border: 2px solid #4caf50;
 }
 
 .button1:hover {
-  background-color: #4caf50;
+  background-color: #ffc17a;
   color: white;
 }
 
 .button2 {
   background-color: white;
   color: black;
-  border: 2px solid #008cba;
 }
 
 .button2:hover {
-  background-color: #008cba;
+  background-color: #ebbff8;
+  color: white;
+}
+.button3 {
+  background-color: white;
+  color: black;
+}
+
+.button3:hover {
+  background-color: #93f8ac;
   color: white;
 }
 </style>

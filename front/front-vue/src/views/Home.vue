@@ -12,7 +12,7 @@
         :name="card.name"
         :img-src="card.imgSrc"
         :key="index"
-        @click="goPath(this)"
+        @click="goPath(gameList[index].link)"
       >
         <div class="absolute-bottom">
           <q-btn-toggle
@@ -33,7 +33,7 @@
                 @click="change('first')"
                 class="flex flex-center"
               >
-                마피아
+                마피아를 찾아라
               </div>
             </template>
             <template v-slot:second>
@@ -42,7 +42,7 @@
                 @click="change('second')"
                 class="flex flex-center"
               >
-                링피트
+                피트런 : 케니의 모험
               </div>
             </template>
             <template v-slot:third>
@@ -51,7 +51,7 @@
                 @click="change('third')"
                 class="flex flex-center"
               >
-                후루추닌자?
+                방탈출(예정)
               </div>
             </template>
           </q-btn-toggle>
@@ -59,14 +59,21 @@
       </q-carousel-slide>
     </q-carousel>
     <div class="row justify-center">
-      <div class="col-7">
-        <div class="col">
-          <h2>전체 게임</h2>
+      <div class="col-10" style="padding-left: 100px">
+        <div class="row">
+          <h4 class="col-5" id="game-list-title">전체 게임</h4>
+          <!-- menu bar -->
+          <div class="col-2 menus" style="margin-left: auto">
+            <div class="menus-contents flex flex-center">
+              <div @click="goPath('/jump')">공지</div>
+              <div>QNA</div>
+            </div>
+          </div>
         </div>
         <div class="row">
           <q-card
             v-for="(game, index) in gameList"
-            class="my-card col-3"
+            class="my-card col-3 game-description"
             style="margin-left:20px; height:400px; margin-top:20px;"
             :key="index"
             @click="goPath(game.link)"
@@ -76,84 +83,15 @@
               <div class="text-h6">{{ game.name }}</div>
               <div class="text-subtitle2">{{ game.people }}</div>
             </q-card-section>
-            <q-card-section>{{ game.descript }}</q-card-section>
+            <q-card-section v-if="!game.developing">{{
+              game.descript
+            }}</q-card-section>
+            <img
+              class="developing"
+              v-if="game.developing"
+              src="../assets/developing.png"
+            />
           </q-card>
-        </div>
-      </div>
-      <div class="col-3">
-        <template v-if="user_no > 0">
-          <div
-            class="col flex flex-center"
-            style="background:#b2bec3; margin-top:180px; height:300px"
-          >
-            <div class="col-10 text-center">
-              <q-btn
-                class="col"
-                color="primary"
-                icon="check"
-                label="마이페이지"
-                to="/mypage"
-              />
-              <div class="col-10" style="margin-top:20px;">
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-              </div>
-              <div class="col-10" style="margin-top:20px;"></div>
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div
-            class="col flex flex-center"
-            style="background:#b2bec3; margin-top:180px; height:300px"
-          >
-            <div class="col-10 text-center">
-              <q-btn
-                class="col"
-                color="primary"
-                icon="check"
-                label="방구석 ID 로그인"
-                to="/login"
-              />
-              <div class="col-10" style="margin-top:20px;">
-                <span>다른계정 로그인</span>
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-                <q-icon name="print" />
-              </div>
-              <div class="col-10" style="margin-top:20px;">
-                <p class="text-right">회원가입</p>
-              </div>
-            </div>
-          </div>
-        </template>
-        <div
-          class="col flex flex-center"
-          style="background:#b2bec3; margin-top:180px; height:300px"
-        >
-          <div class="col-10 text-center">
-            <div class="col-10">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="공지사항"
-                to="/jump"
-              />
-            </div>
-            <div class="col-10" style="margin-top:20px;">
-              <q-btn
-                class="col-10"
-                color="primary"
-                icon="check"
-                label="QNA"
-                to="/temp"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -166,38 +104,44 @@ export default {
     return {
       slide: "first",
       mainCard: [
-        { name: "first", imgSrc: require("../assets/mapia.jpeg") },
-        { name: "second", imgSrc: require("../assets/ring.jpeg") },
+        { name: "first", imgSrc: require("../assets/mafia.png") },
+        { name: "second", imgSrc: require("../assets/ring.png") },
         { name: "third", imgSrc: require("../assets/room.png") }
       ],
       gameList: [
         {
-          name: "마피아",
-          imgSrc: require("../assets/mapia.jpeg"),
+          name: "마피아를 찾아라",
+          imgSrc: require("../assets/mafia.png"),
           people: "4~8명",
-          descript: "마피아게임에 대한 설명",
-          link: "/mafia"
+          descript:
+            "웹캠으로 하는 고도의 심리 게임 마피아! 과연 이번 판의 저격수는 누가 될 것인가?",
+          link: "/mafia",
+          developing: false
         },
         {
-          name: "링피트",
-          imgSrc: require("../assets/ring.jpeg"),
+          name: "피트런: 케니의 모험",
+          imgSrc: require("../assets/ring.png"),
           people: "1명",
-          descript: "링피트게임에 대한 설명",
-          link: "/fitness"
+          descript:
+            "운동으로 몬스터를 처치할 수 있다? 웹캠으로 즐기는 케니의 어드벤처 게임",
+          link: "/fitness",
+          developing: false
         },
         {
           name: "방탈출",
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
-          descript: "방탈출게임에 대한 설명",
+          descript: "",
+          developing: true,
           link: "/mafia"
         },
         {
-          name: "후루추닌자?",
+          name: "후루추닌자",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
-          descript: "게임게임에 대한 설명",
-          link: "/mafia"
+          descript: "",
+          developing: true,
+          link: "/mapmafiaia"
         }
       ],
       user_no: {}
@@ -208,7 +152,6 @@ export default {
   },
   methods: {
     goPath(link) {
-      console.log(link);
       this.$router.push(link);
     },
     change(target) {
@@ -219,11 +162,41 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .text-brand {
   color: white;
 }
 .bg-brand {
-  background: rgba(0, 102, 255, 0.4);
+  background: rgba(218, 0, 0, 0.4);
+}
+.game-list-title {
+  margin-bottom: 0px !important;
+  margin-top: 10px !important;
+  font-family: "SDKukdetopokki-Lt";
+}
+.developing {
+  width: 70%;
+  margin: auto;
+  transform: rotate(-10deg);
+}
+.menus {
+  padding-top: 50px;
+}
+.menus-contents {
+  margin: 0 10px;
+  justify-content: space-between;
+}
+.menus-contents > div {
+  cursor: pointer;
+  width: 70px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+.menus-contents > div:hover {
+  background: rgb(199, 199, 199);
+  color: white;
 }
 </style>

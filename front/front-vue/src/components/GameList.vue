@@ -16,10 +16,10 @@
         />
       </slide>
       <slide :index="1">
-        <img src="../assets/mapia.jpeg" />
+        <img src="../assets/mafia.png" />
       </slide>
       <slide :index="2">
-        <img src="../assets/ring.jpeg" />
+        <img src="../assets/ring.png" />
       </slide>
       <slide :index="3">
         <img src="../assets/room.png" />

@@ -82,5 +82,34 @@ export default {
       .catch(function(error) {
         alert("등록되지 않은 회원입니다." + error);
       });
+  },
+  getMaifaUserCurrent(roomNo) {
+    return firebase
+      .firestore()
+      .collection("Mafia")
+      .doc(roomNo)
+      .collection("user_list");
+  },
+  getMaifaRoomCurrent() {
+    return firebase.firestore().collection("Mafia");
+  },
+  getMaifaRoomInfo(roomNo) {
+    return firebase
+      .firestore()
+      .collection("Mafia")
+      .doc(String(roomNo));
+  },
+  getMaifaRoomIncount(roomNo) {
+    this.getMaifaUserCurrent(roomNo)
+      .get()
+      .then(snapshot => {
+        let total_count = 0;
+        snapshot.forEach(() => {
+          // console.log(doc.data());
+          total_count += 1;
+        });
+        console.log("A" + total_count);
+        return total_count;
+      });
   }
 };

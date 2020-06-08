@@ -64,7 +64,7 @@
       >
         <template v-if="thisIndex == 1">
           <div class="content-container">
-            <img class="img" src="../assets/mapia.jpeg" />
+            <img class="img" src="../assets/mafia.png" />
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
@@ -82,7 +82,7 @@
         </template>
         <div v-else>
           <div class="content-container">
-            <img class="img" src="../assets/mapia.jpeg" />
+            <img class="img" src="../assets/mafia.png" />
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
@@ -105,7 +105,7 @@
       >
         <template v-if="thisIndex == 2">
           <div class="content-container">
-            <img class="img" src="../assets/ring.jpeg" />
+            <img class="img" src="../assets/ring.png" />
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
@@ -123,7 +123,7 @@
         </template>
         <div v-else>
           <div class="content-container">
-            <img class="img" src="../assets/ring.jpeg" />
+            <img class="img" src="../assets/ring.png" />
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
