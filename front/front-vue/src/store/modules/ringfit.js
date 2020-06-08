@@ -7,7 +7,14 @@ const state = {
   rgameInfo_no: 0,
   stages: [],
   coin: 0,
-  isPause: false
+  isPause: false,
+  count: 0,
+  gameInfo: {
+    perfect: 0,
+    great: 0,
+    good: 0,
+    bad: 0
+  }
 };
 
 const getters = {
@@ -40,11 +47,19 @@ const actions = {
         Response.data.data.stageInfo.rstage_usergameinfo[0].ruserinfo_gameinfo
           .rgameinfo_no
       );
+      store.commit("setCount", 0);
+      store.commit("setGameInfo", {
+        perfect: 0,
+        great: 0,
+        good: 0,
+        bad: 0
+      });
     });
   },
   gameEnd: (store, payLoad) => {
     RingfitService.gameEnd(payLoad).then(() => {
       store.commit("setCoin", 0);
+      store.commit("setCount", 0);
     });
   },
   gamePause: (store, payLoad) => {
@@ -72,6 +87,12 @@ const mutations = {
   },
   setIsPause: (state, payload) => {
     state.isPause = payload;
+  },
+  setCount: (state, payload) => {
+    state.count = payload;
+  },
+  setGameInfo: (state, payload) => {
+    state.gameInfo = payload;
   }
 };
 export default {
