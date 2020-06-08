@@ -76,12 +76,8 @@ export default {
     ...mapActions("header", ["changeIsDrawer"]),
     async logout() {
       await window.sessionStorage.setItem("user_no", 0);
-      console.log('여긴가')
       if (this.sessoinUser == 0) {
-        console.log(3847298)
-        // console.log('dafasdf', this.sessoinUser )
         await router.go()
-        console.log(432234)
       }
     }
   },
@@ -95,7 +91,6 @@ export default {
       }
     },
     sessoinUser() {
-      console.log('안돼?')
       return window.sessionStorage.getItem("user_no")
     }
   },

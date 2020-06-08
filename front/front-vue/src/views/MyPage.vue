@@ -2,10 +2,11 @@
   <q-layout class="row">
     <div class="col-3">
       <q-card class="my-card" style="margin-top:20px;">
-        <img src="https://cdn.quasar.dev/img/mountains.jpg" style=" border-radius: 50%;" />
+        <img :src="user.user_profile.img_path" style=" border-radius: 50%;" />
         <q-card-section>
-          <div class="text-h3 text-center">{{user.user_name}}</div>
-          <div class="text-h6 text-center">19999등</div>
+          <div class="text-h3 text-center">{{ user.user_name }}</div>
+          <div class="text-h7 text-center">{{ user.user_email }}</div>
+          <div class="text-h6 text-center">37426등</div>
         </q-card-section>
         <q-card-section>
           <q-input v-model="text" type="text" label="자기소개칸" />
@@ -99,6 +100,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
 export default {
   data() {
     return {
@@ -110,7 +112,14 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$store.state.user.user;
+    this.getInfo()
+  },
+  methods: {
+    ...mapActions({ getUserInfo: "user/getUserInfo" }),
+    getInfo() {
+      this.getUserInfo(this.$store.state.user.user_no)
+      this.user = this.$store.state.user.user.data.data
+    }
   }
 };
 </script>

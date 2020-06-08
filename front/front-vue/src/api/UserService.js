@@ -24,8 +24,9 @@ class UserService {
       });
   }
   async getUserDetailFromNo(userNo) {
-    return await Api.get(`/User/searchDetail/${userNo}`)
+    return await Api.get(`/User/searchUserDetail/${userNo}`)
       .then(Response => {
+        console.log('Rspen', Response)
         return Response;
       })
       .catch(exp => {

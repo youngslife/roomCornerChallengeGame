@@ -65,6 +65,11 @@ const actions = {
   changeDeafultPw: (store, payLoad) => {
     fireService.resetPw(payLoad.email);
     router.push("/login");
+  },
+  getUserInfo: (store, payLoad) => {
+    UserService.getUserDetailFromNo(payLoad).then(res => {
+      store.commit("setUser", res)
+    })
   }
 };
 const mutations = {
@@ -85,6 +90,9 @@ const mutations = {
   setUserNo: (state, payLoad) => {
     state.user_no = payLoad.user_no;
     window.sessionStorage.setItem("user_no", payLoad.user_no);
+  },
+  setUser: (state, payLoad) => {
+    state.user = payLoad
   }
 };
 export default {

@@ -14,6 +14,12 @@
       label="저장"
       @click="isUpdate ? update() : insert()"
     />
+    <q-btn
+      color="white"
+      text-color="black"
+      label="취소"
+      @click="goToList()"
+    />
   </div>
 </template>
 
@@ -74,6 +80,7 @@ export default {
       else if (this.checktype === "팁과공략") board_no = 7;
       else board_no = 8;
       console.log("update");
+      console.log("board_no, this.user_no, this.title, this.editor", board_no, this.user_no, this.title, this.editor)
       this.$store.dispatch("post/updatePost", {
         board_no: board_no,
         user_no: this.user_no,
@@ -81,7 +88,10 @@ export default {
         post_content: this.editor
       });
       this.$emit("update:isUpdate", false);
-    }
+    },
+    goToList() {
+      this.$emit("update:isWrite", false);
+    },
   }
 };
 </script>

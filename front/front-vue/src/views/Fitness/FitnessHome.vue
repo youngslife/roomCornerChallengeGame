@@ -110,9 +110,12 @@
               class="text-subtitle2"
               v-for="(post, j) in board.board_postList.slice(0, 5)"
               :key="j"
-            ><span>{{ post.post_user.user_name }}</span>
-            <span>{{ post.post_title }}</span>
-            <hr />
+            >
+              <hr />
+              <div style="display: flex; justify-content: space-between">
+                <span>{{ post.post_title }}</span>
+                <span>by. {{ post.post_user.user_name }}</span>
+              </div>
             </div>
           </q-card-section>
         </q-card>
@@ -175,7 +178,7 @@ export default {
     },
     goToPage(link) {
       router.push(link);
-    },
+    }
     // goToPostDetail(post_no){
     //   각 글 제목 눌렀을 때 해당 글 페이지로 가게 하자
     //   console.log('hi there')

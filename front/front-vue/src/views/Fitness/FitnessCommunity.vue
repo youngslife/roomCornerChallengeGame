@@ -11,6 +11,14 @@
         <writer game="링피트" :type="category" :isWrite.sync="isWrite"></writer>
       </template>
       <template v-else>
+        <div class="row justify-end">
+          <q-btn
+            color="primary"
+            icon="check"
+            label="글쓰기"
+            @click="write()"
+          />
+        </div>
         <template v-if="isDetail">
           <detail
             game="링피트"
@@ -22,14 +30,6 @@
         <template v-else>
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="자유">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
@@ -47,14 +47,6 @@
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="질문">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
@@ -72,14 +64,6 @@
               </q-list>
             </q-tab-panel>
             <q-tab-panel name="정보">
-              <div class="row justify-end">
-                <q-btn
-                  color="primary"
-                  icon="check"
-                  label="글쓰기"
-                  @click="write()"
-                />
-              </div>
               <q-list bordered>
                 <q-item
                   v-for="(post, index) in board"
