@@ -30,6 +30,7 @@
         <ringfit-attack
           v-if="isMonster"
           :AttackCnt="AttackCnt"
+          :attackType="attackType"
           :player="player"
         />
         <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
@@ -41,20 +42,22 @@
       <div id="right" class="col-2 column">
         <div id="additionalInfo" class="col-5"></div>
         <div class="col-6 self-end">
-          <web-cam
-            v-if="!isMonster"
-            :url="changeUrl"
-            :width="window.width"
-            :height="window.height"
-            @child="jump"
-          ></web-cam>
-          <squat-cam
-            v-if="isMonster"
-            :url="changeUrl"
-            :width="window.width"
-            :height="window.height"
-            @child="goAttack"
-          ></squat-cam>
+          <template v-if="isMonster">
+            <squat-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="goAttack"
+            ></squat-cam>
+          </template>
+          <template v-else>
+            <web-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="jump"
+            ></web-cam>
+          </template>
         </div>
       </div>
     </div>
@@ -83,9 +86,9 @@ export default {
   },
   data() {
     return {
-      url:
-        // "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      // url:
+      //   "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
+      //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
       stage: "",
       window: {
         width: 0,
@@ -98,6 +101,7 @@ export default {
       isStageSelect: true,
       isPoseSelect: false,
       AttackCnt: 0,
+      attackType: "",
       player: {
         username: "방구석여포",
         hp: 200
@@ -114,7 +118,8 @@ export default {
     }),
     ...mapGetters({
       getMotionName: "ringfit/getMotionName",
-      getStageNum: "ringfit/getStageNum"
+      getStageNum: "ringfit/getStageNum",
+      getIdx: "ringfit/getIdx"
     }),
     changeUrl() {
       // console.log(this.url);
@@ -123,6 +128,22 @@ export default {
     },
     isMonster() {
       return this.$store.state.phaser.isMeet;
+    },
+    url() {
+      const urlArr = [
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_squat/",
+        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/jumping_jacks/"
+      ];
+
+      console.log("gettttttttttttttttt", this.getIdx);
+      if (this.getIdx < 1) {
+        return urlArr[0];
+      }
+      return urlArr[this.getIdx];
     },
     isClear() {
       return this.$store.state.phaser.isClear;
@@ -201,8 +222,11 @@ export default {
         // map.style.webkitAnimationPlayState = "paused";
       }
     },
-    goAttack(count) {
-      this.AttackCnt = count;
+    goAttack(status) {
+      // status {type: "bad", cnt: this.count}
+      // console.log(status, "!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      this.attackType = status.type;
+      this.AttackCnt = status.cnt;
     }
     // 이 부분은 isMonster computed에 넣으면 될듯
     // changeToAttack() {

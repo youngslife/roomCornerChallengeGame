@@ -12,7 +12,7 @@
 
     <div class="video-controls">
       <q-btn icon="icon" large error v-on:click.native="onHangup">
-      종료
+        종료
       </q-btn>
       <q-btn icon="icon" large v-on:click.native="onMicToggle">
         마이크 끄기

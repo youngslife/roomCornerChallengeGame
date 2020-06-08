@@ -10,7 +10,10 @@
           <div class="text-h6">2등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
-        <q-card-section>Lorem ipsum dolor sit amet, consectetur adipiscing elit</q-card-section>
+        <q-card-section
+          >Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit</q-card-section
+        >
       </q-card>
       <q-card class="my-card col-3">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -18,7 +21,10 @@
           <div class="text-h6">1등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
-        <q-card-section>Lorem ipsum dolor sit amet, consectetur adipiscing elit</q-card-section>
+        <q-card-section
+          >Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit</q-card-section
+        >
       </q-card>
       <q-card class="my-card col-3">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -26,7 +32,10 @@
           <div class="text-h6">3등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
-        <q-card-section>Lorem ipsum dolor sit amet, consectetur adipiscing elit</q-card-section>
+        <q-card-section
+          >Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit</q-card-section
+        >
       </q-card>
     </div>
     <div class="text-center">

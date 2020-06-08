@@ -13,7 +13,12 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="mails">
             <div class="row justify-end">
-              <q-btn color="primary" icon="check" label="글쓰기" @click="write('asd')" />
+              <q-btn
+                color="primary"
+                icon="check"
+                label="글쓰기"
+                @click="write('asd')"
+              />
             </div>
             <q-list bordered>
               <q-item v-for="index in 10" :key="index" clickable v-ripple>
@@ -25,10 +30,12 @@
             </q-list>
           </q-tab-panel>
           <q-tab-panel name="alarms">
-            <div class="text-h6">Alarms</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Alarms</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
           <q-tab-panel name="movies">
-            <div class="text-h6">Movies</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6">Movies</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
         </q-tab-panels>
       </template>

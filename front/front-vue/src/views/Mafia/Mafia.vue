@@ -1,6 +1,12 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" infinite style="height:710px;" autoplay>
+    <q-carousel
+      animated
+      v-model="slide"
+      infinite
+      style="height:710px;"
+      autoplay
+    >
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -8,7 +14,10 @@
         :key="index"
       >
         <!--이부분은 컴포넌트화시키면 될듯  -->
-        <div class="absolute-top justify-around row" style="height:50px;margin-top:20px;">
+        <div
+          class="absolute-top justify-around row"
+          style="height:50px;margin-top:20px;"
+        >
           <div class="col-2 flex flex-center">
             <q-img
               :src="require('../../assets/fitrun.png')"

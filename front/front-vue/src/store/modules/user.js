@@ -68,8 +68,8 @@ const actions = {
   },
   getUserInfo: (store, payLoad) => {
     UserService.getUserDetailFromNo(payLoad).then(res => {
-      store.commit("setUser", res.data.data)
-    })
+      store.commit("setUser", res.data.data);
+    });
   }
 };
 const mutations = {
@@ -92,7 +92,7 @@ const mutations = {
     window.sessionStorage.setItem("user_no", payLoad.user_no);
   },
   setUser: (state, payLoad) => {
-    state.user = payLoad
+    state.user = payLoad;
   }
 };
 export default {

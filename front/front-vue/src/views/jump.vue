@@ -11,25 +11,25 @@
           style="height:450px; margin-top:50px;"
         >
           <video
-          poster="https://images.assetsdelivery.com/compings_v2/vbaleha/vbaleha1402/vbaleha140200171.jpg"
+            poster="https://images.assetsdelivery.com/compings_v2/vbaleha/vbaleha1402/vbaleha140200171.jpg"
             :id="'feed' + index"
             style="width:100%;"
             autoplay="autoplay"
           ></video>
           <q-card-section class="text-white text-center">
-            <div class="text-h5" style=" font-weight:bold;">황야의 무법자 </div>
+            <div class="text-h5" style=" font-weight:bold;">황야의 무법자</div>
           </q-card-section>
-          <q-card-actions  align="around" >
-              <q-btn flat style="color:red" >
-                  <span style="font-size:30px; font-weight:bold;" >처 형</span>
-              </q-btn>
-              <q-btn flat  style="color:blue" >
-                  <span style="font-size:30px; font-weight:bold;" >치 료</span>
-              </q-btn>
+          <q-card-actions align="around">
+            <q-btn flat style="color:red">
+              <span style="font-size:30px; font-weight:bold;">처 형</span>
+            </q-btn>
+            <q-btn flat style="color:blue">
+              <span style="font-size:30px; font-weight:bold;">치 료</span>
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>
-      
+
       <div class="col-6 justify-around row">
         <q-card
           class="bg-grey-9  col-5"
@@ -38,29 +38,32 @@
           style="height:450px; margin-top:50px;"
         >
           <video
-          poster="https://images.assetsdelivery.com/compings_v2/vbaleha/vbaleha1402/vbaleha140200171.jpg"
+            poster="https://images.assetsdelivery.com/compings_v2/vbaleha/vbaleha1402/vbaleha140200171.jpg"
             :id="'feed' + index"
             style="width:100%;"
             autoplay="autoplay"
           ></video>
           <q-card-section class="text-white text-center">
-            <div class="text-h5" style=" font-weight:bold;">황야의 무법자 </div>
+            <div class="text-h5" style=" font-weight:bold;">황야의 무법자</div>
           </q-card-section>
-          <q-card-actions  align="around" >
-              <q-btn flat style="color:red" >
-                  <span style="font-size:30px; font-weight:bold;" >처 형</span>
-              </q-btn>
-              <q-btn flat  style="color:blue" >
-                  <span style="font-size:30px; font-weight:bold;" >치 료</span>
-              </q-btn>
+          <q-card-actions align="around">
+            <q-btn flat style="color:red">
+              <span style="font-size:30px; font-weight:bold;">처 형</span>
+            </q-btn>
+            <q-btn flat style="color:blue">
+              <span style="font-size:30px; font-weight:bold;">치 료</span>
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>
     </div>
 
     <q-dialog v-model="seamless" seamless position="bottom">
-      <q-card style="width: 500px; height:400px;" class="text-center bg-grey-9 text-white">
-          <h1>낮</h1>
+      <q-card
+        style="width: 500px; height:400px;"
+        class="text-center bg-grey-9 text-white"
+      >
+        <h1>낮</h1>
         <h1>1 : 00</h1>
       </q-card>
     </q-dialog>
@@ -76,7 +79,7 @@ export default {
   props: [],
   data() {
     return {
-          seamless: true,
+      seamless: true,
       flist: [0, 1, 2],
       slist: [3, 4, 5],
       message: null,
@@ -175,6 +178,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

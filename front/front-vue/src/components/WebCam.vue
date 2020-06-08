@@ -2,19 +2,17 @@
   <div>
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
-    <all-predict :predictions="predictions"></all-predict>
+    <!-- <all-predict :predictions="predictions"></all-predict> -->
     <div>Best Prediction</div>
     <div>{{ url }}</div>
-    <div>{{ motionArr }}</div>
     <best-predict :predictions="predictions" @child="test"></best-predict>
-
   </div>
 </template>
 
 <script>
 import "@tensorflow/tfjs";
 import * as tmPose from "@teachablemachine/pose";
-import AllPredict from "./predictions/AllPredictions";
+// import AllPredict from "./predictions/AllPredictions";
 import BestPredict from "./predictions/BestPredictions";
 export default {
   props: {
@@ -29,14 +27,10 @@ export default {
     width: {
       type: Number,
       required: true
-    },
-    motionArr: {
-      type: Array,
-      required: true
     }
   },
   components: {
-    AllPredict,
+    // AllPredict,
     BestPredict
   },
   data() {
