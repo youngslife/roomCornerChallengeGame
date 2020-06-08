@@ -7,9 +7,21 @@
       <p>{{ player.username }} hp : {{ pnowHp }}</p>
     </div>
     <div class="row skill-set">
-      <q-btn class="col-4" :label="skills.first.name" @click="playerAttack(skills.first.name)"></q-btn>
-      <q-btn class="col-4" :label="skills.second.name" @click="playerAttack(skills.second.name)"></q-btn>
-      <q-btn class="col-4" :label="skills.third.name" @click="playerAttack(skills.third.name)"></q-btn>
+      <q-btn
+        class="col-4"
+        :label="skills.first.name"
+        @click="playerAttack(skills.first.name)"
+      ></q-btn>
+      <q-btn
+        class="col-4"
+        :label="skills.second.name"
+        @click="playerAttack(skills.second.name)"
+      ></q-btn>
+      <q-btn
+        class="col-4"
+        :label="skills.third.name"
+        @click="playerAttack(skills.third.name)"
+      ></q-btn>
     </div>
   </div>
 </template>
@@ -80,7 +92,6 @@ export default {
         this.monster.image = require("../../assets/ryan3.png");
         this.monster.hp = 0;
         this.$store.state.phaser.isMeet = false;
-        this.setIdx(0)
         setTimeout(() => {
           //   alert(`${this.monster.name} 처치 완료`);
         }, 500);
@@ -115,7 +126,7 @@ export default {
       return this.AttackCnt;
     },
     atType() {
-      return this.attackType
+      return this.attackType;
     }
   },
   created() {

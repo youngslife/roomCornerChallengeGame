@@ -52,7 +52,7 @@
           </template>
           <template v-else>
             <web-cam
-              :url="url"
+              :url="walkUrl"
               :width="window.width"
               :height="window.height"
               @child="jump"
@@ -89,6 +89,7 @@ export default {
       // url:
       //   "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/",
       //   "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+      walkUrl: "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/", 
       stage: "",
       window: {
         width: 0,
@@ -131,7 +132,7 @@ export default {
     },
     url() {
       const urlArr = [
-        "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
+        // "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/new_walk/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/shoulder_press/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_lunge/",
         "https://raw.githubusercontent.com/youngslife/fitnessPoseModel/master/side_crunch/",
@@ -140,9 +141,9 @@ export default {
       ];
 
       console.log("gettttttttttttttttt", this.getIdx);
-      if (this.getIdx < 1) {
-        return urlArr[0];
-      }
+      // if (this.getIdx < 1) {
+      //   return urlArr[0];
+      // }
       return urlArr[this.getIdx];
     },
     isClear() {
