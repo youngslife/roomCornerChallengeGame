@@ -13,7 +13,9 @@
         <button
           style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
           @click="clickStart"
-        >시작버튼</button>
+        >
+          시작버튼
+        </button>
       </div>
       <div class="col-4">
         <div class="row justify-around" style="margin-top:20px;height:70px;">
@@ -21,7 +23,12 @@
           <q-btn color="primary" icon="check" label="회원가입" class="col-5" />
         </div>
         <div class="row justify-center" style="margin-top:20px">
-          <q-btn color="primary" icon="check" label="다른 간편 로그인 " class="col-11" />
+          <q-btn
+            color="primary"
+            icon="check"
+            label="다른 간편 로그인 "
+            class="col-11"
+          />
         </div>
         <div class="row justify-around" style="margin-top:20px">
           <q-btn color="primary" icon="check" label="방구석ID 찾기" />

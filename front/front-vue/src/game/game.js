@@ -12,6 +12,9 @@ function launch({ containerId, store }) {
     width: "95%",
     height: "84%",
     parent: containerId,
+    audio: {
+      disableWebAudio: true
+    },
     physics: {
       default: "arcade",
       arcade: {

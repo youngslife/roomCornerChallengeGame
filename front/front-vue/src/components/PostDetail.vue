@@ -16,12 +16,29 @@
 
       <div v-html="post.post_content" />
       <q-btn color="white" text-color="black" label="목록으로" @click="back" />
-      <q-btn v-if="isSame" color="white" text-color="black" label="수정" @click="update" />
-      <q-btn v-if="isSame" color="white" text-color="black" label="삭제" @click="deletePost" />
+      <q-btn
+        v-if="isSame"
+        color="white"
+        text-color="black"
+        label="수정"
+        @click="update"
+      />
+      <q-btn
+        v-if="isSame"
+        color="white"
+        text-color="black"
+        label="삭제"
+        @click="deletePost"
+      />
       <hr />
       <div class="row justify-end">
         <q-input outlined v-model="comment" label="댓글" :dense="false" />
-        <q-btn color="primary" icon="check" label="댓글쓰기" @click="insertCmt()" />
+        <q-btn
+          color="primary"
+          icon="check"
+          label="댓글쓰기"
+          @click="insertCmt()"
+        />
       </div>
       <q-list bordered v-if="cmtList[0].cmt_user != null">
         <q-item v-for="(cmt, index) in cmtList" :key="index" clickable v-ripple>
@@ -85,7 +102,7 @@ export default {
     this.user_no = Number(window.sessionStorage.getItem("user_no"));
     this.$store.dispatch("post/getPost", this.post_no);
     // console.log("test", this.post.post_cmtList);
-    console.log('dddd', this.$store.state.comment.comment)
+    console.log("dddd", this.$store.state.comment.comment);
   },
   methods: {
     back() {

@@ -7,12 +7,14 @@ const state = {
   rgameInfo_no: 0,
   stages: [],
   coin: 0,
-  isPause: false
+  isPause: false,
+  idx: 0
 };
 
 const getters = {
   getStageNum: state => state.stageNum,
-  getMotionName: state => state.motionName
+  getMotionName: state => state.motionName,
+  getIdx: state => state.idx
 };
 
 const actions = {
@@ -46,6 +48,9 @@ const actions = {
     RingfitService.gameEnd(payLoad).then(() => {
       store.commit("setCoin", 0);
     });
+  },
+  gamePause: (store, payLoad) => {
+    store.commit("setIsPause", payLoad);
   }
 };
 const mutations = {
@@ -66,6 +71,12 @@ const mutations = {
   },
   setCoin: (state, payload) => {
     state.coin = payload;
+  },
+  setIsPause: (state, payload) => {
+    state.isPause = payload;
+  },
+  setIdx: (state, payload) => {
+    state.idx = payload;
   }
 };
 export default {

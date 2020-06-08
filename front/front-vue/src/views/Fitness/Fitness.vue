@@ -8,7 +8,10 @@
         :key="index"
       >
         <!--이부분은 컴포넌트화시키면 될듯  -->
-        <div class="absolute-top justify-around row" style="height:50px;margin-top:20px;">
+        <div
+          class="absolute-top justify-around row"
+          style="height:50px;margin-top:20px;"
+        >
           <div class="col-2 flex flex-center">
             <q-img
               :src="require('../../assets/fitrun.png')"
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import router from "@/router"
+import router from "@/router";
 export default {
   data() {
     return {
@@ -57,7 +60,7 @@ export default {
   },
   methods: {
     goToPage(link) {
-      router.push(link)
+      router.push(link);
     }
   },
   computed: {}

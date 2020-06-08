@@ -12,12 +12,7 @@
       </template>
       <template v-else>
         <div class="row justify-end">
-          <q-btn
-            color="primary"
-            icon="check"
-            label="글쓰기"
-            @click="write()"
-          />
+          <q-btn color="primary" icon="check" label="글쓰기" @click="write()" />
         </div>
         <template v-if="isDetail">
           <detail
@@ -127,7 +122,7 @@
 <script>
 import writer from "../../components/PostWrite";
 import detail from "../../components/PostDetail";
-import router from "@/router"
+import router from "@/router";
 export default {
   data() {
     return {
@@ -167,7 +162,7 @@ export default {
         } else this.category = "팁과공략";
         this.isWrite = true;
       } else {
-        router.push("/login")
+        router.push("/login");
       }
     },
     check() {

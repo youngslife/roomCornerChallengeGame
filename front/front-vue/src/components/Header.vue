@@ -7,7 +7,10 @@
         </button>
       </div>
       <div class="col text-center text-weight-bold">
-        <img :src="require('../assets/logo.png')" onclick="location.href ='/'" />
+        <img
+          :src="require('../assets/logo.png')"
+          onclick="location.href ='/'"
+        />
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
