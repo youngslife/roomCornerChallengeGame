@@ -1,8 +1,12 @@
 <template>
   <div>
+<<<<<<< HEAD
     <div class="text-center">
       <h2>이달의 저격수</h2>
     </div>
+=======
+    <div class="text-center"><h2>이달의 운동왕</h2></div>
+>>>>>>> feature/maifasite
     <div class="row justify-around">
       <q-card class="my-card col-3">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -10,10 +14,16 @@
           <div class="text-h6">2등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
+<<<<<<< HEAD
         <q-card-section
           >Lorem ipsum dolor sit amet, consectetur adipiscing
           elit</q-card-section
         >
+=======
+        <q-card-section>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </q-card-section>
+>>>>>>> feature/maifasite
       </q-card>
       <q-card class="my-card col-3">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -21,10 +31,16 @@
           <div class="text-h6">1등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
+<<<<<<< HEAD
         <q-card-section
           >Lorem ipsum dolor sit amet, consectetur adipiscing
           elit</q-card-section
         >
+=======
+        <q-card-section>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </q-card-section>
+>>>>>>> feature/maifasite
       </q-card>
       <q-card class="my-card col-3">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -32,6 +48,7 @@
           <div class="text-h6">3등</div>
           <div class="text-subtitle2">by John Doe</div>
         </q-card-section>
+<<<<<<< HEAD
         <q-card-section
           >Lorem ipsum dolor sit amet, consectetur adipiscing
           elit</q-card-section
@@ -41,6 +58,14 @@
     <div class="text-center">
       <h2>랭커들 보일곳</h2>
     </div>
+=======
+        <q-card-section>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </q-card-section>
+      </q-card>
+    </div>
+    <div class="text-center"><h2>랭커들 보일곳</h2></div>
+>>>>>>> feature/maifasite
     <div class="row justify-center">
       <div class="col-10">
         <q-list bordered>

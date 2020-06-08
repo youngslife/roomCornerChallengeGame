@@ -79,6 +79,7 @@ const mutations = {
   },
   postLogIn(state, payLoad) {
     state.user = payLoad.user;
+    console.log(state.user);
     state.user_no = payLoad.user.user_no;
     window.sessionStorage.setItem("user_no", payLoad.user.user_no);
   },

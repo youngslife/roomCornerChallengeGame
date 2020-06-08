@@ -1,8 +1,13 @@
 <template>
   <div>
     <q-tabs v-model="tab" class="text-teal col row">
+<<<<<<< HEAD
       <q-tab class="col-4" name="pose" icon="mail" label="게임 가이드" />
       <q-tab class="col-4" name="game" icon="alarm" label="직업 가이드" />
+=======
+      <q-tab class="col-4" name="pose" icon="mail" label="자세 가이드" />
+      <q-tab class="col-4" name="game" icon="alarm" label="게임 가이드" />
+>>>>>>> feature/maifasite
     </q-tabs>
     <q-card class="my-card">
       <q-tab-panels v-model="tab" animated>

@@ -120,16 +120,17 @@ export default {
           imgSrc: require("../assets/room.png"),
           people: "1~4명",
           descript: "",
-          link: "",
-          developing: true
+          developing: true,
+          link: "/mafia"
         },
         {
           name: "후루추닌자",
           imgSrc: require("../assets/tabsonic.png"),
           people: "1명",
           descript: "",
-          link: "",
-          developing: true
+          developing: true,
+          descript: "게임게임에 대한 설명",
+          link: "/mapmafiaia"
         }
       ],
       user_no: {}
@@ -140,7 +141,6 @@ export default {
   },
   methods: {
     goPath(link) {
-      console.log(link);
       this.$router.push(link);
     },
     change(target) {
