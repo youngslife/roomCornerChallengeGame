@@ -108,7 +108,7 @@ export default {
           // console.log(doc.data());
           total_count += 1;
         });
-        console.log("A" + total_count);
+        // console.log("A" + total_count);
         return total_count;
       });
   }

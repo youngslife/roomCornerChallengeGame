@@ -6,19 +6,18 @@ const getters = {};
 
 const actions = {
   insertCmt: (store, cmt) => {
-    CmtService.insertCmt(cmt).then(Response => {
-      console.log(Response);
+    CmtService.insertCmt(cmt).then(() => {
+      // console.log(Response);
     });
   },
   updateCmt: (store, cmt) => {
-    CmtService.insertCmt(cmt).then(Response => {
-      console.log(Response);
+    CmtService.insertCmt(cmt).then(() => {
+      // console.log(Response);
     });
   },
   deleteCmt: (store, cmt_no) => {
-    console.log(cmt_no);
-    CmtService.deleteCmt(cmt_no).then(Response => {
-      console.log(Response);
+    CmtService.deleteCmt(cmt_no).then(() => {
+      // console.log(Response);
     });
   }
 };

@@ -1,12 +1,6 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      infinite
-      style="height:450px;"
-      autoplay
-    >
+    <q-carousel animated v-model="slide" infinite style="height:50vh;" autoplay>
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"
@@ -18,7 +12,7 @@
           <div class="col-2 menu-button" @click="goToPage('/fitness/info')">소식</div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/guide')">가이드</div>
           <div class="col-4 menu-button" @click="goToPage('/fitness')">
-            <img src="../../assets/fitrun.png">
+            <img src="../../assets/fitrun.png" />
           </div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/rank')">랭킹</div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/community')">커뮤니티</div>
@@ -42,11 +36,7 @@ export default {
         { name: "랭킹", link: "/fitness/rank" },
         { name: "커뮤니티", link: "/fitness/community" }
       ],
-      mainCard: [
-        { name: "first", imgSrc: require("../../assets/mafia.png") },
-        { name: "second", imgSrc: require("../../assets/ring.png") },
-        { name: "third", imgSrc: require("../../assets/room.png") }
-      ],
+      mainCard: [{ name: "first", imgSrc: require("../../assets/ring.png") }],
       slide2: "tv"
     };
   },

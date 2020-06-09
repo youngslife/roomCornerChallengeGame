@@ -149,19 +149,20 @@ export default class TutorialScene extends Scene {
   }
   collectCoin(user, coin) {
     coin.destroy(coin.x, coin.y);
-    self.sound.add("coinAudio");
+    self.sound.play("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster() {
     self.sound.play("wipeAudio");
     this.registry.events.emit("saveScene", "TutorialScene");
+    this.registry.events.emit("wipe", true);
     this.scene.launch("WipeScene");
     this.scene.pause();
     monster.destroy();
   }
   endGame() {
-    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
   }
 }

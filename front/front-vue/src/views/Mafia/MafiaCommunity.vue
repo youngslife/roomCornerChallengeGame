@@ -93,13 +93,10 @@ export default {
     writer
   },
   methods: {
-    write(a) {
-      console.log(this.isWrite);
-      console.log(a);
+    write() {
       this.isWrite = true;
     },
     check() {
-      console.log("gigigi");
       this.isWrite = false;
     }
   }

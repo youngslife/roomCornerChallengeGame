@@ -3,8 +3,8 @@
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
     <!-- <all-predict :predictions="predictions"></all-predict> -->
-    <div>Best Prediction</div>
-    <div>{{ url }}</div>
+    <!-- <div>Best Prediction</div> -->
+    <!-- <div>{{ url }}</div> -->
     <best-predict :predictions="predictions" @child="test"></best-predict>
   </div>
 </template>

@@ -5,6 +5,10 @@ events.on("meetMonster", () => {
   events.store.commit("ringfit/setIdx", events.store.state.ringfit.idx + 1);
 });
 
+events.on("wipe", wipe => {
+  events.store.commit("phaser/setIsWipe", wipe);
+});
+
 events.on("saveScene", scene => {
   events.store.commit("phaser/setScene", scene);
 });

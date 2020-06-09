@@ -48,7 +48,6 @@ class UserService {
   async login(email) {
     return await Api.post("/User/login", { email: email })
       .then(Response => {
-        console.log(Response);
         return Response;
       })
       .catch(exp => {
@@ -59,8 +58,8 @@ class UserService {
   //유저 정보 수정
   async updateUser(user) {
     return await Api.put("/User/update", { user: user })
-      .then(Response => {
-        console.log(Response);
+      .then(() => {
+        // console.log(Response);
         return true;
       })
       .catch(exp => {

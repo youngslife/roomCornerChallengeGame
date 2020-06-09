@@ -1,7 +1,7 @@
 <template>
   <div :id="containerId" v-if="downloaded" />
   <!-- <game-load ref="gameload" v-if="downloaded" :containerId="containerId"></game-load> -->
-  <div class="placeholder" v-else>Loading ...</div>
+  <div class="placeholder" v-else></div>
 </template>
 
 <script>

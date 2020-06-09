@@ -54,7 +54,6 @@ const actions = {
             store.commit("signUpSubEmail", { email: email, type: 1 });
             router.push("/signin");
           } else {
-            console.log(Response);
             store.commit("postLogIn", { user: Response.data.data });
             router.push("/");
           }
@@ -67,7 +66,9 @@ const actions = {
     router.push("/login");
   },
   getUserInfo: (store, payLoad) => {
+    console.log(payLoad);
     UserService.getUserDetailFromNo(payLoad).then(res => {
+      console.log(res);
       store.commit("setUser", res.data.data);
     });
   }
@@ -79,7 +80,6 @@ const mutations = {
   },
   postLogIn(state, payLoad) {
     state.user = payLoad.user;
-    console.log(state.user);
     state.user_no = payLoad.user.user_no;
     window.sessionStorage.setItem("user_no", payLoad.user.user_no);
   },

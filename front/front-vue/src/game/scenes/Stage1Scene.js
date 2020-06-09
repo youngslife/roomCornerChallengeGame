@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import map from "@/game/assets/tilemaps/maps/stage1.json";
-import m from "@/assets/monster_sprites/stage1/01_ordinary/demon_axe_sprites.png";
+import m from "@/assets/monster_sprites/stage1/01_ordinary/sprite.png";
 import m2 from "@/assets/monster_sprites/stage1/02_middleboss/troll_sprites.png";
 import m3 from "@/assets/monster_sprites/stage1/03_finalboss/elice.png";
 let player,
@@ -25,8 +25,8 @@ export default class Stage1Scene extends Scene {
   preload() {
     this.load.tilemapTiledJSON("stage1", map);
     this.load.spritesheet("monster", m, {
-      frameWidth: 500,
-      frameHeight: 500
+      frameWidth: 125,
+      frameHeight: 110
     });
     this.load.spritesheet("monster2", m2, {
       frameWidth: 840,
@@ -51,9 +51,7 @@ export default class Stage1Scene extends Scene {
       key: "stage1"
     });
     let tileset = this.map.addTilesetImage("test", "tiles");
-    console.log(tileset);
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
-    console.log(layer);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
 
@@ -76,7 +74,7 @@ export default class Stage1Scene extends Scene {
     });
     player = this.physics.add.sprite(0, 400, "player");
     // player.setBounce(0.1);
-    player.setCollideWorldBounds(true);
+    // player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
@@ -116,7 +114,7 @@ export default class Stage1Scene extends Scene {
     // monster
     monster = this.physics.add.sprite(1280, 400, "monster");
     monster.setSize(0.3);
-    monster.setDisplaySize(400, 350);
+    monster.setDisplaySize(250, 200);
     monster.setCollideWorldBounds(true);
     monster2 = this.physics.add.sprite(2500, 300, "monster2");
     monster2.setSize(0.3);
@@ -180,14 +178,14 @@ export default class Stage1Scene extends Scene {
   }
   collectCoin(user, coin) {
     coin.destroy(coin.x, coin.y);
-    self.sound.add("coinAudio");
+    self.sound.play("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster(user, monster) {
-    console.log(monster);
-
     self.sound.play("wipeAudio");
+    this.registry.events.emit("wipe", true);
     this.registry.events.emit("saveScene", "Stage1Scene");
     monster.destroy();
     this.scene.launch("WipeScene");
@@ -196,7 +194,6 @@ export default class Stage1Scene extends Scene {
   endGame() {
     // game 끝내고 백으로 result 보내주자
     // isClear 정보도 보내주고
-    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
   }
 }

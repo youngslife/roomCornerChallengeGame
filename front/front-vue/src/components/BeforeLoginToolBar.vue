@@ -1,6 +1,5 @@
 <template>
-  <div>
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -33,15 +32,15 @@ export default {
           .auth()
           .signOut()
           .then(function() {
-            console.log("logout success");
+            // console.log("logout success");
           })
           .catch(function(error) {
             console.log(error);
           });
       }
     },
-    back(){
-      this.$router.go(-1)
+    back() {
+      this.$router.go(-1);
     }
   }
 };

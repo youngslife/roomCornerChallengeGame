@@ -186,17 +186,18 @@ export default class Stage2Scene extends Scene {
     coin.destroy(coin.x, coin.y);
     self.sound.play("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster(user, monster) {
     self.sound.play("wipeAudio");
+    this.registry.events.emit("wipe", true);
     this.registry.events.emit("saveScene", "Stage2Scene");
     monster.destroy();
     this.scene.launch("WipeScene");
     this.scene.pause();
   }
   endGame() {
-    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
   }
 }
