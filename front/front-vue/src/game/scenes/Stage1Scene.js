@@ -189,6 +189,7 @@ export default class Stage1Scene extends Scene {
     console.log(monster);
 
     self.sound.play("wipeAudio");
+    this.registry.events.emit("wipe", true);
     this.registry.events.emit("saveScene", "Stage1Scene");
     monster.destroy();
     this.scene.launch("WipeScene");

@@ -191,6 +191,7 @@ export default class Stage2Scene extends Scene {
   }
   meetMonster(user, monster) {
     self.sound.play("wipeAudio");
+    this.registry.events.emit("wipe", true);
     this.registry.events.emit("saveScene", "Stage2Scene");
     monster.destroy();
     this.scene.launch("WipeScene");

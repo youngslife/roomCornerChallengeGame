@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div>{{ getIdx }}</div>
-    <div v-for="prediction in predictions" :key="prediction.className">
+    <!-- <div>{{ getIdx }}</div> -->
+    <!-- <div v-for="prediction in predictions" :key="prediction.className">
       {{ prediction.className }}: {{ prediction.probability.toFixed(2) }}
-    </div>
+    </div> -->
     <!-- {{ bestPrediction.className }}: {{ bestPrediction.probability.toFixed(2) }} -->
-    <div id="test">{{ test }}</div>
+    <!-- <div id="test">{{ test }}</div> -->
   </div>
 </template>
 

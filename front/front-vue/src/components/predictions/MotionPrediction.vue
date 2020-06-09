@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- <div>{{ getIdx }}</div> -->
-    <div
+    <!-- <div
       v-for="prediction in predictions"
       :key="prediction.className"
-    >{{ prediction.className }}: {{ prediction.probability.toFixed(2) }}</div>
+    >{{ prediction.className }}: {{ prediction.probability.toFixed(2) }}</div> -->
     <!-- {{ bestPrediction.className }}: {{ bestPrediction.probability.toFixed(2) }} -->
     <div id="test">{{ test() }}</div>
   </div>
@@ -403,3 +403,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#test {
+  color: white;
+}
+</style>

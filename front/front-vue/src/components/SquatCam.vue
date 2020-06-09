@@ -3,7 +3,7 @@
     <div ref="webcam"></div>
     <!-- <div>All Prediction</div> -->
     <!-- <all-predict :predictions="predictions"></all-predict> -->
-    <div>Motion Prediction</div>
+    <!-- <div>Motion Prediction</div> -->
     <!-- <div>{{ url }}</div> -->
     <!-- <SquatPredict :predictions="predictions" @child="test"></SquatPredict> -->
     <!-- <best-predict :predictions="predictions" @child="test"></best-predict> -->
