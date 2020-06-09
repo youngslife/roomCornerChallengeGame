@@ -1,20 +1,29 @@
 <template>
-  <div id="stage-select">
+  <div id="stage-select" style="width:90%">
     <!-- 게임 처음해보는 유저면 가이드를 보여주고 튜토리얼부터 시작할 수 있게 하자-->
     <template v-if="this.$store.state.ringfit.stageNum === 1">
-      <h2>피트런 가이드</h2>
       <h3>blah blah</h3>
-      <h4>
-        여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자
-      </h4>
+      <h4>여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자</h4>
       <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" />
     </template>
     <template v-else>
-      
-      <img src="../../assets/stage_title.png" style="margin-left: auto; margin-right: auto;">
+      <div style="text-align:center">
+        <img src="../../assets/stage_title.png" />
+      </div>
       <div class="row stages">
-      <img id="stage-btn" src="../../assets/stage1_btn.png" class="col-5" @click="goToNextPage(1)">
-      <img id="stage-btn" src="../../assets/stage2_btn.png" class="col-5" @click="goToNextPage(2)">
+        <img
+          id="stage-btn"
+          src="../../assets/stage1_btn.png"
+          :class="{'col-5': isOne}"
+          @click="goToNextPage(1)"
+        />
+        <img
+          id="stage-btn"
+          v-if="!isOne"
+          src="../../assets/stage2_btn.png"
+          class="col-5"
+          @click="goToNextPage(2)"
+        />
       </div>
     </template>
   </div>
@@ -30,6 +39,11 @@ export default {
     stages() {
       return this.$store.state.ringfit.stages;
     }
+  },
+  data() {
+    return {
+      isOne: this.$store.state.ringfit.stageNum === 1
+    };
   },
   methods: {
     ...mapMutations({
@@ -72,7 +86,8 @@ export default {
   justify-content: space-around;
 }
 #stage-btn {
-  width: 20vw; height: 20vw;
+  width: 20vw;
+  height: 20vw;
   cursor: pointer;
 }
 #stage-btn:hover {
