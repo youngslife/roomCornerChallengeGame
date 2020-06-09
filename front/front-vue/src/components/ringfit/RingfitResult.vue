@@ -17,7 +17,7 @@
         <h4>랭크 {{ this.rank }}</h4>
       </div>
       <q-btn label="스테이지 선택 화면" @click="selectStage" />
-      <q-btn v-if="this.$store.state.ringfit.stageNum < 3" label="다음 스테이지로" @click="nextStage" />
+      <!-- <q-btn v-if="this.$store.state.ringfit.stageNum < 3" label="다음 스테이지로" @click="nextStage" /> -->
     </div>
   </div>
 </template>
@@ -70,11 +70,12 @@ export default {
       await this.getUserInfo(this.$store.state.user.user_no);
     },
     selectStage() {
-      this.$store.commit(
-        "ringfit/setStages",
-        this.$store.state.ringfit.stageNum + 1
-      );
-      this.$emit("update:isStageSelect", true);
+      this.$router.push("game/RingFit");
+      // this.$store.commit(
+      //   "ringfit/setStages",
+      //   this.$store.state.ringfit.stageNum + 1
+      // );
+      // this.$emit("update:isStageSelect", true);
     },
     nextStage() {
       this.$store.dispatch("ringfit/gameStart", {

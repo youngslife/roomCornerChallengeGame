@@ -141,6 +141,7 @@ export default {
         this.image = this.monster.dead;
         this.monster.hp = 0;
         this.$store.state.phaser.isMeet = false;
+        this.$store.state.phaser.isDead = true;
       }
     }
   },

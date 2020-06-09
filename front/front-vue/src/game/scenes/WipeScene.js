@@ -26,11 +26,17 @@ export default class WipeScene extends Scene {
     wipe.on("animationcomplete", () => {
       this.registry.events.emit("wipe", false);
       this.registry.events.emit("meetMonster");
-      this.scene.resume(this.registry.events.store.state.phaser.scene);
-      this.scene.stop();
     });
   }
   // Runs once per frame for the duration of the scene
-
-  update() {}
+  update() {
+    if (
+      !this.registry.events.store.state.phaser.isMeet &&
+      this.registry.events.store.state.phaser.isDead
+    ) {
+      this.registry.events.store.state.phaser.isDead = false;
+      this.scene.resume(this.registry.events.store.state.phaser.scene);
+      this.scene.stop();
+    }
+  }
 }

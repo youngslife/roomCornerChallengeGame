@@ -129,9 +129,9 @@ export default class Stage1Scene extends Scene {
     this.physics.add.collider(monster, layer);
     this.physics.add.collider(monster2, layer);
     this.physics.add.collider(monster3, layer);
-    // this.physics.add.overlap(player, monster, this.meetMonster, null, this);
-    // this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
-    // this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
+    this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
   }
   // Runs once per frame for the duration of the scene
 

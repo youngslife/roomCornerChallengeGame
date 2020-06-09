@@ -2,7 +2,8 @@ const state = {
   isMeet: false,
   scene: "",
   isClear: false,
-  isWipe: false
+  isWipe: false,
+  isDead: false
 };
 
 const getters = {
@@ -22,7 +23,7 @@ const mutations = {
   setScene: (state, payload) => {
     state.scene = payload;
   },
-  wipe: (state, payload) => {
+  setIsWipe: (state, payload) => {
     state.isWipe = payload;
   }
 };
