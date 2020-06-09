@@ -2,11 +2,13 @@
   <div>
     <q-drawer :value="isDrawer" :width="500" overlay content-class="bg-white">
       <div class="row justify-between">
-        <img
-          :src="require('../assets/logo.png')"
-          onclick="location.href ='/'"
-          style="margin-top:20px;"
-        />
+        <router-link to="/">
+          <img
+            :src="require('../assets/logo.png')"
+            @click="this.$router.push('/')"
+            style="margin-top:20px;"
+          />
+        </router-link>
         <q-btn
           color="primary"
           icon="cancel"
@@ -46,7 +48,7 @@ export default {
       menus: [
         {
           menu: [
-            { name: "링피트", link: "/fitness" },
+            { name: "피트런", link: "/fitness" },
             { name: " - 가이드", link: "/fitness/guide" },
             { name: " - 자유게시판", link: "/fitness/community" }
           ]

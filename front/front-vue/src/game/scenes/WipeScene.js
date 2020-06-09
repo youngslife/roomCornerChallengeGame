@@ -14,23 +14,29 @@ export default class WipeScene extends Scene {
         start: 1,
         end: 28
       }),
-      frameRate: 12
+      frameRate: 14
     });
     const width = this.game.scale.displaySize.width / 2;
     const height = this.game.scale.displaySize.height / 2;
     wipe = this.physics.add.sprite(width, height, "wipe");
     wipe.body.setAllowGravity(0, 0);
     wipe.setScale(width / 80, height / 70);
-    console.log("test");
     wipe.anims.play("playWipe", true);
 
     wipe.on("animationcomplete", () => {
+      this.registry.events.emit("wipe", false);
       this.registry.events.emit("meetMonster");
-      this.scene.resume(this.registry.events.store.state.phaser.scene);
-      this.scene.stop();
     });
   }
   // Runs once per frame for the duration of the scene
-
-  update() {}
+  update() {
+    if (
+      !this.registry.events.store.state.phaser.isMeet &&
+      this.registry.events.store.state.phaser.isDead
+    ) {
+      this.registry.events.store.state.phaser.isDead = false;
+      this.scene.resume(this.registry.events.store.state.phaser.scene);
+      this.scene.stop();
+    }
+  }
 }

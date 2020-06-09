@@ -1,7 +1,13 @@
 <template>
   <div>
     <h2>자세 선택</h2>
-    <h3 v-for="(motion, i) in motions" :key="i" @click="goToNextPage(motion.name)">{{ motion.name }}</h3>
+    <h3
+      v-for="(motion, i) in motions"
+      :key="i"
+      @click="goToNextPage(motion.name)"
+    >
+      {{ motion.name }}
+    </h3>
   </div>
 </template>
 
@@ -31,7 +37,6 @@ export default {
     ...mapMutations({ setMotionName: "ringfit/setMotionName" }),
     goToNextPage(motionName) {
       this.setMotionName(motionName);
-      console.log("ok");
 
       // 여기도 후에 컴포넌트 바꾸는 것으로 한다면 router push 필요 x
       router.push("/game/RingFit");
@@ -40,5 +45,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

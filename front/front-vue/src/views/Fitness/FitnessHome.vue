@@ -1,57 +1,33 @@
 <template>
   <div>
-    <div class="row" style="background:gray;">
+    <div class="row" style="background: #444444;">
       <div class="col-4 flex flex-center">
-        <q-btn
-          color="primary"
-          icon="check"
-          label="어떠한 공간"
-          style="width:90%; height:200px; margin-top:20px; margin-bottom:20px;"
-        />
+        <img class="guide-btn" src="../../assets/guide_btn.png" @click="goToPage('/fitness/guide')" />
       </div>
       <div class="col-4 flex flex-center">
-        <button
-          style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
-          @click="clickStart"
-        >
-          시작버튼
-        </button>
+        <div class="start-button" @click="clickStart"></div>
       </div>
       <div class="col-4">
-        <div class="row justify-around" style="margin-top:20px;height:70px;">
-          <q-btn color="primary" icon="check" label="로그인" class="col-5" />
-          <q-btn color="primary" icon="check" label="회원가입" class="col-5" />
-        </div>
-        <div class="row justify-center" style="margin-top:20px">
+        <div class="row justify-around" style="margin-top: 3vh;">
           <q-btn
-            color="primary"
-            icon="check"
-            label="다른 간편 로그인 "
-            class="col-11"
+            color="#ddd"
+            label="로그인"
+            class="col-5"
+            style="height:30vh"
+            @click="goToPage('/login')"
           />
-        </div>
-        <div class="row justify-around" style="margin-top:20px">
-          <q-btn color="primary" icon="check" label="방구석ID 찾기" />
-          <q-btn color="primary" icon="check" label="비밀번호 찾기" />
+          <q-btn color="#ddd" label="회원가입" class="col-5" @click="goToPage('/signin')" />
         </div>
       </div>
     </div>
-    <div class="row justify-around" style="margin-top:20px;">
-      <h3 @click="goToPage('/fitness/community')" style="cursor: pointer;">
-        링피트 커뮤니티
-      </h3>
+    <div class="row justify-around" style="margin-top: 3vh;">
+      <h3 @click="goToPage('/fitness/community')" style="cursor: pointer;">피트런 커뮤니티</h3>
     </div>
     <div class="row justify-center">
       <div class="col-10 row justify-around">
-        <q-card
-          v-for="(board, i) in boardList.slice(1, 3)"
-          class="my-card col-5"
-          :key="i"
-        >
+        <q-card v-for="(board, i) in boardList.slice(1, 3)" class="my-card col-5" :key="i">
           <q-card-section>
-            <div class="text-h5" style="text-align: center;">
-              {{ board.board_subtitle }} 게시판
-            </div>
+            <div class="text-h5" style="text-align: center;">{{ board.board_subtitle }} 게시판</div>
             <div
               class="text-subtitle2"
               v-for="(post, j) in board.board_postList.slice(0, 5)"
@@ -113,4 +89,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.start-button {
+  background-image: url("../../assets/start_btn.png");
+  width: 200px;
+  height: 200px;
+  transition-duration: 0.3s;
+}
+.start-button:hover {
+  background-image: url("../../assets/start_btn_hover.png");
+  width: 200px;
+  height: 200px;
+}
+.guide-btn {
+  width: 90%;
+  height: 200px;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  cursor: pointer;
+  border-radius: 3vmin;
+}
+</style>

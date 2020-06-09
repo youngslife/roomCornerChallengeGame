@@ -6,7 +6,10 @@
     <div>Walk Best Prediction</div>
     <!-- <best-predict :predictions="predictions" @child="test"></best-predict>-->
     <walk-predict :predictions="predictions" @child="test"></walk-predict>
-    <squat-prediction :predictions="predictions" @child="test"></squat-prediction>
+    <squat-prediction
+      :predictions="predictions"
+      @child="test"
+    ></squat-prediction>
   </div>
 </template>
 
@@ -90,7 +93,6 @@ export default {
       this.predictions = prediction;
     },
     test(isJump) {
-      console.log("walkcam", isJump);
       this.$emit("child", isJump);
     }
   }

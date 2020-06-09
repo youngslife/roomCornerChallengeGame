@@ -2,7 +2,7 @@
   <q-layout class="row">
     <div class="col-3">
       <q-card class="my-card" style="margin-top:20px;">
-        <img :src="user.user_profile.img_path" style=" border-radius: 50%;" />
+        <img :src="image" style=" border-radius: 50%;" />
         <q-card-section>
           <div class="text-h3 text-center">{{ user.user_name }}</div>
           <div class="text-h7 text-center">{{ user.user_email }}</div>
@@ -119,9 +119,18 @@ export default {
       tab: "mails",
       drawerLeft: true,
       orange: false,
-      text: "",
-      user: {}
+      text: ""
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user;
+    },
+    image() {
+      return (
+        "https://k02a3041.p.ssafy.io/uploads/" + this.user.user_profile.img_name
+      );
+    }
   },
   mounted() {
     this.getInfo();
@@ -129,12 +138,7 @@ export default {
   methods: {
     ...mapActions({ getUserInfo: "user/getUserInfo" }),
     getInfo() {
-      // console.log('1111111dfadfewwr', this.user)
       this.getUserInfo(this.$store.state.user.user_no);
-      setTimeout(() => {
-        this.user = this.$store.state.user.user;
-      }, 300);
-      console.log("dfadfewwr", this.user);
     }
   }
 };
