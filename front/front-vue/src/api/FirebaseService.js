@@ -111,5 +111,45 @@ export default {
         // console.log("A" + total_count);
         return total_count;
       });
+  },
+  async checkStart(roomNo) {
+    var temp = true;
+    let s = await firebase
+      .firestore()
+      .collection("Mafia")
+      .doc(roomNo)
+      .collection("user_list")
+      .where("user_nickname", "==", "")
+      .get()
+      .then(async function(querySnapshot) {
+        await querySnapshot.forEach(function(doc) {
+          console.log(doc);
+          temp = false;
+          return false;
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
+    console.log("-------------------" + s + " " + temp);
+    if (temp) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  async checkMyInfo(roomNo, userNo) {
+    const room_id = roomNo;
+    const user_id = userNo; //지목당한 녀석
+    const ref = await firebase
+      .firestore()
+      .collection("Mafia")
+      .doc(room_id)
+      .collection("user_list");
+    //해당 번호랑 똑같은애 찾아서
+    let updated = ref.doc(String(user_id));
+    let maybe_deadman = (await updated.get()).data();
+    return maybe_deadman;
   }
+  
 };
