@@ -151,11 +151,13 @@ export default class TutorialScene extends Scene {
     coin.destroy(coin.x, coin.y);
     self.sound.add("coinAudio");
     score++;
+    self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster() {
     self.sound.play("wipeAudio");
     this.registry.events.emit("saveScene", "TutorialScene");
+    this.registry.events.emit("wipe", true);
     this.scene.launch("WipeScene");
     this.scene.pause();
     monster.destroy();
