@@ -29,11 +29,9 @@ const actions = {
   getStageByUser: (store, payLoad) => {
     RingfitService.getStageByUser(payLoad.no).then(Response => {
       const stage = Response.data.data;
-      console.log(stage.message);
       let stNum;
       if (stage.message === "클리어 전적이 없습니다.") stNum = 1;
       else stNum = stage.record.rstage_no + 1;
-      console.log(stNum);
       store.commit("setStages", 0);
       store.commit("setStageNum", stNum);
       store.commit("setStages", stNum);
@@ -41,7 +39,6 @@ const actions = {
   },
   gameStart: (store, payLoad) => {
     RingfitService.gameStart(payLoad).then(Response => {
-      console.log(Response.data.data.stageInfo);
       store.commit(
         "setUserInfo_no",
         Response.data.data.stageInfo.rstage_usergameinfo[0].ruserinfo_no

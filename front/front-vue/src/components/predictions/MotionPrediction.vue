@@ -296,7 +296,7 @@ export default {
             if (this.pose == "stand") {
               if (this.isAction === false) {
                 this.isAction = true;
-                console.log("Start Action Left");
+                // console.log("Start Action Left");
                 this.prob = this.predictions[4].probability;
                 this.action(0);
               }

@@ -198,7 +198,6 @@ export default class Stage2Scene extends Scene {
     this.scene.pause();
   }
   endGame() {
-    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
   }
 }

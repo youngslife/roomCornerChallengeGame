@@ -22,22 +22,17 @@
     </q-overlay>
     <div class="row">
       <div class="col-9">
-        <h3 v-if="!isStageSelect && !isWipe && !isMonster" class="stage">
-          {{ stage }}
-        </h3>
+        <h3 v-if="!isStageSelect && !isWipe && !isMonster && !isClear" class="stage">{{ stage }}</h3>
         <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />
-        <select-stage
-          v-if="isStageSelect"
+        <select-stage v-if="isStageSelect" :isStageSelect.sync="isStageSelect" />
+        <ringfit-attack v-if="isMonster" :AttackCnt="AttackCnt" :attackType="attackType" />
+        <ringfit-result
+          v-if="isClear && !isStageSelect"
           :isStageSelect.sync="isStageSelect"
+          :gameInfo="gameInfo"
         />
-        <ringfit-attack
-          v-if="isMonster"
-          :AttackCnt="AttackCnt"
-          :attackType="attackType"
-        />
-        <ringfit-result v-if="isClear" :isStageSelect.sync="isStageSelect" />
       </div>
       <!-- <div id="time" class="playtime"></div> -->
       <div v-if="!isStageSelect && !isMonster && !isWipe">
@@ -48,27 +43,17 @@
       </div>
       <!-- <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
-      </div> -->
+      </div>-->
       <div id="right" class="col-2 column">
         <div v-if="isMonster" id="additionalInfo" class="col-5">
           <img :src="example" />
         </div>
         <div class="col-6 self-end">
           <template v-if="isMonster">
-            <squat-cam
-              :url="url"
-              :width="window.width"
-              :height="window.height"
-              @child="goAttack"
-            ></squat-cam>
+            <squat-cam :url="url" :width="window.width" :height="window.height" @child="goAttack"></squat-cam>
           </template>
           <template v-else>
-            <web-cam
-              :url="walkUrl"
-              :width="window.width"
-              :height="window.height"
-              @child="jump"
-            ></web-cam>
+            <web-cam :url="walkUrl" :width="window.width" :height="window.height" @child="jump"></web-cam>
           </template>
         </div>
       </div>
@@ -171,7 +156,6 @@ export default {
       //   "https://k02a3041.p.ssafy.io/model/jumping_jacks/"
       // ];
 
-      console.log("gettttttttttttttttt", this.getIdx);
       // if (this.getIdx < 1) {
       //   return urlArr[0];
       // }
@@ -233,7 +217,6 @@ export default {
     // },
     pause() {
       clearTimeout(this.time);
-      console.log(this.isPause);
       this.$store.commit("ringfit/setIsPause", !this.isPause);
     },
     jump(status) {
@@ -265,16 +248,12 @@ export default {
       this.attackType = status.type;
       if (this.attackType === "perfect") {
         this.gameInfo.perfect++;
-        console.log(this.attackType);
       } else if (this.attackType === "great") {
         this.gameInfo.great++;
-        console.log(this.attackType);
       } else if (this.attackType === "good") {
         this.gameInfo.good++;
-        console.log(this.attackType);
       } else if (this.attackType === "bad") {
         this.gameInfo.bad++;
-        console.log(this.attackType);
       }
       this.AttackCnt = status.cnt;
     },
@@ -317,7 +296,7 @@ $speed: 7s;
 .coinImg {
   position: absolute;
   top: 10.7%;
-  left: 64%;
+  left: 63.5%;
   z-index: 1;
 }
 .coin {

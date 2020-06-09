@@ -66,27 +66,27 @@ export default {
             {
               name: "2-1",
               hp: 150,
-              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+              image: require("../../assets/ryan1.png"),
+              hurt: require("../../assets/ryan2.png"),
+              dead: require("../../assets/ryan3.png")
             }
           ],
           [
             {
               name: "2-2",
               hp: 150,
-              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+              image: require("../../assets/ryan1.png"),
+              hurt: require("../../assets/ryan2.png"),
+              dead: require("../../assets/ryan3.png")
             }
           ],
           [
             {
               name: "2-3",
               hp: 150,
-              image: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif"),
-              hurt: require("../../assets/monster_sprites/tutorial/01_ordinary/hurt.gif"),
-              dead: require("../../assets/monster_sprites/tutorial/01_ordinary/dead.gif")
+              image: require("../../assets/ryan1.png"),
+              hurt: require("../../assets/ryan2.png"),
+              dead: require("../../assets/ryan3.png")
             }
           ]
         ]
@@ -108,7 +108,6 @@ export default {
       return this.image;
     },
     cnt() {
-      console.log(this.AttackCnt);
       if (this.AttackCnt != 0) this.playerAttack();
       return this.AttackCnt;
     },
@@ -130,7 +129,7 @@ export default {
       setGameInfo: "ringfit/setGameInfo"
     }),
     playerAttack() {
-      const damage = 20;
+      const damage = 10;
       this.image = this.monster.hurt;
       this.monster.hp -= damage;
       if (this.monster.hp > 0) {
@@ -148,23 +147,6 @@ export default {
   destroyed() {
     this.$store.commit("ringfit/setGameInfo", this.gameInfo);
     this.$store.commit("ringfit/setCount", this.$store.state.ringfit.count + 1);
-    console.log(this.gameInfo);
-    this.$store.commit(
-      "ringfit/setGameInfo.perfect",
-      this.$store.state.ringfit.gameInfo.perfect + this.gameInfo.perfect
-    );
-    this.$store.commit(
-      "ringfit/setGameInfo.great",
-      this.$store.state.ringfit.gameInfo.great + this.gameInfo.great
-    );
-    this.$store.commit(
-      "ringfit/setGameInfo.good",
-      this.$store.state.ringfit.gameInfo.good + this.gameInfo.good
-    );
-    this.$store.commit(
-      "ringfit/setGameInfo.bad",
-      this.$store.state.ringfit.gameInfo.bad + this.gameInfo.bad
-    );
   }
 };
 </script>

@@ -11,21 +11,18 @@ const actions = {
     });
   },
   insertPost: (store, post) => {
-    console.log(post);
-    PostService.insertPost(post).then(Response => {
-      console.log(Response);
+    PostService.insertPost(post).then(() => {
+      // console.log(Response);
     });
   },
   updatePost: (store, post) => {
-    console.log(post);
-    PostService.insertPost(post).then(Response => {
-      console.log("dafadf", Response);
+    PostService.insertPost(post).then(() => {
+      // console.log("dafadf", Response);
     });
   },
   deletePost: (store, post_no) => {
-    console.log(post_no);
-    PostService.deletePost(post_no).then(Response => {
-      console.log(Response);
+    PostService.deletePost(post_no).then(() => {
+      // console.log(Response);
     });
   }
 };

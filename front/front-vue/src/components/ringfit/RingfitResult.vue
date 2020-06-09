@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div>
-      <img :src="image" style="width: 30vw" />
-      <br />
+    <div class="col-3" style="margin-left: 5%">
       <h3>{{ user.user_name }}</h3>
+      <img :src="image" style="width: 10vw; margin-top: 5%; margin-right: 10%" />
+      <br />
     </div>
     <div>
-      <h1>피트런 결과</h1>
+      <h2>피트런 결과</h2>
       <div>
         <!-- <h2>시간: {{ resultTime }}</h2> -->
         <hr />
@@ -32,21 +32,19 @@ export default {
   data() {
     return {
       score: 0,
-      rank: ""
+      rank: "",
+      image: ""
     };
   },
   computed: {
     user() {
       return this.$store.state.user.user;
-    },
-    image() {
-      return (
-        "https://k02a3041.p.ssafy.io/uploads/" + this.user.user_profile.img_name
-      );
     }
   },
-  mounted() {
-    this.getInfo();
+  async mounted() {
+    await this.getInfo();
+    this.image =
+      "https://k02a3041.p.ssafy.io/uploads/" + this.user.user_profile.img_name;
     this.calcScore();
     this.$store.dispatch("ringfit/gameEnd", {
       ruserinfo_no: this.$store.state.ringfit.ruserInfo_no,
@@ -67,9 +65,9 @@ export default {
   },
   methods: {
     ...mapActions({ getUserInfo: "user/getUserInfo" }),
-    getInfo() {
-      console.log("test");
-      this.getUserInfo(this.$store.state.user.user_no);
+    async getInfo() {
+      console.log(this.$store.state.user.user_no);
+      await this.getUserInfo(this.$store.state.user.user_no);
     },
     selectStage() {
       this.$store.commit(

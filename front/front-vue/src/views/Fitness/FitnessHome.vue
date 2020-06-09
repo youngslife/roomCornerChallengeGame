@@ -14,13 +14,21 @@
       </div>
       <div class="col-4">
         <div class="row justify-around" style="margin-top:20px;">
-          <q-btn color="primary" icon="check" label="로그인" class="col-5" style="height:200px" />
+          <q-btn
+            color="primary"
+            icon="check"
+            label="로그인"
+            class="col-5"
+            style="height:200px"
+          />
           <q-btn color="primary" icon="check" label="회원가입" class="col-5" />
         </div>
       </div>
     </div>
     <div class="row justify-around" style="margin-top:20px;">
-      <h3 @click="goToPage('/fitness/community')" style="cursor: pointer;">피트런 커뮤니티</h3>
+      <h3 @click="goToPage('/fitness/community')" style="cursor: pointer;">
+        피트런 커뮤니티
+      </h3>
     </div>
     <div class="row justify-center">
       <div class="col-10 row justify-around">

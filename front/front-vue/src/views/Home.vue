@@ -4,7 +4,7 @@
       animated
       v-model="slide"
       infinite
-      style="height:610px;"
+      style="height:800px;"
       autoplay
     >
       <q-carousel-slide
@@ -25,11 +25,10 @@
               { value: 'second', slot: 'second' },
               { value: 'third', slot: 'third' }
             ]"
-            style="height:100px; width:100%;"
           >
             <template v-slot:first>
               <div
-                style="height:100px; width:100%;"
+                style="height:100px; width:100%; font-size: 1.2em"
                 @click="change('first')"
                 class="flex flex-center"
               >
@@ -38,7 +37,7 @@
             </template>
             <template v-slot:second>
               <div
-                style="height:100px; width:100%;"
+                style="height:100px; width:100%; font-size: 1.2em"
                 @click="change('second')"
                 class="flex flex-center"
               >
@@ -47,7 +46,7 @@
             </template>
             <template v-slot:third>
               <div
-                style="height:100px; width:100%;"
+                style="height:100px; width:100%; font-size: 1.2em"
                 @click="change('third')"
                 class="flex flex-center"
               >
@@ -65,7 +64,7 @@
           <!-- menu bar -->
           <div class="col-2 menus" style="margin-left: auto">
             <div class="menus-contents flex flex-center">
-              <div @click="goPath('/jump')">공지</div>
+              <div @click="goPath('/')">공지</div>
               <div>QNA</div>
             </div>
           </div>
@@ -74,7 +73,7 @@
           <q-card
             v-for="(game, index) in gameList"
             class="my-card col-3 game-description"
-            style="margin-left:20px; height:400px; margin-top:20px;"
+            style="margin-left:20px; height:24%; margin-top:20px;"
             :key="index"
             @click="goPath(game.link)"
           >
@@ -180,16 +179,16 @@ export default {
   transform: rotate(-10deg);
 }
 .menus {
-  padding-top: 50px;
+  padding-top: 4%;
 }
 .menus-contents {
-  margin: 0 10px;
+  margin: 0 2em;
   justify-content: space-between;
 }
 .menus-contents > div {
   cursor: pointer;
-  width: 70px;
-  height: 40px;
+  width: 40%;
+  height: 10%;
   line-height: 40px;
   border-radius: 10px;
   text-align: center;

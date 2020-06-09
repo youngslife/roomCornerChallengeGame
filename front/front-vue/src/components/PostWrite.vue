@@ -47,12 +47,10 @@ export default {
   },
   mounted() {
     this.user_no = this.$store.state.user.user_no;
-    console.log(this.post);
     if (this.post !== undefined) {
       this.title = this.post.post_title;
       this.editor = this.post.post_content;
     }
-    console.log(this.isUpdate);
   },
   methods: {
     insert() {
@@ -60,7 +58,6 @@ export default {
       if (this.checktype === "자유게시판") board_no = 6;
       else if (this.checktype === "팁과공략") board_no = 7;
       else board_no = 8;
-      console.log("insert");
       this.$store.dispatch("post/insertPost", {
         board_no: board_no,
         user_no: this.user_no,
@@ -74,14 +71,6 @@ export default {
       if (this.checktype === "자유게시판") board_no = 6;
       else if (this.checktype === "팁과공략") board_no = 7;
       else board_no = 8;
-      console.log("update");
-      console.log(
-        "board_no, this.user_no, this.title, this.editor",
-        board_no,
-        this.user_no,
-        this.title,
-        this.editor
-      );
       this.$store.dispatch("post/updatePost", {
         board_no: board_no,
         user_no: this.user_no,

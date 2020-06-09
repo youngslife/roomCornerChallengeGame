@@ -51,9 +51,7 @@ export default class Stage1Scene extends Scene {
       key: "stage1"
     });
     let tileset = this.map.addTilesetImage("test", "tiles");
-    console.log(tileset);
     layer = this.map.createStaticLayer("test", tileset, 0, 200);
-    console.log(layer);
     coinLayer = this.map.getObjectLayer("CoinLayer")["objects"];
     coins = this.physics.add.staticGroup();
 
@@ -76,7 +74,7 @@ export default class Stage1Scene extends Scene {
     });
     player = this.physics.add.sprite(0, 400, "player");
     // player.setBounce(0.1);
-    player.setCollideWorldBounds(true);
+    // player.setCollideWorldBounds(true);
 
     layer.setCollisionByExclusion(-1, true);
     this.cameras.main.startFollow(player, true); // 캐릭터 center
@@ -131,9 +129,9 @@ export default class Stage1Scene extends Scene {
     this.physics.add.collider(monster, layer);
     this.physics.add.collider(monster2, layer);
     this.physics.add.collider(monster3, layer);
-    this.physics.add.overlap(player, monster, this.meetMonster, null, this);
-    this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
-    this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
+    // this.physics.add.overlap(player, monster, this.meetMonster, null, this);
+    // this.physics.add.overlap(player, monster2, this.meetMonster, null, this);
+    // this.physics.add.overlap(player, monster3, this.meetMonster, null, this);
   }
   // Runs once per frame for the duration of the scene
 
@@ -180,14 +178,12 @@ export default class Stage1Scene extends Scene {
   }
   collectCoin(user, coin) {
     coin.destroy(coin.x, coin.y);
-    self.sound.add("coinAudio");
+    self.sound.play("coinAudio");
     score++;
     self.registry.events.emit("setCoin", score);
     return false;
   }
   meetMonster(user, monster) {
-    console.log(monster);
-
     self.sound.play("wipeAudio");
     this.registry.events.emit("wipe", true);
     this.registry.events.emit("saveScene", "Stage1Scene");
@@ -198,7 +194,6 @@ export default class Stage1Scene extends Scene {
   endGame() {
     // game 끝내고 백으로 result 보내주자
     // isClear 정보도 보내주고
-    self.registry.events.emit("setCoin", score);
     self.registry.events.store.state.phaser.isClear = this;
   }
 }
