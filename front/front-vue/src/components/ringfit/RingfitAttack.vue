@@ -128,7 +128,7 @@ export default {
       setGameInfo: "ringfit/setGameInfo"
     }),
     playerAttack() {
-      const damage = 10;
+      const damage = 20;
       this.image = this.monster.hurt;
       this.monster.hp -= damage;
       if (this.monster.hp > 0) {
