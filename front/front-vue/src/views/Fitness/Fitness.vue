@@ -17,7 +17,9 @@
         <div class="row menu-bar">
           <div class="col-2 menu-button" @click="goToPage('/fitness/info')">소식</div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/guide')">가이드</div>
-          <div class="col-4 menu-button" @click="goToPage('/fitness')">이미지</div>
+          <div class="col-4 menu-button" @click="goToPage('/fitness')">
+            <img src="../../assets/fitrun.png">
+          </div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/rank')">랭킹</div>
           <div class="col-2 menu-button" @click="goToPage('/fitness/community')">커뮤니티</div>
         </div>
@@ -65,15 +67,19 @@ export default {
   background: rgba(0, 102, 255, 0.4);
 }
 .menu-bar {
-  height: 70px;
+  height: 10vh;
   text-align: center;
-  line-height: 70px;
-  font-size: 20px;
+  line-height: 10vh;
+  font-size: 1.5rem;
   font-weight: 700;
   color: white;
 }
 .menu-button {
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
 }
 </style>
