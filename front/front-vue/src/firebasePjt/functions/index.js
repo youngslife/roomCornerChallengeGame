@@ -514,10 +514,102 @@ app.get("/updatePolicePhase/:room_no", async (request, response) => {
                         }
                     }
                     let next_phase;
-                    if(updatedData['user_phase'] === night_police_phases[-1]){ //끝난상태면
+                    if(updatedData['user_phase'] === 'NIGHT_END'){ //끝난상태면
                         next_phase = day_phases[0];
                         is_last = true;
                     }else next_phase = night_police_phases[index+1];
+                    result.push(updatedData);
+                    next = next_phase;
+                    updated.update({
+                        user_phase : next_phase
+                    })
+                }
+            });
+            //어떤 상태로 바뀌었는지. 제대로 바뀌었는지.
+            return response.json({"id":id,"next_phase":next,"is_last":is_last,"result":result}); 
+        }).catch(error=>{
+            console.log("Error getting documents: ", error);
+            return response.json(error);
+        })
+    } catch(error){
+        console.log("search error");
+        return response.status(500).send("search error"+error);
+    }
+});
+
+app.get("/updateDoctorPhase/:room_no", async (request, response) => {
+    try {
+        const id = request.params.room_no;
+        const ref = await (db.collection("Mafia").doc(id).collection('user_list'));
+        
+        let result = [];
+        let next = "";
+        let is_last = false;
+        await ref
+        .get()
+        .then(querySnapshot=>{
+            querySnapshot.forEach((doc)=>{
+                let updated = ref.doc(doc.id);
+                let updatedData = doc.data();
+                if(updatedData.user_job === 'doctor'){
+                    let index = 0;
+                    for(let i = 0 ; i < night_doctor_phases.length-1; ++i){
+                        if(updatedData['user_phase'] === night_doctor_phases[i]){
+                            index = i;
+                            break;
+                        }
+                    }
+                    let next_phase;
+                    if(updatedData['user_phase'] === 'NIGHT_END'){ //끝난상태면
+                        next_phase = day_phases[0];
+                        is_last = true;
+                    }else next_phase = night_doctor_phases[index+1];
+                    result.push(updatedData);
+                    next = next_phase;
+                    updated.update({
+                        user_phase : next_phase
+                    })
+                }
+            });
+            //어떤 상태로 바뀌었는지. 제대로 바뀌었는지.
+            return response.json({"id":id,"next_phase":next,"is_last":is_last,"result":result}); 
+        }).catch(error=>{
+            console.log("Error getting documents: ", error);
+            return response.json(error);
+        })
+    } catch(error){
+        console.log("search error");
+        return response.status(500).send("search error"+error);
+    }
+});
+
+app.get("/updateCitizenPhase/:room_no", async (request, response) => {
+    try {
+        const id = request.params.room_no;
+        const ref = await (db.collection("Mafia").doc(id).collection('user_list'));
+        
+        let result = [];
+        let next = "";
+        let is_last = false;
+        await ref
+        .get()
+        .then(querySnapshot=>{
+            querySnapshot.forEach((doc)=>{
+                let updated = ref.doc(doc.id);
+                let updatedData = doc.data();
+                if(updatedData.user_job === 'citizen'){
+                    let index = 0;
+                    for(let i = 0 ; i < night_phases.length-1; ++i){
+                        if(updatedData['user_phase'] === night_phases[i]){
+                            index = i;
+                            break;
+                        }
+                    }
+                    let next_phase;
+                    if(updatedData['user_phase'] === 'NIGHT_END'){ //끝난상태면
+                        next_phase = day_phases[0];
+                        is_last = true;
+                    }else next_phase = night_phases[index+1];
                     result.push(updatedData);
                     next = next_phase;
                     updated.update({

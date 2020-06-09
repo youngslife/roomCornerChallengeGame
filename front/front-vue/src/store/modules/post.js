@@ -19,7 +19,7 @@ const actions = {
   updatePost: (store, post) => {
     console.log(post);
     PostService.insertPost(post).then(Response => {
-      console.log('dafadf', Response);
+      console.log("dafadf", Response);
     });
   },
   deletePost: (store, post_no) => {

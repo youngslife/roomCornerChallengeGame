@@ -1,6 +1,12 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" infinite style="height:450px;" autoplay>
+    <q-carousel
+      animated
+      v-model="slide"
+      infinite
+      style="height:450px;"
+      autoplay
+    >
       <q-carousel-slide
         v-for="(card, index) in mainCard"
         :name="card.name"

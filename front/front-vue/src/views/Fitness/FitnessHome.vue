@@ -24,9 +24,15 @@
     </div>
     <div class="row justify-center">
       <div class="col-10 row justify-around">
-        <q-card v-for="(board, i) in boardList.slice(1, 3)" class="my-card col-5" :key="i">
+        <q-card
+          v-for="(board, i) in boardList.slice(1, 3)"
+          class="my-card col-5"
+          :key="i"
+        >
           <q-card-section>
-            <div class="text-h5" style="text-align: center;">{{ board.board_subtitle }} 게시판</div>
+            <div class="text-h5" style="text-align: center;">
+              {{ board.board_subtitle }} 게시판
+            </div>
             <div
               class="text-subtitle2"
               v-for="(post, j) in board.board_postList.slice(0, 5)"

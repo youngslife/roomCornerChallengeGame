@@ -71,12 +71,9 @@
 </template>
 
 <script>
-import JanusWrapper from "../janus/JanusRoom";
+import JanusWrapper from "../../janus/JanusRoom";
 
 export default {
-  name: "jump",
-  components: {},
-  props: [],
   data() {
     return {
       seamless: true,
@@ -94,7 +91,10 @@ export default {
   },
   computed: {
     roomNameFromRoute() {
-      return "123";
+      return this.$route.params.roomNo;
+    },
+    user() {
+      return this.$store.state.user.user;
     }
   },
   mounted() {
@@ -119,7 +119,11 @@ export default {
 
     if (this.roomNameFromRoute !== undefined) {
       //   console.log("ih");
-      this.janus = new JanusWrapper(this.roomName);
+      this.janus = new JanusWrapper(
+        this.roomName,
+        this.user.user_no,
+        this.user.user_name
+      );
       //   console.log(this.janus);
     } else {
       // don't join the room
