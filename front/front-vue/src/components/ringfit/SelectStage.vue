@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      isOne: this.$store.state.ringfit.stageNum === 1
+      isOne: this.$store.state.ringfit.stageNum === 2
     };
   },
   methods: {
