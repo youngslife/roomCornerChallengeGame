@@ -81,11 +81,15 @@
           <h1>{{ timer }}</h1>
         </template>
 
-        <audio autoplay id="myt">
-          <source
-            src='require("../../assets/sound/마피아인트로.mp3")'
-            type="audio/mp3"
-          />
+        <iframe
+          src="../../assets/sound/silence.mp3"
+          allow="autoplay"
+          id="audio"
+          style="display:none"
+        ></iframe>
+
+        <audio id="audio" autoplay>
+          <source src="../../assets/sound/마피아인트로.mp3" />
         </audio>
       </q-card>
     </q-dialog>
@@ -112,8 +116,13 @@ export default {
       timer: 30,
       userList: [],
       phase: [
+        { mod: "준비시간", time: 32 },
         { mod: "낮", time: 60 },
-        { mod: "낮 투표", time: 30 }
+        { mod: "낮 투표", time: 30 },
+        {
+          mod: "밤",
+          time: 60
+        }
       ],
       pi: 0,
       pp: ""
