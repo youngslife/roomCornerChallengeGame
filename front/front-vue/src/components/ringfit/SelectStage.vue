@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="stage-select">
     <!-- 게임 처음해보는 유저면 가이드를 보여주고 튜토리얼부터 시작할 수 있게 하자-->
     <template v-if="this.$store.state.ringfit.stageNum === 1">
       <h2>피트런 가이드</h2>
@@ -10,10 +10,12 @@
       <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" />
     </template>
     <template v-else>
-      <h2>스테이지 선택</h2>
-      <h3 v-for="stage in stages" :key="stage" @click="goToNextPage(stage)">
-        stage {{ stage }}
-      </h3>
+      
+      <img src="../../assets/stage_title.png" style="margin-left: auto; margin-right: auto;">
+      <div class="row stages">
+      <img id="stage-btn" src="../../assets/stage1_btn.png" class="col-5" @click="goToNextPage(1)">
+      <img id="stage-btn" src="../../assets/stage2_btn.png" class="col-5" @click="goToNextPage(2)">
+      </div>
     </template>
   </div>
 </template>
@@ -60,4 +62,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#stage-select {
+  background-image: url("../../assets/stage_select_bg.png");
+  height: 110%;
+}
+.stages {
+  display: flex;
+  justify-content: space-around;
+}
+#stage-btn {
+  width: 20vw; height: 20vw;
+  cursor: pointer;
+}
+#stage-btn:hover {
+  filter: brightness(120%);
+}
+</style>
