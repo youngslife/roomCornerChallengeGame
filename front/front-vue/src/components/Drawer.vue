@@ -46,7 +46,7 @@ export default {
       menus: [
         {
           menu: [
-            { name: "링피트", link: "/fitness" },
+            { name: "피트런", link: "/fitness" },
             { name: " - 가이드", link: "/fitness/guide" },
             { name: " - 자유게시판", link: "/fitness/community" }
           ]

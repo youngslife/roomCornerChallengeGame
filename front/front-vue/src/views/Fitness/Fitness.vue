@@ -6,30 +6,14 @@
         :name="card.name"
         :img-src="card.imgSrc"
         :key="index"
+        style="padding: 0"
       >
-        <!--이부분은 컴포넌트화시키면 될듯  -->
-        <div
-          class="absolute-top justify-around row"
-          style="height:50px;margin-top:20px;"
-        >
-          <div class="col-2 flex flex-center">
-            <q-img
-              :src="require('../../assets/fitrun.png')"
-              :ratio="16 / 9"
-              spinner-color="primary"
-              spinner-size="82px"
-              @click="goToPage('/fitness')"
-              style="height: 60px"
-            />
-          </div>
-          <q-btn
-            v-for="(menu, index) in menus"
-            :key="index"
-            style=" color:white; font-size:25px;"
-            :label="menu.name"
-            class="col-2 text-weight-bold"
-            :to="menu.link"
-          ></q-btn>
+        <div class="row menu-bar">
+          <div class="col-2 menu-button" @click="goToPage('/fitness/info')">소식</div>
+          <div class="col-2 menu-button" @click="goToPage('/fitness/guide')">가이드</div>
+          <div class="col-4 menu-button" @click="goToPage('/fitness')">이미지</div>
+          <div class="col-2 menu-button" @click="goToPage('/fitness/rank')">랭킹</div>
+          <div class="col-2 menu-button" @click="goToPage('/fitness/community')">커뮤니티</div>
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -73,5 +57,17 @@ export default {
 }
 .bg-brand {
   background: rgba(0, 102, 255, 0.4);
+}
+.menu-bar {
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+.menu-button {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 </style>

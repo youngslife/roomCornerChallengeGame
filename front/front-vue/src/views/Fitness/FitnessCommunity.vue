@@ -8,7 +8,7 @@
       </q-tabs>
       <!-- {{board}} -->
       <template v-if="isWrite">
-        <writer game="링피트" :type="category" :isWrite.sync="isWrite"></writer>
+        <writer game="피트런" :type="category" :isWrite.sync="isWrite"></writer>
       </template>
       <template v-else>
         <div class="row justify-end">
@@ -16,7 +16,7 @@
         </div>
         <template v-if="isDetail">
           <detail
-            game="링피트"
+            game="피트런"
             :type="category"
             :post_no="post_no"
             :isDetail.sync="isDetail"

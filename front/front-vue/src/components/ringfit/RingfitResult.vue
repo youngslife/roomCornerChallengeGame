@@ -6,7 +6,7 @@
       <h3>{{ user.user_name }}</h3>
     </div>
     <div>
-      <h1>링피트 결과</h1>
+      <h1>피트런 결과</h1>
       <div>
         <h2>시간: {{ resultTime }}</h2>
         <h2>칼로리: {{ calories }}</h2>

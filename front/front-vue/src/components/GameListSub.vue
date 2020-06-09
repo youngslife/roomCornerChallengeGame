@@ -109,7 +109,7 @@
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
-              <h1 class="title text-weight-bolder">링피트</h1>
+              <h1 class="title text-weight-bolder">피트런</h1>
               <h3 class="subtitle subtitle-bottom">WINTER UPDATE</h3>
             </div>
 
@@ -127,7 +127,7 @@
 
             <div class="text-wrapper">
               <h3 class="subtitle subtitle-top">THE ARAD</h3>
-              <h1 class="title text-weight-bolder">링피트</h1>
+              <h1 class="title text-weight-bolder">피트런</h1>
               <h3 class="subtitle subtitle-bottom">WINTER UPDATE</h3>
             </div>
 
