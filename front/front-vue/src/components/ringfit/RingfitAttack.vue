@@ -2,13 +2,12 @@
   <div>
     <div style="text-align: center;">
       <h3>
-        <!--{{ monster.name }}-->
-        <span style="color:#ffffff">{{ cnt }}</span>
-        hp : {{ mnowHp }}
+        Hp : {{ mnowHp }}
         <h4>{{ attackType }}</h4>
       </h3>
       <img :src="chnImage" class="img" />
     </div>
+    <span style="color:#ffffff">{{ cnt }}</span>
   </div>
 </template>
 <script>

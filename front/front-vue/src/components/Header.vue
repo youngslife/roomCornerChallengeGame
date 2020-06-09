@@ -13,34 +13,14 @@
       </div>
       <template v-if="user_no > 0">
         <div class="col text-right text-weight-bold">
-          <router-link
-            class="button account-button button1"
-            to="/mypage"
-            tag="button"
-          >
-            마이페이지
-          </router-link>
-          <button class="button account-button button2" @click="logout">
-            로그아웃
-          </button>
+          <router-link class="button account-button button1" to="/mypage" tag="button">마이페이지</router-link>
+          <button class="button account-button button2" @click="logout">로그아웃</button>
         </div>
       </template>
       <template v-else>
         <div class="col text-right text-weight-bold">
-          <router-link
-            class="button account-button button1"
-            to="/signin"
-            tag="button"
-          >
-            회원가입
-          </router-link>
-          <router-link
-            class="button account-button button2"
-            to="/login"
-            tag="button"
-          >
-            로그인
-          </router-link>
+          <router-link class="button account-button button1" to="/signin" tag="button">회원가입</router-link>
+          <router-link class="button account-button button2" to="/login" tag="button">로그인</router-link>
         </div>
       </template>
     </q-bar>
@@ -97,6 +77,7 @@ export default {
     ...mapActions("header", ["changeIsDrawer"]),
     logout() {
       window.sessionStorage.setItem("user_no", 0);
+      window.location.href = "/";
     }
   },
   computed: {

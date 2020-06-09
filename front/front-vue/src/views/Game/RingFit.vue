@@ -44,16 +44,28 @@
       <!-- <div class="pause" v-if="!isStageSelect">
         <q-btn flat @click="pause">pause</q-btn>
       </div>-->
-      <div id="right" class="col-2 column">
+      <div id="right" class="col-3 column">
         <div v-if="isMonster" id="additionalInfo" class="col-5">
-          <img :src="example" />
+          <img :src="example" class="ex" />
         </div>
         <div class="col-6 self-end">
           <template v-if="isMonster">
-            <squat-cam :url="url" :width="window.width" :height="window.height" @child="goAttack"></squat-cam>
+            <squat-cam
+              :url="url"
+              :width="window.width"
+              :height="window.height"
+              @child="goAttack"
+              style="padding-right:5vw"
+            ></squat-cam>
           </template>
           <template v-else>
-            <web-cam :url="walkUrl" :width="window.width" :height="window.height" @child="jump"></web-cam>
+            <web-cam
+              :url="walkUrl"
+              :width="window.width"
+              :height="window.height"
+              @child="jump"
+              style="padding-right:5vw"
+            ></web-cam>
           </template>
         </div>
       </div>
@@ -178,8 +190,8 @@ export default {
   async mounted() {
     const right = document.getElementById("right");
     this.gameInfo = this.$store.state.ringfit.gameInfo;
-    this.window.width = right.offsetWidth;
-    this.window.height = right.offsetWidth;
+    this.window.width = right.offsetWidth - window.innerWidth / 24;
+    this.window.height = right.offsetWidth - window.innerWidth / 24;
     // this.url = "https://raw.githubusercontent.com/LeeGeunSeong/tmPoseTest/master/my_model/"
     await this.getStageByUser(); // 유저 정보로 스테이지 정보 받아오고
     // this.printPlayTime();
@@ -283,16 +295,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$img-w: 2000px;
-$img-h: 6000px;
-$shrink: 6.8;
-$ratio: 1 / $shrink;
-$speed: 7s;
-
-:root {
-  --slider-speed: ;
-}
-
 .coinImg {
   position: absolute;
   top: 10.7%;
@@ -322,5 +324,10 @@ $speed: 7s;
 .my-card {
   width: 100%;
   max-width: 350px;
+}
+.ex {
+  max-width: 25vw;
+  max-height: 55vh;
+  margin-bottom: 10vh;
 }
 </style>
