@@ -22,7 +22,9 @@
     </q-overlay>
     <div class="row">
       <div class="col-9">
-        <h3 v-if="!isStageSelect && !isWipe" class="stage">{{ stage }}</h3>
+        <h3 v-if="!isStageSelect && !isWipe && !isMonster" class="stage">
+          {{ stage }}
+        </h3>
         <!-- <h4>이번 판 운동 : {{ getMotionName }}</h4> -->
         <!-- <q-btn label="몬스터가 나타났다!" @click="changeToAttack"></q-btn> -->
         <Game v-if="!isStageSelect" v-show="!isMonster && !isClear" />

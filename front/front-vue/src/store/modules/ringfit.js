@@ -21,7 +21,8 @@ const state = {
 const getters = {
   getStageNum: state => state.stageNum,
   getMotionName: state => state.motionName,
-  getIdx: state => state.idx
+  getIdx: state => state.idx,
+  getGameInfo: state => state.getGameInfo
 };
 
 const actions = {

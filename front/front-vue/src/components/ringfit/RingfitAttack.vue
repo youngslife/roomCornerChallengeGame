@@ -3,17 +3,16 @@
     <div style="text-align: center;">
       <h3>
         <!--{{ monster.name }}-->
-        <h3>{{ cnt }}</h3>
-        <h3>{{ attackType }}</h3>
+        <span style="color:#ffffff">{{ cnt }}</span>
         hp : {{ mnowHp }}
+        <h4>{{ attackType }}</h4>
       </h3>
-      <!-- <div :class={}>  -->
       <img :src="chnImage" class="img" />
     </div>
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "RingfitAttack",
@@ -99,6 +98,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      getGameInfo: "ringfit/getGameInfo"
+    }),
     mnowHp() {
       return this.monster.hp;
     },
@@ -124,7 +126,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setIdx: "ringfit/setIdx"
+      setIdx: "ringfit/setIdx",
+      setGameInfo: "ringfit/setGameInfo"
     }),
     playerAttack() {
       const damage = 20;
@@ -145,6 +148,23 @@ export default {
   destroyed() {
     this.$store.commit("ringfit/setGameInfo", this.gameInfo);
     this.$store.commit("ringfit/setCount", this.$store.state.ringfit.count + 1);
+    console.log(this.gameInfo);
+    this.$store.commit(
+      "ringfit/setGameInfo.perfect",
+      this.$store.state.ringfit.gameInfo.perfect + this.gameInfo.perfect
+    );
+    this.$store.commit(
+      "ringfit/setGameInfo.great",
+      this.$store.state.ringfit.gameInfo.great + this.gameInfo.great
+    );
+    this.$store.commit(
+      "ringfit/setGameInfo.good",
+      this.$store.state.ringfit.gameInfo.good + this.gameInfo.good
+    );
+    this.$store.commit(
+      "ringfit/setGameInfo.bad",
+      this.$store.state.ringfit.gameInfo.bad + this.gameInfo.bad
+    );
   }
 };
 </script>
@@ -155,7 +175,7 @@ export default {
   height: 95%;
 }
 .img {
-  min-width: 300px;
-  min-height: 300px;
+  min-width: 30%;
+  min-height: 30%;
 }
 </style>

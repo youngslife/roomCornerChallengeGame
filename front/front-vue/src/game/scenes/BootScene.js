@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import tiles from "@/game/assets/tilemaps/tilesets/platformPack_tilesheet.png";
 import bg from "@/game/assets/tilemaps/background.png";
-import wipe from "@/game/assets/tilemaps/wipe2.png";
+import wipe from "@/game/assets/tilemaps/wipe.png";
 import coin from "@/game/assets/sprites/tile.png";
 import end from "@/game/assets/sprites/end.png";
 import player from "@/game/assets/tilemaps/kenney_player.png";

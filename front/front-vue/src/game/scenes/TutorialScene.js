@@ -157,6 +157,7 @@ export default class TutorialScene extends Scene {
   meetMonster() {
     self.sound.play("wipeAudio");
     this.registry.events.emit("saveScene", "TutorialScene");
+    this.registry.events.emit("wipe", true);
     this.scene.launch("WipeScene");
     this.scene.pause();
     monster.destroy();
