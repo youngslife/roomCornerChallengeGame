@@ -1,10 +1,9 @@
 <template>
   <div>
     <!-- <div>{{ getIdx }}</div> -->
-    <div
-      v-for="prediction in predictions"
-      :key="prediction.className"
-    >{{ prediction.className }}: {{ prediction.probability.toFixed(2) }}</div>
+    <div v-for="prediction in predictions" :key="prediction.className">
+      {{ prediction.className }}: {{ prediction.probability.toFixed(2) }}
+    </div>
     <!-- {{ bestPrediction.className }}: {{ bestPrediction.probability.toFixed(2) }} -->
     <div id="test">{{ test() }}</div>
   </div>
@@ -196,7 +195,7 @@ export default {
               this.$emit("child", { type: "bad", cnt: this.count });
               this.isAction = false;
               this.time = 0;
-            } else {
+            } else if (this.time == 250) {
               this.$emit("child", { type: this.accuracy, cnt: this.count });
               this.time = 0;
             }
@@ -212,7 +211,7 @@ export default {
                 this.$emit("child", { type: "bad", cnt: this.count });
                 this.isAction = false;
                 this.time = 0;
-              } else {
+              } else if (this.time == 250) {
                 this.$emit("child", { type: this.accuracy, cnt: this.count });
                 this.time = 0;
               }
@@ -263,7 +262,7 @@ export default {
                 this.$emit("child", { type: "bad", cnt: this.count });
                 this.isAction = false;
                 this.time = 0;
-              } else {
+              } else if (this.time == 250) {
                 this.$emit("child", { type: this.accuracy, cnt: this.count });
                 this.time = 0;
               }
