@@ -12,6 +12,7 @@
       <div class="col-4 flex flex-center">
         <button
           style="border-radius:50%; width:200px; height:200px; margin-top:20px;"
+          @click="start"
         >
           시작버튼
         </button>
@@ -159,6 +160,11 @@ export default {
     return {
       slide2: "tv"
     };
+  },
+  methods: {
+    start() {
+      this.$router.push("/game/mafia/lobby");
+    }
   }
 };
 </script>

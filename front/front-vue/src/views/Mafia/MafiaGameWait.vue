@@ -93,6 +93,7 @@
 
 <script>
 import firebase from "../../api/FirebaseService";
+import MafiaService from "../../api/MafiaService";
 export default {
   data() {
     return {
@@ -120,13 +121,32 @@ export default {
           });
         }
         if (change.type === "modified") {
-          for (let [temp, index] of this.userList) {
-            console.log(index);
-            console.log(temp);
-            if (change.doc.id == temp.id) {
-              this.userList[index] = change.doc.data();
+          console.log("zzzzz", change.doc.data());
+          console.log(this.userList[0]);
+          // let index = 0;
+          //이것을 원한 것이냐
+          for (let i = 0; i < this.userList.length; ++i) {
+            console.log("userList[", i, "]:", this.userList[i].data);
+            if (this.userList[i].data.user_no === change.doc.data().user_no) {
+              this.userList[
+                i
+              ].data.user_nickname = change.doc.data().user_nickname;
             }
           }
+          //아니면 이것을 원한 것이냐
+          // let cnt = 0;
+          // for (let i = 0; i < this.userList.length; ++i) {
+          //   let tempName = this.userList[i].data.user_nickname;
+          //   if (tempName == undefined || tempName == null || tempName === "") {
+          //     console.log("이거면 준비가 덜 되었다는 뜻이 아니겠는가..?");
+          //   } else {
+          //     cnt++;
+          //   }
+          // }
+          // if (cnt == this.room_person) {
+          //   console.log("We are ready!!!");
+          // }
+          // console.log(this.userList[0]);
         }
         if (change.type === "removed") {
           console.log("Removed city: ", change.doc.data(), change.doc.id);
@@ -142,11 +162,23 @@ export default {
   },
   methods: {
     setmyname() {
+      console.log(this.$route.params.roomNo);
+      MafiaService.setNickname({
+        room_no: this.$route.params.roomNo,
+        user_no: this.user.user_no,
+        user_nickname: this.myname
+      });
       console.log(this.myname);
     },
-    gamestart() {
-      console.log("start");
-      this.$router.push("/game/mafia/start/" + this.$route.params.roomNo);
+    async gamestart() {
+      let ss = await firebase.checkStart(this.$route.params.roomNo);
+      console.log(ss);
+      if (ss) {
+        console.log("start");
+        this.$router.push("/game/mafia/start/" + this.$route.params.roomNo);
+      } else {
+        alert("아직 모두 준비가 되지 않앗다.");
+      }
     }
   },
   destroyed() {

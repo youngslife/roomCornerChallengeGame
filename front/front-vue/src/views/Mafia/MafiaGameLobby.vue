@@ -117,6 +117,7 @@
 
 <script>
 import firebase from "../../api/FirebaseService";
+import MafiaService from "../../api/MafiaService";
 export default {
   data() {
     return {
@@ -144,12 +145,19 @@ export default {
   },
   methods: {
     makeRoom() {
-      console.log(Date.now());
-      console.log(this.createUsers);
-      console.log("userNo");
+      MafiaService.createRoom({
+        room_no: Date.now(),
+        room_person: this.createUsers,
+        room_name: this.createRoomName,
+        user_no: this.$store.state.user.user.user_no
+      });
     },
     enter(roomNo) {
       console.log(roomNo);
+      MafiaService.joinRoom({
+        room_no: roomNo,
+        user_no: this.$store.state.user.user.user_no
+      });
       this.$router.push("/game/mafia/room/" + roomNo);
     }
   }

@@ -376,7 +376,8 @@ class JanusRoom {
                 instance.mystream = stream;
 
                 var video;
-
+                document.getElementById("name0").innerHTML = instance.myusername
+              
                 if (document.getElementById("feed0") !== null) {
                   video = document.getElementById("feed0");
                   video.setAttribute("autoplay", "true");
@@ -409,7 +410,9 @@ class JanusRoom {
       }
     });
   }
-
+  attachElementContent(element,content){
+    element = content
+  }
   publishOwnFeed(useAudio) {
     instance.sfutest.createOffer({
       media: {
@@ -545,14 +548,17 @@ class JanusRoom {
       },
       onremotestream: function(stream) {
         var video;
+        console.log(remoteFeed)
         console.log(
           "이번에들어왔다 다른놈" + remoteFeed.rfid + " " + remoteFeed.rfdisplay
         );
+        // remoteFeed.rfid 
+        document.getElementById("name"+remoteFeed.rfindex).innerHTML=remoteFeed.rfdisplay;
         if (document.getElementById("feed" + remoteFeed.rfindex) !== null) {
           video = document.getElementById("feed" + remoteFeed.rfindex);
           video.setAttribute("autoplay", "true");
         }
-
+        
         Janus.attachMediaStream(video, stream);
       },
       oncleanup: function() {

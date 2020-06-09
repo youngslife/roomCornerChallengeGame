@@ -17,16 +17,14 @@
             autoplay="autoplay"
           ></video>
           <q-card-section class="text-white text-center">
-            <div class="text-h5" style=" font-weight:bold;">황야의 무법자</div>
+            <div
+              :id="'name' + index"
+              class="text-h5"
+              style=" font-weight:bold;"
+            >
+              황야의 무법자
+            </div>
           </q-card-section>
-          <q-card-actions align="around">
-            <q-btn flat style="color:red">
-              <span style="font-size:30px; font-weight:bold;">처 형</span>
-            </q-btn>
-            <q-btn flat style="color:blue">
-              <span style="font-size:30px; font-weight:bold;">치 료</span>
-            </q-btn>
-          </q-card-actions>
         </q-card>
       </div>
 
@@ -44,27 +42,51 @@
             autoplay="autoplay"
           ></video>
           <q-card-section class="text-white text-center">
-            <div class="text-h5" style=" font-weight:bold;">황야의 무법자</div>
+            <div
+              :id="'name' + index"
+              class="text-h5"
+              style=" font-weight:bold;"
+            ></div>
           </q-card-section>
-          <q-card-actions align="around">
-            <q-btn flat style="color:red">
-              <span style="font-size:30px; font-weight:bold;">처 형</span>
+        </q-card>
+        <q-card class="bg-grey-9  col-6" style="height:450px; margin-top:50px;">
+          <q-card-section class="text-white text-center col-10">
+            <h4>투표용지</h4>
+          </q-card-section>
+          <q-card-section
+            class="text-white text-center col-10 justify-around row"
+          >
+            <q-btn
+              color="bg-grey-5"
+              class="col-5"
+              style="margin-top:20px;"
+              v-for="(user, index) in userList"
+              :key="index"
+            >
+              {{ user.data.user_nickname }}
             </q-btn>
-            <q-btn flat style="color:blue">
-              <span style="font-size:30px; font-weight:bold;">치 료</span>
-            </q-btn>
-          </q-card-actions>
+          </q-card-section>
         </q-card>
       </div>
     </div>
 
     <q-dialog v-model="seamless" seamless position="bottom">
+      <!-- 페이즈 메이커 -->
       <q-card
         style="width: 500px; height:400px;"
         class="text-center bg-grey-9 text-white"
       >
-        <h1>낮</h1>
-        <h1>1 : 00</h1>
+        <template v-if="true">
+          <h1>{{ pp }}</h1>
+          <h1>{{ timer }}</h1>
+        </template>
+
+        <audio autoplay id="myt">
+          <source
+            src='require("../../assets/sound/마피아인트로.mp3")'
+            type="audio/mp3"
+          />
+        </audio>
       </q-card>
     </q-dialog>
   </div>
@@ -72,13 +94,13 @@
 
 <script>
 import JanusWrapper from "../../janus/JanusRoom";
-
+import firebase from "../../api/FirebaseService";
 export default {
   data() {
     return {
       seamless: true,
       flist: [0, 1, 2],
-      slist: [3, 4, 5],
+      slist: [3, 4],
       message: null,
       expanded: false,
       showCreateRoomDialog: false,
@@ -86,8 +108,61 @@ export default {
       janus: null,
       muted: false,
       published: false,
-      account: "jtree"
+      account: "jtree",
+      timer: 30,
+      userList: [],
+      phase: [
+        { mod: "낮", time: 60 },
+        { mod: "낮 투표", time: 30 }
+      ],
+      pi: 0,
+      pp: ""
     };
+  },
+  created() {
+    let ref = firebase.getMaifaUserCurrent(this.$route.params.roomNo);
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.userList.push({
+            id: doc.id,
+            data: doc.data()
+          });
+        }
+        if (change.type === "modified") {
+          console.log("zzzzz", change.doc.data());
+          console.log(this.userList[0]);
+          // let index = 0;
+          //이것을 원한 것이냐
+          for (let i = 0; i < this.userList.length; ++i) {
+            console.log("userList[", i, "]:", this.userList[i].data);
+            if (this.userList[i].data.user_no === change.doc.data().user_no) {
+              this.userList[
+                i
+              ].data.user_nickname = change.doc.data().user_nickname;
+            }
+          }
+          //아니면 이것을 원한 것이냐
+          // let cnt = 0;
+          // for (let i = 0; i < this.userList.length; ++i) {
+          //   let tempName = this.userList[i].data.user_nickname;
+          //   if (tempName == undefined || tempName == null || tempName === "") {
+          //     console.log("이거면 준비가 덜 되었다는 뜻이 아니겠는가..?");
+          //   } else {
+          //     cnt++;
+          //   }
+          // }
+          // if (cnt == this.room_person) {
+          //   console.log("We are ready!!!");
+          // }
+          // console.log(this.userList[0]);
+        }
+        if (change.type === "removed") {
+          console.log("Removed city: ", change.doc.data(), change.doc.id);
+        }
+      });
+    });
   },
   computed: {
     roomNameFromRoute() {
@@ -97,14 +172,24 @@ export default {
       return this.$store.state.user.user;
     }
   },
-  mounted() {
+  async mounted() {
+    this.$nextTick(() => {
+      var myaudio = document.getElementById("myt");
+      myaudio.play();
+    });
     // console.log("mounted !!!!!!!!!!!!!!!!!!!");
     // console.log(this.account);
     // console.log(this.roomName);
     // console.log(this.roomNameFromRoute);
-
+    let caq = firebase.checkMyInfo(
+      this.$route.params.roomNo,
+      this.$store.state.user.user.user_no
+    );
     this.roomName = this.roomNameFromRoute;
-
+    console.log("-----------------");
+    var myinfo = await caq.then(ex => {
+      return ex;
+    });
     if (this.account === null || this.account === undefined) {
       //   console.log("this.userName: " + this.account);
       this.showCreateRoomDialog = true;
@@ -118,18 +203,37 @@ export default {
     }
 
     if (this.roomNameFromRoute !== undefined) {
-      //   console.log("ih");
+      console.log(myinfo.user_nickname + ", " + myinfo.user_no);
       this.janus = new JanusWrapper(
         this.roomName,
-        this.user.user_no,
-        this.user.user_name
+        myinfo.user_no,
+        myinfo.user_nickname
       );
       //   console.log(this.janus);
     } else {
       // don't join the room
     }
+    this.pp = this.phase[0].mod;
+    this.pi = 0;
+    this.timer = this.phase[0].time;
+    setTimeout(this.countdown, 1000);
   },
   methods: {
+    countdown() {
+      if (this.timer > 0) {
+        this.timer = this.timer - 1;
+        setTimeout(this.countdown, 1000);
+      } else if (this.timer <= 0) {
+        console.log("hi");
+        this.pi++;
+        this.timer = this.phase[this.pi].time;
+        this.pp = this.phase[this.pi].mod;
+        setTimeout(this.countdown, 1000);
+      }
+    },
+    ad() {
+      console.log(document.getElementById("qb1"));
+    },
     confirmRoomName() {
       this.showCreateRoomDialog = false;
       //   console.log("Helloooooo: " + this.roomName);
