@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RMapDao" >
+
+ 	<insert id="insert"		parameterType="rmap">
+	 	INSERT INTO RMap (
+			rstage_no,
+			rmap_length
+		)
+		VALUES(
+			#{rstage_no:INTEGER},
+			#{rmap_length:INTEGER}
+		)
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="rmap">
+	   	UPDATE RMap
+		SET
+			rstage_no = #{rstage_no:INTEGER},
+			rmap_length = #{rmap_length:INTEGER},
+			rmap_del_check = #{rmap_del_check:BOOLEAN}
+		WHERE rmap_no = #{rmap_no:INTEGER}
+   	</update>
+	<select id="search"		parameterType="int"  resultType="rmap">
+		SELECT * FROM RMap WHERE rmap_no = #{rmap_no:INTEGER} AND rmap_del_check = FALSE
+	</select>
+	<select id="searchAll"	resultType="rmap">
+		SELECT * FROM RMap WHERE rmap_del_check = FALSE
+	</select>
+	
+</mapper>
+

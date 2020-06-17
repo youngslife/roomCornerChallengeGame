@@ -1,9 +1,12 @@
 module.exports = {
+  devServer: {
+    host: "localhost"
+  },
   pluginOptions: {
     quasar: {
       importStrategy: "kebab",
-      rtlSupport: false,
-    },
+      rtlSupport: false
+    }
   },
-  transpileDependencies: ["quasar"],
+  transpileDependencies: ["quasar"]
 };

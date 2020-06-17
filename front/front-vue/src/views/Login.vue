@@ -1,70 +1,101 @@
 <template>
-  <div>
-    <q-layout class="flex flex-center">
-      <q-card class="my-card">
-        <q-card-section class="text-center">
-          <div class="text-h4">방구석 챌린지</div>
-          <div class="text-subtitle2">내가 방구석 여포다</div>
-        </q-card-section>
-        <q-card-section>
-          <div class="row">
-            <h4 class="col-3">ID</h4>
-            <q-input class="col-9" v-model="email" type="text" label="아이디" />
-          </div>
-          <div class="row">
-            <h4 class="col-3">PW</h4>
-            <q-input class="col-9" v-model="password" type="password" label="패스워드" />
-          </div>
-        </q-card-section>
-        <q-card-section class="row">
-          <q-btn color="primary" icon="check" label="로그인" class="col-12" to="/home" />
-          <q-btn color="primary" icon="check" label="카톡 로그인" class="col-12" />
-          <q-btn color="primary" icon="check" label="구글 로그인" class="col-12" @click="googleLogin" />
-        </q-card-section>
-      </q-card>
-    </q-layout>
+  <div class="col justify-center" style="margin-bottom:150px;">
+    <div class="row justify-center">
+      <h2 class="col-4" style="margin-top:150px;">로그인</h2>
+    </div>
+    <div class="row justify-center">
+      <div class="q-gutter-y-md col-4" style="max-width: 600px">
+        <q-card>
+          <q-tabs
+            v-model="tab"
+            dense
+            class="text-grey"
+            active-color="primary"
+            indicator-color="primary"
+            align="justify"
+            narrow-indicator
+          >
+            <q-tab name="bg" label="방구석 ID 로그인" />
+            <q-tab name="another" label="다른 간편 계정 로그인" />
+          </q-tabs>
+
+          <q-separator />
+
+          <q-tab-panels v-model="tab" animated style="height:500px">
+            <q-tab-panel name="bg">
+              <div class="row justify-center " style="margin-top:50px;">
+                <q-input
+                  type="text"
+                  label="email"
+                  style="width:80%"
+                  v-model="email"
+                />
+                <q-input
+                  class="col-10"
+                  clearable
+                  v-model="pw"
+                  label="비밀번호"
+                  :type="isPwd ? 'password' : 'text'"
+                  hint
+                  style="width:80%"
+                  @keydown.enter="DefaultLogin()"
+                />
+                <q-btn
+                  color="primary"
+                  icon="check"
+                  label="방구석 ID로 로그인"
+                  style="width:80%; margin-top:50px;"
+                  @click="DefaultLogin()"
+                />
+              </div>
+              <q-separator style="margin-top:50px;" />
+              <div class="row justify-around" style="margin-top:50px;">
+                <q-btn color="primary" icon="check" label="방구석ID 찾기" />
+                <q-btn color="primary" icon="check" label="비밀번호 찾기" />
+                <q-btn color="primary" icon="check" label="방구석 회원가입" />
+              </div>
+            </q-tab-panel>
+            <q-tab-panel name="another">
+              <div class="row justify-center" style="margin-top:20px;">
+                <q-btn
+                  icon="img:https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                  size="md"
+                  style="height: 50px"
+                  class="full-width"
+                  outline
+                  @click="GoogleLogin()"
+                  label="구글 아이디로 로그인"
+                />
+              </div>
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-
 export default {
+  components: {},
   data() {
     return {
+      tab: "bg",
       email: "",
-      password: "",
-      users: {}
+      pw: "",
+      isPwd: true
     };
   },
-  mounted() {
-    this.users = firebase.database().ref("users");
-  },
+  mounted() {},
   methods: {
-    googleLogin() {
-      console.log("Google Login");
-      var self = this;
-      firebase
-        .auth()
-        .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-        .then(function(result) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          console.log(token);
-          localStorage.setItem("accessToken", token);
-          self.$store.dispatch("user/setCurrentUser", result.user);
-        })
-        .catch(function(error) {
-          // Handle Errors here.
-          //   var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorMessage);
-          //   // The email of the user's account used.
-          //   var email = error.email;
-          //   // The firebase.auth.AuthCredential type that was used.
-          //   var credential = error.credential;
-          // ...
-        });
+    DefaultLogin() {
+      this.$store.dispatch("user/postLogIn", {
+        user_email: this.email,
+        user_pw: this.pw
+      });
+    },
+    GoogleLogin() {
+      this.$store.dispatch("user/postGoogleLogIn");
     }
   }
 };

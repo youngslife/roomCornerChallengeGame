@@ -1,49 +1,31 @@
-import api from "../../api";
+import CmtService from "../../api/CommentService";
 
-const state = {
-  comment: null,
-  commentList: [],
-};
+const state = { comment: {} };
 
-const getters = {
-  comment: (state) => state.comment,
-  commentList: (state) => state.commentList,
-};
-
-const mutations = {
-  setCommentList: (state, commentList) => {
-    state.commentList = commentList;
-  },
-  setComment: (state, comment) => {
-    state.comment = comment;
-  },
-};
+const getters = {};
 
 const actions = {
-  async getCommentList({ commit }, params) {
-    const res = await api.getCommentList(params);
-    commit("setCommentList", res.data);
+  insertCmt: (store, cmt) => {
+    CmtService.insertCmt(cmt).then(() => {
+      // console.log(Response);
+    });
   },
-  async getComment({ commit }, params) {
-    const res = await api.getComment(params);
-    commit("setComment", res.data);
+  updateCmt: (store, cmt) => {
+    CmtService.insertCmt(cmt).then(() => {
+      // console.log(Response);
+    });
   },
-  async create(params) {
-    return await api.createComment(params);
-  },
-  async update(params) {
-    return await api.updateComment(params);
-  },
-  async delete(params) {
-    const res = await api.deleteComment(params);
-    console.log(res);
-  },
+  deleteCmt: (store, cmt_no) => {
+    CmtService.deleteCmt(cmt_no).then(() => {
+      // console.log(Response);
+    });
+  }
 };
-
+const mutations = {};
 export default {
   namespaced: true,
   state,
   getters,
   mutations,
-  actions,
+  actions
 };

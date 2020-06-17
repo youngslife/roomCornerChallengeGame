@@ -62,22 +62,86 @@ public class BoardServiceImpl implements BoardService {
 			e.printStackTrace();
 		}
 	}
+	
+
 	@Override
-	public List<Map<String, Object>> searchAllBoard(PageMaker page){
+	public List<Map<String, Object>> searchBoardTitle(PageMaker page) {
 		try {
-			return dao.searchAllBoard(page);
-		} catch (Exception e) {
+			System.out.println("#####"+page);
+			return dao.searchBoardTitle(page);
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 	@Override
-	public List<Map<String, Object>> searchTargetBoard(PageMaker page){
+	public List<Map<String, Object>> searchBoardSubTitle(PageMaker page) {
 		try {
-			return dao.searchTargetBoard(page);
-		} catch (Exception e) {
+			return dao.searchBoardSubTitle(page);
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchBoardTitleByOption(PageMaker page) {
+		try {
+			return dao.searchBoardTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchBoardSubTitleByOption(PageMaker page) {
+		try {
+			return dao.searchBoardSubTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public int countBoardTitle(PageMaker page) {
+		try {
+			return dao.countBoardTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitle(PageMaker page) {
+		try {
+			return dao.countBoardSubTitle(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int countBoardSubTitleByOption(PageMaker page) {
+		try {
+			return dao.countBoardSubTitleByOption(page);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

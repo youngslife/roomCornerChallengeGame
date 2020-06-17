@@ -3,7 +3,7 @@
 	
 
 <mapper namespace="com.ssafy.backspring.model.dao.PostDao" >
-	<resultMap id="cmtMap" type="COMMENT">
+	<resultMap id="cmtMap" type="Comment">
 		<result property="cmt_no" column="cmt_no" />
 		<result property="post_no" column="post_no" />
 		<result property="cmt_parent_no" column="cmt_parent_no" />
@@ -13,16 +13,16 @@
 		<result property="cmt_regtime" column="cmt_regtime" />
 		<result property="cmt_updatetime" column="cmt_updatetime" />
 		<association property="cmt_user" javaType="user">
-			<result property="user_no" column="user_no" />
-			<result property="user_email" column="user_email" />
-			<result property="user_name" column="user_name" />
-			<result property="user_lastlogin" column="user_lastlogin" />
+			<result property="user_no" column="cmt_user_no" />
+			<result property="user_email" column="cmt_user_email" />
+			<result property="user_name" column="cmt_user_name" />
 		</association>
 	</resultMap>
-	<resultMap id="puMap" type="POST">
+	<resultMap id="puMap" type="Post">
 		<result property="post_no" column="post_no" />
 		<result property="board_no" column="board_no" />
 		<result property="user_no" column="user_no" />
+		<result property="post_type" column="post_type" />
 		<result property="post_title" column="post_title" />
 		<result property="post_content" column="post_content" />
 		<result property="post_recommendation_num" column="post_recommendation_num" />
@@ -41,7 +41,7 @@
 	</resultMap>
 
  	<insert id="insert"		parameterType="post">
-	 	INSERT INTO POST(
+	 	INSERT INTO Post(
 			board_no,
 			user_no,
 			post_title,
@@ -52,7 +52,20 @@
 			#{post_title:VARCHAR},
 			#{post_content});
 	</insert> 
-	
+	<insert id="insertNotice"		parameterType="post">
+	 	INSERT INTO Post(
+			board_no,
+			user_no,
+			post_type,
+			post_title,
+			post_content)
+		VALUES(
+			#{board_no:INTEGER},
+			#{user_no:INTEGER},
+			#{post_type:VARCHAR},
+			#{post_title:VARCHAR},
+			#{post_content});
+	</insert> 
    	<delete id="delete" 	parameterType="int">
 
 	</delete>
@@ -62,10 +75,10 @@
    	</update>
 
 	<select id="search"		parameterType="int"  resultType="post">
-		SELECT * FROM POST WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE
+		SELECT * FROM Post WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE
 	</select>
 	<select id="searchAll"	resultType="post">
-		SELECT * FROM POST WHERE post_del_check = FALSE
+		SELECT * FROM Post WHERE post_del_check = FALSE
 	</select>
 	
 	<select id="searchPostDetail" parameterType="int" resultMap="puMap">
@@ -76,6 +89,7 @@
 			u.user_name,
 			u.user_email,
 			p.board_no, 
+			p.post_type,
 			p.post_title, 
 			p.post_content,
 			p.post_recommendation_num,
@@ -94,19 +108,30 @@
 			cc.cmt_blamed,
 			cc.cmt_regtime,
 			cc.cmt_updatetime
-		FROM POST p 
-		LEFT JOIN USER u ON p.user_no = u.user_no AND u.user_del_check = FALSE
+		FROM Post p 
+		LEFT JOIN User u ON p.user_no = u.user_no AND u.user_del_check = FALSE
 		LEFT JOIN
 			(SELECT  
 				c.*,
 				u.user_no as cmt_user_no,
 				u.user_name as cmt_user_name,
 				u.user_email as cmt_user_email
-			FROM COMMENT c
-			JOIN USER u
+			FROM Comment c
+			JOIN User u
 			ON c.user_no = u.user_no) as cc ON p.post_no = cc.post_no
 		WHERE p.post_no = #{post_no:INTEGER} AND p.post_del_check = FALSE ORDER BY cc.cmt_no;
 	</select>
- 
+ 	<update id="addPostViews" parameterType="int">
+ 		UPDATE Post
+ 		SET
+ 			post_views_num = post_views_num + 1
+ 		WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE;
+ 	</update>
+ 	<update id="addPostRecommendation" parameterType="int">
+ 		UPDATE Post
+ 		SET
+ 			post_recommendation_num = post_recommendation_num + 1
+ 		WHERE post_no = #{post_no:INTEGER} AND post_del_check = FALSE;
+ 	</update>
 </mapper>
 

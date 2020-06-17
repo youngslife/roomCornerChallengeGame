@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RMonsterDao" >
+
+ 	<insert id="insert"		parameterType="rmonster">
+	 	INSERT INTO RMonster(
+			rmon_name,
+			rmon_level,
+			rmon_hp,
+			rmon_grade,
+			rmon_description
+			)
+		VALUES(
+			#{rmon_name:VARCHAR},
+			#{rmon_level:INTEGER},
+			#{rmon_hp:INTEGER},
+			#{rmon_grade:VARCHAR},
+			#{rmon_description:VARCHAR}
+		)
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="rmonster">
+	   	UPDATE RMonster
+		SET
+			rmon_name = #{rmon_name:VARCHAR},
+			rmon_level = #{rmon_level:INTEGER},
+			rmon_hp = #{rmon_hp:INTEGER},
+			rmon_grade = #{rmon_grade:VARCHAR},
+			rmon_description = #{rmon_description:VARCHAR},
+			rmon_del_check = #{rmon_del_check:BOOLEAN}
+		WHERE rmon_no = #{rmon_no:INTEGER}
+   	</update>
+	<select id="search"		parameterType="int"  resultType="rmonster">
+		SELECT
+			*, 
+			CASE 
+				WHEN (rmon_no BETWEEN 1 AND 1) THEN 1
+				WHEN (rmon_no BETWEEN 2 AND 4) THEN 2
+				ELSE 3	
+			END AS inStage
+		from RMonster
+		WHERE rmon_no= #{rmon_no:INTEGER} AND rmon_del_check = FALSE;
+	</select>
+	<select id="searchAll"	resultType="rmonster">
+		SELECT * FROM RMonster WHERE rmon_del_check = FALSE
+	</select>
+	<select id="searchList" parameterType="int"  resultType="rmonster">
+		SELECT *
+		FROM (
+			SELECT
+				*, 
+				CASE 
+					WHEN (rmon_no BETWEEN 1 AND 1) THEN 1
+					WHEN (rmon_no BETWEEN 2 AND 4) THEN 2
+					ELSE 3	
+				END AS inStage
+			from RMonster
+			WHERE rmon_del_check = FALSE) as A
+		WHERE A.inStage = #{inStage:INTEGER};
+	</select>
+</mapper>
+

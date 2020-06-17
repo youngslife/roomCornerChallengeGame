@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+
+<mapper namespace="com.ssafy.backspring.model.dao.ringfit.RGameInfoDao" >
+
+ 	<insert id="insert"		parameterType="rgameinfo">
+	 	INSERT INTO RGameinfo(
+			ruserinfo_no,
+			rgameinfo_level
+			)
+		VALUES(
+			#{ruserinfo_no:INTEGER},
+			#{rgameinfo_level:INTEGER}
+		);
+	</insert> 
+   	<delete id="delete" 	parameterType="int">
+	</delete>
+   	<update id="update"		parameterType="rgameinfo">
+	   	UPDATE RGameinfo
+		SET
+			ruserinfo_no 			= #{ruserinfo_no:INTEGER},
+			rgameinfo_playtime	 	= SEC_TO_TIME(TIMESTAMPDIFF(SECOND, rgameinfo_startdate, CURRENT_TIMESTAMP())),
+			rgameinfo_enddate 		= CURRENT_TIMESTAMP(),
+			rgameinfo_level 		= #{rgameinfo_level:INTEGER},
+			rgameinfo_perfect_num	= #{rgameinfo_perfect_num:INTEGER},
+			rgameinfo_great_num 	= #{rgameinfo_great_num:INTEGER},
+			rgameinfo_good_num 		= #{rgameinfo_good_num:INTEGER},
+			rgameinfo_miss_num 		= #{rgameinfo_miss_num:INTEGER},
+			rgameinfo_rank 			= #{rgameinfo_rank:VARCHAR},
+			rgameinfo_kcal 			= #{rgameinfo_kcal:DOUBLE},
+			rgameinfo_score 		= #{rgameinfo_score:DOUBLE},
+			rgameinfo_del_check		= #{rgameinfo_del_check:BOOLEAN}
+		WHERE rgameinfo_no = #{rgameinfo_no:INTEGER};
+   	</update>
+	<select id="search"		parameterType="int"  resultType="rgameinfo">
+		SELECT * FROM RGameinfo WHERE rgameinfo_no=#{rgameinfo_no:INTEGER} AND rgameinfo_del_check = FALSE
+	</select>
+	<select id="searchAll"	resultType="rgameinfo">
+		SELECT * FROM RGameinfo WHERE rgameinfo_del_check = FALSE
+	</select>
+	
+</mapper>
+
