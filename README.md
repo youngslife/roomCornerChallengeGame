@@ -153,3 +153,29 @@
    - 모든 몬스터와 공격을 마치고 Stage 종료 시, 결과 화면
 
    ![image-20200619162851941](./MDImage/images/피트런종료.png)
+
+## 백엔드 정보
+
+### 기능
+- 회원 관리  
+- 커뮤니티(게시판 - 댓글)  
+- 회원별 게임 정보 관리  
+- 피트런 게임 정보 관리(관련 정보 제공 및 기록제공) 및 게임 API 제공  
+- 마피아 게임 정보 관리(페이즈 관리) 및 게임로직 API 제공  
+- Swagger로 API 제공
+
+### 설계 구조
+> REST CONTROLLER - SERVICE - DAO - DB    
+> DB : MySQL, Firebase  
+> SQL Mapper : MyBatis Framework    
+> Business Logic : Spring boot Framework, Firebase Functions  
+
+### DB
+- MySql  
+
+![테이블 구조도](./MDImage/db_table.png)
+
+- Firebase  
+
+![테이블 구조도2](./MDImage/fb1.png)
+![테이블 구조도3](./MDImage/fb2.png)
