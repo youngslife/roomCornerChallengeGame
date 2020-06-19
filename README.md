@@ -39,7 +39,7 @@
   - webRtc
   - quasar.js
 - 백 엔드
-  - [백엔드](back/back-spring/ReadMe.md)
+  - **[백엔드 관련](back/back-spring/ReadMe.md)**
   - spring boot
   - mysql
   - mybatis
