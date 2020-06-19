@@ -33,6 +33,8 @@
   - vue router
   - webRtc
   - quasar.js
+  - Teachable Machine
+  - Tensorflow.js
 - 백 엔드
   - spring boot
   - mysql
@@ -47,6 +49,18 @@
 ### 1. 피트런
 
 #### Fitness Pose Estimation
+
+##### 개요
+
+- 모션 인식 기술을 바탕으로 홈트레이닝과 게임을 결합한 서비스
+
+- Posenet, Teachable Machine, Tensorflow.js 를 활용한 전문가의 운동 동작 학습
+
+- 게임 유저의 동작을 인식하여 포즈 정확도를 판단
+
+ 
+
+##### Trained Pose Model
 
 1. Walk
 
