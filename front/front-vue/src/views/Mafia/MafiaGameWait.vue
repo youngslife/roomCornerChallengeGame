@@ -1,6 +1,5 @@
 <template>
   <div class="row justify-around">
-    {{ user }}
     <div class="col-3 justify-center">
       <q-btn
         class="col-10"
