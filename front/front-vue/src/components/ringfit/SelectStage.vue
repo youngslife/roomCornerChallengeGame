@@ -2,13 +2,30 @@
   <div id="stage-select" style="width:90%">
     <!-- 게임 처음해보는 유저면 가이드를 보여주고 튜토리얼부터 시작할 수 있게 하자-->
     <template v-if="this.$store.state.ringfit.stageNum === 1">
-      <h3>blah blah</h3>
-      <h4>여기엔 카메라에 얼마나 떨어져야 되는지, 영상 자세랑 같이 하는법 알려주자</h4>
-      <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" />
+      <q-carousel
+        v-model="slide"
+        transition-prev="scale"
+        transition-next="scale"
+        swipeable
+        animated
+        control-color="white"
+        navigation
+        padding
+        arrows
+        width="95%">
+
+        <q-carousel-slide name="tu1">
+          <img src="../../assets/tutorial1.png" style="margin: 0 3vw; height: 100%;" />
+        </q-carousel-slide>
+        <q-carousel-slide name="tu2">
+          <img src="../../assets/tutorial2.png" style="margin: 0 3vw; height: 100%;" />
+        </q-carousel-slide>
+      </q-carousel>
+      <q-btn label="튜토리얼 시작" @click="goToNextPage(0)" style="" />
     </template>
     <template v-else>
       <div style="text-align:center">
-        <img src="../../assets/stage_title.png" />
+        <img :src="require('../../assets/stage_title.png')" />
       </div>
       <div class="row stages">
         <img
@@ -42,7 +59,8 @@ export default {
   },
   data() {
     return {
-      isOne: this.$store.state.ringfit.stageNum === 2
+      isOne: this.$store.state.ringfit.stageNum === 2,
+      slide: "tu1",
     };
   },
   methods: {
@@ -79,6 +97,7 @@ export default {
 <style>
 #stage-select {
   background-image: url("../../assets/stage_select_bg.png");
+  background-size: contain;
   height: 110%;
 }
 .stages {
